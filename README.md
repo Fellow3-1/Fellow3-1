@@ -12,11 +12,7 @@ Hi there :wave: I am Felloh, a Software Engineer. I ❤  open source
 
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Fellow3-1&layout=compact)](https://github.com/Fellow3-1/github-readme-stats)
 
-<a href="https://github.com/Fellow3-1/github-readme-stats">
-  <img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=Fellow3-1&repo=github-readme-stats" />
-</a>
-<a href="https://github.com/Fellow3-1/convoychat">
-  <img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=Fellow3-1&repo=convoychat" />
-</a>
 
 <img width=100% src="https://github-profile-trophy.vercel.app/?username=Fellow3-1&column=7&title_color=ffffff&icon_color=ffffff&text_color=ffffff&bg_color=000000"/>
+
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=Fellow3-1&repo=github-readme-stats)](https://github.com/Fellow3-1/github-readme-stats)
