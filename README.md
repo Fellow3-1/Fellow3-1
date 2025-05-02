@@ -2,7 +2,6 @@
 
 Hi there :wave: I am Felloh, a Software Engineer. I ❤  open source 
 
-- 🌱 I’m currently learning everything.
 - 💞️ I’m looking to collaborate on any project and improving my skills.
 
 ## Skills
