@@ -35,7 +35,7 @@ Hi there :wave: I am Felloh, a Software Engineer. I ❤  open source
 
 <img alt="Top Langs" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Fellow3-1&hide=html&title_color=ffffff&icon_color=ffffff&text_color=ffffff&bg_color=000000" >
 
-<div align="center">
+<div align="right">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake.svg">
