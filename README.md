@@ -1,8 +1,19 @@
 
 
 Hi there :wave: I am Felloh, a Software Engineer. I ❤  open source 
+<picture>
 
-- 💞️ I’m looking to collaborate on any project and improving my skills.
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wamaithanyamu/Fellow3-1/output/github-contribution-grid-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/wamaithanyamu/Fellow3-1/output/github-contribution-grid-snake.svg">
+  <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/wamaithanyamu/Fellow3-1/output/github-contribution-grid-snake.svg">
+  
+</picture>
+
+
+</div>
+<a href="#gitstats">
+  <img src="https://github-readme-stats.vercel.app/api?username=Fellow3-1&theme=nord&count_private=true&show_icons=true" alt="Wamaitha's GitHub stats" align="right" />
+</a>
 
 ## Skills
 
