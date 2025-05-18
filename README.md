@@ -1,19 +1,7 @@
 
 
 Hi there :wave: I am Felloh, a Software Engineer. I ❤  open source 
-<picture>
 
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wamaithanyamu/Fellow3-1/output/github-contribution-grid-snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/wamaithanyamu/Fellow3-1/output/github-contribution-grid-snake.svg">
-  <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/wamaithanyamu/Fellow3-1/output/github-contribution-grid-snake.svg">
-  
-</picture>
-
-
-</div>
-<a href="#gitstats">
-  <img src="https://github-readme-stats.vercel.app/api?username=Fellow3-1&theme=nord&count_private=true&show_icons=true" alt="Wamaitha's GitHub stats" align="right" />
-</a>
 
 ## Skills
 
@@ -46,3 +34,13 @@ Hi there :wave: I am Felloh, a Software Engineer. I ❤  open source
 ![CodePen](https://img.shields.io/badge/Codepen-000000?style=for-the-badge&logo=codepen&logoColor=white) ![Reddit](https://img.shields.io/badge/Reddit-%23FF4500.svg?style=for-the-badge&logo=Reddit&logoColor=white)  ![Stack Overflow](https://img.shields.io/badge/-Stackoverflow-FE7A16?style=for-the-badge&logo=stack-overflow&logoColor=white)  ![XDA-Developers](https://img.shields.io/badge/XDA--Developers-%23AC6E2F.svg?style=for-the-badge&logo=XDA-Developers&logoColor=white)
 
 <img alt="Top Langs" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Fellow3-1&hide=html&title_color=ffffff&icon_color=ffffff&text_color=ffffff&bg_color=000000" >
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake.svg">
+    <img alt="GitHub contribution snake animation" src="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake.svg" style="max-width: 100%; height: auto;">
+  </picture>
+</div>
+
+
