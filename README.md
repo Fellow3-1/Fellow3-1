@@ -4,16 +4,6 @@ Hi there :wave: I am Felloh, a Software Engineer. I ❤  open source
 
 ![Snake animation](https://github.com/Fellow3-1/Fellow3-1/blob/output/github-contribution-grid-snake.svg)
 
-
-<div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake.svg">
-    <img alt="GitHub contribution snake animation" src="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake.svg" style="max-width: 100%; height: auto;">
-  </picture>
-</div>
-
-
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Fellow3-1&layout=compact)
 
 ## Skills
