@@ -4,7 +4,7 @@ Hi there :wave: I am Felloh, a Software Engineer. I ❤  open source
 
 ![Snake animation](https://github.com/Fellow3-1/Fellow3-1/blob/output/github-contribution-grid-snake.svg)
 
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Fellow3-1&layout=compact)
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Fellow3-1&layout=compact&theme=radical)
 
 ## Skills
 
