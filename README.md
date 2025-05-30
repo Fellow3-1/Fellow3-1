@@ -47,5 +47,13 @@ Hi there :wave: I am Felloh, a Software Engineer. I ❤  open source
 
 
 
+<p align="left">
+  <a href="https://github.com/ryo-ma/github-profile-trophy">
+    <img src="https://github-profile-trophy.vercel.app/?username=fellow3-1&theme=midnight_purple" alt="fellow3-1" />
+  </a>
+</p>
 
+<p>
+  <img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=fellow3-1&theme=midnight-purple" alt="fellow3-1" />
+</p>
 
