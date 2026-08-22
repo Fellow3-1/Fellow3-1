@@ -4,6 +4,9 @@ import react from "@vitejs/plugin-react";
 // `base: "./"` keeps every built asset URL relative, so the same build works
 // locally, behind the Arena preview proxy, and under the GitHub Pages project
 // sub-path (https://fellow3-1.github.io/Fellow3-1/).
+//
+// The production bundle is also copied to /docs so Pages can serve it with
+// "Deploy from a branch → main / docs" (see `npm run build:pages`).
 export default defineConfig({
   plugins: [react()],
   base: "./",

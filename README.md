@@ -9,8 +9,14 @@
 </p>
 
 <p align="center">
-  <a href="https://fellow3-1.github.io/Fellow3-1/">
-    <img src="https://img.shields.io/badge/View_My_Portfolio-8A2BE2?style=for-the-badge&amp;logo=githubpages&amp;logoColor=white" alt="View my portfolio on GitHub Pages" />
+  <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/View_My_Portfolio-8A2BE2?style=for-the-badge&amp;logo=githubpages&amp;logoColor=white" alt="View my portfolio on GitHub Pages (opens in a new tab)" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
+    <img src="public/assets/portfolio-preview.jpg" alt="Felloh 3.1 live portfolio — click to open in a new tab" width="100%" />
   </a>
 </p>
 
@@ -206,7 +212,10 @@
 ## 📫 Connect With Me
 
 <p align="center">
-  <a href="https://github.com/Fellow3-1">
+  <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/Portfolio-8A2BE2?style=for-the-badge&logo=githubpages&logoColor=white" alt="Live portfolio (opens in a new tab)" />
+  </a>
+  <a href="https://github.com/Fellow3-1" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
   </a>
   <a href="mailto:felixodhiambo31@live.com">
