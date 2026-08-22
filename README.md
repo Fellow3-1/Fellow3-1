@@ -8,9 +8,6 @@
   </a>
 </p>
 
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=Fellow3-1&amp;color=8A2BE2&amp;style=for-the-badge&amp;label=Profile+Views" alt="Profile views counter" />
-</p>
 
 <p align="center">
   <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
@@ -28,6 +25,9 @@
   <a href="https://github.com/Fellow3-1?tab=followers">
     <img src="https://img.shields.io/github/followers/Fellow3-1?label=Followers&amp;style=for-the-badge&amp;color=8A2BE2&amp;logo=github" alt="GitHub followers" />
   </a>
+  <p align="center">
+  <img src="https://komarev.com/ghpvc/?username=Fellow3-1&amp;color=8A2BE2&amp;style=for-the-badge&amp;label=Profile+Views" alt="Profile views counter" />
+</p>
   <a href="https://github.com/Fellow3-1?tab=repositories">
     <img src="https://img.shields.io/github/stars/Fellow3-1?affiliations=OWNER&amp;style=for-the-badge&amp;color=8A2BE2&amp;logo=github" alt="Stars across my GitHub repositories" />
   </a>
