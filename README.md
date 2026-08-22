@@ -1,28 +1,37 @@
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&height=220&text=Hello,%20I'm%20Felloh!%20👋&fontAlign=50&fontAlignY=38&color=gradient&customColorList=12,24,30&fontSize=42&desc=Full-Stack%20%7C%20Cloud%20%7C%20Mobile%20Developer&descAlign=50&descAlignY=65" width="100%" alt="Header Banner" />
 </p>
-## 🕹️ Mini Games & Interactive Zone
 
-### 🐍 GitHub Contribution Snake
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/main/github-snake-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/main/github-snake.svg" />
-    <img alt="GitHub Snake Animation" src="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/main/github-snake.svg" width="100%" />
-  </picture>
+  <a href="https://git.io/typing-svg">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&amp;weight=600&amp;size=22&amp;pause=1000&amp;color=A970FF&amp;center=true&amp;vCenter=true&amp;width=600&amp;lines=%F0%9F%9A%80+Full-Stack+Software+Engineer;%F0%9F%93%B1+Mobile+%26+Web+Application+Developer;%F0%9F%A4%96+AI+%26+Modern+Tech+Explorer;%F0%9F%92%A1+Open+Source+Contributor" alt="Typing introduction: Full-Stack Software Engineer, Mobile and Web Application Developer, AI and Modern Tech Explorer, and Open Source Contributor" />
+  </a>
 </p>
 
-### 🎮 Developer RPG Character Sheet
-```text
- ╔══════════════════════════════════════════════════════════════════════════╗
- ║                         FELLOH - LEVEL 99 DEV                            ║
- ╠══════════════════════════════════════════════════════════════════════════╣
- ║  HP  : ██████████████████ 100%  │ Class     : Full-Stack Sorcerer        ║
- ║  MP  : ██████████████████ 100%  │ Sub-Class : Cloud & AI Specialist      ║
- ║  EXP : ██████████████░░░░  85%  │ Weapon    : Neovim & TypeScript        ║
- ║  STAMINA : ☕ Infinite Coffee   │ Armor     : Docker & Kubernetes        ║
- ╚══════════════════════════════════════════════════════════════════════════╝
-```
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=Fellow3-1&amp;color=8A2BE2&amp;style=for-the-badge&amp;label=Profile+Views" alt="Profile views counter" />
+</p>
+
+<p align="center">
+  <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/View_My_Portfolio-8A2BE2?style=for-the-badge&amp;logo=githubpages&amp;logoColor=white" alt="View my portfolio on GitHub Pages (opens in a new tab)" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
+    <img src="public/assets/portfolio-preview.jpg" alt="Felloh 3.1 live portfolio — click to open in a new tab" width="100%" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Fellow3-1?tab=followers">
+    <img src="https://img.shields.io/github/followers/Fellow3-1?label=Followers&amp;style=for-the-badge&amp;color=8A2BE2&amp;logo=github" alt="GitHub followers" />
+  </a>
+  <a href="https://github.com/Fellow3-1?tab=repositories">
+    <img src="https://img.shields.io/github/stars/Fellow3-1?affiliations=OWNER&amp;style=for-the-badge&amp;color=8A2BE2&amp;logo=github" alt="Stars across my GitHub repositories" />
+  </a>
+</p>
 
 ---
 
@@ -49,37 +58,40 @@
   </a>
 </p>
 
----
+### 🏆 GitHub Trophies
 
 <p align="center">
-  <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&amp;weight=600&amp;size=22&amp;pause=1000&amp;color=A970FF&amp;center=true&amp;vCenter=true&amp;width=600&amp;lines=%F0%9F%9A%80+Full-Stack+Software+Engineer;%F0%9F%93%B1+Mobile+%26+Web+Application+Developer;%F0%9F%A4%96+AI+%26+Modern+Tech+Explorer;%F0%9F%92%A1+Open+Source+Contributor" alt="Typing introduction: Full-Stack Software Engineer, Mobile and Web Application Developer, AI and Modern Tech Explorer, and Open Source Contributor" />
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/View_My_Portfolio-8A2BE2?style=for-the-badge&amp;logo=githubpages&amp;logoColor=white" alt="View my portfolio on GitHub Pages (opens in a new tab)" />
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
-    <img src="public/assets/portfolio-preview.jpg" alt="Felloh 3.1 live portfolio — click to open in a new tab" width="100%" />
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/Fellow3-1?tab=followers">
-    <img src="https://img.shields.io/github/followers/Fellow3-1?label=Followers&amp;style=for-the-badge&amp;color=8A2BE2&amp;logo=github" alt="GitHub followers" />
-  </a>
-  <a href="https://github.com/Fellow3-1?tab=repositories">
-    <img src="https://img.shields.io/github/stars/Fellow3-1?affiliations=OWNER&amp;style=for-the-badge&amp;color=8A2BE2&amp;logo=github" alt="Stars across my GitHub repositories" />
+  <a href="https://github.com/Fellow3-1">
+    <img src="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/main/github-trophies.svg" width="100%" alt="GitHub profile trophies" />
   </a>
 </p>
 
 ---
 
+## 🕹️ Mini Games & Interactive Zone
+
+### 🐍 GitHub Contribution Snake
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/main/github-snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/main/github-snake.svg" />
+    <img alt="GitHub Snake Animation" src="https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/main/github-snake.svg" width="100%" />
+  </picture>
+</p>
+
+### 🎮 Developer RPG Character Sheet
+```text
+ ╔══════════════════════════════════════════════════════════════════════════╗
+ ║                         FELLOH - LEVEL 99 DEV                            ║
+ ╠══════════════════════════════════════════════════════════════════════════╣
+ ║  HP  : ██████████████████ 100%  │ Class     : Full-Stack Sorcerer        ║
+ ║  MP  : ██████████████████ 100%  │ Sub-Class : Cloud & AI Specialist      ║
+ ║  EXP : ██████████████░░░░  85%  │ Weapon    : Neovim & TypeScript        ║
+ ║  STAMINA : ☕ Infinite Coffee   │ Armor     : Docker & Kubernetes        ║
+ ╚══════════════════════════════════════════════════════════════════════════╝
+```
+
+---
 
 ## 🛠️ Tech Stack & Skills Matrix
 
@@ -212,9 +224,6 @@
 ## 📫 Connect With Me
 
 <p align="center">
-  <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/Portfolio-8A2BE2?style=for-the-badge&logo=githubpages&logoColor=white" alt="Live portfolio (opens in a new tab)" />
-  </a>
   <a href="https://github.com/Fellow3-1" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
   </a>
