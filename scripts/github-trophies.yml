@@ -1,0 +1,57 @@
+# Optional: keep the GitHub Profile Trophies fresher.
+#
+# The README currently embeds the generated trophy SVG committed to the repo
+# root (github-trophies.svg) so the row always renders, without depending on
+# a third-party badge service (the public github-profile-trophy.vercel.app
+# endpoint has been paused by its maintainer).
+#
+# To enable automatic regeneration, copy this file to
+# .github/workflows/github-trophies.yml (creating workflow files requires the
+# `workflows` permission on the token/app used to push, and Actions enabled).
+# The generated SVG is committed back to `main`, so the README URL
+# (main/github-trophies.svg) keeps working.
+#
+# Rendering is done with the official local generator from
+# ryo-ma/github-profile-trophy (a Deno script), via its composite action.
+
+name: Generate GitHub Profile Trophies
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # daily at midnight (UTC)
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate trophy SVG
+        uses: ryo-ma/github-profile-trophy@master
+        with:
+          username: ${{ github.repository_owner }}
+          output_path: github-trophies.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          theme: aura
+
+      - name: Commit generated SVG back to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add github-trophies.svg
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update GitHub trophies SVG"
+            git push
+          fi
