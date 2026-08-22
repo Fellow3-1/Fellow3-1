@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:pages": "vite build && rm -rf docs && cp -a dist/. docs && cp dist/index.html docs/404.html",
     "preview": "vite preview"
   },
   "dependencies": {
