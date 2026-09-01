@@ -1,5 +1,9 @@
 import { marquee } from "../data/content.js";
 
+/**
+ * Duplicated track + translateX(-50%) keyframes for a seamless loop.
+ * The whole strip is decorative (aria-hidden); real content lives elsewhere.
+ */
 export default function Marquee() {
   const items = [...marquee, ...marquee];
   return (

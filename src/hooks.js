@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /** Nairobi wall-clock, updating every second. */
 export function useNairobiClock() {
@@ -15,6 +15,24 @@ function format() {
     timeZone: "Africa/Nairobi",
     hour12: false,
   });
+}
+
+/** Live mount-time uptime counter for the neofetch panel. */
+export function useUptime(startDate = "2014-10-01T00:00:00+03:00") {
+  const [label, setLabel] = useState("");
+  useEffect(() => {
+    const tick = () => {
+      const ms = Date.now() - new Date(startDate).getTime();
+      const days = Math.floor(ms / 86400000);
+      const years = Math.floor(days / 365.25);
+      const rem = days - Math.floor(years * 365.25);
+      setLabel(`${years}y ${rem}d ${String(Math.floor((ms % 86400000) / 3600000)).padStart(2, "0")}h`);
+    };
+    tick();
+    const id = setInterval(tick, 60000);
+    return () => clearInterval(id);
+  }, [startDate]);
+  return label;
 }
 
 /** Typewriter that cycles through a list of strings. */
@@ -106,4 +124,69 @@ export function usePrefersReducedMotion() {
     return () => mq.removeEventListener?.("change", handler);
   }, []);
   return reduced;
+}
+
+/**
+ * True when the primary input is touch (coarse pointer). Used to gate
+ * hover-only flourishes that would otherwise become dead UI on mobile.
+ */
+export function useIsTouch() {
+  const [touch, setTouch] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: none), (pointer: coarse)");
+    setTouch(mq.matches);
+    const handler = (e) => setTouch(e.matches);
+    mq.addEventListener?.("change", handler);
+    return () => mq.removeEventListener?.("change", handler);
+  }, []);
+  return touch;
+}
+
+const sfx = {
+  key: [1244, 14],
+  confirm: [880, 90],
+  launch: [1318, 160],
+  boot: [523, 120],
+};
+
+// Module-level singleton — every useSfx() consumer shares one AudioContext
+// (browsers cap the number of contexts per page).
+let sharedCtx = null;
+
+/**
+ * Tiny synthesized UI bleeps via Web Audio — zero audio assets shipped.
+ * Safely no-ops until a real user gesture (browser autoplay policy),
+ * when reduced motion is on, and in browsers without AudioContext.
+ */
+export function useSfx() {
+  const reduced = usePrefersReducedMotion();
+
+  const play = useCallback(
+    (name = "key") => {
+      if (reduced) return;
+      try {
+        if (!sharedCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return;
+          sharedCtx = new AC();
+        }
+        if (sharedCtx.state === "suspended") sharedCtx.resume().catch(() => {});
+      } catch {
+        return;
+      }
+      const [freq, ms] = sfx[name] || [1000, 20];
+      const osc = sharedCtx.createOscillator();
+      const gain = sharedCtx.createGain();
+      osc.type = "square";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.035, sharedCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, sharedCtx.currentTime + ms / 1000);
+      osc.connect(gain).connect(sharedCtx.destination);
+      osc.start();
+      osc.stop(sharedCtx.currentTime + ms / 1000);
+    },
+    [reduced],
+  );
+
+  return play;
 }

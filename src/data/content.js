@@ -55,6 +55,7 @@ export const marquee = [
 export const timeline = [
   {
     era: "2014 — House Android",
+    hash: "a3f9c1d",
     title: "Android internals & the modding scene",
     org: "Independent · XDA era",
     body: "The origin story. Root, custom ROMs, Magisk tooling and device trees — learning how software really works by tearing it apart at the kernel level.",
@@ -62,6 +63,7 @@ export const timeline = [
   },
   {
     era: "2018 — 2019 · ALC / Google",
+    hash: "7b2e0f4",
     title: "Android Engineering, Andela Learning Community",
     org: "ALC · Udacity / Google Android",
     body: "Formalised the craft through the Google/Udacity Android for Beginners track and Andela Learning Community challenges — shipping Tic-Tac-Toe, Just Java, and Court Counter apps.",
@@ -69,6 +71,7 @@ export const timeline = [
   },
   {
     era: "2020 · BuildForSDG",
+    hash: "c91d4a8",
     title: "Software Engineer — Cohort 1",
     org: "@BuildForSDG",
     body: "Built COVID-19 estimator tooling for the Sustainable Development Goals initiative, shipping JS systems against tight, real-world product constraints.",
@@ -76,6 +79,7 @@ export const timeline = [
   },
   {
     era: "2020 — 2021 · Fintech",
+    hash: "e45f7b2",
     title: "Payments rails — MPESA / Daraja",
     org: "Open Source · Safaricom APIs",
     body: "Authored mpesa-api-go, the unofficial Safaricom MPESA (Daraja) API wrapper for Golang — 34 forks and counting — alongside Node and Android SDK work in the payments space.",
@@ -83,6 +87,7 @@ export const timeline = [
   },
   {
     era: "2023 — 2024 · ALX",
+    hash: "08ac3e9",
     title: "Software Engineering — systems & full-stack",
     org: "ALX Africa",
     body: "Went close to the metal: a custom printf, a bytecode interpreter (monty), low-level C, Python, and system engineering / DevOps curriculum across 20+ repositories.",
@@ -90,6 +95,7 @@ export const timeline = [
   },
   {
     era: "2024 — Now",
+    hash: "f1d60c5",
     title: "AI, cloud-native & developer tooling",
     org: "Independent · Open Source",
     body: "Building LLM-powered interfaces, React Router and Astro starter templates, and cloud-native architecture — while looking to collaborate on OSS and developer tools.",
@@ -173,12 +179,16 @@ export const skillCategories = [
   },
 ];
 
+// Selected work. `lang` drives the real GitHub language dot color.
 export const projects = [
   {
     name: "mpesa-api-go",
-    kicker: "Go · 34 forks · Safaricom",
+    kicker: "Unofficial Safaricom Daraja SDK",
     description:
       "Unofficial Safaricom MPESA (Daraja) API wrapper for Golang — bringing Kenyan payments rails into a language that likes speed.",
+    lang: "Go",
+    stars: 8,
+    forks: 34,
     tags: ["Go", "REST", "OAuth", "Fintech"],
     link: "https://github.com/Fellow3-1/mpesa-api-go",
     image: "assets/proj-mpesa.jpg",
@@ -186,41 +196,56 @@ export const projects = [
   },
   {
     name: "tovuti",
-    kicker: "Java · 12 forks · Android",
+    kicker: "Connectivity & speed utility",
     description:
       "Library for live internet connection status and speed on Wi-Fi and mobile data — a small utility thousands of Android apps have reused.",
+    lang: "Java",
+    stars: 15,
+    forks: 12,
     tags: ["Java", "Android", "Library"],
     link: "https://github.com/Fellow3-1/tovuti",
     image: "assets/proj-tovuti.jpg",
   },
   {
     name: "android-sms-verifier",
-    kicker: "Java · Android",
+    kicker: "OTP autofill library",
     description: "Auto-copies verification codes from SMS straight into the app — no more tab-switching during login.",
+    lang: "Java",
+    stars: 6,
+    forks: 3,
     tags: ["Java", "Android", "UX"],
     link: "https://github.com/Fellow3-1/android-sms-verifier",
     image: "assets/proj-mobile.jpg",
   },
   {
     name: "printf + monty",
-    kicker: "C · ALX · Systems",
+    kicker: "Systems programming",
     description: "A custom printf implementation and a stack-based bytecode interpreter — close to the metal, taught me how machines think.",
+    lang: "C",
+    stars: 4,
+    forks: 5,
     tags: ["C", "Systems", "ALX"],
     link: "https://github.com/Fellow3-1/printf",
     image: "assets/proj-systems.jpg",
   },
   {
     name: "llm-chat-app",
-    kicker: "JavaScript · AI",
+    kicker: "Conversational AI template",
     description: "A template for conversational interfaces sitting on modern LLM rails — streaming, history, and clean separation of concerns.",
+    lang: "JavaScript",
+    stars: 5,
+    forks: 2,
     tags: ["AI", "LLM", "JavaScript"],
     link: "https://github.com/Fellow3-1/llm-chat-app-template",
     image: "assets/proj-ai.jpg",
   },
   {
     name: "VR_Navigation",
-    kicker: "CSS · VR · In development",
+    kicker: "Experimental · in development",
     description: "A virtual-reality wayfinding experiment — navigation reimagined as light and depth.",
+    lang: "CSS",
+    stars: 2,
+    forks: 1,
     tags: ["VR", "CSS", "Experiment"],
     link: "https://github.com/Fellow3-1/VR_Navigation",
     image: "assets/proj-vr.jpg",
@@ -264,9 +289,94 @@ export const socials = [
   { label: "Coordinates", value: "Nairobi, Kenya · UTC+3" },
 ];
 
+// --- Nexus OS data ----------------------------------------------------------
+
+/** neofetch-style panel on the hero. */
+export const sysinfo = {
+  host: "felloh@nexus",
+  os: "Nexus OS 3.1 LTS",
+  kernel: "house-android 6.1.0-nbo",
+  uptime: "12+ years in production",
+  shell: "zsh 5.9 + Neovim",
+  editor: "Neovim (btw)",
+  stack: "React · TypeScript · Go · K8s",
+  location: "Nairobi, Kenya · UTC+3",
+  status: "OPEN FOR WORK",
+};
+
+/** Boot screen kernel messages (fast, skippable). */
+export const bootLines = [
+  "nexus-kernel: loading House Android image ......... [ OK ]",
+  "mounting /dev/nairobi ............................. [ OK ]",
+  "starting authd · credentials: senior engineer ..... [ OK ]",
+  "attaching units: web.service mobile.service k8s ... [ OK ]",
+  "ai-daemon: warming LLM context .................... [ OK ]",
+  "welcome to nexus os 3.1 — session: guest",
+];
+
+/** Registry for the ⌘K command palette. */
+export const commands = [
+  { id: "top", label: "Go to Hero", hint: "Jump to the top of the page", kbd: "G H", run: () => "#top" },
+  { id: "about", label: "About · whoami", hint: "Identity dossier", kbd: "G A", run: () => "#about" },
+  { id: "experience", label: "Experience · git log", hint: "12 years of shipping", kbd: "G E", run: () => "#experience" },
+  { id: "skills", label: "Skills · stack", hint: "The full arsenal, filterable", kbd: "G S", run: () => "#skills" },
+  { id: "projects", label: "Projects · ls ~/work", hint: "Selected repositories", kbd: "G P", run: () => "#projects" },
+  { id: "contact", label: "Contact · open channel", hint: "Email, GitHub, X", kbd: "G C", run: () => "#contact" },
+  { id: "github", label: "Open GitHub profile", hint: "github.com/Fellow3-1", kbd: "", run: () => "https://github.com/Fellow3-1" },
+  {
+    id: "email",
+    label: "Copy email address",
+    hint: "felixodhiambo31@live.com",
+    kbd: "",
+    run: () => {
+      navigator.clipboard?.writeText("felixodhiambo31@live.com").catch(() => {});
+      return null;
+    },
+  },
+  { id: "download", label: "Download résumé", hint: "Grab the CV", kbd: "", run: () => "assets/cv-felix-odhiambo.txt" },
+];
+
+/**
+ * Interactive terminal registry. Each command returns lines of output.
+ * Keep it honest — these are real facts and real links.
+ */
+export const termCommands = {
+  help: () => [
+    "nexus-shell — available commands:",
+    "  whoami     uptime      stack      neofetch",
+    "  projects   contact     socials    motto",
+    "  clear      exit",
+    "  (tip: <cmd> --help is decorative, like most CLIs)",
+  ],
+  whoami: () => ["felix odhiambo — felloh 3.1 · House Android · The Unboxed", "senior full-stack & cloud engineer, Nairobi (UTC+3)"],
+  uptime: () => ["up 12+ years, 0 critical incidents on the mantle", "12+ years shipping · 90 public repos · 34 forks on mpesa-api-go"],
+  stack: () => ["primary   typescript · react · node", "systems   go · c · python", "mobile    android (java/kotlin) · react native", "infra     docker · kubernetes · aws · github actions"],
+  neofetch: () => [
+    "felloh@nexus",
+    "-----------",
+    "OS....... Nexus OS 3.1 LTS",
+    "Kernel... house-android 6.1.0-nbo",
+    "Shell.... zsh + neovim (btw)",
+    "Uptime... 12+ years in production",
+    "Stack.... React · TypeScript · Go · K8s",
+  ],
+  projects: () => [
+    "mpesa-api-go ....... Go SDK for Safaricom Daraja (34 forks)",
+    "tovuti ............. Android connectivity library",
+    "android-sms-verifier  OTP autofill for Android",
+    "printf + monty ..... C systems builds (ALX)",
+    "llm-chat-app ....... LLM chat template",
+    "→ full list: github.com/Fellow3-1?tab=repositories",
+  ],
+  contact: () => ["email.... felixodhiambo31@live.com", "github... github.com/Fellow3-1", "x........ @Fellow3_1", "run `open mailto` in your head — or use the form beside this terminal."],
+  socials: () => ["github.com/Fellow3-1 · @Fellow3_1 · felixodhiambo31@live.com"],
+  motto: () => ["coffee in. crispy systems out."],
+  exit: () => ["there is no exit. only deploy. (just kidding — scroll on)"],
+};
+
 export const terminalScript = [
-  { cmd: "whoami", out: "felloh@nairobi — Senior Full-Stack & Cloud Engineer · House Android" },
-  { cmd: "status --live", out: "shipping full-stack web + mobile · learning AI/LLM & cloud-native" },
+  { cmd: "whoami", out: "felloh@nexus — Senior Full-Stack & Cloud Engineer · House Android" },
+  { cmd: "status --live", out: "shipping full-stack web + mobile · open to senior roles" },
   { cmd: "stack --top", out: "React · TypeScript · Go · Docker · Kubernetes" },
   { cmd: "open --channel", out: "felixodhiambo31@live.com · github.com/Fellow3-1 · @Fellow3_1" },
   { cmd: "echo motto", out: "coffee in. crispy systems out." },

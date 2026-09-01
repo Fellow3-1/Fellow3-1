@@ -1,0 +1,40 @@
+# ------------------------------------------------------------------
+# FELIX ODHIAMBO — "Felloh 3.1"
+# Senior Full-Stack & Cloud Engineer — Nairobi, Kenya (UTC+3)
+# ------------------------------------------------------------------
+# This is a machine-readable placeholder résumé shipped with the
+# portfolio so the ⌘K "Download résumé" command always resolves.
+# Replace with the real PDF (public/assets/cv-felix-odhiambo.pdf)
+# and update src/data/content.js → commands[].run.
+
+CONTACT
+  email..... felixodhiambo31@live.com
+  github.... github.com/Fellow3-1
+  x......... @Fellow3_1
+  location.. Nairobi, Kenya · UTC+3
+
+SUMMARY
+  Senior full-stack & cloud engineer with 12+ years across web,
+  mobile, payments, systems programming and AI integration.
+  Creator of mpesa-api-go (unofficial Safaricom Daraja SDK for Go,
+  34 forks) and tovuti (Android connectivity library).
+
+STACK
+  Languages... TypeScript, JavaScript, Go, Python, C, Java, Kotlin
+  Frontend.... React, Next.js, Astro, Vue, Tailwind, Vite
+  Backend..... Node.js, NestJS, FastAPI, GraphQL, REST
+  Mobile...... Android (Java/Kotlin), React Native, Flutter
+  Cloud....... Docker, Kubernetes, AWS, GitHub Actions, Nginx
+  AI.......... OpenAI, LangChain, Hugging Face, PyTorch
+
+SELECTED WORK
+  2024—now  AI, cloud-native & developer tooling (independent)
+  2023—24   ALX Software Engineering (systems & full-stack)
+  2020—21   Payments rails — MPESA / Daraja (open source)
+  2020      BuildForSDG Cohort 1 — COVID-19 estimator tooling
+  2018—19   Andela Learning Community / Google Android track
+  2014—     Android internals & the modding scene (XDA era)
+
+EDUCATION & CREDENTIALS
+  ALX Software Engineering · ALC / Google · Google-Udacity Android
+  GitHub: Pull Shark ×2 · Pair Extraordinaire · YOLO

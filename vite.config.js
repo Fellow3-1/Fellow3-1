@@ -10,6 +10,11 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   base: "./",
+  // Only scan the real entry — the committed /docs Pages build must not
+  // be crawled for dev-time dependency discovery.
+  optimizeDeps: {
+    entries: ["index.html"],
+  },
   server: {
     host: true,
     port: 5173,

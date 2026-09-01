@@ -1,27 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { bootLines } from "../data/content.js";
+import { usePrefersReducedMotion } from "../hooks.js";
 
-const LINES = [
-  "establishing uplink · nairobi node",
-  "handshake with house android",
-  "loading senior engineer profile",
-  "syncing arsenal matrix · lvl 99",
-  "welcome, operator",
-];
-
-const DURATION = 1150; // ms — quick, skippable boot ritual
+const DURATION = 1400; // ms — quick, skippable boot ritual
+const EXIT = 420; // ms — matches the CSS sweep-out animation
 
 /**
- * Quick, skippable boot sequence — keeps the futuristic ritual without
- * slowing the page down. Progress is driven by a single rAF loop
- * (one ~60fps timer instead of a 30Hz interval), and the screen
- * unmounts itself when done.
+ * Nexus OS kernel boot. Progress is driven by a single rAF loop (one ~60fps
+ * timer, not a 30Hz interval). Skippable by tap/keys; honors reduced motion
+ * by skipping straight through. Self-unmounts and hands off to the app.
  */
 export default function BootScreen({ onDone }) {
   const [progress, setProgress] = useState(0);
   const [gone, setGone] = useState(false);
+  const doneRef = useRef(false);
+  const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
+    if (reduced) {
+      // Respect the user: no ritual, straight in.
+      setProgress(100);
+      return undefined;
+    }
     let raf;
     const t0 = performance.now();
     const tick = (now) => {
@@ -31,52 +32,63 @@ export default function BootScreen({ onDone }) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, []);
-
-  useEffect(() => {
-    if (progress >= 100) {
-      const t = setTimeout(() => {
-        setGone(true);
-        onDone();
-      }, 320);
-      return () => clearTimeout(t);
-    }
-  }, [progress, onDone]);
+  }, [reduced]);
 
   const finish = () => {
-    if (gone) return;
+    if (doneRef.current) return;
+    doneRef.current = true;
     setGone(true);
     onDone();
   };
 
-  const line = LINES[Math.min(Math.floor(progress / 22), LINES.length - 1)];
+  useEffect(() => {
+    if (progress < 100 || gone) return undefined;
+    const t = setTimeout(finish, EXIT);
+    const onKey = () => finish();
+    window.addEventListener("keydown", onKey);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("keydown", onKey);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progress, gone]);
+
+  const line = bootLines[Math.min(Math.floor((progress / 100) * bootLines.length), bootLines.length - 1)];
 
   return (
     <AnimatePresence>
       {!gone && (
         <motion.div
           className="boot"
-          onClick={finish}
-          exit={{ opacity: 0, transition: { duration: 0.55, ease: "easeInOut" } }}
+          exit={{ opacity: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
           role="dialog"
           aria-label="System boot"
+          onClick={finish}
+          data-testid="boot"
         >
+          <div className="boot-scan" aria-hidden="true" />
           <div className="boot-inner">
-            <p className="boot-kicker">NEXUS // HOUSE ANDROID</p>
-            <div className="boot-mark">
-              <img src="assets/crest.png" alt="" decoding="async" />
-            </div>
-            <h1 className="boot-title">
-              FELLOH <span>3.1</span>
-            </h1>
-            <p className="boot-line">{line}</p>
-            <div className="boot-bar">
+            <p className="boot-kicker">NEXUS BIOS v3.1 — HOUSE ANDROID</p>
+            <pre className="boot-ascii" aria-hidden="true">{ASCII}</pre>
+            <p className="boot-line">
+              <span className="boot-ok">[ ok ]</span> {line}
+            </p>
+            <div className="boot-bar" aria-hidden="true">
               <span style={{ width: `${progress}%` }} />
             </div>
-            <p className="boot-skip">click anywhere to skip</p>
+            <p className="boot-skip">press any key to skip</p>
           </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
 }
+
+const ASCII = String.raw`
+ ███╗   ██╗███████╗██╗  ██╗██╗   ██╗███████╗
+ ████╗  ██║██╔════╝╚██╗██╔╝██║   ██║██╔════╝
+ ██╔██╗ ██║█████╗   ╚███╔╝ ██║   ██║███████╗
+ ██║╚██╗██║██╔══╝   ██╔██╗ ██║   ██║╚════██║
+ ██║ ╚████║███████╗██╔╝ ██╗╚██████╔╝███████║
+ ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+`;

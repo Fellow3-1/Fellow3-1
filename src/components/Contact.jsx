@@ -1,47 +1,132 @@
-import { useEffect, useState } from "react";
-import { Send, Copy, Check } from "lucide-react";
-import { SectionHeading, Reveal, GlassCard } from "./ui.jsx";
-import { socials, terminalScript } from "../data/content.js";
+import { useEffect, useRef, useState } from "react";
+import { Send, Copy, Check, TerminalSquare } from "lucide-react";
+import { SectionHeading, Reveal, Panel } from "./ui.jsx";
+import { socials, termCommands } from "../data/content.js";
+import { useSfx } from "../hooks.js";
 
+const EMAIL = "felixodhiambo31@live.com";
+const BANNER = ["nexus-shell v3.1 — guest session", "type `help` and hit enter. it's a real shell (mostly)."];
+
+/**
+ * A REAL terminal, not a scripted loop: a stateful line-reader with a
+ * command registry, history (↑/↓), tab-completion, and autoscroll.
+ * Announces output politely to screen readers via aria-live.
+ */
 function Terminal() {
-  const [out, setOut] = useState("");
+  const [lines, setLines] = useState(BANNER);
+  const [value, setValue] = useState("");
+  const [history, setHistory] = useState([]);
+  const [histIndex, setHistIndex] = useState(-1);
+  const bodyRef = useRef(null);
+  const inputRef = useRef(null);
+  const play = useSfx();
+
+  const print = (out) => setLines((prev) => [...prev, ...(Array.isArray(out) ? out : [out])]);
 
   useEffect(() => {
-    let cancelled = false;
-    let text = "";
-    const lines = [];
-    terminalScript.forEach((row) => {
-      lines.push(`$ ${row.cmd}`, row.out, "");
-    });
+    // Keep the latest line in view as output streams in.
+    const el = bodyRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [lines]);
 
-    let idx = 0;
-    const type = () => {
-      if (cancelled) return;
-      if (idx < lines.length) {
-        text += (text ? "\n" : "") + lines[idx];
-        idx += 1;
-        setOut(text + "\n$ █");
-        setTimeout(type, idx % 3 === 0 ? 340 : 160);
+  const exec = (raw) => {
+    const input = raw.trim();
+    print(`guest@nexus:~$ ${input}`);
+    if (!input) return;
+    setHistory((h) => [...h, input]);
+    setHistIndex(-1);
+    const [cmd, ...args] = input.split(/\s+/);
+    if (cmd === "clear") {
+      setLines([]);
+      return;
+    }
+    if (cmd === "sudo") {
+      print(["nice try. this shell runs on trust and coffee."]);
+      return;
+    }
+    if (cmd === "open" && args[0]?.startsWith("mailto")) {
+      window.location.href = `mailto:${EMAIL}`;
+      return;
+    }
+    const fn = termCommands[cmd];
+    if (fn) {
+      play("confirm");
+      print(fn(args));
+    } else {
+      print([`nexus: command not found: ${cmd} — try \`help\``]);
+    }
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      play("key");
+      exec(value);
+      setValue("");
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (!history.length) return;
+      const next = histIndex < 0 ? history.length - 1 : Math.max(0, histIndex - 1);
+      setHistIndex(next);
+      setValue(history[next]);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (histIndex < 0) return;
+      const next = histIndex + 1;
+      if (next >= history.length) {
+        setHistIndex(-1);
+        setValue("");
       } else {
-        setOut(text + "\n$ █");
+        setHistIndex(next);
+        setValue(history[next]);
       }
-    };
-    type();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    } else if (e.key === "Tab") {
+      e.preventDefault();
+      const match = Object.keys(termCommands).find((c) => c.startsWith(value.trim()) && value.trim());
+      if (match) setValue(`${match} `);
+    }
+  };
 
   return (
-    <GlassCard className="terminal" hover={false}>
+    <Panel className="terminal" hover={false}>
       <div className="term-bar">
-        <span />
-        <span />
-        <span />
-        <p>felloh@nairobi:~</p>
+        <span className="term-dot td-r" />
+        <span className="term-dot td-y" />
+        <span className="term-dot td-g" />
+        <p>guest@nexus:~</p>
+        <span className="term-badge">
+          <TerminalSquare size={11} aria-hidden="true" /> interactive
+        </span>
       </div>
-      <pre className="term-body">{out}</pre>
-    </GlassCard>
+      <div
+        className="term-body"
+        ref={bodyRef}
+        onClick={() => inputRef.current?.focus({ preventScroll: true })}
+        role="log"
+        aria-live="polite"
+        aria-label="Interactive terminal"
+      >
+        {lines.map((l, i) => (
+          <p key={i} className={l.startsWith("guest@nexus") ? "term-cmd" : ""}>
+            {l || "\u00A0"}
+          </p>
+        ))}
+        <div className="term-input-row">
+          <span aria-hidden="true">guest@nexus:~$</span>
+          <input
+            ref={inputRef}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={onKeyDown}
+            placeholder="help"
+            aria-label="Terminal input"
+            autoComplete="off"
+            autoCapitalize="off"
+            spellCheck="false"
+            enterKeyHint="send"
+          />
+        </div>
+      </div>
+    </Panel>
   );
 }
 
@@ -51,7 +136,7 @@ function ContactForm() {
 
   const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText("felixodhiambo31@live.com");
+      await navigator.clipboard.writeText(EMAIL);
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     } catch {
@@ -63,12 +148,12 @@ function ContactForm() {
     e.preventDefault();
     const subject = encodeURIComponent(`Portfolio inquiry from ${form.name || "a visitor"}`);
     const body = encodeURIComponent(form.message || "");
-    window.location.href = `mailto:felixodhiambo31@live.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
   };
 
   return (
-    <GlassCard className="contact-form" hover={false}>
-      <p className="panel-kicker">// open a channel</p>
+    <Panel className="contact-form" hover={false}>
+      <p className="panel-kicker">{"// open a channel"}</p>
       <h3>Start something crispy.</h3>
       <form onSubmit={submit}>
         <label>
@@ -100,7 +185,7 @@ function ContactForm() {
           </button>
         </div>
       </form>
-    </GlassCard>
+    </Panel>
   );
 }
 
@@ -109,7 +194,7 @@ export default function Contact() {
     <section id="contact" className="section contact">
       <SectionHeading
         index="05"
-        kicker="Signal"
+        kicker="open --channel"
         title="Open a channel."
         lede="For roles, consulting, or open-source collaboration — Nairobi is online."
       />
@@ -127,7 +212,7 @@ export default function Contact() {
                 s.href ? (
                   <a
                     key={s.label}
-                    className="glass link-card"
+                    className="panel link-card"
                     href={s.href}
                     target={s.href.startsWith("http") ? "_blank" : undefined}
                     rel="noreferrer"
@@ -136,7 +221,7 @@ export default function Contact() {
                     <strong>{s.value}</strong>
                   </a>
                 ) : (
-                  <div key={s.label} className="glass link-card">
+                  <div key={s.label} className="panel link-card">
                     <span>{s.label}</span>
                     <strong>{s.value}</strong>
                   </div>

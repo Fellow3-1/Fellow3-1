@@ -1,10 +1,13 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Lightweight canvas particle constellation with pointer parallax.
- * No heavy deps — ~90 lines replaces the old three.js background.
- * Perf notes: pauses while the tab is hidden, resize is rAF-debounced,
- * and all window listeners are passive so they can never block scrolling.
+ * "Phosphor dust" — a light canvas layer of drifting motes that reacts to
+ * pointer parallax. Replaces the old particle constellation with something
+ * far cheaper: no O(n²) link pass, one fill pass per frame.
+ *
+ * Perf contract: pauses while the tab is hidden, rAF-debounced resize,
+ * DPR capped at 1.5, all listeners passive, fully disabled under
+ * prefers-reduced-motion.
  */
 export default function ParticleField() {
   const ref = useRef(null);
@@ -18,9 +21,9 @@ export default function ParticleField() {
     let w = 0;
     let h = 0;
     let raf = 0;
-    let particles = [];
+    let motes = [];
     let resizeQueued = false;
-    const mouse = { x: -9999, y: -9999 };
+    const mouse = { x: 0.5, y: 0.5 }; // normalized −1..1-ish offsets
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -28,60 +31,40 @@ export default function ParticleField() {
       h = canvas.height = Math.floor(window.innerHeight * dpr);
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
-      const count = Math.min(110, Math.floor((window.innerWidth * window.innerHeight) / 17000));
-      particles = Array.from({ length: count }, () => ({
+      const count = Math.min(70, Math.floor((window.innerWidth * window.innerHeight) / 26000));
+      motes = Array.from({ length: count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.18 * dpr,
-        vy: (Math.random() - 0.5) * 0.18 * dpr,
-        r: (Math.random() * 1.4 + 0.5) * dpr,
+        z: 0.35 + Math.random() * 0.65, // depth → parallax + size + alpha
+        vx: (Math.random() - 0.5) * 0.12,
+        vy: (Math.random() - 0.5) * 0.12,
+        r: 0,
       }));
     };
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
-      const link = 110 * (w / window.innerWidth);
-      const attract = 180 * (w / window.innerWidth);
-      for (let i = 0; i < particles.length; i += 1) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < -20) p.x = w + 20;
-        if (p.x > w + 20) p.x = -20;
-        if (p.y < -20) p.y = h + 20;
-        if (p.y > h + 20) p.y = -20;
-
-        // faint mouse attraction
-        const dxm = mouse.x - p.x;
-        const dym = mouse.y - p.y;
-        const dm = Math.hypot(dxm, dym);
-        if (dm < attract && dm > 0.001) {
-          p.x += dxm * 0.0012;
-          p.y += dym * 0.0012;
-        }
-
+      const px = (mouse.x - 0.5) * 26;
+      const py = (mouse.y - 0.5) * 26;
+      for (let i = 0; i < motes.length; i += 1) {
+        const m = motes[i];
+        m.x += m.vx * m.z;
+        m.y += m.vy * m.z;
+        if (m.x < -30) m.x = w + 30;
+        if (m.x > w + 30) m.x = -30;
+        if (m.y < -30) m.y = h + 30;
+        if (m.y > h + 30) m.y = -30;
+        m.r = 1.1 * m.z * (w / window.innerWidth || 1);
+        const ox = px * m.z;
+        const oy = py * m.z;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(181,124,255,0.75)";
+        ctx.arc(m.x + ox, m.y + oy, m.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(82,255,168,${0.05 + m.z * 0.16})`;
         ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j += 1) {
-          const q = particles[j];
-          const d = Math.hypot(p.x - q.x, p.y - q.y);
-          if (d < link) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(92,225,255,${(1 - d / link) * 0.16})`;
-            ctx.lineWidth = 0.6;
-            ctx.stroke();
-          }
-        }
       }
       raf = requestAnimationFrame(draw);
     };
 
-    // rAF-debounced resize: resizing mid-scroll is cheap, not per-event
     const onResize = () => {
       if (resizeQueued) return;
       resizeQueued = true;
@@ -92,12 +75,10 @@ export default function ParticleField() {
     };
 
     const onMove = (e) => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      mouse.x = e.clientX * dpr;
-      mouse.y = e.clientY * dpr;
+      mouse.x = e.clientX / window.innerWidth;
+      mouse.y = e.clientY / window.innerHeight;
     };
 
-    // Freeze the whole loop while the tab is in the background
     const onVisibility = () => {
       if (document.hidden) {
         cancelAnimationFrame(raf);

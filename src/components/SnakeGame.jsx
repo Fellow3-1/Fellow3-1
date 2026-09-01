@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { SectionHeading, Reveal } from "./ui.jsx";
 
-const COLS = 53;
+const COLS = 53; // matches GitHub's contribution-graph width
 const ROWS = 7;
 const seed = 31;
 const rand = (n) => {
@@ -34,14 +34,14 @@ function draw(canvas, { cells, snake }) {
   (cells || []).forEach((c) => {
     const px = c.x * (size + gap);
     const py = c.y * (size + gap) + (h - ROWS * (size + gap)) / 2;
-    ctx.fillStyle = c.on ? `rgba(181,124,255,${0.25 + c.heat * 0.7})` : "rgba(255,255,255,0.04)";
+    ctx.fillStyle = c.on ? `rgba(82,255,168,${0.22 + c.heat * 0.6})` : "rgba(140,190,160,0.07)";
     ctx.fillRect(px, py, size, size);
   });
   (snake || []).forEach((s, i) => {
     const px = s.x * (size + gap);
     const py = s.y * (size + gap) + (h - ROWS * (size + gap)) / 2;
-    ctx.fillStyle = i === 0 ? "#5ce1ff" : `rgba(92,225,255,${1 - i / snake.length})`;
-    ctx.shadowColor = "#5ce1ff";
+    ctx.fillStyle = i === 0 ? "#baffdd" : `rgba(82,255,168,${1 - i / snake.length})`;
+    ctx.shadowColor = "rgba(82,255,168,0.8)";
     ctx.shadowBlur = i === 0 ? 12 : 0;
     ctx.fillRect(px, py, size, size);
     ctx.shadowBlur = 0;
@@ -49,10 +49,10 @@ function draw(canvas, { cells, snake }) {
 }
 
 /**
- * Living "contribution snake" — a canvas take on the GitHub contribution
- * graph. Deterministic seed keeps the lattice stable; a serpent wanders it.
- * The loop only runs while the section is on screen (and the tab visible),
- * so an off-screen canvas never burns frames.
+ * The contribution matrix — a canvas take on the GitHub contribution graph,
+ * with a serpent committing its way across the year. Deterministic seed keeps
+ * the lattice stable. The loop only runs while the section is on screen (and
+ * the tab visible); reduced motion gets a single static frame.
  */
 export default function SnakeGame() {
   const ref = useRef(null);
@@ -145,14 +145,14 @@ export default function SnakeGame() {
 
   return (
     <section id="snake" className="section snake-section">
-      <SectionHeading index="04.5" kicker="Interactive zone" title="The contribution serpent." />
+      <SectionHeading index="04.5" kicker="commit --graph" title="The contribution matrix." />
       <Reveal>
-        <div className="glass snake-panel">
+        <div className="panel snake-panel">
           <div className="snake-meta">
-            <p className="panel-kicker">// neural lattice</p>
+            <p className="panel-kicker">{"// commit lattice"}</p>
             <p>A living map of commits. Watch the serpent eat the year.</p>
           </div>
-          <canvas ref={ref} className="snake-canvas" width="1100" height="180" aria-label="Animated contribution graph" />
+          <canvas ref={ref} className="snake-canvas" width="1100" height="180" aria-label="Animated contribution graph" role="img" />
         </div>
       </Reveal>
     </section>
