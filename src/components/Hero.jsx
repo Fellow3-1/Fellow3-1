@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { ArrowDown, Download, Github, Twitter, Mail } from "lucide-react";
-import { profile, roles, stats } from "../data/content.js";
-import { useTypewriter } from "../hooks.js";
+import { ArrowDown, FolderGit2, Twitter, Mail, MapPin } from "lucide-react";
+import { profile, roles, stats, sysinfo } from "../data/content.js";
+import { useTypewriter, useUptime } from "../hooks.js";
 import { Counter, Magnetic } from "./ui.jsx";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -17,16 +17,14 @@ const item = {
 
 export default function Hero({ ready = true }) {
   const role = useTypewriter(roles);
+  const uptime = useUptime();
 
   return (
     <section className="hero" id="top">
       <div
         className="hero-bg"
         aria-hidden="true"
-        style={{
-          backgroundImage:
-            "linear-gradient(180deg, rgba(4,2,10,0.12), rgba(4,2,10,0.94)), url('assets/hero-void.jpg')",
-        }}
+        style={{ backgroundImage: "linear-gradient(180deg, rgba(3,5,4,0.25), rgba(3,5,4,0.96) 78%), url('assets/hero-void.jpg')" }}
       />
       <div className="hero-grid" aria-hidden="true" />
 
@@ -45,8 +43,7 @@ export default function Hero({ ready = true }) {
           </motion.h1>
 
           <motion.p variants={item} className="hero-role" aria-live="polite">
-            <span className="role-prefix">{"// "}</span>
-            {role}
+            <span className="role-prefix">felloh@nexus:~$</span> {role}
             <span className="caret" />
           </motion.p>
 
@@ -61,13 +58,13 @@ export default function Hero({ ready = true }) {
               </a>
             </Magnetic>
             <Magnetic>
-              <a className="btn btn-ghost" href="mailto:felixodhiambo31@live.com?subject=Let's%20build%20something%20crispy&body=Hi%20Felloh,%0A%0A">
-                <Download size={15} /> Hire me
+              <a className="btn btn-ghost" href="assets/cv-felix-odhiambo.txt" download>
+                Résumé
               </a>
             </Magnetic>
             <div className="hero-socials">
               <a href="https://github.com/Fellow3-1" target="_blank" rel="noreferrer" aria-label="GitHub">
-                <Github size={18} />
+                <FolderGit2 size={18} />
               </a>
               <a href="https://twitter.com/Fellow3_1" target="_blank" rel="noreferrer" aria-label="X / Twitter">
                 <Twitter size={18} />
@@ -91,26 +88,71 @@ export default function Hero({ ready = true }) {
         </motion.div>
       </div>
 
-      <motion.div
-        className="hero-sigil"
-        initial={{ opacity: 0, scale: 0.85 }}
-        animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 }}
-        transition={{ duration: 1.1, delay: 0.4, ease: EASE }}
+      {/* neofetch — live system panel */}
+      <motion.aside
+        className="hero-fetch"
+        initial={{ opacity: 0, scale: 0.96, y: 16 }}
+        animate={ready ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.96, y: 16 }}
+        transition={{ duration: 1, delay: 0.45, ease: EASE }}
+        aria-label="System information"
       >
-        <div className="orbit orbit-a" />
-        <div className="orbit orbit-b" />
-        <div className="orbit orbit-c" />
-        <div className="sigil-core">
-          <img src="assets/crest.png" alt="House Android crest" decoding="async" />
+        <div className="fetch-bar" aria-hidden="true">
+          <span className="fetch-dot" />
+          <span className="fetch-dot" />
+          <span className="fetch-dot" />
+          <p>operator@nexus — neofetch</p>
         </div>
-        <div className="sigil-caption">
-          <span>CLASS</span>
-          <strong>Full-Stack Sorcerer</strong>
+        <div className="fetch-body">
+          <pre className="fetch-art" aria-hidden="true">
+            {FETCH_ART}
+          </pre>
+          <dl className="fetch-info">
+            <div>
+              <dt>operator</dt>
+              <dd>
+                {profile.realName} <em>“{profile.handle}”</em>
+              </dd>
+            </div>
+            <div>
+              <dt>os</dt>
+              <dd>{sysinfo.os}</dd>
+            </div>
+            <div>
+              <dt>kernel</dt>
+              <dd>{sysinfo.kernel}</dd>
+            </div>
+            <div>
+              <dt>uptime</dt>
+              <dd>
+                {uptime || sysinfo.uptime}
+              </dd>
+            </div>
+            <div>
+              <dt>shell</dt>
+              <dd>{sysinfo.shell}</dd>
+            </div>
+            <div>
+              <dt>stack</dt>
+              <dd>{sysinfo.stack}</dd>
+            </div>
+            <div>
+              <dt>location</dt>
+              <dd>
+                <MapPin size={11} aria-hidden="true" /> {sysinfo.location}
+              </dd>
+            </div>
+            <div>
+              <dt>status</dt>
+              <dd>
+                <span className="fetch-status">
+                  <span className="live-dot" aria-hidden="true" />
+                  {sysinfo.status}
+                </span>
+              </dd>
+            </div>
+          </dl>
         </div>
-        <div className="sigil-status">
-          <span className="live-dot" /> ONLINE
-        </div>
-      </motion.div>
+      </motion.aside>
 
       <a className="hero-scroll" href="#about" aria-label="Scroll to about">
         <span>scroll</span>
@@ -125,3 +167,12 @@ export default function Hero({ ready = true }) {
     </section>
   );
 }
+
+const FETCH_ART = String.raw`
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄
+  █ ▀▀▀ ██ ▀▀▀ █
+  █ ██  ██  ██ █
+  █ ▄▄▄ ██ ▄▄▄ █
+  █▄▄▄▄▄▄▄▄▄▄▄▄█
+   ████▄▄▄▄████
+`;

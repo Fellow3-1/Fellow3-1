@@ -1,25 +1,37 @@
 import { socials } from "../data/content.js";
+import { useNairobiClock } from "../hooks.js";
 
+/** tmux-style status bar as the footer. */
 export default function Footer() {
   const year = new Date().getFullYear();
+  const clock = useNairobiClock();
   return (
-    <footer className="foot">
-      <div className="foot-brand">
-        <img src="assets/crest.png" alt="" loading="lazy" decoding="async" />
-        <p>
-          House Android · Nairobi node
-          <br />
-          © {year} Felloh 3.1 — Felix Odhiambo
-        </p>
+    <footer className="foot" role="contentinfo">
+      <div className="foot-cell foot-session">
+        <img src="assets/crest.png" alt="" loading="lazy" decoding="async" width="22" height="22" />
+        <span>
+          [0] <strong>felloh@nexus</strong>
+        </span>
+        <span className="foot-hide-sm">© {year} Felix Odhiambo</span>
       </div>
-      <div className="foot-links">
-        {socials.slice(0, 4).map((s) => (
-          <a key={s.label} href={s.href || "#contact"} target={s.href?.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
-            {s.label}
-          </a>
-        ))}
+
+      <div className="foot-cell foot-links">
+        {socials
+          .filter((s) => s.href)
+          .slice(0, 4)
+          .map((s) => (
+            <a key={s.label} href={s.href} target={s.href?.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+              {s.label}
+            </a>
+          ))}
       </div>
-      <p className="foot-tag">Breaker of mediocre products.</p>
+
+      <div className="foot-cell foot-right">
+        <span className="foot-tag">coffee in · crispy systems out</span>
+        <span>
+          NBO {clock} · <span className="foot-ok">● online</span>
+        </span>
+      </div>
     </footer>
   );
 }

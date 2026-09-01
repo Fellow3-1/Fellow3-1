@@ -1,11 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#5ce1ff"/>
-      <stop offset="1" stop-color="#b57cff"/>
-    </linearGradient>
-  </defs>
-  <polygon points="16,2.4 28.2,9.4 28.2,22.6 16,29.6 3.8,22.6 3.8,9.4" fill="#07040d" stroke="url(#g)" stroke-width="1.6"/>
-  <polygon points="16,10 20.2,12.4 20.2,17.2 16,19.6 11.8,17.2 11.8,12.4" fill="none" stroke="#b57cff" stroke-width="1.1"/>
-  <circle cx="16" cy="14.8" r="1.4" fill="#5ce1ff"/>
+  <polygon points="16,2.4 28.2,9.4 28.2,22.6 16,29.6 3.8,22.6 3.8,9.4" fill="#04120a" stroke="#52ffa8" stroke-width="1.6"/>
+  <polygon points="16,10 20.2,12.4 20.2,17.2 16,19.6 11.8,17.2 11.8,12.4" fill="none" stroke="#52ffa8" stroke-width="1.1"/>
+  <circle cx="16" cy="14.8" r="1.6" fill="#52ffa8"/>
 </svg>

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
-import { useCountUp } from "../hooks.js";
+import { useCountUp, useIsTouch } from "../hooks.js";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -49,7 +49,7 @@ export function SectionHeading({ index, kicker, title, lede, align = "left" }) {
     <Reveal className={`section-head is-${align}`}>
       <p className="index">
         <span className="index-num">{index}</span>
-        <span className="index-slash">/</span> {kicker}
+        <span className="index-slash">//</span> {kicker}
       </p>
       <AnimatedTitle text={title} className="section-title" />
       {lede ? <p className="section-lede">{lede}</p> : null}
@@ -57,15 +57,14 @@ export function SectionHeading({ index, kicker, title, lede, align = "left" }) {
   );
 }
 
-/** Frosted-glass panel with HUD corner brackets and a hover glow. */
-export function GlassCard({ children, className = "", as: Tag = "div", hover = true, ...rest }) {
+/** Solid HUD panel with corner ticks and a hover accent. */
+export function Panel({ children, className = "", as: Tag = "div", hover = true, ...rest }) {
   return (
-    <Tag className={`glass ${hover ? "is-hover" : ""} ${className}`} {...rest}>
-      <span className="glass-corner gc-tl" aria-hidden="true" />
-      <span className="glass-corner gc-tr" aria-hidden="true" />
-      <span className="glass-corner gc-bl" aria-hidden="true" />
-      <span className="glass-corner gc-br" aria-hidden="true" />
-      <span className="glass-sheen" aria-hidden="true" />
+    <Tag className={`panel ${hover ? "is-hover" : ""} ${className}`} {...rest}>
+      <span className="panel-tick pt-tl" aria-hidden="true" />
+      <span className="panel-tick pt-tr" aria-hidden="true" />
+      <span className="panel-tick pt-bl" aria-hidden="true" />
+      <span className="panel-tick pt-br" aria-hidden="true" />
       {children}
     </Tag>
   );
@@ -76,13 +75,21 @@ export function Chip({ children, tone = "" }) {
   return <span className={`chip ${tone}`}>{children}</span>;
 }
 
-/** Magnetic hover wrapper — element leans toward the cursor. */
+/** Keyboard key cap. */
+export function Kbd({ children }) {
+  return <kbd className="kbd">{children}</kbd>;
+}
+
+/** Magnetic hover wrapper — element leans toward the cursor. (fine pointers only) */
 export function Magnetic({ children, strength = 0.35 }) {
   const ref = useRef(null);
+  const isTouch = useIsTouch();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 200, damping: 18 });
   const sy = useSpring(y, { stiffness: 200, damping: 18 });
+
+  if (isTouch) return <div style={{ display: "inline-block" }}>{children}</div>;
 
   const onMove = (e) => {
     const el = ref.current;
@@ -97,12 +104,7 @@ export function Magnetic({ children, strength = 0.35 }) {
   };
 
   return (
-    <motion.div
-      ref={ref}
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
-      style={{ x: sx, y: sy, display: "inline-block" }}
-    >
+    <motion.div ref={ref} onPointerMove={onMove} onPointerLeave={onLeave} style={{ x: sx, y: sy, display: "inline-block" }}>
       {children}
     </motion.div>
   );
@@ -120,3 +122,25 @@ export function Counter({ to, suffix = "", duration = 1400, className = "" }) {
     </span>
   );
 }
+
+/** Real GitHub language dot colors. */
+export const LANG_COLORS = {
+  TypeScript: "#3178c6",
+  JavaScript: "#f1e05a",
+  Python: "#3572A5",
+  Go: "#00ADD8",
+  Rust: "#dea584",
+  "C++": "#f34b7d",
+  C: "#555555",
+  "C#": "#178600",
+  Java: "#b07219",
+  Kotlin: "#A97BFF",
+  Swift: "#F05138",
+  PHP: "#4F5D95",
+  HTML: "#e34c26",
+  CSS: "#563d7c",
+  SQL: "#e38c00",
+  Shell: "#89e051",
+  Dart: "#00B4AB",
+  Ruby: "#701516",
+};

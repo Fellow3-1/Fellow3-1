@@ -3,7 +3,7 @@
   "private": true,
   "version": "3.1.0",
   "type": "module",
-  "description": "Felloh 3.1 — Senior Full-Stack & Cloud Engineer. Futuristic glassmorphism portfolio.",
+  "description": "Felloh 3.1 — Nexus OS. Senior Full-Stack & Cloud Engineer. A portfolio that boots.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
