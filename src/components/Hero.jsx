@@ -93,7 +93,7 @@ export default function Hero({ ready = true }) {
         </motion.div>
       </div>
 
-      {/* neofetch — now with crest image instead of ASCII robot */}
+      {/* neofetch — with the low-poly Joker artwork in place of the ASCII robot */}
       <motion.aside
         className="hero-fetch with-beam"
         initial={{ opacity: 0, scale: 0.96, y: 16 }}
@@ -105,13 +105,13 @@ export default function Hero({ ready = true }) {
           <span className="fetch-dot" />
           <span className="fetch-dot" />
           <span className="fetch-dot" />
-          <p>Crest protocol · Quick introduction</p>
+          <p>Joker protocol · Quick introduction</p>
         </div>
         <div className="fetch-body">
           <div className="fetch-crest" aria-hidden="true">
             <img
-              src="assets/crest.png"
-              alt="Felloh crest — robotic shield"
+              src="assets/HD-Joker-Wallpapers-scaled.jpg"
+              alt="Low-poly Joker artwork — the site's muse"
               width="220"
               height="260"
               decoding="async"

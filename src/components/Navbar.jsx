@@ -69,7 +69,7 @@ export default function Navbar({ onOpenPalette }) {
         transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
       >
         <a className="nav-brand" href="#top" onClick={go("top")} aria-label="Back to top">
-          <img src="assets/crest.png" alt="" decoding="async" width="34" height="34" />
+          <img src="assets/HD-Joker-Wallpapers-scaled.jpg" alt="" decoding="async" width="34" height="34" />
           <span>
             <strong>FELLOH&nbsp;3.1</strong>
             <small>Nairobi, Kenya</small>

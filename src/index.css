@@ -1,10 +1,10 @@
 /* ==========================================================================
    FELIX ODHIAMBO — PORTFOLIO DESIGN SYSTEM
    Two themes, one palette. Every colour is derived from three brand tokens
-   (mint -> sky -> violet) plus a set of surface tokens, so switching
+   (lime -> violet -> crimson) plus a set of surface tokens, so switching
    [data-theme] re-skins the entire site:
-     - dark  = true AMOLED black (#000) so OLED pixels switch off
-     - light = soft neutral greys with deeper, accessible accents
+     - dark  = true AMOLED charcoal (#07070A) so OLED pixels switch off
+     - light = soft violet-grey paper with deeper, accessible accents
    Layout rules kept from before: overflow-x clip, 100svh hero, hover-gated
    effects, 44px touch targets, :focus-visible rings, reduced-motion support.
    ========================================================================== */
@@ -12,11 +12,12 @@
 :root {
   color-scheme: dark;
 
-  /* ---- brand gradient borrowed from crest image (mint shield on black) ---- */
-  /* Primary mint from the robot crest: #7DFFB3, secondary #5EFFA6, tertiary #B8FFD4 */
-  --accent-rgb: 125 255 179;      /* #7DFFB3 - main crest mint */
-  --accent-2-rgb: 94 255 166;     /* #5EFFA6 - bright crest */
-  --accent-3-rgb: 184 255 212;    /* #B8FFD4 - light glow */
+  /* ---- brand gradient borrowed from HD-Joker-Wallpapers-scaled.jpg ------- */
+  /* Low-poly Joker artwork: lime hair & suit (#74F200), violet lapels       */
+  /* (#924FCD) and the crimson grin / tie (#DD020B), all on charcoal black.  */
+  --accent-rgb: 118 238 41;       /* #76EE29 - Joker lime (hair & suit) */
+  --accent-2-rgb: 156 91 214;     /* #9C5BD6 - lapel violet */
+  --accent-3-rgb: 236 74 64;      /* #EC4A40 - grin crimson */
   --accent: rgb(var(--accent-rgb));
   --accent-2: rgb(var(--accent-2-rgb));
   --accent-3: rgb(var(--accent-3-rgb));
@@ -30,37 +31,37 @@
 
   /* back-compat aliases */
   --phos: var(--accent);
-  --phos-soft: #a7ffd0;
+  --phos-soft: #b9f488;           /* soft lime — pale face highlight tamed */
   --phos-2: var(--accent-2);
   --phos-dim: rgb(var(--accent-rgb) / 0.55);
 
-  /* ---- dark theme (crest-tinted AMOLED) ---- */
-  --bg0: #000805;
-  --bg1: #020c07;
-  --bg2: #08130e;
-  --bg3: #12201a;
-  --bg4: #1c2e26;
-  --surface-rgb: 0 8 5;
-  --hi-rgb: 200 255 225;
-  --shadow-rgb: 0 10 6;
-  --on-accent: #02140a;
+  /* ---- dark theme (Joker-charcoal AMOLED — the artwork's backdrop) ------- */
+  --bg0: #07070a;                 /* wallpaper void: sampled #07070A */
+  --bg1: #0b0a10;
+  --bg2: #12121a;
+  --bg3: #1c1b27;
+  --bg4: #292834;
+  --surface-rgb: 9 9 14;
+  --hi-rgb: 225 226 242;
+  --shadow-rgb: 3 3 8;
+  --on-accent: #0b1305;
 
   --line: rgb(var(--hi-rgb) / 0.12);
   --line-2: rgb(var(--accent-rgb) / 0.32);
-  --text: #eafff3;
-  --body: #b9d6c4;
-  --muted: #7fa898;
-  --dim: #4f7567;
+  --text: #f0f1ee;                /* pale greasepaint face */
+  --body: #b7bac2;
+  --muted: #848492;
+  --dim: #595864;
 
-  --glass: rgb(0 8 5 / 0.78);
-  --panel-bg: linear-gradient(160deg, rgb(255 255 255 / 0.05), rgb(125 255 179 / 0.03));
+  --glass: rgb(9 9 14 / 0.78);
+  --panel-bg: linear-gradient(160deg, rgb(255 255 255 / 0.05), rgb(var(--accent-rgb) / 0.03));
   --glow: 0 0 22px rgb(var(--accent-rgb) / 0.28);
   --glow-strong: 0 0 34px rgb(var(--accent-rgb) / 0.45);
 
   /* semantic */
-  --amber: #ffd27a;
-  --red: #ff8a8a;
-  --yellow: #ffe08a;
+  --amber: #f2a33c;               /* orange tie highlights */
+  --red: #f2645c;
+  --yellow: #f0ce63;
 
   --font-d: "Funnel Sans", "Funnel Display", "Fluid Sans", "Outfit", "Space Grotesk", system-ui, sans-serif;
   --font-m: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
@@ -70,36 +71,36 @@
   --r-sm: 8px;
 }
 
-/* ---- light theme — same crest hue, light paper ---- */
+/* ---- light theme — same Joker hues, softened daylight paper ---- */
 html[data-theme="light"] {
   color-scheme: light;
 
-  --accent-rgb: 6 122 72;         /* #067A48 - accessible deep mint */
-  --accent-2-rgb: 0 166 106;      /* #00A66A */
-  --accent-3-rgb: 55 115 88;      /* #377358 - average from crest */
+  --accent-rgb: 60 134 13;        /* #3C860D - accessible suit green */
+  --accent-2-rgb: 122 63 204;     /* #7A3FCC - lapel violet */
+  --accent-3-rgb: 194 38 29;      /* #C2261D - grin crimson */
 
-  --bg0: #f2fbf6;
+  --bg0: #f6f5fa;
   --bg1: #ffffff;
-  --bg2: #e6f4eb;
-  --bg3: #d1e9da;
-  --bg4: #b8d9c6;
+  --bg2: #edeaf3;
+  --bg3: #dad6e4;
+  --bg4: #c3bfce;
   --surface-rgb: 255 255 255;
-  --hi-rgb: 10 40 28;
-  --shadow-rgb: 12 40 28;
+  --hi-rgb: 20 18 34;
+  --shadow-rgb: 30 26 48;
   --on-accent: #ffffff;
 
   --line: rgb(var(--hi-rgb) / 0.12);
   --line-2: rgb(var(--accent-rgb) / 0.32);
-  --text: #0a1a12;
-  --body: #2d4a3a;
-  --muted: #5a7a6a;
-  --dim: #7a9a8a;
+  --text: #151420;
+  --body: #3c3a48;
+  --muted: #666374;
+  --dim: #8b8797;
 
   --glass: rgb(255 255 255 / 0.84);
-  --panel-bg: linear-gradient(160deg, rgb(255 255 255 / 0.98), rgb(242 251 246 / 0.9));
+  --panel-bg: linear-gradient(160deg, rgb(255 255 255 / 0.98), rgb(246 245 250 / 0.9));
   --glow: 0 10px 26px rgb(var(--accent-rgb) / 0.14);
   --glow-strong: 0 14px 34px rgb(var(--accent-rgb) / 0.20);
-  --phos-soft: #067a48;
+  --phos-soft: #3c860d;
 }
 
 /* ---------- reset --------------------------------------------------------- */
@@ -1123,7 +1124,7 @@ main {
   padding: clamp(18px, 2.6vw, 30px);
   align-items: center;
 }
-/* new crest image instead of ASCII robot */
+/* low-poly Joker artwork in place of the old ASCII robot */
 .fetch-crest {
   position: relative;
   width: clamp(160px, 18vw, 220px);
@@ -1132,24 +1133,26 @@ main {
   place-items: center;
   border-radius: 18px;
   background: radial-gradient(120% 120% at 50% 10%, rgb(var(--accent-rgb) / 0.18), transparent 60%),
-    linear-gradient(160deg, rgb(var(--accent-rgb) / 0.08), rgb(var(--accent-2-rgb) / 0.04));
+    linear-gradient(160deg, rgb(var(--accent-rgb) / 0.08), rgb(var(--accent-2-rgb) / 0.08));
   border: 1px solid rgb(var(--accent-rgb) / 0.18);
-  box-shadow: 0 0 0 1px rgb(var(--accent-rgb) / 0.08) inset, 0 16px 40px rgb(var(--accent-rgb) / 0.14), 0 0 80px rgb(var(--accent-rgb) / 0.12);
+  box-shadow: 0 0 0 1px rgb(var(--accent-rgb) / 0.08) inset, 0 16px 40px rgb(var(--accent-rgb) / 0.14), 0 0 80px rgb(var(--accent-2-rgb) / 0.12);
   overflow: hidden;
   isolation: isolate;
 }
 .fetch-crest-img {
-  width: 92%;
-  height: 92%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 12px rgb(var(--accent-rgb) / 0.55)) drop-shadow(0 0 30px rgb(var(--accent-rgb) / 0.25));
+  width: 94%;
+  height: 94%;
+  object-fit: cover;
+  object-position: 50% 28%;
+  border-radius: 12px;
+  filter: saturate(1.08) contrast(1.03) drop-shadow(0 0 12px rgb(var(--accent-rgb) / 0.45)) drop-shadow(0 0 30px rgb(var(--accent-2-rgb) / 0.25));
   animation: crest-float 6s ease-in-out infinite;
   z-index: 1;
 }
 .fetch-crest-glow {
   position: absolute;
   inset: -20%;
-  background: radial-gradient(60% 60% at 50% 35%, rgb(var(--accent-rgb) / 0.28), transparent 70%);
+  background: radial-gradient(60% 60% at 50% 35%, rgb(var(--accent-rgb) / 0.24), rgb(var(--accent-2-rgb) / 0.12) 55%, transparent 75%);
   filter: blur(12px);
   z-index: 0;
   animation: crest-pulse 3.2s ease-in-out infinite alternate;
@@ -2452,8 +2455,9 @@ main {
 
 /* ==========================================================================
    GRADIENT LAYER + THEME POLISH
-   Colour is applied through three brand tokens (mint → sky → violet) so a
-   single palette swap re-skins the whole site in either theme.
+   Colour is applied through three brand tokens (lime → violet → crimson,
+   lifted from the Joker artwork) so a single palette swap re-skins the
+   whole site in either theme.
    ========================================================================== */
 
 .grad-text {
@@ -2660,7 +2664,7 @@ html[data-theme="light"] .hero-bg::after {
 
 /* ---------- flowing gradient type ---------------------------------------
    Headlines, kickers and stat numerals no longer sit in a flat colour;
-   they carry a slow-running river of mint → sky → violet. */
+   they carry a slow-running river of lime → violet → crimson. */
 
 .aw-i {
   background-image: linear-gradient(
@@ -3079,10 +3083,11 @@ html[data-theme="light"] .tech-pill {
 /* ---------- mobile keeps the ticker honest --------------------------------- */
 
 /* ==========================================================================
-   CREST IMAGE INTEGRATION — Fluid Sans + mint blend layer
-   Uses the crest.png palette (#7DFFB3, #5EFFA6, #B8FFD4, #000805) across
-   backgrounds, orbs, and text, and enforces Fluid Sans (Funnel Sans/
-   Funnel Display) as the primary typeface.
+   JOKER ARTWORK INTEGRATION — Fluid Sans + lime/violet blend layer
+   Uses the HD-Joker-Wallpapers-scaled.jpg palette (lime #76EE29, violet
+   #9C5BD6, crimson #EC4A40 on charcoal #07070A) across backgrounds, orbs,
+   and text, and enforces Fluid Sans (Funnel Sans/ Funnel Display) as the
+   primary typeface.
    ========================================================================== */
 
 /* Fluid Sans as primary — Funnel Display for display, Funnel Sans for UI */
@@ -3140,34 +3145,37 @@ html[data-theme="light"] .tech-pill {
   font-family: var(--font-m) !important;
 }
 
-/* Crest-tinted hero background — blend hero-void.jpg with mint wash */
+/* Joker-tinted hero background — blend hero-void.jpg with a lime + violet wash */
 .hero-bg {
   opacity: 0.22 !important;
-  filter: saturate(0.6) hue-rotate(85deg) brightness(0.9) !important;
+  filter: saturate(1.05) brightness(0.85) !important;
 }
 .hero-bg::after {
-  background: radial-gradient(90% 80% at 50% 20%, rgb(var(--accent-rgb) / 0.22), transparent 60%),
+  background: radial-gradient(90% 80% at 50% 20%, rgb(var(--accent-rgb) / 0.18), transparent 55%),
+    radial-gradient(70% 60% at 82% 60%, rgb(var(--accent-2-rgb) / 0.14), transparent 70%),
     linear-gradient(180deg, rgb(var(--surface-rgb) / 0.1), var(--bg0) 82%) !important;
 }
 html[data-theme="light"] .hero-bg {
   opacity: 0.10 !important;
 }
 
-/* Orbs now purely mint shades from crest */
+/* Ambient orbs in the artwork's three key shades: lime hair, violet lapels, crimson grin */
 .orb-a {
-  background: radial-gradient(circle, rgb(var(--accent-rgb) / 0.34), transparent 68%) !important;
+  background: radial-gradient(circle, rgb(var(--accent-rgb) / 0.32), transparent 68%) !important;
 }
 .orb-b {
-  background: radial-gradient(circle, rgb(var(--accent-2-rgb) / 0.28), transparent 70%) !important;
+  background: radial-gradient(circle, rgb(var(--accent-2-rgb) / 0.3), transparent 70%) !important;
 }
 .orb-c {
-  background: radial-gradient(circle, rgb(var(--accent-3-rgb) / 0.28), transparent 70%) !important;
+  background: radial-gradient(circle, rgb(var(--accent-3-rgb) / 0.22), transparent 70%) !important;
 }
 
-/* Nav brand crest gets extra glow to match favicon */
+/* Nav brand Joker tile gets extra glow to match the favicon */
 .nav-brand img,
 .foot-session img {
-  filter: drop-shadow(0 0 10px rgb(var(--accent-rgb) / 0.55)) drop-shadow(0 0 22px rgb(var(--accent-rgb) / 0.28)) !important;
+  object-fit: cover;
+  object-position: 50% 30%;
+  filter: drop-shadow(0 0 10px rgb(var(--accent-rgb) / 0.55)) drop-shadow(0 0 22px rgb(var(--accent-2-rgb) / 0.28)) !important;
   border-radius: 8px;
 }
 
@@ -3188,11 +3196,11 @@ html[data-theme="light"] .hero-bg {
   border-radius: var(--r) !important;
 }
 
-/* Light theme adjustments for crest blend */
+/* Light theme adjustments for the Joker blend */
 html[data-theme="light"] .fetch-crest {
   background: radial-gradient(120% 120% at 50% 10%, rgb(var(--accent-rgb) / 0.12), transparent 60%),
-    linear-gradient(160deg, #ffffff, #e8f5ec) !important;
-  border-color: rgb(var(--accent-rgb) / 0.20) !important;
+    linear-gradient(160deg, #ffffff, #efeaf6) !important;
+  border-color: rgb(var(--accent-2-rgb) / 0.20) !important;
 }
 
 @media (hover: none) {

@@ -44,7 +44,7 @@ export default function ParticleField() {
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
-      // Particles follow the live theme accents (mint → sky → violet).
+      // Particles follow the live theme accents (lime → violet → crimson).
       const css = getComputedStyle(document.documentElement);
       const tints = ["--accent-rgb", "--accent-2-rgb", "--accent-3-rgb"].map(
         (k) => (css.getPropertyValue(k).trim() || "82 255 168").replace(/\s+/g, ","),

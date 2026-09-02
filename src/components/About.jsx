@@ -70,7 +70,7 @@ export default function About() {
                 decoding="async"
                 width="72"
                 height="72"
-                onError={(e) => (e.currentTarget.src = "assets/crest.png")}
+                onError={(e) => (e.currentTarget.src = "assets/HD-Joker-Wallpapers-scaled.jpg")}
               />
               <div>
                 <strong>Felix Odhiambo</strong>
