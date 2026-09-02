@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
+import { Coffee, Database, Braces, Cloud, CloudUpload, Bot, Hash, Palette, Code2 } from "lucide-react";
+import { TECH } from "../data/tech.js";
 import { useCountUp, useIsTouch } from "../hooks.js";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -121,6 +123,57 @@ export function Counter({ to, suffix = "", duration = 1400, className = "" }) {
       {suffix}
     </span>
   );
+}
+
+/**
+ * Official brand logo for a technology. Three render modes, driven by the
+ * generated data in src/data/tech.js:
+ *   - real brand SVG path (most tech), drawn in the brand's own colour via
+ *     currentColor — the parent sets `color` from the --brand variable;
+ *   - a lucide glyph stand-in for brands that forbid logo redistribution;
+ *   - a two-letter tile, exactly the way Adobe's own app icons look.
+ */
+const TECH_GLYPHS = {
+  coffee: Coffee,
+  database: Database,
+  braces: Braces,
+  cloud: Cloud,
+  "upload-cloud": CloudUpload,
+  bot: Bot,
+  hash: Hash,
+  palette: Palette,
+};
+
+export function TechIcon({ name, size = 15 }) {
+  const t = TECH[name];
+  if (!t) return <Code2 size={size} aria-hidden="true" />;
+  if (t.text) {
+    return (
+      <span className="tech-tile" aria-hidden="true">
+        {t.text}
+      </span>
+    );
+  }
+  if (!t.path) {
+    const Glyph = TECH_GLYPHS[t.glyph] || Code2;
+    return <Glyph size={size} strokeWidth={2.1} aria-hidden="true" />;
+  }
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true" focusable="false">
+      <path d={t.path} />
+    </svg>
+  );
+}
+
+/**
+ * Inline CSS variables carrying a tech's brand colour (official + the two
+ * contrast-safe variants). CSS picks the right one for the active theme:
+ * everything brand-tinted then just references var(--brand).
+ */
+export function brandVars(name) {
+  const t = TECH[name];
+  if (!t) return {};
+  return { "--b": `#${t.hex}`, "--b-dk": `#${t.dk}`, "--b-lt": `#${t.lt}` };
 }
 
 /** Real GitHub language dot colors. */

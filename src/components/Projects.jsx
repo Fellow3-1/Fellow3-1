@@ -25,7 +25,14 @@ function ProjectCard({ p, i }) {
     my.set(0);
   };
 
-  const motionProps = isTouch ? {} : { style: { rotateX: rx, rotateY: ry, transformPerspective: 1100 }, onPointerMove: onMove, onPointerLeave: reset };
+  const langColor = LANG_COLORS[p.lang] || "52ffa8";
+  const motionProps = isTouch
+    ? { style: { "--proj": langColor } }
+    : {
+        style: { rotateX: rx, rotateY: ry, transformPerspective: 1100, "--proj": langColor },
+        onPointerMove: onMove,
+        onPointerLeave: reset,
+      };
 
   return (
     <Reveal delay={(i % 3) * 0.07} className={p.featured ? "proj-featured" : ""}>
@@ -34,12 +41,13 @@ function ProjectCard({ p, i }) {
         href={p.link}
         target="_blank"
         rel="noreferrer"
-        className={`project panel ${p.featured ? "featured" : ""}`}
+        className={`project panel ${p.featured ? "featured with-beam" : ""}`}
         whileHover={isTouch ? undefined : { y: -8 }}
         {...motionProps}
       >
         <div className="project-media" aria-hidden="true">
           <img src={p.image} alt="" loading="lazy" decoding="async" width="640" height="360" />
+          <span className="project-glint" />
         </div>
         <div className="project-body">
           <div className="project-top">
@@ -54,7 +62,7 @@ function ProjectCard({ p, i }) {
           <div className="project-meta">
             {p.lang && (
               <span className="project-lang">
-                <i style={{ background: LANG_COLORS[p.lang] || "#8fa89a" }} /> {p.lang}
+                <i style={{ background: langColor, boxShadow: `0 0 8px ${langColor}B0` }} /> {p.lang}
               </span>
             )}
             <span className="project-stat">

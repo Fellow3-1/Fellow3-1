@@ -27,6 +27,11 @@ export default function Hero({ ready = true }) {
         style={{ backgroundImage: "url('assets/hero-void.jpg')" }}
       />
       <div className="hero-grid" aria-hidden="true" />
+      <div className="hero-aurora" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+      </div>
 
       <div className="hero-copy">
         <motion.div variants={container} initial="hidden" animate={ready ? "show" : "hidden"}>
@@ -90,7 +95,7 @@ Download CV
 
       {/* neofetch — live system panel */}
       <motion.aside
-        className="hero-fetch"
+        className="hero-fetch with-beam"
         initial={{ opacity: 0, scale: 0.96, y: 16 }}
         animate={ready ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.96, y: 16 }}
         transition={{ duration: 1, delay: 0.45, ease: EASE }}

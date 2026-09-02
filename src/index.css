@@ -1513,6 +1513,9 @@ main {
   gap: 9px;
 }
 .skill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 0.68rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1521,7 +1524,8 @@ main {
   padding: 9px 12px;
   color: var(--body);
   background: rgb(var(--surface-rgb) / 0.6);
-  transition: opacity 0.25s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  transition: opacity 0.25s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease,
+    background 0.2s ease, text-shadow 0.2s ease;
 }
 .skill:hover {
   border-color: var(--line-2);
@@ -2355,7 +2359,8 @@ main {
   .particles,
   .scanlines,
   .grain,
-  .boot-scan {
+  .boot-scan,
+  .hero-aurora {
     display: none;
   }
   .marquee-track {
@@ -2534,4 +2539,495 @@ html[data-theme="light"] ::-webkit-scrollbar-thumb {
 }
 html[data-theme="light"] .hero-bg::after {
   background: linear-gradient(180deg, rgb(255 255 255 / 0.55), var(--bg0) 82%);
+}
+
+/* ==========================================================================
+   POMP & FLAIR LAYER
+   Everything below exists for one reason: delight. Brand-true tech colours
+   and logos, flowing gradients, rotating border beams, aurora glows and a
+   tech ticker. All loops are killed by the prefers-reduced-motion blanket
+   rule above; hover-only flourishes stay behind (hover: hover) guards.
+
+   Custom property contract used by components:
+     --b / --b-dk / --b-lt  official brand hex + contrast-safe variants
+                            (inlined per element from src/data/tech.js)
+     --brand                the theme-resolved brand colour (set here)
+     --proj                 per-project language colour
+     --beam                 rotating angle for conic border beams
+   ========================================================================== */
+
+/* Palindrome gradient: start and end on the same colour at 200% size so
+   `gradient-pan` loops forever without a visible seam. Either theme's accent
+   tokens flow through automatically. */
+:root {
+  --grad-loop: linear-gradient(
+    115deg,
+    var(--accent) 0%,
+    var(--accent-2) 25%,
+    var(--accent-3) 50%,
+    var(--accent-2) 75%,
+    var(--accent) 100%
+  );
+}
+
+@property --beam {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes gradient-pan {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 200% 50%;
+  }
+}
+@keyframes beam-spin {
+  to {
+    --beam: 360deg;
+  }
+}
+@keyframes aurora-drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(7vw, 5vh, 0) scale(1.14);
+  }
+}
+@keyframes aurora-drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.08);
+  }
+  to {
+    transform: translate3d(-6vw, -4vh, 0) scale(0.92);
+  }
+}
+
+/* ---------- flowing gradient type ---------------------------------------
+   Headlines, kickers and stat numerals no longer sit in a flat colour;
+   they carry a slow-running river of mint → sky → violet. */
+
+.aw-i {
+  background-image: linear-gradient(
+    115deg,
+    var(--text) 0%,
+    var(--text) 30%,
+    var(--accent) 42%,
+    var(--accent-2) 50%,
+    var(--accent-3) 58%,
+    var(--text) 70%,
+    var(--text) 100%
+  );
+  background-size: 280% 100%;
+  animation: gradient-pan 9s ease-in-out infinite alternate;
+}
+.section-title:hover .aw-i {
+  animation-duration: 2.6s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.index-num,
+.eyebrow,
+.panel-kicker {
+  background-image: var(--grad-loop);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 8s linear infinite;
+}
+/* the eyebrow keeps its solid pulse dot */
+.eyebrow .pulse {
+  background: var(--accent);
+}
+
+.hero-title em {
+  background-image: var(--grad-loop);
+  background-size: 200% 100%;
+  animation: gradient-pan 6s linear infinite;
+}
+
+.hero-stats dd,
+.stat-card strong {
+  background-image: var(--grad-loop);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 7s linear infinite;
+}
+
+/* ---------- hero aurora ---------------------------------------------------
+   Three brand-coloured searchlights sweeping behind the hero copy — the
+   instant "not bland" signal at the top of the page. */
+
+.hero-aurora {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-aurora i {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.hero-aurora i:nth-child(1) {
+  width: 46vw;
+  height: 46vw;
+  top: -14vw;
+  left: -10vw;
+  background: radial-gradient(circle, rgb(var(--accent-rgb) / 0.42), transparent 68%);
+  animation: aurora-drift-a 16s ease-in-out infinite alternate;
+}
+.hero-aurora i:nth-child(2) {
+  width: 40vw;
+  height: 40vw;
+  top: 8vh;
+  right: -12vw;
+  background: radial-gradient(circle, rgb(var(--accent-3-rgb) / 0.38), transparent 68%);
+  animation: aurora-drift-b 19s ease-in-out infinite alternate;
+}
+.hero-aurora i:nth-child(3) {
+  width: 36vw;
+  height: 36vw;
+  bottom: -14vw;
+  left: 30vw;
+  background: radial-gradient(circle, rgb(var(--accent-2-rgb) / 0.36), transparent 68%);
+  animation: aurora-drift-a 22s ease-in-out infinite alternate-reverse;
+}
+html[data-theme="light"] .hero-aurora i {
+  opacity: 0.34;
+  mix-blend-mode: normal;
+}
+
+/* ---------- rotating gradient border beams --------------------------------
+   A 1px conic-gradient ring masked to the border, its angle driven by the
+   @property-animated --beam. Always-on for .with-beam centerpieces,
+   hover-gated for regular panels. Without @property support the beam
+   degrades to a static gradient ring — same look, no spin. */
+
+.panel::before,
+.hero-fetch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--beam),
+    transparent 0turn 0.68turn,
+    rgb(var(--accent-rgb) / 0.95) 0.8turn,
+    rgb(var(--accent-2-rgb) / 0.95) 0.87turn,
+    rgb(var(--accent-3-rgb) / 0.95) 0.93turn,
+    transparent 1turn
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+.panel.is-hover:hover::before,
+.panel.with-beam::before,
+.hero-fetch.with-beam::after {
+  opacity: 1;
+  animation: beam-spin 3.8s linear infinite;
+}
+.hero-fetch::after {
+  inset: 0;
+}
+
+/* ---------- animated gradient buttons ------------------------------------- */
+
+.btn-primary {
+  background: var(--grad);
+  background-size: 240% 240%;
+  animation: gradient-pan 7s ease-in-out infinite alternate;
+}
+.btn-ghost:hover {
+  border-color: rgb(var(--accent-2-rgb) / 0.6);
+}
+
+/* ---------- skills: brand colours, real logos ----------------------------- */
+
+.skill,
+.tech-pill {
+  --brand: var(--b-dk, var(--phos));
+}
+html[data-theme="light"] .skill,
+html[data-theme="light"] .tech-pill {
+  --brand: var(--b-lt, var(--phos));
+}
+
+.skill-logo {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--brand);
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.skill-logo svg {
+  display: block;
+}
+.skill:hover .skill-logo,
+.tech-pill:hover .skill-logo {
+  transform: scale(1.28) rotate(-8deg);
+}
+
+/* two-letter tile for brands that forbid logo redistribution (Adobe suite) */
+.tech-tile {
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-d);
+  font-weight: 700;
+  font-size: 8.5px;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  color: var(--brand);
+  background: #17181c;
+  border: 1px solid rgb(var(--hi-rgb) / 0.16);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--brand) 18%, #14151b), #0d0e12);
+  border-color: color-mix(in srgb, var(--brand) 42%, transparent);
+}
+
+@media (hover: hover) {
+  .skill:hover {
+    /* fallbacks first — browsers without color-mix keep a sane glow */
+    border-color: var(--brand);
+    background: rgb(var(--accent-rgb) / 0.06);
+    box-shadow: var(--glow);
+    /* brand-true treatment */
+    color: var(--brand);
+    border-color: color-mix(in srgb, var(--brand) 62%, transparent);
+    background: color-mix(in srgb, var(--brand) 10%, transparent);
+    box-shadow:
+      0 0 22px color-mix(in srgb, var(--brand) 34%, transparent),
+      0 10px 24px rgb(var(--shadow-rgb) / 0.32);
+    text-shadow: 0 0 14px color-mix(in srgb, var(--brand) 58%, transparent);
+  }
+}
+
+/* active filter tab rides the brand gradient */
+.filter {
+  position: relative;
+  overflow: hidden;
+}
+.filter.is-on {
+  background: var(--grad-soft);
+  border-color: var(--line-2);
+  color: var(--text);
+  box-shadow: var(--glow);
+}
+.filter.is-on::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 5px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--grad-loop);
+  background-size: 200% 100%;
+  animation: gradient-pan 4s linear infinite;
+  box-shadow: 0 0 10px rgb(var(--accent-2-rgb) / 0.65);
+}
+
+/* ---------- tech ticker: every tool, on parade ---------------------------- */
+
+.tech-ticker {
+  margin-top: 34px;
+  overflow: hidden;
+  padding: 4px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.tech-ticker-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  animation: ticker 80s linear infinite;
+}
+.tech-ticker:hover .tech-ticker-track {
+  animation-play-state: paused;
+}
+.tech-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex: none;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgb(var(--surface-rgb) / 0.55);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+.tech-pill .skill-logo {
+  color: var(--brand);
+}
+@supports (background: color-mix(in srgb, red, blue)) {
+  .tech-pill {
+    border-color: color-mix(in srgb, var(--brand) 26%, transparent);
+    background: color-mix(in srgb, var(--brand) 5%, var(--bg2));
+  }
+  .tech-pill:hover {
+    border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--brand) 26%, transparent);
+    color: var(--text);
+  }
+}
+
+/* ---------- stats: icon badges -------------------------------------------- */
+
+.stat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.stat-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: var(--phos);
+  background: var(--grad-soft);
+  border: 1px solid var(--line);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+@media (hover: hover) {
+  .stat-card:hover .stat-icon {
+    transform: rotate(-8deg) scale(1.08);
+    border-color: var(--line-2);
+    box-shadow: var(--glow);
+  }
+}
+
+/* ---------- projects: language-tinted glint + sheen sweep ------------------ */
+
+.project {
+  --proj: var(--phos);
+}
+.project-glint {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    200deg,
+    transparent 30%,
+    color-mix(in srgb, var(--proj) 28%, transparent) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.project::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 32%, rgb(255 255 255 / 0.08) 48%, transparent 64%);
+  transform: translateX(-130%);
+}
+@media (hover: hover) {
+  .project:hover .project-glint {
+    opacity: 1;
+  }
+  .project:hover::after {
+    transform: translateX(130%);
+    transition: transform 0.9s ease;
+  }
+}
+
+/* ---------- marquee: gradient rails + faded edges -------------------------- */
+
+.marquee {
+  position: relative;
+  border-block-color: transparent;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.marquee::before,
+.marquee::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--grad);
+  background-size: 240% 100%;
+  opacity: 0.45;
+}
+.marquee::before {
+  top: 0;
+}
+.marquee::after {
+  bottom: 0;
+}
+.marquee-track span::before {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- services & education: gradient icon wells on hover ------------- */
+
+@media (hover: hover) {
+  .service-card:hover .service-icon,
+  .edu-card:hover .edu-icon {
+    background: var(--grad-soft);
+    border-color: var(--line-2);
+  }
+}
+
+/* ---------- footer: gradient top rail -------------------------------------- */
+
+.foot::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--grad-loop);
+  background-size: 200% 100%;
+  opacity: 0.7;
+  animation: gradient-pan 10s linear infinite;
+}
+
+/* ---------- mobile keeps the ticker honest --------------------------------- */
+
+@media (hover: none) {
+  .tech-ticker:hover .tech-ticker-track {
+    animation-play-state: running;
+  }
 }
