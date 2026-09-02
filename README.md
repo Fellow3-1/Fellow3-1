@@ -226,9 +226,12 @@
 
 <p align="center">
   <a href="https://github.com/Fellow3-1" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+    <img src="https://img.shields.io/badge/GitHub-12261c?style=for-the-badge&labelColor=07100b&logo=github&logoColor=52ffa8" alt="GitHub" />
+  </a>
+  <a href="https://twitter.com/Fellow3_1" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/%40Fellow3__1-12261c?style=for-the-badge&labelColor=07100b&logo=x&logoColor=52ffa8" alt="X / Twitter" />
   </a>
   <a href="mailto:felixodhiambo31@live.com">
-    <img src="https://img.shields.io/badge/Outlook-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
+    <img src="https://img.shields.io/badge/felixodhiambo31%40live.com-12261c?style=for-the-badge&labelColor=07100b&logo=maildotru&logoColor=52ffa8" alt="Email" />
   </a>
 </p>
