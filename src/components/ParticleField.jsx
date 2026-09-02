@@ -44,6 +44,11 @@ export default function ParticleField() {
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
+      // Particles follow the live theme accents (mint → sky → violet).
+      const css = getComputedStyle(document.documentElement);
+      const tints = ["--accent-rgb", "--accent-2-rgb", "--accent-3-rgb"].map(
+        (k) => (css.getPropertyValue(k).trim() || "82 255 168").replace(/\s+/g, ","),
+      );
       const px = (mouse.x - 0.5) * 26;
       const py = (mouse.y - 0.5) * 26;
       for (let i = 0; i < motes.length; i += 1) {
@@ -59,7 +64,7 @@ export default function ParticleField() {
         const oy = py * m.z;
         ctx.beginPath();
         ctx.arc(m.x + ox, m.y + oy, m.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(82,255,168,${0.05 + m.z * 0.16})`;
+        ctx.fillStyle = `rgba(${tints[i % 3]},${0.05 + m.z * 0.16})`;
         ctx.fill();
       }
       raf = requestAnimationFrame(draw);

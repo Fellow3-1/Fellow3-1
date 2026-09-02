@@ -59,6 +59,7 @@ export default function App() {
       <div className="orbs" aria-hidden="true">
         <span className="orb orb-a" />
         <span className="orb orb-b" />
+        <span className="orb orb-c" />
       </div>
 
       <Navbar onOpenPalette={() => setPaletteOpen(true)} />
@@ -81,10 +82,10 @@ export default function App() {
       {/* thumb-reach dock for phones (CSS shows it under 900px) */}
       <nav className="dock" aria-label="Sections">
         <a href="#about">About</a>
-        <a href="#experience">Log</a>
-        <a href="#skills">Stack</a>
+        <a href="#experience">Story</a>
+        <a href="#skills">Skills</a>
         <a href="#projects">Work</a>
-        <a href="#contact">Ping</a>
+        <a href="#contact">Contact</a>
       </nav>
 
       <Footer />

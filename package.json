@@ -3,7 +3,7 @@
   "private": true,
   "version": "3.1.0",
   "type": "module",
-  "description": "Felloh 3.1 — Nexus OS. Senior Full-Stack & Cloud Engineer. A portfolio that boots.",
+  "description": "Felix Odhiambo — software engineer in Nairobi building websites, mobile apps and AI features.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

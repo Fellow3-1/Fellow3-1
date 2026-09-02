@@ -190,3 +190,49 @@ export function useSfx() {
 
   return play;
 }
+
+/**
+ * Light / dark theme with three-way logic:
+ *   1. an explicit choice saved in localStorage wins,
+ *   2. otherwise we follow the OS setting live,
+ *   3. dark mode uses true #000 (AMOLED) surfaces.
+ */
+export function useTheme() {
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") return "dark";
+    const saved = window.localStorage?.getItem("felloh-theme");
+    if (saved === "light" || saved === "dark") return saved;
+    return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", theme === "light" ? "#f6f8fb" : "#000000");
+  }, [theme]);
+
+  // Follow the OS while the visitor has not made an explicit choice.
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: light)");
+    const handler = (e) => {
+      if (window.localStorage?.getItem("felloh-theme")) return;
+      setTheme(e.matches ? "light" : "dark");
+    };
+    mq.addEventListener?.("change", handler);
+    return () => mq.removeEventListener?.("change", handler);
+  }, []);
+
+  const toggle = useCallback(() => {
+    setTheme((t) => {
+      const next = t === "dark" ? "light" : "dark";
+      try {
+        window.localStorage?.setItem("felloh-theme", next);
+      } catch {
+        /* storage blocked — session-only theme is fine */
+      }
+      return next;
+    });
+  }, []);
+
+  return [theme, toggle];
+}

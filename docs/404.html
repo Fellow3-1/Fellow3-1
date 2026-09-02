@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Felloh 3.1 — Nexus OS · Senior Full-Stack &amp; Cloud Engineer</title>
+    <title>Felix Odhiambo — Software engineer building websites &amp; apps</title>
     <meta
       name="description"
-      content="Felloh 3.1 (Felix Odhiambo) — senior full-stack, cloud & mobile engineer from Nairobi. 12+ years shipping web, Android, payments (MPESA/Daraja), cloud-native and AI/LLM systems. Boot Nexus OS to explore."
+      content="Felix Odhiambo (Felloh) — a software engineer in Nairobi, Kenya. I build websites, mobile apps, mobile-money payments and AI features, and I have been doing it for over 12 years."
     />
-    <meta name="theme-color" content="#050807" />
-    <meta property="og:title" content="Felloh 3.1 — Nexus OS · Senior Full-Stack & Cloud Engineer" />
+    <meta name="theme-color" content="#000000" />
+    <meta property="og:title" content="Felix Odhiambo — Software engineer building websites & apps" />
     <meta
       property="og:description"
-      content="A portfolio that boots. 12+ years of full-stack, mobile, payments, cloud-native and AI systems — from Nairobi."
+      content="Websites, mobile apps and AI features, built in Nairobi for over 12 years."
     />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="assets/hero-void.jpg" />
@@ -40,9 +40,21 @@
         rel="stylesheet"
       />
     </noscript>
-    <script type="module" crossorigin src="./assets/index-CdUHsDEO.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BNRKZe4k.css">
+    <script type="module" crossorigin src="./assets/index-Cq287zd_.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Do4daxBU.css">
   </head>
+  <script>
+      // Set the theme before first paint so there is no light/dark flash.
+      (function () {
+        try {
+          var saved = localStorage.getItem("felloh-theme");
+          var light = saved ? saved === "light" : window.matchMedia("(prefers-color-scheme: light)").matches;
+          document.documentElement.dataset.theme = light ? "light" : "dark";
+          var m = document.querySelector('meta[name="theme-color"]');
+          if (m) m.setAttribute("content", light ? "#f6f8fb" : "#000000");
+        } catch (e) {}
+      })();
+    </script>
   <body>
     <div id="root"></div>
   </body>

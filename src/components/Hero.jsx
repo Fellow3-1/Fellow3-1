@@ -24,7 +24,7 @@ export default function Hero({ ready = true }) {
       <div
         className="hero-bg"
         aria-hidden="true"
-        style={{ backgroundImage: "linear-gradient(180deg, rgba(3,5,4,0.25), rgba(3,5,4,0.96) 78%), url('assets/hero-void.jpg')" }}
+        style={{ backgroundImage: "url('assets/hero-void.jpg')" }}
       />
       <div className="hero-grid" aria-hidden="true" />
 
@@ -32,7 +32,7 @@ export default function Hero({ ready = true }) {
         <motion.div variants={container} initial="hidden" animate={ready ? "show" : "hidden"}>
           <motion.p variants={item} className="eyebrow">
             <span className="pulse" />
-            {profile.location} · {profile.house} · est. 2014
+            {profile.location} · Available for work
           </motion.p>
 
           <motion.h1 variants={item} className="hero-title">
@@ -43,23 +43,23 @@ export default function Hero({ ready = true }) {
           </motion.h1>
 
           <motion.p variants={item} className="hero-role" aria-live="polite">
-            <span className="role-prefix">felloh@nexus:~$</span> {role}
+            <span className="role-prefix">Hi, I'm Felix —</span> {role}
             <span className="caret" />
           </motion.p>
 
           <motion.p variants={item} className="hero-lede">
-            {profile.role} &amp; the operator behind the handle. {profile.tagline}
+            {profile.tagline}
           </motion.p>
 
           <motion.div variants={item} className="hero-actions">
             <Magnetic>
               <a className="btn btn-primary" href="#contact">
-                Open a channel <ArrowDown size={15} />
+                Get in touch <ArrowDown size={15} />
               </a>
             </Magnetic>
             <Magnetic>
               <a className="btn btn-ghost" href="assets/cv-felix-odhiambo.txt" download>
-                Résumé
+Download CV
               </a>
             </Magnetic>
             <div className="hero-socials">
@@ -100,7 +100,7 @@ export default function Hero({ ready = true }) {
           <span className="fetch-dot" />
           <span className="fetch-dot" />
           <span className="fetch-dot" />
-          <p>operator@nexus — neofetch</p>
+          <p>Quick introduction</p>
         </div>
         <div className="fetch-body">
           <pre className="fetch-art" aria-hidden="true">
@@ -108,35 +108,33 @@ export default function Hero({ ready = true }) {
           </pre>
           <dl className="fetch-info">
             <div>
-              <dt>operator</dt>
+              <dt>name</dt>
               <dd>
                 {profile.realName} <em>“{profile.handle}”</em>
               </dd>
             </div>
             <div>
-              <dt>os</dt>
-              <dd>{sysinfo.os}</dd>
+              <dt>role</dt>
+              <dd>{sysinfo.role}</dd>
             </div>
             <div>
-              <dt>kernel</dt>
-              <dd>{sysinfo.kernel}</dd>
+              <dt>experience</dt>
+              <dd>{uptime ? `${sysinfo.experience} (since 2014)` : sysinfo.experience}</dd>
             </div>
             <div>
-              <dt>uptime</dt>
-              <dd>
-                {uptime || sysinfo.uptime}
-              </dd>
+              <dt>focus</dt>
+              <dd>{sysinfo.focus}</dd>
             </div>
             <div>
-              <dt>shell</dt>
-              <dd>{sysinfo.shell}</dd>
+              <dt>works with</dt>
+              <dd>{sysinfo.worksWith}</dd>
             </div>
             <div>
-              <dt>stack</dt>
-              <dd>{sysinfo.stack}</dd>
+              <dt>tools</dt>
+              <dd>{sysinfo.favouriteTools}</dd>
             </div>
             <div>
-              <dt>location</dt>
+              <dt>based in</dt>
               <dd>
                 <MapPin size={11} aria-hidden="true" /> {sysinfo.location}
               </dd>
@@ -155,7 +153,7 @@ export default function Hero({ ready = true }) {
       </motion.aside>
 
       <a className="hero-scroll" href="#about" aria-label="Scroll to about">
-        <span>scroll</span>
+        <span>Scroll</span>
         <motion.span
           className="hero-scroll-line"
           animate={{ y: [0, 12, 0] }}

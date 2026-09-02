@@ -4,21 +4,20 @@ import { services } from "../data/content.js";
 
 const ICONS = { Globe, Smartphone, Cloud, Sparkles, Wrench, Compass };
 
-/** Services presented as systemd units — enabled and running. */
+/** Plain-language list of what Felix offers. */
 export default function Services() {
   return (
     <section id="services" className="section services">
       <SectionHeading
-        index="02.5"
-        kicker="systemctl list-units"
-        title="Capabilities, not keywords."
-        lede="Senior-level delivery across the whole stack — from pixels to production."
+        index="03"
+        kicker="What I can do for you"
+        title="How I can help."
+        lede="Whatever the project, you get one person who can take it from idea to launch."
       />
 
       <div className="services-grid">
         {services.map((s, i) => {
           const Icon = ICONS[s.icon] || Wrench;
-          const unit = s.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
           return (
             <Reveal key={s.title} delay={i * 0.05}>
               <Panel className="service-card">
@@ -27,9 +26,8 @@ export default function Services() {
                     <Icon size={21} strokeWidth={1.6} />
                   </div>
                   <span className="service-unit">
-                    {unit}.service
                     <em>
-                      <span className="live-dot" aria-hidden="true" /> enabled · running
+                      <span className="live-dot" aria-hidden="true" /> Available
                     </em>
                   </span>
                 </div>

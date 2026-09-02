@@ -8,7 +8,7 @@ const DEFAULT_ICON = Layers;
 export default function Education() {
   return (
     <section id="education" className="section education">
-      <SectionHeading index="04.75" kicker="credentials --verify" title="Formally trained, self-forged." />
+      <SectionHeading index="07" kicker="Training" title="Where I learned it." />
       <div className="edu-grid">
         {education.map((e, i) => {
           const Icon = ICONS[e.type] || DEFAULT_ICON;

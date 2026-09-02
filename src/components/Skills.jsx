@@ -22,10 +22,10 @@ export default function Skills() {
   return (
     <section id="skills" className="section skills">
       <SectionHeading
-        index="03"
-        kicker="package registry"
-        title="A matrix, not a pile of badges."
-        lede={isTouch ? "Tap a category to filter the registry." : "Hover to feel the grid. Filter to see the shape of the stack."}
+        index="04"
+        kicker="What I work with"
+        title="The tools of the trade."
+        lede={isTouch ? "Tap a category to see what I use." : "Pick a category to see the tools I reach for most."}
       />
 
       <div className="filters" role="tablist" aria-label="Skill categories">

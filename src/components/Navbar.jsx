@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Command } from "lucide-react";
-import { useNairobiClock, useSfx } from "../hooks.js";
+import { Menu, X, Command, Sun, Moon } from "lucide-react";
+import { useNairobiClock, useSfx, useTheme } from "../hooks.js";
 import { Kbd } from "./ui.jsx";
 
 const LINKS = [
   { id: "about", label: "About", num: "01" },
-  { id: "experience", label: "Log", num: "02" },
-  { id: "skills", label: "Stack", num: "03" },
+  { id: "experience", label: "Experience", num: "02" },
+  { id: "skills", label: "Skills", num: "03" },
   { id: "projects", label: "Work", num: "04" },
-  { id: "contact", label: "Signal", num: "05" },
+  { id: "contact", label: "Contact", num: "05" },
 ];
 
 export default function Navbar({ onOpenPalette }) {
   const clock = useNairobiClock();
   const play = useSfx();
+  const [theme, toggleTheme] = useTheme();
   const [active, setActive] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -71,7 +72,7 @@ export default function Navbar({ onOpenPalette }) {
           <img src="assets/crest.png" alt="" decoding="async" width="34" height="34" />
           <span>
             <strong>FELLOH&nbsp;3.1</strong>
-            <small>nexus os · nbo</small>
+            <small>Nairobi, Kenya</small>
           </span>
         </a>
 
@@ -85,9 +86,18 @@ export default function Navbar({ onOpenPalette }) {
         </nav>
 
         <div className="nav-right">
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Light mode" : "Dark mode"}
+          >
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
           <button type="button" className="cmdk-trigger" onClick={onOpenPalette} aria-haspopup="dialog">
             <Command size={13} aria-hidden="true" />
-            <span className="cmdk-trigger-label">commands</span>
+            <span className="cmdk-trigger-label">Search</span>
             <Kbd>⌘K</Kbd>
           </button>
           <div className="nav-meta" aria-label="Nairobi local time">
@@ -141,7 +151,7 @@ export default function Navbar({ onOpenPalette }) {
                 onOpenPalette();
               }}
             >
-              <Command size={14} aria-hidden="true" /> Command palette
+              <Command size={14} aria-hidden="true" /> Quick search
             </button>
           </motion.nav>
         )}

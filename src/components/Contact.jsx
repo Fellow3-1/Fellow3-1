@@ -5,7 +5,7 @@ import { socials, termCommands } from "../data/content.js";
 import { useSfx } from "../hooks.js";
 
 const EMAIL = "felixodhiambo31@live.com";
-const BANNER = ["nexus-shell v3.1 — guest session", "type `help` and hit enter. it's a real shell (mostly)."];
+const BANNER = ["Curious? This is a mini command line — just for fun.", "Type help and press enter to see what it can do."];
 
 /**
  * A REAL terminal, not a scripted loop: a stateful line-reader with a
@@ -31,7 +31,7 @@ function Terminal() {
 
   const exec = (raw) => {
     const input = raw.trim();
-    print(`guest@nexus:~$ ${input}`);
+    print(`you: ${input}`);
     if (!input) return;
     setHistory((h) => [...h, input]);
     setHistIndex(-1);
@@ -41,7 +41,7 @@ function Terminal() {
       return;
     }
     if (cmd === "sudo") {
-      print(["nice try. this shell runs on trust and coffee."]);
+      print(["Nice try — this one runs on trust and coffee."]);
       return;
     }
     if (cmd === "open" && args[0]?.startsWith("mailto")) {
@@ -53,7 +53,7 @@ function Terminal() {
       play("confirm");
       print(fn(args));
     } else {
-      print([`nexus: command not found: ${cmd} — try \`help\``]);
+      print([`I don\u2019t know "${cmd}" — type help to see the options.`]);
     }
   };
 
@@ -92,9 +92,9 @@ function Terminal() {
         <span className="term-dot td-r" />
         <span className="term-dot td-y" />
         <span className="term-dot td-g" />
-        <p>guest@nexus:~</p>
+        <p>Mini terminal</p>
         <span className="term-badge">
-          <TerminalSquare size={11} aria-hidden="true" /> interactive
+          <TerminalSquare size={11} aria-hidden="true" /> Just for fun
         </span>
       </div>
       <div
@@ -106,12 +106,12 @@ function Terminal() {
         aria-label="Interactive terminal"
       >
         {lines.map((l, i) => (
-          <p key={i} className={l.startsWith("guest@nexus") ? "term-cmd" : ""}>
+          <p key={i} className={l.startsWith("you:") ? "term-cmd" : ""}>
             {l || "\u00A0"}
           </p>
         ))}
         <div className="term-input-row">
-          <span aria-hidden="true">guest@nexus:~$</span>
+          <span aria-hidden="true">you:</span>
           <input
             ref={inputRef}
             value={value}
@@ -153,14 +153,14 @@ function ContactForm() {
 
   return (
     <Panel className="contact-form" hover={false}>
-      <p className="panel-kicker">{"// open a channel"}</p>
-      <h3>Start something crispy.</h3>
+      <p className="panel-kicker">Send a message</p>
+      <h3>Let's build something.</h3>
       <form onSubmit={submit}>
         <label>
           <span>Name</span>
           <input
             type="text"
-            placeholder="Operator name"
+            placeholder="Your name"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
@@ -169,7 +169,7 @@ function ContactForm() {
           <span>Message</span>
           <textarea
             rows={4}
-            placeholder="What are we building?"
+            placeholder="Tell me a little about your project"
             value={form.message}
             onChange={(e) => setForm({ ...form, message: e.target.value })}
             required
@@ -177,7 +177,7 @@ function ContactForm() {
         </label>
         <div className="form-actions">
           <button type="submit" className="btn btn-primary">
-            <Send size={15} /> Send via email
+            <Send size={15} /> Send message
           </button>
           <button type="button" className="btn btn-ghost" onClick={copyEmail}>
             {copied ? <Check size={15} /> : <Copy size={15} />}
@@ -193,10 +193,10 @@ export default function Contact() {
   return (
     <section id="contact" className="section contact">
       <SectionHeading
-        index="05"
-        kicker="open --channel"
-        title="Open a channel."
-        lede="For roles, consulting, or open-source collaboration — Nairobi is online."
+        index="08"
+        kicker="Get in touch"
+        title="Say hello."
+        lede="Got a project, a role, or just a question? I read every message."
       />
       <div className="contact-grid">
         <Reveal>

@@ -5,7 +5,7 @@ import { stats, achievements } from "../data/content.js";
 export default function Stats() {
   return (
     <section id="stats" className="section stats">
-      <SectionHeading index="03.5" kicker="telemetry" title="Signals from the network." />
+      <SectionHeading index="05" kicker="By the numbers" title="A quick snapshot." />
       <div className="stat-grid">
         {stats.map((s, i) => (
           <Reveal key={s.label} delay={i * 0.06}>
@@ -22,7 +22,7 @@ export default function Stats() {
 
       <Reveal delay={0.1} className="achievements">
         <span className="ach-label">
-          <Trophy size={14} /> achievements
+          <Trophy size={14} /> Highlights
         </span>
         {achievements.map((a) => (
           <span key={a} className="achievement">
@@ -30,13 +30,13 @@ export default function Stats() {
           </span>
         ))}
         <span className="achievement">
-          <GitFork size={12} /> 34 forks on mpesa-api-go
+          <GitFork size={12} /> Payment tool reused by 34 teams
         </span>
         <span className="achievement">
-          <Users size={12} /> 39 followers
+          <Users size={12} /> 39 developers following
         </span>
         <a className="achievement achievement-link" href="https://github.com/Fellow3-1" target="_blank" rel="noreferrer">
-          <Github size={12} /> verify on GitHub
+          <Github size={12} /> See it on GitHub
         </a>
       </Reveal>
     </section>

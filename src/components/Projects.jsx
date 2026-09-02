@@ -82,10 +82,10 @@ export default function Projects() {
   return (
     <section id="projects" className="section projects">
       <SectionHeading
-        index="04"
-        kicker="ls ~/work — 6 of 90 shown"
-        title="Selected repositories."
-        lede="Hand-picked from 90 public repositories — the rest live on GitHub."
+        index="06"
+        kicker="Things I've built"
+        title="Some of my favourite work."
+        lede="Six picks from ninety public projects — the rest are on GitHub."
       />
       <div className="project-grid">
         {projects.map((p, i) => (
@@ -94,7 +94,7 @@ export default function Projects() {
       </div>
       <Reveal className="projects-more">
         <a className="btn btn-ghost" href="https://github.com/Fellow3-1?tab=repositories" target="_blank" rel="noreferrer">
-          Explore all 90 repositories <ArrowUpRight size={15} />
+          See all 90 projects <ArrowUpRight size={15} />
         </a>
       </Reveal>
     </section>

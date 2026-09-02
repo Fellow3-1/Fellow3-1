@@ -10,7 +10,7 @@ export default function Footer() {
       <div className="foot-cell foot-session">
         <img src="assets/crest.png" alt="" loading="lazy" decoding="async" width="22" height="22" />
         <span>
-          [0] <strong>felloh@nexus</strong>
+          <strong>Felix Odhiambo</strong>
         </span>
         <span className="foot-hide-sm">© {year} Felix Odhiambo</span>
       </div>
@@ -27,9 +27,9 @@ export default function Footer() {
       </div>
 
       <div className="foot-cell foot-right">
-        <span className="foot-tag">coffee in · crispy systems out</span>
+        <span className="foot-tag">Coffee in · software that works, out</span>
         <span>
-          NBO {clock} · <span className="foot-ok">● online</span>
+          Nairobi {clock} · <span className="foot-ok">● Available</span>
         </span>
       </div>
     </footer>

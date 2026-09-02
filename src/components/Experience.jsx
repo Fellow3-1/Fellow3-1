@@ -13,9 +13,9 @@ export default function Experience() {
     <section id="experience" className="section experience">
       <SectionHeading
         index="02"
-        kicker="git log --graph"
-        title="Twelve years of shipping."
-        lede="From Android internals to cloud-native AI systems — a career arc, not a badge list."
+        kicker="My story"
+        title="Twelve years, one step at a time."
+        lede="How I went from taking phones apart to building software people rely on every day."
       />
 
       <div className="timeline" role="list">
@@ -27,7 +27,7 @@ export default function Experience() {
             <motion.article className="tl-card panel" whileHover={{ y: -5 }}>
               <div className="tl-head">
                 <p className="tl-era">
-                  <span className="tl-hash">{t.hash}</span> {t.era}
+                  {t.era}
                 </p>
                 <span className="tl-org">{t.org}</span>
               </div>
@@ -39,8 +39,8 @@ export default function Experience() {
                 ))}
               </div>
               {i === timeline.length - 1 && (
-                <span className="tl-branch" aria-hidden="true">
-                  <GitBranch size={11} /> HEAD → main
+                <span className="tl-branch">
+                  <GitBranch size={11} /> Where I am now
                 </span>
               )}
             </motion.article>

@@ -3,11 +3,11 @@ import { profile } from "../data/content.js";
 import { useUptime } from "../hooks.js";
 
 const FACTS = [
-  ["working_on", "Full-stack web + mobile"],
-  ["learning", "AI / LLM · Cloud-native"],
-  ["open_to", "Senior roles · OSS · Dev tools"],
-  ["editor", "Neovim (btw)"],
-  ["armor", "Docker & Kubernetes"],
+  ["Working on", "Websites and mobile apps"],
+  ["Learning", "AI features and better hosting"],
+  ["Open to", "Jobs, freelance work and collaborations"],
+  ["Based in", "Nairobi, Kenya"],
+  ["Reply time", "Usually within a day"],
 ];
 
 export default function About() {
@@ -16,15 +16,15 @@ export default function About() {
     <section id="about" className="section about">
       <SectionHeading
         index="01"
-        kicker="whoami"
-        title="A transmission from the Unboxed."
-        lede="Senior engineer by trade, tinkerer by instinct."
+        kicker="About me"
+        title="Hi, I'm Felix."
+        lede="A software engineer from Nairobi who likes making complicated things feel simple."
       />
 
       <div className="about-grid">
         <Reveal>
           <Panel className="about-panel">
-            <p className="panel-kicker">{"// dossier"}</p>
+            <p className="panel-kicker">A little background</p>
             <h3 className="about-name">
               {profile.handle}
               <span> — {profile.realName}</span>
@@ -32,12 +32,12 @@ export default function About() {
             {profile.about.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
-            <p className="fun">fun_fact: coffee goes in. clean, efficient, readable code comes out.</p>
+            <p className="fun">Fun fact: coffee goes in, software that just works comes out.</p>
             <ul className="chips">
               <Chip>@BuildForSDG</Chip>
-              <Chip>OSAM-ASSOCIATES</Chip>
-              <Chip>GitHub Developer Program</Chip>
-              <Chip>Nairobi · UTC+3</Chip>
+              <Chip>Open source</Chip>
+              <Chip>GitHub developer</Chip>
+              <Chip>Nairobi, Kenya</Chip>
             </ul>
           </Panel>
         </Reveal>
@@ -45,7 +45,7 @@ export default function About() {
         <div className="about-side">
           <Reveal delay={0.1}>
             <Panel className="status-panel">
-              <p className="panel-kicker">{"// live status"}</p>
+              <p className="panel-kicker">Right now</p>
               <ul className="status-list">
                 {FACTS.map(([k, v]) => (
                   <li key={k}>
@@ -54,8 +54,8 @@ export default function About() {
                   </li>
                 ))}
                 <li>
-                  <span>session_uptime</span>
-                  <strong className="mono">{uptime || "—"}</strong>
+                  <span>Doing this for</span>
+                  <strong className="mono">{uptime || "12+ years"}</strong>
                 </li>
               </ul>
             </Panel>
@@ -73,7 +73,7 @@ export default function About() {
                 onError={(e) => (e.currentTarget.src = "assets/crest.png")}
               />
               <div>
-                <strong>House Android · The Unboxed</strong>
+                <strong>Felix Odhiambo</strong>
                 <span>{profile.availability}</span>
               </div>
             </Panel>
