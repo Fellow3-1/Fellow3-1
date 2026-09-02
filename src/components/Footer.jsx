@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="foot" role="contentinfo">
       <div className="foot-cell foot-session">
-        <img src="assets/crest.png" alt="" loading="lazy" decoding="async" width="22" height="22" />
+        <img src="assets/HD-Joker-Wallpapers-scaled.jpg" alt="" loading="lazy" decoding="async" width="22" height="22" />
         <span>
           <strong>Felix Odhiambo</strong>
         </span>
