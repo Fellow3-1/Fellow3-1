@@ -68,15 +68,15 @@ export default function BootScreen({ onDone }) {
         >
           <div className="boot-scan" aria-hidden="true" />
           <div className="boot-inner">
-            <p className="boot-kicker">NEXUS BIOS v3.1 — HOUSE ANDROID</p>
+            <p className="boot-kicker">Felix Odhiambo · Software engineer</p>
             <pre className="boot-ascii" aria-hidden="true">{ASCII}</pre>
             <p className="boot-line">
-              <span className="boot-ok">[ ok ]</span> {line}
+              {line}
             </p>
             <div className="boot-bar" aria-hidden="true">
               <span style={{ width: `${progress}%` }} />
             </div>
-            <p className="boot-skip">press any key to skip</p>
+            <p className="boot-skip">Tap anywhere to skip</p>
           </div>
         </motion.div>
       )}

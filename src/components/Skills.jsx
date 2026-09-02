@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { SectionHeading } from "./ui.jsx";
+import { SectionHeading, TechIcon, brandVars } from "./ui.jsx";
 import { skillCategories } from "../data/content.js";
 import { useIsTouch } from "../hooks.js";
 
@@ -19,13 +19,21 @@ export default function Skills() {
     [filter],
   );
 
+  // One of each technology for the ticker ribbon (Kotlin appears in two
+  // categories but only needs one ride on the carousel).
+  const ticker = useMemo(() => [...new Set(skillCategories.flatMap((c) => c.items))], []);
+
   return (
     <section id="skills" className="section skills">
       <SectionHeading
-        index="03"
-        kicker="package registry"
-        title="A matrix, not a pile of badges."
-        lede={isTouch ? "Tap a category to filter the registry." : "Hover to feel the grid. Filter to see the shape of the stack."}
+        index="04"
+        kicker="What I work with"
+        title="The tools of the trade."
+        lede={
+          isTouch
+            ? "Every tool in its own true colours. Tap a category to filter."
+            : "Every tool in its own true colours — hover one to see it glow. Pick a category to filter."
+        }
       />
 
       <div className="filters" role="tablist" aria-label="Skill categories">
@@ -53,18 +61,36 @@ export default function Skills() {
             key={s.name}
             layout
             className={`skill ${hovered && hovered !== s.name ? "is-dim" : ""}`}
-            initial={{ opacity: 0, scale: 0.7 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            style={brandVars(s.name)}
+            initial={{ opacity: 0, scale: 0.6, rotate: -3 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             onMouseEnter={isTouch ? undefined : () => setHovered(s.name)}
             onMouseLeave={isTouch ? undefined : () => setHovered(null)}
-            whileHover={isTouch ? undefined : { y: -4, scale: 1.06 }}
+            whileHover={isTouch ? undefined : { y: -5, scale: 1.07 }}
             data-cat={s.label}
           >
+            <span className="skill-logo">
+              <TechIcon name={s.name} size={15} />
+            </span>
             {s.name}
           </motion.li>
         ))}
       </motion.ul>
+
+      {/* Infinite ribbon of everything at once — pure CSS loop, decorative */}
+      <div className="tech-ticker" aria-hidden="true">
+        <div className="tech-ticker-track">
+          {[...ticker, ...ticker].map((name, i) => (
+            <span key={`${name}-${i}`} className="tech-pill" style={brandVars(name)}>
+              <span className="skill-logo">
+                <TechIcon name={name} size={14} />
+              </span>
+              {name}
+            </span>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

@@ -22,6 +22,11 @@ function buildCells() {
 
 function draw(canvas, { cells, snake }) {
   const ctx = canvas.getContext("2d");
+  // Pull the live theme accent so the graph re-colours with light/dark mode.
+  const css = getComputedStyle(document.documentElement);
+  const a1 = css.getPropertyValue("--accent-rgb").trim() || "82 255 168";
+  const a2 = css.getPropertyValue("--accent-2-rgb").trim() || "56 200 255";
+  const rgb = (v) => v.replace(/\s+/g, ",");
   const w = canvas.clientWidth || 1100;
   const h = Math.max(140, Math.round(w * 0.16));
   if (canvas.width !== w || canvas.height !== h) {
@@ -34,14 +39,16 @@ function draw(canvas, { cells, snake }) {
   (cells || []).forEach((c) => {
     const px = c.x * (size + gap);
     const py = c.y * (size + gap) + (h - ROWS * (size + gap)) / 2;
-    ctx.fillStyle = c.on ? `rgba(82,255,168,${0.22 + c.heat * 0.6})` : "rgba(140,190,160,0.07)";
+    ctx.fillStyle = c.on
+      ? `rgba(${rgb(c.heat > 0.72 ? a2 : a1)},${0.22 + c.heat * 0.6})`
+      : "rgba(140,160,175,0.09)";
     ctx.fillRect(px, py, size, size);
   });
   (snake || []).forEach((s, i) => {
     const px = s.x * (size + gap);
     const py = s.y * (size + gap) + (h - ROWS * (size + gap)) / 2;
-    ctx.fillStyle = i === 0 ? "#baffdd" : `rgba(82,255,168,${1 - i / snake.length})`;
-    ctx.shadowColor = "rgba(82,255,168,0.8)";
+    ctx.fillStyle = i === 0 ? `rgb(${rgb(a2)})` : `rgba(${rgb(a1)},${1 - i / snake.length})`;
+    ctx.shadowColor = `rgba(${rgb(a1)},0.8)`;
     ctx.shadowBlur = i === 0 ? 12 : 0;
     ctx.fillRect(px, py, size, size);
     ctx.shadowBlur = 0;
@@ -145,12 +152,12 @@ export default function SnakeGame() {
 
   return (
     <section id="snake" className="section snake-section">
-      <SectionHeading index="04.5" kicker="commit --graph" title="The contribution matrix." />
+      <SectionHeading index="06.5" kicker="A year of work" title="Every square is a day I wrote code." />
       <Reveal>
         <div className="panel snake-panel">
           <div className="snake-meta">
-            <p className="panel-kicker">{"// commit lattice"}</p>
-            <p>A living map of commits. Watch the serpent eat the year.</p>
+            <p className="panel-kicker">Daily activity</p>
+            <p>Brighter squares are busier days — and yes, something is eating them.</p>
           </div>
           <canvas ref={ref} className="snake-canvas" width="1100" height="180" aria-label="Animated contribution graph" role="img" />
         </div>

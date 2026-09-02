@@ -121,7 +121,7 @@ export default function CommandPalette({ open, onClose }) {
                 ref={inputRef}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Type a command or search…"
+                placeholder="Search this site…"
                 aria-label="Command search"
                 autoComplete="off"
                 spellCheck="false"
@@ -129,7 +129,7 @@ export default function CommandPalette({ open, onClose }) {
               <Kbd>ESC</Kbd>
             </div>
             <ul className="cmdk-list" ref={listRef} role="listbox" aria-label="Commands">
-              {results.length === 0 && <li className="cmdk-empty">no matching process — try “projects”</li>}
+              {results.length === 0 && <li className="cmdk-empty">Nothing found — try “projects”</li>}
               {results.map((c, i) => (
                 <li
                   key={c.id}
@@ -149,12 +149,12 @@ export default function CommandPalette({ open, onClose }) {
             </ul>
             <div className="cmdk-foot" aria-hidden="true">
               <span>
-                <Kbd>↑</Kbd> <Kbd>↓</Kbd> navigate
+                <Kbd>↑</Kbd> <Kbd>↓</Kbd> move
               </span>
               <span>
-                <Kbd>↵</Kbd> run
+                <Kbd>↵</Kbd> open
               </span>
-              <span className="cmdk-brand">nexus-shell</span>
+              <span className="cmdk-brand">Quick search</span>
             </div>
           </motion.div>
         </motion.div>

@@ -25,7 +25,14 @@ function ProjectCard({ p, i }) {
     my.set(0);
   };
 
-  const motionProps = isTouch ? {} : { style: { rotateX: rx, rotateY: ry, transformPerspective: 1100 }, onPointerMove: onMove, onPointerLeave: reset };
+  const langColor = LANG_COLORS[p.lang] || "52ffa8";
+  const motionProps = isTouch
+    ? { style: { "--proj": langColor } }
+    : {
+        style: { rotateX: rx, rotateY: ry, transformPerspective: 1100, "--proj": langColor },
+        onPointerMove: onMove,
+        onPointerLeave: reset,
+      };
 
   return (
     <Reveal delay={(i % 3) * 0.07} className={p.featured ? "proj-featured" : ""}>
@@ -34,12 +41,13 @@ function ProjectCard({ p, i }) {
         href={p.link}
         target="_blank"
         rel="noreferrer"
-        className={`project panel ${p.featured ? "featured" : ""}`}
+        className={`project panel ${p.featured ? "featured with-beam" : ""}`}
         whileHover={isTouch ? undefined : { y: -8 }}
         {...motionProps}
       >
         <div className="project-media" aria-hidden="true">
           <img src={p.image} alt="" loading="lazy" decoding="async" width="640" height="360" />
+          <span className="project-glint" />
         </div>
         <div className="project-body">
           <div className="project-top">
@@ -54,7 +62,7 @@ function ProjectCard({ p, i }) {
           <div className="project-meta">
             {p.lang && (
               <span className="project-lang">
-                <i style={{ background: LANG_COLORS[p.lang] || "#8fa89a" }} /> {p.lang}
+                <i style={{ background: langColor, boxShadow: `0 0 8px ${langColor}B0` }} /> {p.lang}
               </span>
             )}
             <span className="project-stat">
@@ -82,10 +90,10 @@ export default function Projects() {
   return (
     <section id="projects" className="section projects">
       <SectionHeading
-        index="04"
-        kicker="ls ~/work — 6 of 90 shown"
-        title="Selected repositories."
-        lede="Hand-picked from 90 public repositories — the rest live on GitHub."
+        index="06"
+        kicker="Things I've built"
+        title="Some of my favourite work."
+        lede="Six picks from ninety public projects — the rest are on GitHub."
       />
       <div className="project-grid">
         {projects.map((p, i) => (
@@ -94,7 +102,7 @@ export default function Projects() {
       </div>
       <Reveal className="projects-more">
         <a className="btn btn-ghost" href="https://github.com/Fellow3-1?tab=repositories" target="_blank" rel="noreferrer">
-          Explore all 90 repositories <ArrowUpRight size={15} />
+          See all 90 projects <ArrowUpRight size={15} />
         </a>
       </Reveal>
     </section>
