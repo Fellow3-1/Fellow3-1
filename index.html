@@ -3,40 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Felix Odhiambo — Software engineer building websites &amp; apps</title>
+    <title>Felix Odhiambo — Software engineer building websites & apps</title>
     <meta
       name="description"
       content="Felix Odhiambo (Felloh) — a software engineer in Nairobi, Kenya. I build websites, mobile apps, mobile-money payments and AI features, and I have been doing it for over 12 years."
     />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#000805" />
     <meta property="og:title" content="Felix Odhiambo — Software engineer building websites & apps" />
     <meta
       property="og:description"
       content="Websites, mobile apps and AI features, built in Nairobi for over 12 years."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/hero-void.jpg" />
+    <meta property="og:image" content="assets/crest.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="assets/crest.png" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="apple-touch-icon" href="assets/crest.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="image" href="assets/hero-void.jpg" />
-    <!-- Fonts load async so first paint is never blocked; the boot screen
-         covers the swap, and display=swap avoids invisible text. -->
+    <link rel="preload" as="image" href="assets/crest.png" />
+    <!-- Fluid Sans implementation: Funnel Sans + Funnel Display (fluid geometric sans) + JetBrains Mono -->
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Funnel+Display:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Funnel+Display:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Funnel+Display:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet"
       />
     </noscript>
@@ -49,7 +50,7 @@
           var light = saved ? saved === "light" : window.matchMedia("(prefers-color-scheme: light)").matches;
           document.documentElement.dataset.theme = light ? "light" : "dark";
           var m = document.querySelector('meta[name="theme-color"]');
-          if (m) m.setAttribute("content", light ? "#f6f8fb" : "#000000");
+          if (m) m.setAttribute("content", light ? "#f2fbf6" : "#000805");
         } catch (e) {}
       })();
     </script>

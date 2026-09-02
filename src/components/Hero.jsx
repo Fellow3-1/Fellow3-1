@@ -64,7 +64,7 @@ export default function Hero({ ready = true }) {
             </Magnetic>
             <Magnetic>
               <a className="btn btn-ghost" href="assets/cv-felix-odhiambo.txt" download>
-Download CV
+                Download CV
               </a>
             </Magnetic>
             <div className="hero-socials">
@@ -93,7 +93,7 @@ Download CV
         </motion.div>
       </div>
 
-      {/* neofetch — live system panel */}
+      {/* neofetch — now with crest image instead of ASCII robot */}
       <motion.aside
         className="hero-fetch with-beam"
         initial={{ opacity: 0, scale: 0.96, y: 16 }}
@@ -105,12 +105,22 @@ Download CV
           <span className="fetch-dot" />
           <span className="fetch-dot" />
           <span className="fetch-dot" />
-          <p>Quick introduction</p>
+          <p>Crest protocol · Quick introduction</p>
         </div>
         <div className="fetch-body">
-          <pre className="fetch-art" aria-hidden="true">
-            {FETCH_ART}
-          </pre>
+          <div className="fetch-crest" aria-hidden="true">
+            <img
+              src="assets/crest.png"
+              alt="Felloh crest — robotic shield"
+              width="220"
+              height="260"
+              decoding="async"
+              loading="eager"
+              className="fetch-crest-img"
+            />
+            <span className="fetch-crest-glow" />
+            <span className="fetch-crest-ring" />
+          </div>
           <dl className="fetch-info">
             <div>
               <dt>name</dt>
@@ -170,12 +180,3 @@ Download CV
     </section>
   );
 }
-
-const FETCH_ART = String.raw`
-   ▄▄▄▄▄▄▄▄▄▄▄▄▄
-  █ ▀▀▀ ██ ▀▀▀ █
-  █ ██  ██  ██ █
-  █ ▄▄▄ ██ ▄▄▄ █
-  █▄▄▄▄▄▄▄▄▄▄▄▄█
-   ████▄▄▄▄████
-`;
