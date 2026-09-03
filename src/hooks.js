@@ -208,7 +208,7 @@ export function useTheme() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", theme === "light" ? "#f6f5fa" : "#07070a");
+    if (meta) meta.setAttribute("content", theme === "light" ? "#f7f6fb" : "#07070c");
   }, [theme]);
 
   // Follow the OS while the visitor has not made an explicit choice.
