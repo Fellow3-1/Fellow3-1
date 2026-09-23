@@ -62,11 +62,6 @@ export default function Hero({ ready = true }) {
                 Get in touch <ArrowDown size={15} />
               </a>
             </Magnetic>
-            <Magnetic>
-              <a className="btn btn-ghost" href="assets/cv-felix-odhiambo.txt" download>
-                Download CV
-              </a>
-            </Magnetic>
             <div className="hero-socials">
               <a href="https://github.com/Fellow3-1" target="_blank" rel="noreferrer" aria-label="GitHub">
                 <FolderGit2 size={18} />

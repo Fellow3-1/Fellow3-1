@@ -8,41 +8,45 @@
       name="description"
       content="Felix Odhiambo (Felloh) — a software engineer in Nairobi, Kenya. I build websites, mobile apps, mobile-money payments and AI features, and I have been doing it for over 12 years."
     />
-    <meta name="theme-color" content="#07070A" />
+    <meta name="theme-color" content="#07070C" />
     <meta property="og:title" content="Felix Odhiambo — Software engineer building websites & apps" />
     <meta
       property="og:description"
       content="Websites, mobile apps and AI features, built in Nairobi for over 12 years."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/HD-Joker-Wallpapers-scaled.jpg" />
+    <meta property="og:image" content="assets/portfolio-preview.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Fellow3_1" />
     <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-joker.png" />
     <link rel="icon" type="image/jpeg" href="assets/HD-Joker-Wallpapers-scaled.jpg" />
     <link rel="apple-touch-icon" href="assets/joker-apple-touch.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" as="image" href="assets/HD-Joker-Wallpapers-scaled.jpg" />
-    <!-- Fluid Sans implementation: Funnel Sans + Funnel Display (fluid geometric sans) + JetBrains Mono -->
+    <link rel="preload" as="image" href="assets/hero-void.jpg" />
+    <!-- Fluid Sans implementation: only the weights the CSS actually uses
+         (Funnel Sans 400–700, Funnel Display 700, JetBrains Mono 400/500/700)
+         — nothing italic, no 300/800. -->
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Funnel+Display:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=Funnel+Display:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Funnel+Display:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=Funnel+Display:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
-        href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Funnel+Display:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=Funnel+Display:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet"
       />
     </noscript>
-    <script type="module" crossorigin src="./assets/index-B1cMXU1L.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CA3zF1Nv.css">
+    <script type="module" crossorigin src="./assets/index-BCgbokIG.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BNnOVDvy.css">
   </head>
   <script>
       // Set the theme before first paint so there is no light/dark flash.
@@ -52,7 +56,7 @@
           var light = saved ? saved === "light" : window.matchMedia("(prefers-color-scheme: light)").matches;
           document.documentElement.dataset.theme = light ? "light" : "dark";
           var m = document.querySelector('meta[name="theme-color"]');
-          if (m) m.setAttribute("content", light ? "#f6f5fa" : "#07070a");
+          if (m) m.setAttribute("content", light ? "#f7f6fb" : "#07070c");
         } catch (e) {}
       })();
     </script>

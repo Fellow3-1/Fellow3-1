@@ -43,7 +43,7 @@ export default function Stats() {
           <GitFork size={12} /> Payment tool reused by 34 teams
         </span>
         <span className="achievement">
-          <Users size={12} /> 39 developers following
+          <Users size={12} /> 38 developers following
         </span>
         <a className="achievement achievement-link" href="https://github.com/Fellow3-1" target="_blank" rel="noreferrer">
           <Github size={12} /> See it on GitHub

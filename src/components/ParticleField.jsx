@@ -25,6 +25,25 @@ export default function ParticleField() {
     let resizeQueued = false;
     const mouse = { x: 0.5, y: 0.5 }; // normalized −1..1-ish offsets
 
+    // Accent tints are read ONCE per theme change, not per frame: calling
+    // getComputedStyle every frame forces a style recalc each rAF tick.
+    let tints = ["82,255,168", "56,200,255", "236,74,64"];
+    const readTints = () => {
+      const css = getComputedStyle(document.documentElement);
+      tints = ["--accent-rgb", "--accent-2-rgb", "--accent-3-rgb"].map(
+        (k) => (css.getPropertyValue(k).trim() || "82 255 168").replace(/\s+/g, ","),
+      );
+    };
+    readTints();
+    let themeObserver;
+    if (typeof MutationObserver !== "undefined") {
+      themeObserver = new MutationObserver(readTints);
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"],
+      });
+    }
+
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       w = canvas.width = Math.floor(window.innerWidth * dpr);
@@ -44,11 +63,6 @@ export default function ParticleField() {
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
-      // Particles follow the live theme accents (lime → violet → crimson).
-      const css = getComputedStyle(document.documentElement);
-      const tints = ["--accent-rgb", "--accent-2-rgb", "--accent-3-rgb"].map(
-        (k) => (css.getPropertyValue(k).trim() || "82 255 168").replace(/\s+/g, ","),
-      );
       const px = (mouse.x - 0.5) * 26;
       const py = (mouse.y - 0.5) * 26;
       for (let i = 0; i < motes.length; i += 1) {
@@ -100,6 +114,7 @@ export default function ParticleField() {
     document.addEventListener("visibilitychange", onVisibility);
     return () => {
       cancelAnimationFrame(raf);
+      themeObserver && themeObserver.disconnect();
       window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("visibilitychange", onVisibility);

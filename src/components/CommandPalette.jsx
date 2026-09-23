@@ -49,11 +49,6 @@ export default function CommandPalette({ open, onClose }) {
       if (!target) return;
       if (target.startsWith("#")) {
         document.querySelector(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else if (target.endsWith(".txt")) {
-        const a = document.createElement("a");
-        a.href = target;
-        a.download = "";
-        a.click();
       } else {
         window.open(target, "_blank", "noreferrer");
       }

@@ -1,10 +1,9 @@
 import { socials } from "../data/content.js";
-import { useNairobiClock } from "../hooks.js";
+import { NairobiClock } from "./ui.jsx";
 
 /** tmux-style status bar as the footer. */
 export default function Footer() {
   const year = new Date().getFullYear();
-  const clock = useNairobiClock();
   return (
     <footer className="foot" role="contentinfo">
       <div className="foot-cell foot-session">
@@ -29,7 +28,7 @@ export default function Footer() {
       <div className="foot-cell foot-right">
         <span className="foot-tag">Coffee in · software that works, out</span>
         <span>
-          Nairobi {clock} · <span className="foot-ok">● Available</span>
+          Nairobi <NairobiClock /> · <span className="foot-ok">● Available</span>
         </span>
       </div>
     </footer>

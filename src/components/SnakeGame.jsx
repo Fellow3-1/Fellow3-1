@@ -20,13 +20,22 @@ function buildCells() {
   return cells;
 }
 
+/**
+ * Theme accents as a small mutable holder: read from the CSS variables once
+ * per theme change (not per frame), so draw() never triggers a style
+ * recalculation mid-animation.
+ */
+const accents = { a1: "82,255,168", a2: "56,200,255" };
+
+function readAccents() {
+  const css = getComputedStyle(document.documentElement);
+  accents.a1 = (css.getPropertyValue("--accent-rgb").trim() || "82 255 168").replace(/\s+/g, ",");
+  accents.a2 = (css.getPropertyValue("--accent-2-rgb").trim() || "56 200 255").replace(/\s+/g, ",");
+}
+
 function draw(canvas, { cells, snake }) {
   const ctx = canvas.getContext("2d");
-  // Pull the live theme accent so the graph re-colours with light/dark mode.
-  const css = getComputedStyle(document.documentElement);
-  const a1 = css.getPropertyValue("--accent-rgb").trim() || "82 255 168";
-  const a2 = css.getPropertyValue("--accent-2-rgb").trim() || "56 200 255";
-  const rgb = (v) => v.replace(/\s+/g, ",");
+  const { a1, a2 } = accents;
   const w = canvas.clientWidth || 1100;
   const h = Math.max(140, Math.round(w * 0.16));
   if (canvas.width !== w || canvas.height !== h) {
@@ -40,15 +49,15 @@ function draw(canvas, { cells, snake }) {
     const px = c.x * (size + gap);
     const py = c.y * (size + gap) + (h - ROWS * (size + gap)) / 2;
     ctx.fillStyle = c.on
-      ? `rgba(${rgb(c.heat > 0.72 ? a2 : a1)},${0.22 + c.heat * 0.6})`
+      ? `rgba(${c.heat > 0.72 ? a2 : a1},${0.22 + c.heat * 0.6})`
       : "rgba(140,160,175,0.09)";
     ctx.fillRect(px, py, size, size);
   });
   (snake || []).forEach((s, i) => {
     const px = s.x * (size + gap);
     const py = s.y * (size + gap) + (h - ROWS * (size + gap)) / 2;
-    ctx.fillStyle = i === 0 ? `rgb(${rgb(a2)})` : `rgba(${rgb(a1)},${1 - i / snake.length})`;
-    ctx.shadowColor = `rgba(${rgb(a1)},0.8)`;
+    ctx.fillStyle = i === 0 ? `rgb(${a2})` : `rgba(${a1},${1 - i / snake.length})`;
+    ctx.shadowColor = `rgba(${a1},0.8)`;
     ctx.shadowBlur = i === 0 ? 12 : 0;
     ctx.fillRect(px, py, size, size);
     ctx.shadowBlur = 0;
@@ -72,9 +81,20 @@ export default function SnakeGame() {
     let snake = [];
     for (let i = 0; i < 8; i += 1) snake.push({ x: 8 - i, y: 3 });
 
+    // Keep the palette in step with light/dark without per-frame lookups.
+    readAccents();
+    let themeObserver;
+    if (typeof MutationObserver !== "undefined") {
+      themeObserver = new MutationObserver(readAccents);
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"],
+      });
+    }
+
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       draw(canvas, { cells, snake });
-      return;
+      return () => themeObserver && themeObserver.disconnect();
     }
 
     let dir = { x: 1, y: 0 };
@@ -145,6 +165,7 @@ export default function SnakeGame() {
     start();
     return () => {
       stop();
+      themeObserver && themeObserver.disconnect();
       io && io.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
     };

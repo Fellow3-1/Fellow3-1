@@ -2,10 +2,8 @@
 # FELIX ODHIAMBO — "Felloh 3.1"
 # Senior Full-Stack & Cloud Engineer — Nairobi, Kenya (UTC+3)
 # ------------------------------------------------------------------
-# This is a machine-readable placeholder résumé shipped with the
-# portfolio so the ⌘K "Download résumé" command always resolves.
-# Replace with the real PDF (public/assets/cv-felix-odhiambo.pdf)
-# and update src/data/content.js → commands[].run.
+# Plain-text résumé that ships with the portfolio.
+# Facts mirror the live public profile: github.com/Fellow3-1
 
 CONTACT
   email..... felixodhiambo31@live.com
@@ -17,7 +15,9 @@ SUMMARY
   Senior full-stack & cloud engineer with 12+ years across web,
   mobile, payments, systems programming and AI integration.
   Creator of mpesa-api-go (unofficial Safaricom Daraja SDK for Go,
-  34 forks) and tovuti (Android connectivity library).
+  34 forks) and tovuti (Android connectivity library, 12 forks).
+  I take projects from the first sketch to launch day — fast on
+  every connection, easy for the next person to look after.
 
 STACK
   Languages... TypeScript, JavaScript, Go, Python, C, Java, Kotlin
@@ -37,4 +37,4 @@ SELECTED WORK
 
 EDUCATION & CREDENTIALS
   ALX Software Engineering · ALC / Google · Google-Udacity Android
-  GitHub: Pull Shark ×2 · Pair Extraordinaire · YOLO
+  GitHub: Developer Program Member · Pull Shark ×2 · Pair Extraordinaire

@@ -33,7 +33,7 @@ export const roles = [
 export const stats = [
   { label: "Years building software", value: 12, suffix: "+", note: "writing code since 2014" },
   { label: "Projects shared publicly", value: 90, suffix: "", note: "apps, tools and experiments" },
-  { label: "Developers following along", value: 39, suffix: "", note: "on GitHub" },
+  { label: "Developers following along", value: 38, suffix: "", note: "on GitHub" },
   { label: "Teams reusing my payment tool", value: 34, suffix: "", note: "my M-PESA helper, copied and reused" },
 ];
 
@@ -185,7 +185,7 @@ export const projects = [
     description:
       "A free tool that lets developers take M-PESA mobile payments inside their own apps, without wrestling with the paperwork.",
     lang: "Go",
-    stars: 8,
+    stars: 1,
     forks: 34,
     tags: ["Payments", "M-PESA"],
     link: "https://github.com/Fellow3-1/mpesa-api-go",
@@ -198,7 +198,7 @@ export const projects = [
     description:
       "A small add-on for Android apps that tells them, in real time, whether the user is online and how fast their connection is.",
     lang: "Java",
-    stars: 15,
+    stars: 0,
     forks: 12,
     tags: ["Android", "Reliability"],
     link: "https://github.com/Fellow3-1/tovuti",
@@ -209,8 +209,8 @@ export const projects = [
     kicker: "No more typing codes",
     description: "Fills in the security code from a text message automatically, so signing in takes one tap instead of five.",
     lang: "Java",
-    stars: 6,
-    forks: 3,
+    stars: 0,
+    forks: 0,
     tags: ["Android", "Ease of use"],
     link: "https://github.com/Fellow3-1/android-sms-verifier",
     image: "assets/proj-mobile.jpg",
@@ -220,8 +220,8 @@ export const projects = [
     kicker: "How computers really work",
     description: "Two from-scratch builds of the parts most programmers take for granted — the deep end, and the best teacher I have had.",
     lang: "C",
-    stars: 4,
-    forks: 5,
+    stars: 0,
+    forks: 1,
     tags: ["Fundamentals"],
     link: "https://github.com/Fellow3-1/printf",
     image: "assets/proj-systems.jpg",
@@ -231,8 +231,8 @@ export const projects = [
     kicker: "Add an assistant to your product",
     description: "A ready-made starting point for adding a chat assistant to a website or app, with replies that stream in as they are written.",
     lang: "JavaScript",
-    stars: 5,
-    forks: 2,
+    stars: 0,
+    forks: 0,
     tags: ["AI", "Chat"],
     link: "https://github.com/Fellow3-1/llm-chat-app-template",
     image: "assets/proj-ai.jpg",
@@ -242,8 +242,8 @@ export const projects = [
     kicker: "A work in progress",
     description: "An experiment in finding your way around a space in virtual reality, using light and depth instead of arrows.",
     lang: "CSS",
-    stars: 2,
-    forks: 1,
+    stars: 0,
+    forks: 0,
     tags: ["VR", "Experiment"],
     link: "https://github.com/Fellow3-1/VR_Navigation",
     image: "assets/proj-vr.jpg",
@@ -329,7 +329,6 @@ export const commands = [
       return null;
     },
   },
-  { id: "download", label: "Download my CV", hint: "A one-page summary", kbd: "", run: () => "assets/cv-felix-odhiambo.txt" },
 ];
 
 /**
