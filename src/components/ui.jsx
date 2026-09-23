@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
 import { Coffee, Database, Braces, Cloud, CloudUpload, Bot, Hash, Palette, Code2 } from "lucide-react";
 import { TECH } from "../data/tech.js";
-import { useCountUp, useIsTouch } from "../hooks.js";
+import { useCountUp, useIsTouch, useNairobiClock } from "../hooks.js";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -80,6 +80,15 @@ export function Chip({ children, tone = "" }) {
 /** Keyboard key cap. */
 export function Kbd({ children }) {
   return <kbd className="kbd">{children}</kbd>;
+}
+
+/**
+ * Nairobi wall clock as its own component: the per-second tick re-renders
+ * only this tiny <span>, not the whole navbar or footer around it.
+ */
+export function NairobiClock({ className = "" }) {
+  const time = useNairobiClock();
+  return <span className={className}>{time}</span>;
 }
 
 /** Magnetic hover wrapper — element leans toward the cursor. (fine pointers only) */

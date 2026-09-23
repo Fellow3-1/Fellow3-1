@@ -65,12 +65,18 @@ function ProjectCard({ p, i }) {
                 <i style={{ background: langColor, boxShadow: `0 0 8px ${langColor}B0` }} /> {p.lang}
               </span>
             )}
-            <span className="project-stat">
-              <Star size={12} /> {p.stars}
-            </span>
-            <span className="project-stat">
-              <GitFork size={12} /> {p.forks}
-            </span>
+            {/* Only real social proof is shown — repos at zero are left out
+                rather than rendering a misleading "0". */}
+            {p.stars > 0 && (
+              <span className="project-stat">
+                <Star size={12} /> {p.stars}
+              </span>
+            )}
+            {p.forks > 0 && (
+              <span className="project-stat">
+                <GitFork size={12} /> {p.forks}
+              </span>
+            )}
             <span className="project-cc" aria-hidden="true">
               CC
             </span>

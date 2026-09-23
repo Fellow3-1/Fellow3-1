@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Command, Sun, Moon } from "lucide-react";
-import { useNairobiClock, useSfx, useTheme } from "../hooks.js";
-import { Kbd } from "./ui.jsx";
+import { useSfx, useTheme } from "../hooks.js";
+import { Kbd, NairobiClock } from "./ui.jsx";
 
 const LINKS = [
   { id: "about", label: "About", num: "01" },
@@ -13,7 +13,6 @@ const LINKS = [
 ];
 
 export default function Navbar({ onOpenPalette }) {
-  const clock = useNairobiClock();
   const play = useSfx();
   const [theme, toggleTheme] = useTheme();
   const [active, setActive] = useState("");
@@ -102,7 +101,9 @@ export default function Navbar({ onOpenPalette }) {
           </button>
           <div className="nav-meta" aria-label="Nairobi local time">
             <span className="live-dot" aria-hidden="true" />
-            <time>NBO {clock}</time>
+            <time>
+              NBO <NairobiClock />
+            </time>
           </div>
           <button
             type="button"
