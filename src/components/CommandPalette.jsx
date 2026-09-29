@@ -6,7 +6,7 @@ import { Kbd } from "./ui.jsx";
 import { useSfx } from "../hooks.js";
 
 /**
- * ⌘K command palette — the signature Nexus OS interaction.
+ * ⌘K command palette — the signature Felloh OS interaction.
  * Arrow keys navigate, Enter runs, Esc closes. Focus is trapped while open
  * and restored to the invoking element on close. Body scroll is locked.
  */
