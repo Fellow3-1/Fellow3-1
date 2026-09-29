@@ -7,7 +7,7 @@ const DURATION = 1400; // ms — quick, skippable boot ritual
 const EXIT = 420; // ms — matches the CSS sweep-out animation
 
 /**
- * Nexus OS kernel boot. Progress is driven by a single rAF loop (one ~60fps
+ * Felloh OS kernel boot. Progress is driven by a single rAF loop (one ~60fps
  * timer, not a 30Hz interval). Skippable by tap/keys; honors reduced motion
  * by skipping straight through. Self-unmounts and hands off to the app.
  */
@@ -85,10 +85,10 @@ export default function BootScreen({ onDone }) {
 }
 
 const ASCII = String.raw`
- ███╗   ██╗███████╗██╗  ██╗██╗   ██╗███████╗
- ████╗  ██║██╔════╝╚██╗██╔╝██║   ██║██╔════╝
- ██╔██╗ ██║█████╗   ╚███╔╝ ██║   ██║███████╗
- ██║╚██╗██║██╔══╝   ██╔██╗ ██║   ██║╚════██║
- ██║ ╚████║███████╗██╔╝ ██╗╚██████╔╝███████║
- ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+ ███████╗███████╗██╗     ██╗      ██████╗ ██╗  ██╗
+ ██╔════╝██╔════╝██║     ██║     ██╔═══██╗██║  ██║
+ █████╗  █████╗  ██║     ██║     ██║   ██║███████║
+ ██╔══╝  ██╔══╝  ██║     ██║     ██║   ██║██╔══██║
+ ██║     ███████╗███████╗███████╗╚██████╔╝██║  ██║
+ ╚═╝     ╚══════╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝
 `;
