@@ -80,16 +80,13 @@
 
 <div align="center">
 
-| Stat | Value |
-| :--- | :---: |
-| **HP** | `██████████████████ 100%` |
-| **MP** | `██████████████████ 100%` |
-| **EXP** | `██████████████░░░░ 85%` |
-| **Stamina** | ☕ Infinite Coffee |
-| **Class** | Full-Stack Sorcerer |
-| **Sub-Class** | Cloud &amp; AI Specialist |
-| **Weapon** | Neovim &amp; TypeScript |
-| **Armor** | Docker &amp; Kubernetes |
+| ❤️ HP | 🔷 MP | ⭐ EXP | ☕ Stamina |
+| :---: | :---: | :---: | :---: |
+| `██████████` 100% | `██████████` 100% | `████████░░` 85% | Infinite Coffee |
+
+| 🧙 Class | 🔮 Sub-Class | ⚔️ Weapon | 🛡️ Armor |
+| :---: | :---: | :---: | :---: |
+| Full-Stack Sorcerer | Cloud &amp; AI Specialist | Neovim &amp; TypeScript | Docker &amp; Kubernetes |
 
 </div>
 
