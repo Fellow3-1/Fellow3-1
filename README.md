@@ -6,27 +6,22 @@
   <a href="https://git.io/typing-svg">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&amp;weight=600&amp;size=22&amp;pause=1000&amp;color=A970FF&amp;center=true&amp;vCenter=true&amp;width=600&amp;lines=%F0%9F%9A%80+Full-Stack+Software+Engineer;%F0%9F%93%B1+Mobile+%26+Web+Application+Developer;%F0%9F%A4%96+AI+%26+Modern+Tech+Explorer;%F0%9F%92%A1+Open+Source+Contributor" alt="Typing introduction: Full-Stack Software Engineer, Mobile and Web Application Developer, AI and Modern Tech Explorer, and Open Source Contributor" />
   </a>
+  
 </p>
-
 <p align="center">
   <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/View_My_Portfolio-8A2BE2?style=for-the-badge&amp;logo=githubpages&amp;logoColor=white" alt="View my portfolio on GitHub Pages (opens in a new tab)" />
   </a>
-</p>
-
-<p align="center">
   <a href="https://github.com/Fellow3-1?tab=followers">
     <img src="https://img.shields.io/github/followers/Fellow3-1?label=Followers&amp;style=for-the-badge&amp;color=8A2BE2&amp;logo=github" alt="GitHub followers" />
   </a>
   <a href="https://github.com/Fellow3-1?tab=repositories">
     <img src="https://img.shields.io/github/stars/Fellow3-1?affiliations=OWNER&amp;style=for-the-badge&amp;color=8A2BE2&amp;logo=github" alt="Stars across my GitHub repositories" />
   </a>
+  <a href="https://github.com/Fellow3-1">
+    <img src="https://komarev.com/ghpvc/?username=Fellow3-1&amp;color=8A2BE2&amp;style=for-the-badge&amp;label=Profile+Views" alt="Profile views counter" />
+  </a>
 </p>
-
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=Fellow3-1&amp;color=8A2BE2&amp;style=for-the-badge&amp;label=Profile+Views" alt="Profile views counter" />
-</p>
-
 ---
 
 <h2 align="center">📊 GitHub Stats & Analytics</h2>
