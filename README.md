@@ -72,7 +72,7 @@
 
 <h3 align="center">🎮 Developer RPG Character Sheet</h3>
 
-<p align="center"><b>FELLOH · LEVEL 99 DEV</b></p>
+<p align="center"><b>· LEVEL 99 DEV ·</b></p>
 
 <div align="center">
 
