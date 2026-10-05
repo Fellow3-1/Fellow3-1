@@ -22,6 +22,7 @@
     <img src="https://komarev.com/ghpvc/?username=Fellow3-1&amp;color=8A2BE2&amp;style=for-the-badge&amp;label=Profile+Views" alt="Profile views counter" />
   </a>
 </p>
+
 ---
 
 <h2 align="center">📊 GitHub Stats & Analytics</h2>
