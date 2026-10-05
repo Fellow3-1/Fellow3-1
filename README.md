@@ -8,13 +8,6 @@
   </a>
 </p>
 
-
-<p align="center">
-  <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/View_My_Portfolio-8A2BE2?style=for-the-badge&amp;logo=githubpages&amp;logoColor=white" alt="View my portfolio on GitHub Pages (opens in a new tab)" />
-  </a>
-</p>
-
 <p align="center">
   <a href="https://fellow3-1.github.io/Fellow3-1/" target="_blank" rel="noopener noreferrer">
     <img src="public/assets/portfolio-preview.jpg" alt="Felloh 3.1 live portfolio — click to open in a new tab" width="100%" />
