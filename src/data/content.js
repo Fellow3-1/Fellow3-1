@@ -5,371 +5,200 @@
 // ---------------------------------------------------------------------------
 
 export const profile = {
-  handle: "Felloh 3.1",
+  firstName: "Felix",
+  lastName: "Odhiambo",
+  handle: "Felloh",
   realName: "Felix Odhiambo",
-  house: "House Android",
-  epithet: "The Unboxed",
   location: "Nairobi, Kenya",
   timeZone: "Africa/Nairobi",
   utc: "UTC+3",
-  role: "Senior Full-Stack & Cloud Engineer",
-  tagline: "I build websites, apps and the systems behind them — and I make them fast, clear and easy to use.",
-  about: [
-    "I build things people actually use: websites, mobile apps, and the invisible plumbing that keeps them running. I take a project from the first sketch all the way to launch day.",
-    "For over ten years I've worked across phones, browsers and the cloud — including mobile payments in Kenya and, more recently, adding AI features to everyday products.",
-    "My promise is simple: something that loads fast, works on any device, and is easy for the next person to look after.",
-  ],
-  availability: "Available for full-time roles, freelance projects and friendly collaborations.",
+  email: "felixodhiambo31@live.com",
+  tagline: "Software engineer in Nairobi, building websites, apps and the systems behind them. Building since 2014.",
+  facts: ["M-PESA tool reused by 34 teams", "90 public projects"],
+  availability: "Available for full-time roles and freelance work. I reply within one working day.",
 };
 
-export const roles = [
-  "I build websites",
-  "I build mobile apps",
-  "I connect apps to payments",
-  "I add AI to products",
-  "I keep it all running",
+export const nav = [
+  { label: "Work", href: "#work" },
+  { label: "Story", href: "#story" },
+  { label: "Contact", href: "#contact" },
 ];
 
-export const stats = [
-  { label: "Years building software", value: 12, suffix: "+", note: "writing code since 2014" },
-  { label: "Projects shared publicly", value: 90, suffix: "", note: "apps, tools and experiments" },
-  { label: "Developers following along", value: 38, suffix: "", note: "on GitHub" },
-  { label: "Teams reusing my payment tool", value: 34, suffix: "", note: "my M-PESA helper, copied and reused" },
+// The staircase statement: five lines, ≥12 words, alternating two inks.
+export const introLines = [
+  { text: "Websites, apps,", ink: "full" },
+  { text: "payments, AI:", ink: "soft" },
+  { text: "whatever you need,", ink: "full" },
+  { text: "built fast and", ink: "soft" },
+  { text: "kept simple.", ink: "full" },
 ];
 
-export const marquee = [
-  "Websites",
-  "Mobile apps",
-  "Online payments",
-  "AI features",
-  "Fast & accessible",
-  "Clean design",
-  "Reliable hosting",
-  "Nairobi, Kenya",
-  "12+ years",
-  "Free & open source",
-];
+export const introNote = ["Felix Odhiambo, software engineer", "Nairobi, Kenya · UTC+3"];
 
-export const timeline = [
-  {
-    era: "2014 — Where it started",
-    hash: "a3f9c1d",
-    title: "Taking phones apart to learn how they work",
-    org: "Self-taught",
-    body: "I started by customising Android phones — rebuilding the software that runs on them. It taught me how software really works, from the inside out.",
-    tags: ["Android", "Phones", "Self-taught"],
-  },
-  {
-    era: "2018 — 2019 · Training with Google",
-    hash: "7b2e0f4",
-    title: "Learning app development properly",
-    org: "Google & Andela learning programme",
-    body: "I turned a hobby into a profession through a Google-backed training programme, building and shipping my first real Android apps.",
-    tags: ["Android apps", "Training"],
-  },
-  {
-    era: "2020 · Building for good",
-    hash: "c91d4a8",
-    title: "Software for the UN development goals",
-    org: "@BuildForSDG",
-    body: "I helped build a COVID-19 forecasting tool as part of a programme creating software for the UN Sustainable Development Goals — real deadlines, real users.",
-    tags: ["Teamwork", "Public good"],
-  },
-  {
-    era: "2020 — 2021 · Mobile money",
-    hash: "e45f7b2",
-    title: "Making M-PESA payments easy to plug in",
-    org: "Open source project",
-    body: "I wrote a free tool that lets other developers accept M-PESA mobile payments in their apps. Dozens of teams have reused it since.",
-    tags: ["Payments", "M-PESA", "Open source"],
-  },
-  {
-    era: "2023 — 2024 · Going deeper",
-    hash: "08ac3e9",
-    title: "Formal software engineering training",
-    org: "ALX Africa",
-    body: "A full engineering programme covering the foundations — how computers, servers and teams really work — across more than twenty hands-on projects.",
-    tags: ["Fundamentals", "Servers"],
-  },
-  {
-    era: "2024 — Today",
-    hash: "f1d60c5",
-    title: "Modern web apps with a bit of AI",
-    org: "Freelance & open source",
-    body: "Today I build fast, modern websites and apps — often with AI assistants built in — and share reusable starter kits with other developers.",
-    tags: ["Websites", "AI", "Cloud"],
-  },
-];
-
-export const services = [
-  {
-    icon: "Globe",
-    title: "Websites & web apps",
-    body: "From a simple landing page to a full customer portal — designed, built and launched, and quick on every connection.",
-  },
-  {
-    icon: "Smartphone",
-    title: "Mobile apps",
-    body: "Android and cross-platform apps, taken all the way from idea to a listing on the app store.",
-  },
-  {
-    icon: "Cloud",
-    title: "Hosting that stays up",
-    body: "I set up the servers and automatic updates behind your product, so it keeps running while you sleep.",
-  },
-  {
-    icon: "Sparkles",
-    title: "AI features",
-    body: "Chat assistants and smart search added to your product — useful and dependable, not a gimmick.",
-  },
-  {
-    icon: "Wrench",
-    title: "Tools for other developers",
-    body: "Free, well-documented tools and templates that other teams can pick up and use straight away.",
-  },
-  {
-    icon: "Compass",
-    title: "Advice & mentoring",
-    body: "A second opinion on your plan, your code or your team — turning a rough idea into something ready to build.",
-  },
-];
-
-export const skillCategories = [
-  {
-    id: "lang",
-    label: "Languages",
-    items: ["TypeScript", "JavaScript", "Python", "Go", "Rust", "C++", "C", "C#", "Java", "Kotlin", "Swift", "PHP", "HTML5", "CSS3", "SQL", "Bash"],
-  },
-  {
-    id: "front",
-    label: "Frontend",
-    items: ["React", "Next.js", "Vue", "Nuxt", "Svelte", "Astro", "Tailwind", "SASS", "Vite", "Vuetify", "Bootstrap"],
-  },
-  {
-    id: "back",
-    label: "Backend",
-    items: ["Node.js", "Express", "NestJS", "Fastify", "Flask", "FastAPI", "Django", "Spring Boot", "GraphQL", "REST"],
-  },
-  {
-    id: "data",
-    label: "Data & ORMs",
-    items: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Supabase", "Prisma", "Firebase", "SQLite"],
-  },
-  {
-    id: "ai",
-    label: "AI / ML",
-    items: ["OpenAI", "PyTorch", "TensorFlow", "Hugging Face", "LangChain", "Pandas", "NumPy"],
-  },
-  {
-    id: "cloud",
-    label: "Cloud & DevOps",
-    items: ["AWS", "Docker", "Kubernetes", "Cloudflare", "Vercel", "Netlify", "GitHub Actions", "Nginx", "Linux", "Heroku"],
-  },
-  {
-    id: "mobile",
-    label: "Mobile",
-    items: ["React Native", "Flutter", "Expo", "Android Studio", "Kotlin"],
-  },
-  {
-    id: "design",
-    label: "Design & Tools",
-    items: ["Figma", "Illustrator", "Photoshop", "Adobe XD", "Canva", "Neovim", "Git", "Postman"],
-  },
-];
-
-// Selected work. `lang` drives the real GitHub language dot color.
+// Selected work. Every entry is a real public repository.
 export const projects = [
   {
     name: "mpesa-api-go",
-    kicker: "Accept M-PESA payments",
+    title: "M-PESA payments, one import away",
     description:
-      "A free tool that lets developers take M-PESA mobile payments inside their own apps, without wrestling with the paperwork.",
+      "A free Go library that lets developers accept M-PESA mobile payments inside their own apps, without wrestling with the paperwork.",
+    detail: "Forked by 34 teams",
     lang: "Go",
-    stars: 1,
-    forks: 34,
-    tags: ["Payments", "M-PESA"],
+    tags: ["Payments", "M-PESA", "Open source"],
     link: "https://github.com/Fellow3-1/mpesa-api-go",
-    image: "assets/proj-mpesa.jpg",
-    featured: true,
+    image: "assets/work-mpesa.jpg",
+    w: 1376,
+    h: 768,
   },
   {
     name: "tovuti",
-    kicker: "Know when the internet drops",
+    title: "Know when the internet drops",
     description:
-      "A small add-on for Android apps that tells them, in real time, whether the user is online and how fast their connection is.",
+      "A small add-on for Android apps that reports, in real time, whether the user is online and how fast the connection is.",
+    detail: "Forked by 12 teams",
     lang: "Java",
-    stars: 0,
-    forks: 12,
     tags: ["Android", "Reliability"],
     link: "https://github.com/Fellow3-1/tovuti",
-    image: "assets/proj-tovuti.jpg",
+    image: "assets/work-tovuti.jpg",
+    w: 928,
+    h: 1152,
   },
   {
     name: "android-sms-verifier",
-    kicker: "No more typing codes",
-    description: "Fills in the security code from a text message automatically, so signing in takes one tap instead of five.",
+    title: "Sign-in codes without the typing",
+    description:
+      "Fills the security code from a text message automatically, so signing in takes one tap instead of five.",
     lang: "Java",
-    stars: 0,
-    forks: 0,
     tags: ["Android", "Ease of use"],
     link: "https://github.com/Fellow3-1/android-sms-verifier",
-    image: "assets/proj-mobile.jpg",
+    image: "assets/work-sms.jpg",
+    w: 1408,
+    h: 768,
   },
   {
-    name: "Foundations",
-    kicker: "How computers really work",
-    description: "Two from-scratch builds of the parts most programmers take for granted — the deep end, and the best teacher I have had.",
+    name: "printf & simple_shell",
+    title: "How computers really work",
+    description:
+      "Two from-scratch builds of the parts most programmers take for granted: the deep end, and the best teacher I have had.",
     lang: "C",
-    stars: 0,
-    forks: 1,
-    tags: ["Fundamentals"],
+    tags: ["Fundamentals", "ALX"],
     link: "https://github.com/Fellow3-1/printf",
-    image: "assets/proj-systems.jpg",
+    image: "assets/work-foundations.jpg",
+    w: 1376,
+    h: 768,
   },
   {
-    name: "AI chat starter",
-    kicker: "Add an assistant to your product",
-    description: "A ready-made starting point for adding a chat assistant to a website or app, with replies that stream in as they are written.",
+    name: "llm-chat-app-template",
+    title: "An assistant for your product",
+    description:
+      "A ready-made starting point for adding a chat assistant to a website or app, with replies that stream in as they are written.",
     lang: "JavaScript",
-    stars: 0,
-    forks: 0,
     tags: ["AI", "Chat"],
     link: "https://github.com/Fellow3-1/llm-chat-app-template",
-    image: "assets/proj-ai.jpg",
+    image: "assets/work-ai.jpg",
+    w: 928,
+    h: 1152,
   },
   {
-    name: "VR wayfinding",
-    kicker: "A work in progress",
-    description: "An experiment in finding your way around a space in virtual reality, using light and depth instead of arrows.",
+    name: "VR_Navigation",
+    title: "Wayfinding inside virtual reality",
+    description:
+      "An experiment in finding your way around a space in VR, using light and depth instead of arrows.",
     lang: "CSS",
-    stars: 0,
-    forks: 0,
     tags: ["VR", "Experiment"],
     link: "https://github.com/Fellow3-1/VR_Navigation",
-    image: "assets/proj-vr.jpg",
+    image: "assets/work-vr.jpg",
+    w: 1376,
+    h: 768,
   },
 ];
 
-export const achievements = ["Pull Shark ×2", "Pair Extraordinaire", "YOLO", "GitHub Developer Program Member"];
-
-export const education = [
+// twelve years, six rows; years are right-aligned with tabular figures.
+export const story = [
   {
-    type: "Program",
-    title: "ALX Software Engineering",
-    org: "ALX Africa · 2023 — 2024",
-    body: "A full engineering programme: the fundamentals of software, servers, and building in a team.",
+    title: "Taking phones apart",
+    org: "Self-taught",
+    body: "Android software rebuilt from the inside out",
+    years: "2014",
   },
   {
-    type: "Program",
-    title: "Andela Learning Community",
-    org: "ALC / Google · 2018 — 2019",
-    body: "A Google-backed mobile development track, with real apps to build and deadlines to meet.",
+    title: "Android, done properly",
+    org: "Google × Andela",
+    body: "Backed training; first real apps shipped",
+    years: "2018–19",
   },
   {
-    type: "Certification",
-    title: "Android Development for Beginners",
-    org: "Google · Udacity",
-    body: "The Google course that turned phone tinkering into proper app development.",
+    title: "Built for the UN goals",
+    org: "BuildForSDG",
+    body: "A COVID-19 forecasting tool, on a pan-African team",
+    years: "2020",
   },
   {
-    type: "Cohort",
-    title: "BuildForSDG — Cohort 1",
-    org: "@BuildForSDG · 2020",
-    body: "Building software for the UN development goals, alongside engineers from across Africa.",
+    title: "Mobile money for everyone",
+    org: "Open source",
+    body: "The M-PESA helper other teams still fork",
+    years: "2020–21",
+  },
+  {
+    title: "The deep end",
+    org: "ALX Africa",
+    body: "Formal engineering training, twenty hands-on projects",
+    years: "2023–24",
+  },
+  {
+    title: "Fast sites with AI inside",
+    org: "Freelance",
+    body: "Websites, apps and assistants, launched",
+    years: "2024–now",
   },
 ];
+
+// One-size name columns: name + one honest sentence that names real tools.
+export const services = [
+  {
+    name: "Websites & web apps",
+    body: "Landing pages to customer portals in React, Next.js or Astro, quick on any connection.",
+  },
+  {
+    name: "Mobile apps",
+    body: "Android and cross-platform apps, taken from a rough idea to a store listing.",
+  },
+  {
+    name: "Payments & M-PESA",
+    body: "Mobile-money checkout wired into your product, with the library 34 teams already reuse.",
+  },
+  {
+    name: "AI features",
+    body: "Assistants and smart search with OpenAI and LangChain. Useful and dependable, never a gimmick.",
+  },
+  {
+    name: "Hosting that stays up",
+    body: "AWS, Docker and automated deploys that keep the lights on while you sleep.",
+  },
+  {
+    name: "Advice & code review",
+    body: "A second opinion on your plan, your code or your team, before you spend the budget.",
+  },
+];
+
+// The figures-inside-a-sentence statement. Figures roll up once on entry.
+export const statsSentence = {
+  before: "Since",
+  parts: [
+    { figure: "2014", text: "I’ve shipped" },
+    { figure: "90", text: "public projects, and the M-PESA helper I wrote in Go is now forked by" },
+    { figure: "34", text: "teams." },
+  ],
+};
+
+// The live thing: an M-PESA-style confirmation the visitor actually sends.
+export const receiptNeeds = ["A website", "A mobile app", "Payments / M-PESA", "An AI feature"];
 
 export const socials = [
   { label: "GitHub", value: "github.com/Fellow3-1", href: "https://github.com/Fellow3-1" },
   { label: "X / Twitter", value: "@Fellow3_1", href: "https://twitter.com/Fellow3_1" },
-  { label: "Email", value: "felixodhiambo31@live.com", href: "mailto:felixodhiambo31@live.com" },
+  { label: "CV", value: "Plain text, one page", href: "assets/cv-felix-odhiambo.txt" },
   { label: "Community", value: "@BuildForSDG", href: "https://github.com/BuildForSDG" },
-  { label: "Based in", value: "Nairobi, Kenya" },
 ];
 
-// --- Extras ----------------------------------------------------------
-
-/** neofetch-style panel on the hero. */
-export const sysinfo = {
-  name: "Felix Odhiambo",
-  role: "Software engineer",
-  experience: "12+ years",
-  focus: "Websites, apps & AI features",
-  worksWith: "Startups, agencies & founders",
-  favouriteTools: "React, Go, Android, cloud",
-  location: "Nairobi, Kenya",
-  status: "AVAILABLE FOR WORK",
-};
-
-/** Boot screen kernel messages (fast, skippable). */
-export const bootLines = [
-  "Warming things up…",
-  "Pouring the coffee…",
-  "Loading twelve years of work…",
-  "Almost there…",
-  "Welcome — glad you stopped by.",
-];
-
-/** Registry for the ⌘K command palette. */
-export const commands = [
-  { id: "top", label: "Back to the top", hint: "The start of the page", kbd: "G H", run: () => "#top" },
-  { id: "about", label: "About me", hint: "Who I am, in plain English", kbd: "G A", run: () => "#about" },
-  { id: "experience", label: "My story", hint: "Twelve years, step by step", kbd: "G E", run: () => "#experience" },
-  { id: "skills", label: "What I work with", hint: "Tools and technologies", kbd: "G S", run: () => "#skills" },
-  { id: "projects", label: "Things I've built", hint: "Selected work", kbd: "G P", run: () => "#projects" },
-  { id: "contact", label: "Get in touch", hint: "Email, GitHub, X", kbd: "G C", run: () => "#contact" },
-  { id: "github", label: "See my GitHub", hint: "github.com/Fellow3-1", kbd: "", run: () => "https://github.com/Fellow3-1" },
-  {
-    id: "email",
-    label: "Copy email address",
-    hint: "felixodhiambo31@live.com",
-    kbd: "",
-    run: () => {
-      navigator.clipboard?.writeText("felixodhiambo31@live.com").catch(() => {});
-      return null;
-    },
-  },
-];
-
-/**
- * Interactive terminal registry. Each command returns lines of output.
- * Keep it honest — these are real facts and real links.
- */
-export const termCommands = {
-  help: () => [
-    "Try one of these:",
-    "  whoami     experience   tools      card",
-    "  projects   contact      socials    motto",
-    "  clear      exit",
-  ],
-  whoami: () => ["Felix Odhiambo — software engineer in Nairobi, Kenya", "I build websites, mobile apps and the systems behind them."],
-  experience: () => ["Building software for 12+ years and still enjoying it.", "90 public projects · a payments tool reused by 34 teams"],
-  tools: () => ["Websites.. React, TypeScript, Node", "Apps...... Android, React Native", "Behind it. Go, Python, databases", "Hosting... AWS, Docker, automated deploys"],
-  card: () => [
-    "Felix Odhiambo — “Felloh”",
-    "---------------------------",
-    "Software engineer · Nairobi, Kenya",
-    "Websites, mobile apps and AI features",
-    "12+ years of experience",
-    "felixodhiambo31@live.com",
-  ],
-  projects: () => [
-    "M-PESA tool ........ lets apps accept mobile payments",
-    "Tovuti ............. tells apps when the internet drops",
-    "SMS verifier ....... fills in login codes automatically",
-    "AI chat starter .... adds an assistant to a product",
-    "→ all 90: github.com/Fellow3-1?tab=repositories",
-  ],
-  contact: () => ["Email.... felixodhiambo31@live.com", "GitHub... github.com/Fellow3-1", "X........ @Fellow3_1", "Or just use the form next to this box."],
-  socials: () => ["github.com/Fellow3-1 · @Fellow3_1 · felixodhiambo31@live.com"],
-  motto: () => ["Coffee in. Software that just works, out."],
-  exit: () => ["No exit button here — just keep scrolling."],
-};
-
-export const terminalScript = [
-  { cmd: "whoami", out: "Felix Odhiambo — software engineer, Nairobi" },
-  { cmd: "status", out: "Building websites and apps · available for work" },
-  { cmd: "tools", out: "React · TypeScript · Go · Android · Cloud" },
-  { cmd: "contact", out: "felixodhiambo31@live.com · github.com/Fellow3-1" },
-  { cmd: "motto", out: "Coffee in. Software that just works, out." },
-];
+export const credits = ["Set in Inter", "Imagery made for this site", "Nairobi, Kenya · UTC+3"];

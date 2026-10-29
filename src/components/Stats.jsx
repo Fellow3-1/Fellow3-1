@@ -1,54 +1,48 @@
-import { Github, GitFork, Star, Users, Trophy, Hourglass, FolderGit2, Wallet } from "lucide-react";
-import { SectionHeading, Reveal, Panel, Counter } from "./ui.jsx";
-import { stats, achievements } from "../data/content.js";
+import { useEffect, useRef } from "react";
+import { statsSentence } from "../data/content.js";
 
-const STAT_ICONS = [Hourglass, FolderGit2, Users, Wallet];
-
+// Figures inside a sentence, set at statement size: the only numbers on the
+// page are true, and the sentence fills from pale to full ink as it rises
+// past. One statement, once. Without scroll timelines or under reduced
+// motion the sentence is simply full ink.
 export default function Stats() {
-  return (
-    <section id="stats" className="section stats">
-      <SectionHeading index="05" kicker="By the numbers" title="A quick snapshot." />
-      <div className="stat-grid">
-        {stats.map((s, i) => {
-          const StatIcon = STAT_ICONS[i % STAT_ICONS.length];
-          return (
-            <Reveal key={s.label} delay={i * 0.06}>
-              <Panel className="stat-card">
-                <div className="stat-top">
-                  <p>{s.label}</p>
-                  <span className="stat-icon" aria-hidden="true">
-                    <StatIcon size={15} strokeWidth={2} />
-                  </span>
-                </div>
-                <strong>
-                  <Counter to={s.value} suffix={s.suffix} />
-                </strong>
-                <span>{s.note}</span>
-              </Panel>
-            </Reveal>
-          );
-        })}
-      </div>
+  const ref = useRef(null);
 
-      <Reveal delay={0.1} className="achievements">
-        <span className="ach-label">
-          <Trophy size={14} /> Highlights
-        </span>
-        {achievements.map((a) => (
-          <span key={a} className="achievement">
-            <Star size={12} /> {a}
-          </span>
-        ))}
-        <span className="achievement">
-          <GitFork size={12} /> Payment tool reused by 34 teams
-        </span>
-        <span className="achievement">
-          <Users size={12} /> 38 developers following
-        </span>
-        <a className="achievement achievement-link" href="https://github.com/Fellow3-1" target="_blank" rel="noreferrer">
-          <Github size={12} /> See it on GitHub
-        </a>
-      </Reveal>
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ok =
+      typeof CSS !== "undefined" &&
+      CSS.supports("animation-timeline: view()") &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!ok) return;
+    el.querySelectorAll("[data-words]").forEach((node) => {
+      const text = node.textContent;
+      node.textContent = "";
+      text
+        .trim()
+        .split(/\s+/)
+        .forEach((word, i, all) => {
+          const s = document.createElement("span");
+          s.className = "word";
+          s.textContent = word;
+          node.append(s, i < all.length - 1 ? " " : "");
+        });
+    });
+    el.classList.add("is-filling");
+  }, []);
+
+  return (
+    <section className="stats" aria-label="In numbers">
+      <p className="stats__sentence" ref={ref}>
+        <span data-words>{statsSentence.before}</span>{" "}
+        <span className="figure">{statsSentence.parts[0].figure}</span>{" "}
+        <span data-words>{statsSentence.parts[0].text}</span>{" "}
+        <span className="figure">{statsSentence.parts[1].figure}</span>{" "}
+        <span data-words>{statsSentence.parts[1].text}</span>{" "}
+        <span className="figure">{statsSentence.parts[2].figure}</span>{" "}
+        <span data-words>{statsSentence.parts[2].text}</span>
+      </p>
     </section>
   );
 }
