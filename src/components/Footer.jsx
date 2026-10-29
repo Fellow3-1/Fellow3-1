@@ -44,7 +44,7 @@ export default function Footer() {
         <div className="foot__base">
           <p>{footer.line}</p>
           <p>
-            <a href="sitemap.xml">sitemap</a> · <a href="cv.html">printable CV</a>
+            <a href="sitemap.xml">sitemap</a>
           </p>
         </div>
       </div>

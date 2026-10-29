@@ -80,6 +80,37 @@ body {
   color: #ffffff;
 }
 
+/* the scrollbar, dressed in the same sheet: paper track, ink thumb,
+   accent on hover. Firefox gets the two-value property, everything
+   else the pseudo-elements. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(95, 96, 104, 0.55) var(--paper);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(95, 96, 104, 0.45);
+  border: 3px solid var(--paper);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--paper);
+}
+
 :focus {
   outline: none;
 }

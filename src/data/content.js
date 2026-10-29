@@ -36,10 +36,9 @@ export const nav = {
 
 export const hero = {
   tagline: 'Full-stack engineer. I build payment-ready web and Android products that stay fast under real traffic.',
-  note: 'Independent · based in Nairobi, Kenya · projects described by sector, not by client',
+  note: 'Based in Nairobi, Kenya · projects described by sector, not by client',
   links: [
     { label: 'GitHub', href: 'https://github.com/Fellow3-1' },
-    { label: 'CV', href: 'cv.html' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/felloh31' },
   ],
 }
@@ -292,7 +291,7 @@ export const faq = {
   items: [
     {
       q: 'Who is Felloh 3.1?',
-      a: 'Felix Odhiambo, an independent full-stack engineer in Nairobi, Kenya. Fellow3-1 on GitHub, shipping websites, Android products, payment integrations and agents since 2014. Clients and employers stay unnamed by policy; the sector and the outcome are the story.',
+      a: 'Felix Odhiambo, a full-stack engineer in Nairobi, Kenya. Fellow3-1 on GitHub, shipping websites, Android products, payment integrations and agents since 2014. Clients and employers stay unnamed by policy; the sector and the outcome are the story.',
     },
     {
       q: 'Is he open to full-time work, contract, or consulting?',
@@ -351,7 +350,6 @@ export const footer = {
   ],
   hygienic: [
     'No trackers, no analytics pixels',
-    'Printable CV at /cv.html',
     'Sitemap at /sitemap.xml · RSS at /feed.xml',
     'llms.txt and FAQ schema for answer engines',
     'Location: Nairobi, Kenya, nothing more precise.',
