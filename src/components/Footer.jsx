@@ -1,22 +1,6 @@
-import { useEffect, useState } from 'react'
 import { brand, footer } from '../data/content.js'
 
 export default function Footer() {
-  const [clock, setClock] = useState('')
-
-  useEffect(() => {
-    const fmt = new Intl.DateTimeFormat('en-KE', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-      timeZone: brand.tz,
-    })
-    const tick = () => setClock(fmt.format(new Date()))
-    tick()
-    const id = window.setInterval(tick, 20000)
-    return () => window.clearInterval(id)
-  }, [])
-
   return (
     <footer className="foot">
       <div className="wrap">
@@ -32,28 +16,18 @@ export default function Footer() {
             </ul>
           </div>
           <div className="foot__col">
-            <span className="cap">Reach me</span>
+            <span className="cap">Technical hygiene</span>
             <ul>
+              {footer.hygienic.map((h) => (
+                <li key={h}>
+                  <p>{h}</p>
+                </li>
+              ))}
               <li>
-                <a href={`mailto:${brand.email}`}>{brand.email}</a>
+                <a href={`${brand.repoUrl}`} target="_blank" rel="noreferrer">
+                  source on GitHub
+                </a>
               </li>
-              {brand.socials.map((s) => (
-                <li key={s.href}>
-                  <a href={s.href} target="_blank" rel="noreferrer">
-                    {s.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="foot__col">
-            <span className="cap">Recognition</span>
-            <ul>
-              {footer.recognition.map((r) => (
-                <li key={r}>
-                  <p style={{ fontSize: '15px', color: 'var(--ink)' }}>{r}</p>
-                </li>
-              ))}
             </ul>
           </div>
           <div className="foot__col">
@@ -61,25 +35,16 @@ export default function Footer() {
             {footer.colophon.map((c) => (
               <p key={c}>{c}</p>
             ))}
-            <p className="foot__clock">
-              Nairobi — {clock || '· · : · ·'} {brand.tzLabel}
+            <p className="foot__muse" title="The returned muse">
+              <img src="assets/favicon-joker.png" alt="" width="20" height="20" />
+              {footer.muse}
             </p>
           </div>
         </div>
-
-        <div className="foot__band">
-          <p className="foot__mark" aria-label={brand.name}>
-            Felloh <i>3.1</i>
-          </p>
-        </div>
-
         <div className="foot__base">
           <p>{footer.line}</p>
           <p>
-            Built by hand ·{' '}
-            <a href={brand.repoUrl} target="_blank" rel="noreferrer">
-              source on GitHub
-            </a>
+            <a href="sitemap.xml">sitemap</a> · <a href="cv.html">printable CV</a>
           </p>
         </div>
       </div>

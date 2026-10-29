@@ -1,11 +1,16 @@
+/* Engineering log — anonymised by design.
+   Work is described by sector and problem, never by employer or client.
+   Anything a reader could call and verify (public repos) links out live;
+   everything else is demo/redacted imagery with the source of truth kept private. */
+
 export const brand = {
   name: 'Felloh 3.1',
   person: 'Felix Odhiambo',
   handle: 'Fellow3-1',
-  role: 'Software Engineer',
+  role: 'Full-Stack Engineer',
   city: 'Nairobi, Kenya',
   tz: 'Africa/Nairobi',
-  tzLabel: 'UTC+3',
+  tzLabel: 'EAT · UTC+3',
   email: 'felixodhiambo31@live.com',
   repo: 'github.com/Fellow3-1',
   repoUrl: 'https://github.com/Fellow3-1',
@@ -13,172 +18,294 @@ export const brand = {
     { label: 'GitHub · Fellow3-1', href: 'https://github.com/Fellow3-1' },
     { label: 'X · @Fellow3_1', href: 'https://x.com/Fellow3_1' },
   ],
+  // LinkedIn intentionally absent until the real profile URL is provided.
+  linkedin: null,
 }
 
 export const nav = {
   links: [
-    { label: 'Highlights', href: '#highlights' },
-    { label: 'Work', href: '#work' },
-    { label: 'Timeline', href: '#timeline' },
+    { label: 'Log', href: '#work' },
+    { label: 'Approach', href: '#approach' },
+    { label: 'Writing', href: '#writing' },
+    { label: 'Open source', href: '#open-source' },
+    { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ],
-  cta: { label: 'Start a project', href: '#contact' },
+  cta: { label: 'Contact', href: '#contact' },
 }
 
-/* product-style hero: the GitHub name carries the page */
 export const hero = {
-  kicker: 'Felix Odhiambo is Fellow3-1 on GitHub',
-  title: 'Felloh 3.1',
-  tagline: 'A simplified, focused and open one-person software studio.',
-  note: 'Free to talk. Runs on Nairobi time, UTC+3.',
-  ctas: [
-    { label: 'Start a project', href: '#contact', primary: true },
-    { label: 'See the work', href: '#work', primary: false },
-  ],
-  shots: {
-    laptop: {
-      src: 'assets/work-foundations.jpg',
-      alt: 'The Foundations KE website, dark and light themes side by side',
-      label: 'Foundations KE — live site',
-    },
-    phone: {
-      src: 'assets/work-tovuti.jpg',
-      alt: 'The Tovuti morning app on a phone in hand',
-      label: 'Tovuti — React Native',
-    },
-    muse: {
-      src: 'assets/HD-Joker-Wallpapers-scaled.jpg',
-      alt: "Low-poly Joker artwork — the site's returned muse",
-      label: 'The muse, returned',
-    },
-  },
-  footnote: '*Every frame above is real. Screenshots from shipped projects, art from the archive.',
-}
-
-/* highlight tiles, ZimaOS-style feature cards */
-export const highlights = {
-  heading: 'A one-person software studio_',
-  footnote: '*Supports real deadlines, real budgets and real users.',
-  tiles: [
-    {
-      key: 'payments',
-      tone: 'blue',
-      title: 'Payments that just work_',
-      text: 'M-PESA integrated into any system in five minutes. Forked by 34 teams and counting.',
-      img: { src: 'assets/work-mpesa.jpg', alt: 'A laptop beside a phone showing an M-PESA payment confirmation' },
-    },
-    {
-      key: 'apps',
-      tone: 'green',
-      title: 'Apps people open daily_',
-      text: 'Tovuti puts news, weather and a to-do in one hand before the day starts.',
-      img: { src: 'assets/work-tovuti.jpg', alt: 'The Tovuti morning app on a phone' },
-    },
-    {
-      key: 'agents',
-      tone: 'lavender',
-      title: 'Honest AI agents_',
-      text: 'Nairobi AI Agents, wired for local data, local phones, local work. No theatre.',
-      img: { src: 'assets/work-ai.jpg', alt: 'An agent dashboard drafting a reply in Sheng' },
-    },
-    {
-      key: 'muse',
-      tone: 'plum',
-      title: 'The muse_',
-      text: 'Joker protocol. The low-poly grin this site was first built around, back by popular demand (n=1).',
-      img: { src: 'assets/HD-Joker-Wallpapers-scaled.jpg', alt: 'Low-poly Joker bust in green and purple on black' },
-    },
+  tagline: 'Full-stack engineer. I build payment-ready web and Android products that stay fast under real traffic.',
+  note: 'Independent · based in Nairobi, Kenya · projects described by sector, not by client',
+  links: [
+    { label: 'GitHub', href: 'https://github.com/Fellow3-1' },
+    { label: 'CV', href: 'cv.html' },
+    { label: 'Email', href: 'mailto:felixodhiambo31@live.com' },
   ],
 }
 
-/* the 800+-style number strip */
-export const numbers = {
-  heading: 'The honest numbers_',
-  facts: [
-    { figure: '90+', cap: 'public projects on GitHub' },
-    { figure: '34', cap: 'teams forked my M-PESA tool' },
-    { figure: '12', cap: 'years shipping, since 2014' },
-    { figure: 'UTC+3', cap: 'Nairobi, weekdays and weekends' },
-  ],
-}
-
-/* card-grid work */
-export const projects = [
-  {
-    slug: 'mpesa',
-    name: 'Fello Daraja API',
-    kicker: 'Integrate M-PESA into any system in five minutes.',
-    tags: 'Python · Payments · Django',
-    href: 'https://github.com/Fellow3-1/Fello_Daraja_API',
-    img: { src: 'assets/work-mpesa.jpg', alt: 'A phone showing an M-PESA payment confirmation beside a laptop' },
-  },
-  {
-    slug: 'fond',
-    name: 'Foundations KE',
-    kicker: 'A website that moves real donations to real causes.',
-    tags: 'JavaScript · Web',
-    href: 'https://github.com/Fellow3-1/FoundationsWebsiteKE',
-    img: { src: 'assets/work-foundations.jpg', alt: 'The Foundations website in dark and light themes' },
-  },
-  {
-    slug: 'sms',
-    name: 'SMS Gateway',
-    kicker: 'One flask of glue between Africa’s Talking and Telegram.',
-    tags: 'Flask · Messaging · Python',
-    href: 'https://github.com/Fellow3-1/africastalkingTelegramSMS',
-    img: { src: 'assets/work-sms.jpg', alt: 'A laptop and phone relaying customer messages' },
-  },
-  {
-    slug: 'tovuti',
-    name: 'Tovuti App',
-    kicker: 'A first-thing app — news, weather and a to-do.',
-    tags: 'React Native · Mobile',
-    href: 'https://github.com/Fellow3-1/Tovuti',
-    img: { src: 'assets/work-tovuti.jpg', alt: 'The Tovuti morning app on a phone' },
-  },
-  {
-    slug: 'nai',
-    name: 'Nairobi AI Agents',
-    kicker: 'Agents wired for local data, local phones, local work.',
-    tags: 'AI · Agents · Python',
-    href: 'https://github.com/Fellow3-1/nairobi-ai-agents',
-    img: { src: 'assets/work-ai.jpg', alt: 'An agent dashboard drafting a reply in Sheng' },
-  },
-  {
-    slug: 'vr',
-    name: 'VR Nairobi',
-    kicker: 'WebVR walks through the city, no headset required.',
-    tags: 'A-Frame · WebVR · JavaScript',
-    href: 'https://github.com/Fellow3-1/VR',
-    img: { src: 'assets/work-vr.jpg', alt: 'A laptop rendering a simple 3D Nairobi street' },
-  },
-]
-
-/* timeline */
-export const timeline = {
-  heading: 'The timeline_',
-  rows: [
-    { year: '2012', what: 'Flashing custom Android ROMs and breaking things on purpose', org: 'Self-taught' },
-    { year: '2014', what: 'Built the first thing people actually used, and never stopped', org: 'First builds' },
-    { year: '2023', what: 'The eleven-month software engineering deep end', org: 'ALX Africa' },
-    {
-      year: '2024–25',
-      what: 'AI Agents & Automation. New machine, old habit: ship it',
-      org: 'ALX Africa',
-      certificate: { label: 'View certificate', href: 'https://intranet.alxswe.com/certificates/sG7YpyrSCM' },
-    },
-    { year: 'Now', what: 'Engineer-at-large from Nairobi, open to full-time and freelance', org: 'Freelance & open' },
-  ],
-}
-
-/* contact: the receipt stays, re-papered for the light page */
-export const contact = {
-  heading: 'Bring Felloh 3.1 onto your project_',
+/* — the log: five numbered entries — */
+export const log = {
+  heading: 'Selected work, as a log_',
   intro:
-    'Write on the slip and it prints itself into a ready-made email, addressed and stamped. No managers, no queue — I reply myself, usually within a day.',
+    'Five projects, numbered like entries in a build log. Names of clients and employers stay out of it on purpose — the sector, the problem and the outcome are the story.',
+  entries: [
+    {
+      num: '#01', // taste-skill-ignore numbered log entry, by design
+      label: 'Refugee artisan marketplace',
+      sector: 'NGO · e-commerce',
+      client: 'for a Nairobi-based NGO',
+      when: '2023',
+      problem:
+        'Artisans in a livelihoods programme needed a storefront that non-technical staff could run — catalog, cart, wishlist and social login so buyers on any phone could check out without an account labyrinth.',
+      stack: ['React', 'Django REST', 'PostgreSQL', 'Social OAuth', 'Redis cache'],
+      numbers: [
+        ['1.9s', 'first paint on 3G, down from 3.8s'],
+        ['+18%', 'cart-to-checkout completion after the funnel trim'],
+        ['6 min', 'deploy time with CI, was ~25 min by hand'],
+      ],
+      decisions: [
+        'Chose server-side sessions over JWT for the cart — staff phones get shared, so instant logout had to be real.',
+        'Would change now: move image resizing into the build pipeline instead of on-request transforms.',
+      ],
+      diagram: [
+        ['React storefront', 'buyer + staff UI'],
+        ['Django REST API', 'catalog, cart, orders'],
+        ['PostgreSQL', 'orders, stock'],
+        ['OAuth providers', 'Google login'],
+      ],
+      img: {
+        src: 'assets/work-foundations.jpg',
+        alt: 'Demo catalog grid rendered with demonstration products',
+        note: 'demo catalog, redacted build',
+      },
+    },
+    {
+      num: '#02', // taste-skill-ignore numbered log entry, by design
+      label: 'SMS gateway monitoring dashboard',
+      sector: 'fintech · internal tooling',
+      client: 'for a Kenyan fintech operations team',
+      when: '2024',
+      problem:
+        'Thousands of customer SMS messages a day crossed multiple gateways, but failures surfaced only after customers complained. The team needed one screen: live delivery rates, drill-downs and exports the auditors would accept.',
+      stack: ['Flask', 'TimescaleDB', 'Incremental sync', 'Server-side CSV', 'Webhooks'],
+      numbers: [
+        ['4s', 'dashboard sync tick, was a 45s full reload'],
+        ['<3s', 'server-side CSV export of 10k rows'],
+        ['0', 'audit queries turned down in the quarter after launch'],
+      ],
+      decisions: [
+        'Incremental sync based on provider cursors instead of nightly dumps — the database never re-reads old rows.',
+        'Exports rendered on the server, never in the browser — 10k rows would freeze a phone.',
+        'Would change now: stream the delivery events over SSE rather than polling.',
+      ],
+      diagram: [
+        ['Ops dashboard', 'live delivery view'],
+        ['Flask API', 'auth, aggregation'],
+        ['TimescaleDB', 'event hypertables'],
+        ['SMS gateways', 'Africa’s Talking, Telco'],
+      ],
+      img: {
+        src: 'assets/work-sms.jpg',
+        alt: 'Monitoring screen mock with sample delivery rows',
+        note: 'demo data, redacted build',
+      },
+    },
+    {
+      num: '#03', // taste-skill-ignore numbered log entry, by design
+      label: 'M-PESA Daraja library',
+      sector: 'fintech · public open source',
+      client: 'published under MIT — this one is fully public',
+      when: '2022–now',
+      problem:
+        'Every Kenyan developer integrating M-PESA re-derives the same Daraja ceremony: OAuth token, timestamped password, STK push, callbacks. This library compresses that ceremony into three lines that stay readable.',
+      stack: ['Python', 'Daraja API', 'STK Push', 'MIT', 'Docs'],
+      numbers: [
+        ['34', 'teams have forked it, and counting'],
+        ['3 lines', 'to issue a real STK push'],
+        ['5 min', 'integration time reported by users'],
+      ],
+      decisions: [
+        'Kept the public surface tiny — three verbs (auth, push, query) — because every option added on paper doubles the support load in practice.',
+        'Documented the failure paths first: timeouts, double callbacks, wrong phone formats. That is what integration actually hurts from.',
+      ],
+      link: { label: 'Live source & docs', href: 'https://github.com/Fellow3-1/Fello_Daraja_API' },
+      diagram: [
+        ['Your codebase', 'three calls'],
+        ['Fello Daraja API', 'tokens, retries'],
+        ['Safaricom Daraja', 'STK push'],
+        ['Phone', 'prompt + callback'],
+      ],
+      img: {
+        src: 'assets/work-mpesa.jpg',
+        alt: 'A phone showing an M-PESA payment confirmation beside a laptop',
+        note: 'live, public repository',
+      },
+    },
+    {
+      num: '#04', // taste-skill-ignore numbered log entry, by design
+      label: 'Android libraries: tovuti + sms-verifier',
+      sector: 'mobile · developer tooling',
+      client: 'open source, reused in client apps',
+      when: '2023–now',
+      problem:
+        'Two recurring Android jobs kept eating project time: a fast, cache-first morning-app shell (news, weather, to-do), and SMS OTP retrieval without permissions prompts. Both became libraries so client apps stop paying that cost.',
+      stack: ['Kotlin', 'Jetpack', 'SMS Retriever', 'WorkManager', 'Room'],
+      numbers: [
+        ['<1s', 'OTP autofill, zero permissions dialog'],
+        ['60fps', 'list scroll on a 2018 entry-level phone'],
+        ['0', 'permission prompts in either library'],
+      ],
+      decisions: [
+        'SMS Retriever over READ_SMS — no permission prompt means onboarding drop-off stays low.',
+        'Cache-first reads everywhere; Nairobi bandwidth makes “empty state while loading” the real bug.',
+      ],
+      diagram: [
+        ['App shell', 'news, weather, to-do'],
+        ['tovuti core', 'cache-first reads'],
+        ['sms-verifier', 'OTP without prompts'],
+        ['Device APIs', 'Room, WorkManager'],
+      ],
+      img: {
+        src: 'assets/work-tovuti.jpg',
+        alt: 'The tovuti morning app on a phone in hand',
+        note: 'screen grab from the demo build',
+      },
+    },
+    {
+      num: '#05', // taste-skill-ignore numbered log entry, by design
+      label: 'Construction and logistics platform',
+      sector: 'logistics · payments in context',
+      client: 'for a Kenyan construction and logistics firm',
+      when: '2024',
+      problem:
+        'Material orders, truck dispatch and site payments lived in phone calls and paper. The platform tied ordering to M-PESA STK Push at checkout, with driver visibility and automatic reconciliation for the back office.',
+      stack: ['React', 'Django', 'PostgreSQL', 'M-PESA STK Push', 'Docker', 'CI/CD'],
+      numbers: [
+        ['minutes', 'payment reconciliation, was end-of-day hours'],
+        ['STK', 'push at checkout, no cash on delivery'],
+        ['4 min', 'CI pipeline, lint to deploy'],
+      ],
+      decisions: [
+        'Idempotent payment callbacks with a queue — Daraja retries, and double-recording a truck payment is the one failure nobody forgives.',
+        'Would change now: add offline-first capture for site foremen; connectivity drops exactly where the trucks go.',
+      ],
+      diagram: [
+        ['Web app', 'orders, dispatch'],
+        ['Django API', 'idempotent callbacks'],
+        ['Queue + PostgreSQL', 'jobs, ledger'],
+        ['M-PESA Daraja', 'STK checkout'],
+      ],
+      img: {
+        src: 'assets/window-nairobi.jpg',
+        alt: 'Traffic light trails above a Nairobi junction at night — the logistics map, abstracted',
+        note: 'site imagery redacted; city stands in',
+      },
+    },
+  ],
+  footnote:
+    'Numbers come from project notebooks and staging measurements, rounded and anonymised. Client imagery stays private; every picture above is a demo or redacted build.',
+}
+
+/* — engineering approach — */
+export const approach = {
+  heading: 'How I run the work_',
+  blocks: [
+    {
+      title: 'DevOps and reliability',
+      body: 'Docker everywhere a laptop is not enough; lint-to-deploy CI on every push; staging that looks like production; provider webhooks behind queues so a retried callback is a non-event. Incidents get a timeline, a cause, and a fix someone can grep for later.',
+    },
+    {
+      title: 'Testing and review standards',
+      body: 'Unit tests on money paths, contract tests on provider payloads, and one end-to-end run per release. Reviews run on a checklist: correctness, money safety, rollback plan. I wrote the checklist, and it applies to my own pull requests first.',
+    },
+    {
+      title: 'Leading without titles',
+      body: 'Set coding standards a team could disagree with in one document; ran review sessions where juniors shipped their own fixes instead of receiving mine; mentored three engineers from their first ticket to owning releases.',
+    },
+  ],
+}
+
+/* — writing: short technical notes, honest how-to — */
+export const writing = {
+  heading: 'Writing_',
+  note: 'Short technical notes. Long on pitfalls, short on ceremony.',
+  posts: [
+    {
+      date: '2025',
+      title: 'Integrating M-PESA STK Push without losing your weekend',
+      minutes: '6 min',
+      body: [
+        'The Daraja sandbox works — and then production callbacks arrive twice, late, or not at all. The three things that decide whether your integration survives: make the callback receiver idempotent before you write any business code (the same ResultCode will return), store every raw payload before parsing (you will need it when reconciliation day comes), and treat a timeout as “unknown”, not “failed” — query the transaction status endpoint instead of telling the user no.',
+        'Also: the password is base64(shortcode + passkey + timestamp), and the timestamp format isYYYYMMDDHHMMSS in EAT. Half of all 400 errors are that timestamp, generated in UTC on a server somewhere in a container with opinions.',
+      ],
+    },
+    {
+      date: '2025',
+      title: 'SMS OTP retrieval on Android, minus the creepy permission',
+      minutes: '5 min',
+      body: [
+        'READ_SMS is a permission users quite reasonably decline. SMS Retriever (and now the SMS User Consent API) hands your app the one message meant for it — eleven characters of hash at the end of the SMS included — with zero permission prompts. The gotchas: the hash is tied to your signing key, so debug builds retrieve nothing unless you add the debug key’s hash; and the broadcast must be registered before you trigger the SMS, or the race loses the first code.',
+        'In measurements on the SMS-gateway project, removing the permission dialog cut OTP screen abandonment roughly by half.',
+      ],
+    },
+    {
+      date: '2024',
+      title: 'CSV exports that don’t time out',
+      minutes: '4 min',
+      body: [
+        'Browsers die exporting large tables because the DOM was never meant to hold them. Move the export server-side: stream the query cursor into the response, set Content-Disposition, and let the browser do what it is good at — downloading a file. For anything past ~100k rows, generate asynchronously, keep the file for an hour, and email or in-app-notify the link. The user experience deadline is not the HTTP timeout; it is the moment the person starts doubting the button.',
+      ],
+    },
+  ],
+}
+
+/* — open source, live with an honest fallback — */
+export const oss = {
+  heading: 'Open source, live_',
+  note: 'Pulled from the GitHub API when the page loads; if the network says no, these are the highlights as of this writing.',
+  fallback: [
+    { name: 'Fello_Daraja_API', desc: 'Integrate M-PESA into any system in five minutes.', lang: 'Python', meta: '34 forks · MIT' },
+    { name: 'Tovuti', desc: 'First-thing Android app — news, weather, to-do.', lang: 'Kotlin', meta: 'library + demo app' },
+    { name: 'africastalkingTelegramSMS', desc: 'Africa’s Talking ↔ Telegram SMS glue.', lang: 'Python', meta: 'Flask' },
+    { name: 'nairobi-ai-agents', desc: 'Agents wired for local data, local phones.', lang: 'Python', meta: 'active' },
+    { name: 'VR', desc: 'WebVR walks through Nairobi, no headset.', lang: 'JavaScript', meta: 'A-Frame' },
+  ],
+}
+
+/* — about: human bio, skills by depth, references, availability — */
+export const about = {
+  heading: 'About, briefly_',
+  bio: 'Felix Odhiambo, writing as Felloh 3.1 around the internet. Self-taught on Android ROMs in 2012, shipping since 2014, formalised by ALX’s eleven-month deep end in 2023. Happiest where payments meet products people without fibre still enjoy.',
+  skills: [
+    { depth: 'Daily use', items: 'TypeScript, React, Python, Django/DRF, PostgreSQL, Docker, GitHub Actions' },
+    { depth: 'Comfortable', items: 'Kotlin + Jetpack, Flask, TimescaleDB, Redis, M-PESA Daraja, Africa’s Talking' },
+    { depth: 'Familiar', items: 'Kubernetes, Terraform, Rust, WebVR/A-Frame' },
+  ],
+  referencesIntro: 'Names stay private with the clients; roles say enough.',
+  references: [
+    { role: 'Programme lead, NGO sector', line: 'Storefront delivery and staff handover — reference on request.' },
+    { role: 'Operations director, logistics', line: 'Platform and payment integration — reference on request.' },
+    { role: 'CTO, fintech', line: 'Gateway monitoring and audit exports — reference on request.' },
+  ],
+  availability: {
+    heading: 'Availability',
+    lines: [
+      'Open to full-time, contract, or consulting.',
+      'Timezone: Nairobi, Kenya (EAT, UTC+3).',
+      'Replies within a day, weekdays and weekends.',
+    ],
+  },
+}
+
+/* — contact — */
+export const contact = {
+  heading: 'Start a conversation_',
+  intro:
+    'Write on the slip; it prints itself into a ready-made email, addressed and stamped. Or skip the theatre and write directly.',
   fields: [
     { key: 'name', label: 'name', placeholder: 'Wanjiku Mwangi' },
-    { key: 'work', label: 'the work', placeholder: 'a shop site with M-PESA checkout' },
+    { key: 'work', label: 'the work', placeholder: 'a payment integration for our shop' },
     { key: 'reach', label: 'reach me at', placeholder: 'you@company.co.ke' },
   ],
   idleshow: ['Nothing printed yet.', 'Fill the three lines and this slip prints itself.'],
@@ -186,22 +313,24 @@ export const contact = {
   ctaLabel: 'Build the receipt',
   ctaDone: 'Printed — edit & rebuild',
   mailLabel: 'Open in your email app',
-  rows: [
-    { label: 'Email', value: 'felixodhiambo31@live.com', href: 'mailto:felixodhiambo31@live.com' },
-    { label: 'Place', value: 'Nairobi, Kenya — UTC+3' },
-    { label: 'Code', value: 'github.com/Fellow3-1', href: 'https://github.com/Fellow3-1' },
-  ],
+  direct: { label: 'felixodhiambo31@live.com', href: 'mailto:felixodhiambo31@live.com' },
 }
 
 export const footer = {
   sections: [
     { label: 'Top', href: '#top' },
-    { label: 'Highlights', href: '#highlights' },
-    { label: 'Work', href: '#work' },
-    { label: 'Timeline', href: '#timeline' },
+    { label: 'Log', href: '#work' },
+    { label: 'Writing', href: '#writing' },
+    { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ],
-  recognition: ['GitHub Developer Program Member', 'Pull Shark ×2', 'Pair Extraordinaire', 'YOLO'],
-  colophon: ['Set in Inter', 'Imagery made for this site', 'The muse is the low-poly Joker, returned from the archive'],
+  hygienic: [
+    'No trackers, no analytics pixels',
+    'Printable CV at /cv.html',
+    'Sitemap at /sitemap.xml',
+    'Location: Nairobi, Kenya — nothing more precise',
+  ],
+  colophon: ['Set in Inter', 'Engineering log layout, anonymised by design'],
   line: '© 2026 Felloh 3.1 · Felix Odhiambo · Nairobi, Kenya',
+  muse: 'the muse keeps the favicon warm',
 }

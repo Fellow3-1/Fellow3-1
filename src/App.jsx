@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
-import Highlights from './components/Highlights.jsx'
-import Numbers from './components/Numbers.jsx'
-import Work from './components/Work.jsx'
-import Timeline from './components/Timeline.jsx'
+import Log from './components/Log.jsx'
+import Approach from './components/Approach.jsx'
+import Writing from './components/Writing.jsx'
+import OpenSource from './components/OpenSource.jsx'
+import About from './components/About.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 
@@ -51,10 +52,11 @@ export default function App() {
       <Nav />
       <main id="main">
         <Hero />
-        <Highlights />
-        <Numbers />
-        <Work />
-        <Timeline />
+        <Log />
+        <Approach />
+        <Writing />
+        <OpenSource />
+        <About />
         <Contact />
       </main>
       <Footer />

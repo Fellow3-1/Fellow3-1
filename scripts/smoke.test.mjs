@@ -1,5 +1,5 @@
 /* Smoke test — jsdom render of the real App, asserting the DOM contract
-   of the light Felloh 3.1 product landing. Run: node scripts/smoke.test.mjs */
+   of the engineering-log build. Run: node scripts/smoke.test.mjs */
 
 import { JSDOM } from 'jsdom'
 import React from 'react'
@@ -8,7 +8,6 @@ import { createRoot } from 'react-dom/client'
 import { build } from 'esbuild'
 import { mkdirSync } from 'node:fs'
 
-/* bundle the real components once, then render them in jsdom */
 mkdirSync('node_modules/.smoke', { recursive: true })
 await build({
   entryPoints: ['src/App.jsx'],
@@ -37,6 +36,8 @@ globalThis.cancelAnimationFrame = (id) => clearTimeout(id)
 window.matchMedia =
   window.matchMedia ||
   ((q) => ({ matches: false, media: q, addListener() {}, removeListener() {} }))
+/* no network in tests: OpenSource must take its documented fallback path */
+window.fetch = undefined
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -57,59 +58,58 @@ const $ = (sel) => document.querySelector(sel)
 const $$ = (sel) => Array.from(document.querySelectorAll(sel))
 const text = (el) => (el ? el.textContent.trim() : null)
 
-/* — brand carried from GitHub — */
-check('brand: page named after the GitHub handle', text($('.hero__title')) === 'Felloh 3.1')
-check('brand: kicker ties handle to the person', /Felix Odhiambo is Fellow3-1/.test(text($('.badge')) || ''))
-check('brand: nav brand reads Felloh 3.1', text($('.nav__brand')).includes('Felloh 3.1'))
-
-/* — nav — */
-check('nav: four section links', $$('.nav__links a').length === 4)
-check('nav: pill CTA to contact', $('.nav .pill')?.getAttribute('href') === '#contact')
-
-/* — hero band with real shots + the muse — */
-check('hero: two CTAs', $$('.hero__ctas a').length === 2)
-check('hero: laptop shot carries a real project still', $('.shot--lap img')?.src.includes('work-foundations'))
-check('hero: phone shot carries a real project still', $('.shot--phone img')?.src.includes('work-tovuti'))
+/* — hero — */
 check(
-  'hero: the joker muse is returned',
-  $('.shot--muse img')?.src.includes('HD-Joker-Wallpapers-scaled.jpg'),
-  $('.shot--muse img')?.getAttribute('src'),
+  'hero: exact tagline from the brief',
+  text($('.hero__tag')) ===
+    'Full-stack engineer. I build payment-ready web and Android products that stay fast under real traffic.',
 )
-check('hero: muse card is labelled', /muse/i.test(text($('.shot--muse figcaption')) || ''))
+check('hero: name carries Felloh 3.1', text($('.hero__name')).includes('Felloh 3.1'))
+check('hero: three route links (GitHub, CV, Email)', $$('.hero__links a').length === 3)
+check('hero: anonymised-positioning note shown', /described by sector, not by client/.test(text($('.hero__note')) || ''))
 
-/* — highlights incl. the muse tile — */
-check('highlights: four tiles', $$('.tile').length === 4)
-check('highlights: plum muse tile present', $('.tile--plum img')?.src.includes('HD-Joker'))
-check('highlights: underscore voice kept', $$('.tile h3').some((h) => text(h).endsWith('_')))
-
-/* — numbers — */
-check('numbers: four cards', $$('.num').length === 4)
-const numValues = $$('.num .roll__sr').map((el) => text(el))
+/* — the log — */
+check('log: five entries', $$('.entry').length === 5)
 check(
-  'numbers: values plain-readable for assistive tech',
-  ['90+', '34', '12', 'UTC+3'].every((v) => numValues.includes(v)),
-  numValues.join(','),
+  'log: entries numbered as a log',
+  $$('.entry__num').map((el) => text(el)).join(',') === '#01,#02,#03,#04,#05',
 )
-
-/* — work cards — */
-check('work: six cards', $$('.card').length === 6)
 check(
-  'work: every card links out to GitHub',
-  $$('.card .alink').length === 6 && $$('.card .alink').every((a) => a.href.startsWith('https://github.com/Fellow3-1/')),
+  'log: labels are sector + problem, no employer names',
+  ['Refugee artisan marketplace', 'SMS gateway monitoring dashboard', 'M-PESA Daraja library', 'Android libraries: tovuti + sms-verifier', 'Construction and logistics platform'].every((l) =>
+    $$('.entry__label').some((el) => text(el) === l),
+  ),
 )
-check('work: every card shows a real screenshot', $$('.card figure img').length === 6)
-
-/* — timeline — */
-check('timeline: five honest rows', $$('.tline__row').length === 5)
+check('log: every entry has a stack tag row', $$('.entry .tagrow').length === 5)
+check('log: every entry has three impact-number cells', $$('.entry__nums').length === 5 && $$('.entry__num-cell').length === 15)
+check('log: every entry records decisions', $$('.entry__decisions').length === 5)
+check('log: every entry expands to architecture + shot', $$('.entry details').length === 5 && $$('.flow').length === 5)
+check('log: every architecture diagram has four nodes', $$('.flow').every((f) => f.querySelectorAll('.flow__node').length === 4))
 check(
-  'timeline: certificate link intact',
-  $('.tline__org a')?.href === 'https://intranet.alxswe.com/certificates/sG7YpyrSCM',
+  'log: only the public repo links out live',
+  $$('.entry .alink').length === 1 && $('.entry .alink')?.href === 'https://github.com/Fellow3-1/Fello_Daraja_API',
 )
+check('log: non-public imagery is marked demo/redacted', $$('.entry__shot figcaption').filter((f) => /demo|redacted|screen grab/i.test(text(f))).length >= 4)
+
+/* — approach — */
+check('approach: three pillars incl. DevOps and leadership', $$('.block').length === 3 && /DevOps and reliability/.test($$('.block h3').map((h) => text(h)).join(',')))
+
+/* — writing — */
+check('writing: three technical notes', $$('.post').length === 3)
+check('writing: posts carry real body text', $$('.post__body p').length >= 5)
+
+/* — open source fallback (fetch disabled in tests) — */
+check('oss: fallback renders five repos', $$('.oss__row').length === 5)
+check('oss: fallback note, not live badge', text($('.oss__live'))?.includes('GitHub API'))
+
+/* — about — */
+check('about: skills grouped by depth', $$('.depth__row').length === 3 && text($$('.depth__row')[0]).includes('Daily use'))
+check('about: availability card lists engagement types', /full-time, contract, or consulting/.test(text($('.about__card')) || ''))
+check('about: EAT timezone stated', text($('.about__card'))?.includes('EAT'))
+check('about: references are anonymised by role', $$('.refs__row').length === 3 && !/@[a-z]+\./i.test(text($('.refs')) || ''))
 
 /* — contact + receipt flow — */
-check('contact: studio CTA heading', /Bring Felloh 3\.1/.test(text($('.cta .head')) || ''))
-check('contact: slip branded with the muse icon', $('.slip__brand img')?.src.includes('favicon-joker'))
-check('receipt: build button disabled until filled', $('.slip__form .pill').disabled === true)
+check('receipt: build button disabled until filled', $('.slip__form .btn').disabled === true)
 
 /* jsdom's synthetic input events never trip React's change plugin here, so we
    call the fiber's bound onChange with a target-shaped object; jsdom also
@@ -127,12 +127,12 @@ const setInput = (input, value) => {
 
 await act(async () => {
   setInput($('#field-name'), 'Wanjiku Mwangi')
-  setInput($('#field-work'), 'a shop site with M-PESA checkout')
+  setInput($('#field-work'), 'a payment integration for our shop')
   setInput($('#field-reach'), 'wanjiku@company.co.ke')
   await new Promise((r) => setTimeout(r, 30))
 })
 
-check('receipt: button unlocks once filled', $('.slip__form .pill').disabled === false)
+check('receipt: button unlocks once filled', $('.slip__form .btn').disabled === false)
 
 await act(async () => {
   $('.slip__form').dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }))
@@ -142,31 +142,16 @@ await act(async () => {
 check('receipt: CONFIRMED block prints', $('.slip__confirm') !== null)
 const mail = $('.slip__confirm a')
 check('receipt: mail draft is a mailto', mail?.getAttribute('href').startsWith('mailto:felixodhiambo31@live.com'))
-check(
-  'receipt: draft carries the filled values',
-  /Wanjiku%20Mwangi/.test(mail?.getAttribute('href') || '') && /M-PESA%20checkout/.test(mail?.getAttribute('href') || ''),
-)
-check(
-  'receipt: figures sharpen when confirmed',
-  $('.slip__card').classList.contains('is-confirmed') && $$('.slip__fig').length >= 4,
-)
+check('receipt: draft carries the filled values', /Wanjiku%20Mwangi/.test(mail?.getAttribute('href') || ''))
+check('receipt: figures sharpen when confirmed', $('.slip__card').classList.contains('is-confirmed'))
 
-/* — footer — */
-check('footer: wordmark reads Felloh 3.1', text($('.foot__mark')).replace(/\s+/g, ' ') === 'Felloh 3.1')
-check('footer: four quiet columns', $$('.foot__col').length === 4)
-check('footer: clock ticking with a colon', /:/.test(text($('.foot__clock')) || ''), text($('.foot__clock')))
-
-/* — page furniture — */
-check('reveal: observers registered on real nodes', $$('[data-reveal]').length >= 20, String($$('[data-reveal]').length))
+/* — furniture + muse — */
+check('nav: fixed bar with open status', $('.nav') !== null && /open · nairobi/.test(text($('.nav__status')) || ''))
+check('muse: joker favicon img survives in footer badge', $('.foot__muse img')?.getAttribute('src') === 'assets/favicon-joker.png')
+check('footer: hygiene column lists no-trackers', /No trackers/.test(text($('.foot')) || ''))
+check('footer: sitemap + CV links', $$('.foot__base a').some((a) => a.getAttribute('href') === 'sitemap.xml') && $$('.foot__base a').some((a) => a.getAttribute('href') === 'cv.html'))
+check('reveal: observers registered on real nodes', $$('[data-reveal]').length >= 18, String($$('[data-reveal]').length))
 check('skip link points into the page', $('.skiplink')?.getAttribute('href') === '#work')
-
-/* — reduced motion — */
-document.documentElement.classList.add('reduce')
-await act(async () => {
-  await new Promise((r) => setTimeout(r, 20))
-})
-check('reduced: true values remain in the DOM', $$('.num .roll__sr').length === 4)
-document.documentElement.classList.remove('reduce')
 
 /* — tally — */
 let pass = 0

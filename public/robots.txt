@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fellow3-1.github.io/Fellow3-1/sitemap.xml

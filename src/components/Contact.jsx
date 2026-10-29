@@ -1,8 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
 import { brand, contact } from '../data/content.js'
 
-/* The receipt, on the light page: fill the slip, it prints into a
-   ready-made email. Same proven flow as before. */
+/* The receipt survives yet another redesign: fill the slip, it prints
+   into a ready-made email. Same proven flow, log-paper dressing. */
 
 const RATES = { name: 40, work: 60, reach: 20 }
 
@@ -33,26 +33,18 @@ export default function Contact() {
   return (
     <section className="section" id="contact">
       <div className="wrap">
+        <p className="logmark" data-reveal>
+          <b>[log]</b> 07 — contact
+        </p>
         <div className="cta" data-reveal>
           <div>
             <h2 className="head">{contact.heading}</h2>
             <p className="cta__intro">{contact.intro}</p>
-
-            <div className="cta__plainrows">
-              {contact.rows.map((r) =>
-                r.href ? (
-                  <a key={r.label} href={r.href}>
-                    <span className="cap">{r.label}</span>
-                    {r.value}
-                  </a>
-                ) : (
-                  <p key={r.label}>
-                    <span className="cap">{r.label}</span>
-                    {r.value}
-                  </p>
-                ),
-              )}
-            </div>
+            <p className="cta__direct">
+              <a className="alink" href={contact.direct.href}>
+                {contact.direct.label}
+              </a>
+            </p>
 
             <form
               className="slip__form"
@@ -78,7 +70,7 @@ export default function Contact() {
                 </div>
               ))}
               <div>
-                <button className="pill" type="submit" disabled={!ready}>
+                <button className="btn" type="submit" disabled={!ready}>
                   {confirmed ? contact.ctaDone : contact.ctaLabel}
                 </button>
               </div>
@@ -88,7 +80,7 @@ export default function Contact() {
           <div className={`slip__card${confirmed ? ' is-confirmed' : ''}`}>
             <div className="slip__head">
               <p className="slip__brand">
-                <img src="assets/favicon-joker.png" alt="" width="26" height="26" />
+                <img src="assets/favicon-joker.png" alt="" width="24" height="24" />
                 {brand.name}
               </p>
               <p className="slip__stateline">
@@ -121,14 +113,14 @@ export default function Contact() {
               <div className="slip__confirm" role="status">
                 <b>{contact.confirmed[0]}</b>
                 <span>{contact.confirmed[1]}</span>
-                <p style={{ marginTop: '16px' }}>
-                  <a className="pill pill--pale" href={mailto} ref={mailRef}>
+                <p style={{ marginTop: '14px' }}>
+                  <a className="btn" style={{ background: '#0d060b' }} href={mailto} ref={mailRef}>
                     {contact.mailLabel}
                   </a>
                 </p>
               </div>
             ) : (
-              <p className="slip__idleshow" style={{ paddingBottom: '22px' }}>
+              <p className="slip__idleshow">
                 <b>{contact.idleshow[0]}</b>
                 {contact.idleshow[1]}
               </p>
