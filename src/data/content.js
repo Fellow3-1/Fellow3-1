@@ -27,7 +27,7 @@ export const nav = {
     { label: 'Log', href: '#work' },
     { label: 'Approach', href: '#approach' },
     { label: 'Writing', href: '#writing' },
-    { label: 'Open source', href: '#open-source' },
+    { label: 'Contributions', href: '#contributions' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ],
@@ -197,9 +197,9 @@ export const log = {
         ['M-PESA Daraja', 'STK checkout'],
       ],
       img: {
-        src: 'assets/window-nairobi.jpg',
-        alt: 'Traffic light trails above a Nairobi junction at night — the logistics map, abstracted',
-        note: 'site imagery redacted; city stands in',
+        src: 'assets/work-logistics.jpg',
+        alt: 'A Kenyan construction logistics yard with trucks and stacked materials in daylight',
+        note: 'illustrative yard photo — client site stays private',
       },
     },
   ],
@@ -260,19 +260,6 @@ export const writing = {
   ],
 }
 
-/* — open source, live with an honest fallback — */
-export const oss = {
-  heading: 'Open source, live_',
-  note: 'Pulled from the GitHub API when the page loads; if the network says no, these are the highlights as of this writing.',
-  fallback: [
-    { name: 'Fello_Daraja_API', desc: 'Integrate M-PESA into any system in five minutes.', lang: 'Python', meta: '34 forks · MIT' },
-    { name: 'Tovuti', desc: 'First-thing Android app — news, weather, to-do.', lang: 'Kotlin', meta: 'library + demo app' },
-    { name: 'africastalkingTelegramSMS', desc: 'Africa’s Talking ↔ Telegram SMS glue.', lang: 'Python', meta: 'Flask' },
-    { name: 'nairobi-ai-agents', desc: 'Agents wired for local data, local phones.', lang: 'Python', meta: 'active' },
-    { name: 'VR', desc: 'WebVR walks through Nairobi, no headset.', lang: 'JavaScript', meta: 'A-Frame' },
-  ],
-}
-
 /* — about: human bio, skills by depth, references, availability — */
 export const about = {
   heading: 'About, briefly_',
@@ -304,7 +291,7 @@ export const contact = {
   intro:
     'Write on the slip; it prints itself into a ready-made email, addressed and stamped. Or skip the theatre and write directly.',
   fields: [
-    { key: 'name', label: 'name', placeholder: 'Wanjiku Mwangi' },
+    { key: 'name', label: 'name', placeholder: 'Susan Akinyi' },
     { key: 'work', label: 'the work', placeholder: 'a payment integration for our shop' },
     { key: 'reach', label: 'reach me at', placeholder: 'you@company.co.ke' },
   ],

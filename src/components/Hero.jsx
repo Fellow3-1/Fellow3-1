@@ -25,6 +25,11 @@ export default function Hero() {
             </a>
           ))}
         </div>
+
+        <figure className="hero__strip" data-reveal>
+          <img src="assets/hero-skyline-day.jpg" alt="The Nairobi skyline on a clear day" loading="lazy" decoding="async" />
+          <figcaption>nairobi, daytime — the office window view, roughly · EAT UTC+3</figcaption>
+        </figure>
       </div>
     </section>
   )

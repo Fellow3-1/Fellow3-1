@@ -32,6 +32,10 @@ export default function About() {
             </div>
           </div>
           <aside className="about__card" data-reveal>
+            <figure className="about__shot">
+              <img src="assets/intro-desk.jpg" alt="The desk where most of it happens: laptop, phones, notebooks" loading="lazy" decoding="async" />
+              <figcaption>the desk itself — anonymised like everything else</figcaption>
+            </figure>
             <h3>{about.availability.heading}</h3>
             <ul>
               {about.availability.lines.map((l) => (

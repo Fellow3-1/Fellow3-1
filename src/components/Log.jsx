@@ -22,27 +22,36 @@ function Entry({ e }) {
         </span>
       </div>
 
-      <p className="entry__problem">{e.problem}</p>
+      <div className="entry__main">
+        <div>
+          <p className="entry__problem">{e.problem}</p>
 
-      <p className="tagrow" aria-label="Stack">
-        {e.stack.map((s) => (
-          <span key={s}>{s}</span>
-        ))}
-      </p>
+          <p className="tagrow" aria-label="Stack">
+            {e.stack.map((s) => (
+              <span key={s}>{s}</span>
+            ))}
+          </p>
 
-      <div className="entry__nums" aria-label="Impact numbers">
-        {e.numbers.map(([v, k]) => (
-          <div className="entry__num-cell" key={k}>
-            <b>{v}</b>
-            <span>{k}</span>
+          <div className="entry__nums" aria-label="Impact numbers">
+            {e.numbers.map(([v, k]) => (
+              <div className="entry__num-cell" key={k}>
+                <b>{v}</b>
+                <span>{k}</span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className="entry__decisions">
-        {e.decisions.map((d) => (
-          <p key={d}>{d}</p>
-        ))}
+          <div className="entry__decisions">
+            {e.decisions.map((d) => (
+              <p key={d}>{d}</p>
+            ))}
+          </div>
+        </div>
+
+        <figure className="entry__shot">
+          <img src={e.img.src} alt={e.img.alt} loading="lazy" decoding="async" />
+          <figcaption>{e.img.note}</figcaption>
+        </figure>
       </div>
 
       <div className="entry__foot">
@@ -53,26 +62,20 @@ function Entry({ e }) {
           </a>
         ) : null}
         <details>
-          <summary>Architecture &amp; notes</summary>
-          <div className="entry__detail">
-            <div className="flow">
-              <p className="flow__title">Architecture</p>
-              <div className="flow__nodes">
-                {e.diagram.map(([label, sub], i) => (
-                  <span key={label} style={{ display: 'contents' }}>
-                    {i > 0 ? <FlowArrow /> : null}
-                    <span className="flow__node">
-                      {label}
-                      <span>{sub}</span>
-                    </span>
+          <summary>Architecture</summary>
+          <div className="flow">
+            <p className="flow__title">Architecture</p>
+            <div className="flow__nodes">
+              {e.diagram.map(([label, sub], i) => (
+                <span key={label} style={{ display: 'contents' }}>
+                  {i > 0 ? <FlowArrow /> : null}
+                  <span className="flow__node">
+                    {label}
+                    <span>{sub}</span>
                   </span>
-                ))}
-              </div>
+                </span>
+              ))}
             </div>
-            <figure className="entry__shot">
-              <img src={e.img.src} alt={e.img.alt} loading="lazy" decoding="async" />
-              <figcaption>{e.img.note}</figcaption>
-            </figure>
           </div>
         </details>
       </div>

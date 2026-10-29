@@ -378,6 +378,24 @@ html.js [data-reveal].is-in {
   color: var(--mut);
 }
 
+.hero__strip {
+  margin-top: clamp(40px, 7vh, 64px);
+}
+
+.hero__strip img {
+  width: 100%;
+  height: clamp(180px, 26vh, 260px);
+  object-fit: cover;
+  object-position: 50% 38%;
+  border-radius: var(--radius);
+}
+
+.hero__strip figcaption {
+  margin-top: 10px;
+  font-size: var(--fs-1);
+  color: var(--mut);
+}
+
 /* 6 — the log entries */
 .log__intro {
   max-width: 54ch;
@@ -431,8 +449,15 @@ html.js [data-reveal].is-in {
   font-weight: 600;
 }
 
-.entry__problem {
+.entry__main {
   margin-top: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4.6fr);
+  gap: clamp(18px, 2.6vw, 34px);
+  align-items: start;
+}
+
+.entry__problem {
   max-width: 68ch;
   color: var(--ink);
 }
@@ -527,12 +552,8 @@ html.js [data-reveal].is-in {
   color: var(--accent);
 }
 
-.entry__detail {
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(16px, 2.4vw, 28px);
-  align-items: start;
+.entry details .flow {
+  margin-top: 16px;
 }
 
 /* the diagram: flat nodes, arrowed flow */
@@ -582,11 +603,17 @@ html.js [data-reveal].is-in {
   flex: none;
 }
 
+.entry__shot {
+  position: sticky;
+  top: 90px;
+}
+
 .entry__shot img {
   width: 100%;
-  aspect-ratio: 16 / 9.6;
+  aspect-ratio: 16 / 11;
   object-fit: cover;
   border-radius: 10px;
+  background: var(--well);
 }
 
 .entry__shot figcaption {
@@ -758,6 +785,44 @@ html.js [data-reveal].is-in {
 .oss__live b {
   color: var(--go);
   font-weight: 600;
+}
+
+/* 9b — contributions snake */
+.snake {
+  margin-top: clamp(32px, 5vh, 52px);
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: clamp(16px, 2.4vw, 28px);
+  overflow-x: auto;
+}
+
+.snake img {
+  min-width: 640px;
+  width: 100%;
+}
+
+.snake__note {
+  font-size: 15px;
+  color: var(--mut);
+  line-height: 1.6;
+}
+
+/* about side photo */
+.about__shot {
+  margin-bottom: 22px;
+}
+
+.about__shot img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.about__shot figcaption {
+  margin-top: 8px;
+  font-size: var(--fs-1);
+  color: var(--mut);
 }
 
 /* 10 — about */
@@ -1161,8 +1226,13 @@ html.js [data-reveal].is-in {
     grid-template-columns: 1fr;
   }
 
-  .entry__detail {
+  .entry__main {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .entry__shot {
+    position: static;
   }
 
   .blocks {

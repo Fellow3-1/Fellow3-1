@@ -89,7 +89,7 @@ check(
   'log: only the public repo links out live',
   $$('.entry .alink').length === 1 && $('.entry .alink')?.href === 'https://github.com/Fellow3-1/Fello_Daraja_API',
 )
-check('log: non-public imagery is marked demo/redacted', $$('.entry__shot figcaption').filter((f) => /demo|redacted|screen grab/i.test(text(f))).length >= 4)
+check('log: non-public imagery is marked demo/redacted', $$('.entry__shot figcaption').filter((f) => /demo|redacted|screen grab|illustrative|private/i.test(text(f))).length >= 4)
 
 /* — approach — */
 check('approach: three pillars incl. DevOps and leadership', $$('.block').length === 3 && /DevOps and reliability/.test($$('.block h3').map((h) => text(h)).join(',')))
@@ -98,9 +98,27 @@ check('approach: three pillars incl. DevOps and leadership', $$('.block').length
 check('writing: three technical notes', $$('.post').length === 3)
 check('writing: posts carry real body text', $$('.post__body p').length >= 5)
 
-/* — open source fallback (fetch disabled in tests) — */
-check('oss: fallback renders five repos', $$('.oss__row').length === 5)
-check('oss: fallback note, not live badge', text($('.oss__live'))?.includes('GitHub API'))
+/* — contributions snake — */
+check('oss section is gone', $('.oss__rows') === null && $$('.nav__links a').every((a) => text(a) !== 'Open source'))
+check(
+  'snake: targets the repo output branch',
+  $('.snake img')?.src ===
+    'https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake.svg',
+)
+await act(async () => {
+  $('.snake img').dispatchEvent(new window.Event('error'))
+  await new Promise((r) => setTimeout(r, 30))
+})
+check('snake: missing file falls back to an honest note with the real grid link', $('.snake__note') !== null)
+
+/* — added imagery — */
+check('hero: field photo strip present', $('.hero__strip img')?.getAttribute('src') === 'assets/hero-skyline-day.jpg')
+check('log: every entry shows its picture inline', $$('.entry__shot img').length === 5)
+check(
+  'log: construction entry uses the real yard photo',
+  $$('.entry__shot img').some((i) => i.getAttribute('src') === 'assets/work-logistics.jpg'),
+)
+check('about: desk photo present', $('.about__shot img')?.getAttribute('src') === 'assets/intro-desk.jpg')
 
 /* — about — */
 check('about: skills grouped by depth', $$('.depth__row').length === 3 && text($$('.depth__row')[0]).includes('Daily use'))
@@ -109,6 +127,7 @@ check('about: EAT timezone stated', text($('.about__card'))?.includes('EAT'))
 check('about: references are anonymised by role', $$('.refs__row').length === 3 && !/@[a-z]+\./i.test(text($('.refs')) || ''))
 
 /* — contact + receipt flow — */
+check('contact: name placeholder is Susan Akinyi', $('#field-name')?.placeholder === 'Susan Akinyi')
 check('receipt: build button disabled until filled', $('.slip__form .btn').disabled === true)
 
 /* jsdom's synthetic input events never trip React's change plugin here, so we
