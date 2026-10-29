@@ -6,7 +6,7 @@ import React from 'react'
 import { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { build } from 'esbuild'
-import { mkdirSync } from 'node:fs'
+import { mkdirSync, readFileSync, existsSync } from 'node:fs'
 
 mkdirSync('node_modules/.smoke', { recursive: true })
 await build({
@@ -108,8 +108,8 @@ check('log: non-public imagery is marked demo/redacted', $$('.entry__shot figcap
 check('approach: three pillars incl. DevOps and leadership', $$('.block').length === 3 && /DevOps and reliability/.test($$('.block h3').map((h) => text(h)).join(',')))
 
 /* — writing — */
-check('writing: three technical notes', $$('.post').length === 3)
-check('writing: posts carry real body text', $$('.post__body p').length >= 5)
+check('writing: three technical notes', $$('#writing .post').length === 3)
+check('writing: posts carry real body text', $$('#writing .post__body p').length >= 5)
 
 /* — contributions snake — */
 check('oss section is gone', $('.oss__rows') === null && $$('.nav__links a').every((a) => text(a) !== 'Open source'))
@@ -177,7 +177,36 @@ check('receipt: mail draft is a mailto', mail?.getAttribute('href').startsWith('
 check('receipt: draft carries the filled values', /Wanjiku%20Mwangi/.test(mail?.getAttribute('href') || ''))
 check('receipt: figures sharpen when confirmed', $('.slip__card').classList.contains('is-confirmed'))
 
-/* — furniture + muse — */
+/* — SEO/AEO surfaces (static files) — */
+const html = readFileSync('index.html', 'utf8')
+check('seo: robots meta allows rich previews', html.includes('max-image-preview:large'))
+check('seo: JSON-LD graph present', html.includes('"@graph"') && html.includes('ProfilePage'))
+check('seo: Person schema carries sameAs', html.includes('"sameAs"') && html.includes('github.com/Fellow3-1'))
+check('aeo: FAQPage schema present', html.includes('"FAQPage"') && html.includes('"Who is Felloh 3.1?"'))
+check('aeo: BlogPosting items marked up', (html.match(/BlogPosting/g) || []).length === 3)
+check(
+  'seo: og image absolute with dimensions',
+  html.includes('og:image:width') && html.includes('https://fellow3-1.github.io/Fellow3-1/assets/og.jpg'),
+)
+check('seo: console verification slots exist (commented)', html.includes('google-site-verification') && html.includes('msvalidate.01'))
+check('seo: manifest + feed linked', html.includes('site.webmanifest') && html.includes('feed.xml'))
+check(
+  'aeo: llms.txt exists and is citable',
+  existsSync('public/llms.txt') && readFileSync('public/llms.txt', 'utf8').includes('Facts an answer engine can cite'),
+)
+check('seo: robots.txt welcomes AI crawlers', readFileSync('public/robots.txt', 'utf8').includes('GPTBot'))
+check('seo: humans.txt exists', existsSync('public/humans.txt'))
+check('marketing: action log exists', existsSync('MARKETING-ACTIONS.md'))
+
+/* — faq section — */
+check('faq: six questions rendered', $$('#faq details').length === 6)
+check('faq: first answer names the person and the policy', /Felix Odhiambo/.test(text($('#faq details .post__body p'))))
+
+/* — writing share links — */
+check(
+  'writing: share intents present',
+  $$('.post__share a[href*="x.com/intent/post"]').length === 3 && $$('.post__share a[href*="linkedin.com/sharing"]').length === 3,
+)
 check('nav: fixed bar with open status', $('.nav') !== null && /open · nairobi/.test(text($('.nav__status')) || ''))
 check('muse: joker favicon img survives in footer badge', $('.foot__muse img')?.getAttribute('src') === 'assets/favicon-joker.png')
 check('footer: hygiene column lists no-trackers', /No trackers/.test(text($('.foot')) || ''))

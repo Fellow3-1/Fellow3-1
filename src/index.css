@@ -983,6 +983,21 @@ html.js .entry.is-in .entry__decisions p {
   color: var(--mut);
 }
 
+.post__title--q {
+  font-size: var(--fs-2);
+}
+
+.post__share {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.post__share .alink {
+  font-size: var(--fs-1);
+}
+
 /* 9 · open source */
 .oss__rows {
   margin-top: clamp(32px, 5vh, 52px);

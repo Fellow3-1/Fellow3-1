@@ -34,7 +34,7 @@ export default function Contact() {
     <section className="section" id="contact">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 07 · contact
+          <b>[log]</b> 08 · contact
         </p>
         <div className="cta" data-reveal>
           <div>

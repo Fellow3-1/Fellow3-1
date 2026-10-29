@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://fellow3-1.github.io/Fellow3-1/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://fellow3-1.github.io/Fellow3-1/assets/og.jpg</image:loc>
+      <image:title>Felloh 3.1 · Felix Odhiambo, full-stack engineer in Nairobi</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://fellow3-1.github.io/Fellow3-1/assets/hero-skyline-day.jpg</image:loc>
+      <image:title>The Nairobi skyline on a clear day</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://fellow3-1.github.io/Fellow3-1/assets/HD-Joker-Wallpapers-scaled.jpg</image:loc>
+      <image:title>Low-poly Joker, the site muse</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://fellow3-1.github.io/Fellow3-1/cv.html</loc>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

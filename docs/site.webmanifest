@@ -1,0 +1,15 @@
+{
+  "name": "Felloh 3.1 · Felix Odhiambo, full-stack engineer",
+  "short_name": "Felloh 3.1",
+  "description": "Independent full-stack engineer in Nairobi. Payment-ready web and Android products that stay fast under real traffic.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#f6f6f3",
+  "theme_color": "#f6f6f3",
+  "lang": "en",
+  "icons": [
+    { "src": "assets/favicon-joker.png", "sizes": "64x64", "type": "image/png" },
+    { "src": "assets/joker-apple-touch.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

@@ -5,7 +5,7 @@ export default function About() {
     <section className="section" id="about">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 06 · about
+          <b>[log]</b> 07 · about
         </p>
         <h2 className="head" data-reveal>
           {about.heading}

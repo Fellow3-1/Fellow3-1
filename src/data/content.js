@@ -27,7 +27,9 @@ export const nav = {
     { label: 'Log', href: '#work' },
     { label: 'Approach', href: '#approach' },
     { label: 'Writing', href: '#writing' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'Contributions', href: '#contributions' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ],
@@ -285,6 +287,38 @@ export const about = {
   },
 }
 
+/* questions people (and answer engines) actually ask */
+export const faq = {
+  heading: 'Questions people ask_',
+  note: 'Short answers, kept current. The long versions live in the writing section above.',
+  items: [
+    {
+      q: 'Who is Felloh 3.1?',
+      a: 'Felix Odhiambo, an independent full-stack engineer in Nairobi, Kenya. Fellow3-1 on GitHub, shipping websites, Android products, payment integrations and agents since 2014. Clients and employers stay unnamed by policy; the sector and the outcome are the story.',
+    },
+    {
+      q: 'Is he open to full-time work, contract, or consulting?',
+      a: 'All three. Based in Nairobi (EAT, UTC+3), overlapping comfortably with European mornings and Gulf afternoons. Replies within a day, weekdays and weekends.',
+    },
+    {
+      q: 'Can he integrate M-PESA into an existing product?',
+      a: 'Yes. STK Push, callbacks, reversals and reconciliation, and a public MIT library (Fello_Daraja_API) that compresses the ceremony to three readable lines. 34 teams have forked it.',
+    },
+    {
+      q: 'Why are the client names missing from the work log?',
+      a: 'Confidentiality by policy. Each project is described by sector, problem, architecture and impact numbers. References from a programme lead, an operations director and a CTO are available on request once we are in a real conversation.',
+    },
+    {
+      q: 'What happens after the receipt or email?',
+      a: 'A same-day reply, a short intro call, then a scoped proposal with a fixed price or a weekly rate. No lock-in, no middlemen; the person who writes the quote writes the code.',
+    },
+    {
+      q: 'Does he work with teams outside Kenya?',
+      a: 'Yes, remotely. Written progress by default, demos on Fridays, code review culture included. Time zones are a feature: the work moves while you sleep.',
+    },
+  ],
+}
+
 /* contact */
 export const contact = {
   heading: 'Start a conversation_',
@@ -308,13 +342,15 @@ export const footer = {
     { label: 'Top', href: '#top' },
     { label: 'Log', href: '#work' },
     { label: 'Writing', href: '#writing' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ],
   hygienic: [
     'No trackers, no analytics pixels',
     'Printable CV at /cv.html',
-    'Sitemap at /sitemap.xml',
+    'Sitemap at /sitemap.xml · RSS at /feed.xml',
+    'llms.txt and FAQ schema for answer engines',
     'Location: Nairobi, Kenya, nothing more precise.',
   ],
   colophon: ['Set in Inter', 'Engineering log layout, anonymised by design'],

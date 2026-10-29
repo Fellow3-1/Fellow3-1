@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Felloh 3.1 · writing</title>
+    <link>https://fellow3-1.github.io/Fellow3-1/#writing</link>
+    <atom:link href="https://fellow3-1.github.io/Fellow3-1/feed.xml" rel="self" type="application/rss+xml" />
+    <description>Short technical notes from an independent full-stack engineer in Nairobi. Long on pitfalls, short on ceremony.</description>
+    <language>en</language>
+    <item>
+      <title>Integrating M-PESA STK Push without losing your weekend</title>
+      <link>https://fellow3-1.github.io/Fellow3-1/#writing</link>
+      <guid>https://fellow3-1.github.io/Fellow3-1/#post-stk-push</guid>
+      <pubDate>Mon, 02 Jun 2025 09:00:00 +0300</pubDate>
+      <description>Idempotent callbacks, raw payload storage, and why a timeout means unknown, not failed.</description>
+    </item>
+    <item>
+      <title>SMS OTP retrieval on Android, minus the creepy permission</title>
+      <link>https://fellow3-1.github.io/Fellow3-1/#writing</link>
+      <guid>https://fellow3-1.github.io/Fellow3-1/#post-sms-otp</guid>
+      <pubDate>Mon, 14 Jul 2025 09:00:00 +0300</pubDate>
+      <description>SMS Retriever and User Consent: zero permission prompts, with the debug-signing gotcha handled.</description>
+    </item>
+    <item>
+      <title>CSV exports that don't time out</title>
+      <link>https://fellow3-1.github.io/Fellow3-1/#writing</link>
+      <guid>https://fellow3-1.github.io/Fellow3-1/#post-csv-exports</guid>
+      <pubDate>Mon, 04 Nov 2024 09:00:00 +0300</pubDate>
+      <description>Server-side streaming exports, async generation past 100k rows, and where the real deadline lives.</description>
+    </item>
+  </channel>
+</rss>
