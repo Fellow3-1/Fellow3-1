@@ -1,65 +1,56 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Felix Odhiambo — Software engineer building websites & apps</title>
+    <title>Felloh 3.1 — Felix Odhiambo, full-stack engineer in Nairobi</title>
     <meta
       name="description"
-      content="Felix Odhiambo (Felloh) — a software engineer in Nairobi, Kenya. I build websites, mobile apps, mobile-money payments and AI features, and I have been doing it for over 12 years."
+      content="Felix Odhiambo (Felloh 3.1, Fellow3-1 on GitHub): independent full-stack engineer in Nairobi. Payment-ready web and Android products — NGO storefronts, fintech dashboards, M-PESA tooling — described by sector and problem, anonymised by design."
     />
-    <meta name="theme-color" content="#07070C" />
-    <meta property="og:title" content="Felix Odhiambo — Software engineer building websites & apps" />
+    <meta name="theme-color" content="#f6f6f3" />
+    <link rel="canonical" href="https://fellow3-1.github.io/Fellow3-1/" />
+    <meta property="og:url" content="https://fellow3-1.github.io/Fellow3-1/" />
+    <meta property="og:title" content="Felloh 3.1 — full-stack engineer in Nairobi" />
     <meta
       property="og:description"
-      content="Websites, mobile apps and AI features, built in Nairobi for over 12 years."
+      content="Full-stack engineer. Payment-ready web and Android products that stay fast under real traffic. Engineering log, anonymised by design."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/portfolio-preview.jpg" />
+    <meta property="og:image" content="assets/og.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@Fellow3_1" />
+    <!-- the returned muse, back on the tab bar -->
     <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-joker.png" />
-    <link rel="icon" type="image/jpeg" href="assets/HD-Joker-Wallpapers-scaled.jpg" />
     <link rel="apple-touch-icon" href="assets/joker-apple-touch.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="image" href="assets/HD-Joker-Wallpapers-scaled.jpg" />
-    <link rel="preload" as="image" href="assets/hero-void.jpg" />
-    <!-- Fluid Sans implementation: only the weights the CSS actually uses
-         (Funnel Sans 400–700, Funnel Display 700, JetBrains Mono 400/500/700)
-         — nothing italic, no 300/800. -->
+    <!-- Inter is the only face on the page (300 display, 400 text, 500 emphasis).
+         Loaded without blocking, with a synchronous fallback for print / no-JS. -->
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=Funnel+Display:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=Funnel+Display:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
-        href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=Funnel+Display:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
         rel="stylesheet"
       />
     </noscript>
-    <script type="module" crossorigin src="./assets/index-CE_gzXEh.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BNnOVDvy.css">
-  </head>
-  <script>
-      // Set the theme before first paint so there is no light/dark flash.
-      (function () {
-        try {
-          var saved = localStorage.getItem("felloh-theme");
-          var light = saved ? saved === "light" : window.matchMedia("(prefers-color-scheme: light)").matches;
-          document.documentElement.dataset.theme = light ? "light" : "dark";
-          var m = document.querySelector('meta[name="theme-color"]');
-          if (m) m.setAttribute("content", light ? "#f7f6fb" : "#07070c");
-        } catch (e) {}
-      })();
+    <script>
+      // One gate, set before paint: CSS reveals only apply when JS is alive to fire them.
+      document.documentElement.classList.replace("no-js", "js");
     </script>
+    <script type="module" crossorigin src="./assets/index-BJeDgK5t.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-kVZjTyTp.css">
+  </head>
   <body>
     <div id="root"></div>
   </body>

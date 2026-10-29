@@ -1,36 +1,53 @@
-import { socials } from "../data/content.js";
-import { NairobiClock } from "./ui.jsx";
+import { brand, footer } from '../data/content.js'
 
-/** tmux-style status bar as the footer. */
 export default function Footer() {
-  const year = new Date().getFullYear();
   return (
-    <footer className="foot" role="contentinfo">
-      <div className="foot-cell foot-session">
-        <img src="assets/HD-Joker-Wallpapers-scaled.jpg" alt="" loading="lazy" decoding="async" width="22" height="22" />
-        <span>
-          <strong>Felix Odhiambo</strong>
-        </span>
-        <span className="foot-hide-sm">© {year} Felix Odhiambo</span>
-      </div>
-
-      <div className="foot-cell foot-links">
-        {socials
-          .filter((s) => s.href)
-          .slice(0, 4)
-          .map((s) => (
-            <a key={s.label} href={s.href} target={s.href?.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
-              {s.label}
-            </a>
-          ))}
-      </div>
-
-      <div className="foot-cell foot-right">
-        <span className="foot-tag">Coffee in · software that works, out</span>
-        <span>
-          Nairobi <NairobiClock /> · <span className="foot-ok">● Available</span>
-        </span>
+    <footer className="foot">
+      <div className="wrap">
+        <div className="foot__cols">
+          <div className="foot__col">
+            <span className="cap">Sections</span>
+            <ul>
+              {footer.sections.map((s) => (
+                <li key={s.href}>
+                  <a href={s.href}>{s.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="foot__col">
+            <span className="cap">Technical hygiene</span>
+            <ul>
+              {footer.hygienic.map((h) => (
+                <li key={h}>
+                  <p>{h}</p>
+                </li>
+              ))}
+              <li>
+                <a href={`${brand.repoUrl}`} target="_blank" rel="noreferrer">
+                  source on GitHub
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="foot__col">
+            <span className="cap">Colophon</span>
+            {footer.colophon.map((c) => (
+              <p key={c}>{c}</p>
+            ))}
+            <p className="foot__muse" title="The returned muse">
+              <img src="assets/favicon-joker.png" alt="" width="20" height="20" />
+              {footer.muse}
+            </p>
+          </div>
+        </div>
+        <div className="foot__base">
+          <p>{footer.line}</p>
+          <p>
+            <a href="sitemap.xml">sitemap</a> · <a href="cv.html">printable CV</a>
+          </p>
+        </div>
       </div>
     </footer>
-  );
+  )
 }

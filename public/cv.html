@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Felix Odhiambo (Felloh 3.1) — CV</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-joker.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #111318;
+        --mut: #5f6068;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+        color: var(--ink);
+        line-height: 1.55;
+        background: #ffffff;
+        padding: 48px 20px 64px;
+      }
+      main {
+        max-width: 720px;
+        margin-inline: auto;
+      }
+      h1 {
+        font-size: 30px;
+        letter-spacing: -0.02em;
+      }
+      .sub {
+        color: var(--mut);
+        margin-top: 6px;
+        font-size: 14px;
+      }
+      h2 {
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--mut);
+        margin-top: 34px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #e4e4e0; /* taste-skill-ignore real document rule (print CV) */
+      }
+      h3 {
+        font-size: 15px;
+        margin-top: 18px;
+      }
+      p,
+      li {
+        font-size: 14px;
+      }
+      .dim {
+        color: var(--mut);
+        font-size: 13px;
+      }
+      ul {
+        padding-left: 18px;
+        margin-top: 6px;
+      }
+      li {
+        margin-top: 4px;
+      }
+      .row {
+        margin-top: 14px;
+      }
+      a {
+        color: inherit;
+      }
+      .actions {
+        margin-bottom: 28px;
+        display: flex;
+        gap: 12px;
+      }
+      .actions button,
+      .actions a {
+        font: inherit;
+        font-size: 13px;
+        padding: 9px 16px;
+        border-radius: 8px;
+        background: var(--ink);
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .actions a {
+        background: #eeeee9;
+        color: var(--ink);
+      }
+      @media print {
+        .actions {
+          display: none;
+        }
+        body {
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="actions">
+        <button onclick="window.print()">Print / save as PDF</button>
+        <a href="index.html">Back to the site</a>
+      </div>
+
+      <h1>Felix Odhiambo — Felloh 3.1</h1>
+      <p class="sub">
+        Full-Stack Engineer · Nairobi, Kenya (EAT, UTC+3) · felixodhiambo31@live.com ·
+        github.com/Fellow3-1
+      </p>
+
+      <h2>Summary</h2>
+      <p class="row">
+        Full-stack engineer building payment-ready web and Android products that stay fast under
+        real traffic. Independent since 2014; projects delivered for NGO, fintech and logistics
+        sectors in Kenya. Client names stay private; references available on request.
+      </p>
+
+      <h2>Selected work (anonymised)</h2>
+      <div class="row">
+        <h3>Refugee artisan marketplace — NGO, e-commerce</h3>
+        <p class="dim">React storefront, Django REST API, PostgreSQL, social OAuth · 2023</p>
+        <ul>
+          <li>First paint on 3G brought from 3.8s to 1.9s; cart-to-checkout completion +18%.</li>
+          <li>CI pipeline cut deploy time from ~25 minutes by hand to 6 minutes.</li>
+        </ul>
+      </div>
+      <div class="row">
+        <h3>SMS gateway monitoring dashboard — fintech, internal tooling</h3>
+        <p class="dim">Flask, TimescaleDB, incremental sync, server-side CSV · 2024</p>
+        <ul>
+          <li>Live delivery visibility across gateways; 45s reloads became a 4s incremental tick.</li>
+          <li>Auditor-ready exports: 10k-row CSV in under 3 seconds, rendered server-side.</li>
+        </ul>
+      </div>
+      <div class="row">
+        <h3>Fello Daraja API — public open source (M-PESA)</h3>
+        <p class="dim">Python, Daraja STK Push, MIT · 2022–now</p>
+        <ul>
+          <li>Three readable lines to issue a real STK push; forked by 34 teams.</li>
+          <li>Live source and docs: github.com/Fellow3-1/Fello_Daraja_API</li>
+        </ul>
+      </div>
+      <div class="row">
+        <h3>Android libraries — tovuti, android-sms-verifier</h3>
+        <p class="dim">Kotlin, Jetpack, SMS Retriever, WorkManager · 2023–now</p>
+        <ul>
+          <li>OTP autofill under a second with zero permission prompts.</li>
+          <li>Cache-first app shell reused across client apps.</li>
+        </ul>
+      </div>
+      <div class="row">
+        <h3>Construction and logistics platform — payments in context</h3>
+        <p class="dim">React, Django, M-PESA STK Push, Docker, CI/CD · 2024</p>
+        <ul>
+          <li>STK Push at checkout replaced cash on delivery; reconciliation fell to minutes.</li>
+          <li>Idempotent payment callbacks behind a queue; 4-minute lint-to-deploy pipeline.</li>
+        </ul>
+      </div>
+
+      <h2>Career</h2>
+      <div class="row">
+        <p>2020–now — Technical Lead, Full-Stack (independent and contract)</p>
+        <p>2016–2020 — Full-Stack Engineer, web and Android</p>
+        <p>2014–2016 — Junior Developer, first shipped builds</p>
+        <p class="dim">
+          Alongside: IT systems and infrastructure for non-profit and public-sector teams.
+        </p>
+      </div>
+
+      <h2>Engineering approach</h2>
+      <ul>
+        <li>Docker-based delivery, lint-to-deploy CI on every push, staging parities.</li>
+        <li>Money paths under unit + contract tests; provider webhooks behind queues.</li>
+        <li>Review checklists and mentoring; led three engineers to release ownership.</li>
+      </ul>
+
+      <h2>Skills by depth</h2>
+      <div class="row">
+        <p><strong>Daily use:</strong> TypeScript, React, Python, Django/DRF, PostgreSQL, Docker, GitHub Actions</p>
+        <p><strong>Comfortable:</strong> Kotlin + Jetpack, Flask, TimescaleDB, Redis, M-PESA Daraja, Africa’s Talking</p>
+        <p><strong>Familiar:</strong> Kubernetes, Terraform, Rust, WebVR/A-Frame</p>
+      </div>
+
+      <h2>Education and recognition</h2>
+      <div class="row">
+        <p>ALX Africa — Software Engineering deep end, 2023; AI Agents &amp; Automation, 2024–25</p>
+        <p class="dim">
+          GitHub: Developer Program Member · Pull Shark ×2 · Pair Extraordinaire · YOLO
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

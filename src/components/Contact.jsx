@@ -1,236 +1,133 @@
-import { useEffect, useRef, useState } from "react";
-import { Send, Copy, Check, TerminalSquare } from "lucide-react";
-import { SectionHeading, Reveal, Panel } from "./ui.jsx";
-import { socials, termCommands } from "../data/content.js";
-import { useSfx } from "../hooks.js";
+import { useMemo, useRef, useState } from 'react'
+import { brand, contact } from '../data/content.js'
 
-const EMAIL = "felixodhiambo31@live.com";
-const BANNER = ["Curious? This is a mini command line — just for fun.", "Type help and press enter to see what it can do."];
+/* The receipt survives yet another redesign: fill the slip, it prints
+   into a ready-made email. Same proven flow, log-paper dressing. */
 
-/**
- * A REAL terminal, not a scripted loop: a stateful line-reader with a
- * command registry, history (↑/↓), tab-completion, and autoscroll.
- * Announces output politely to screen readers via aria-live.
- */
-function Terminal() {
-  const [lines, setLines] = useState(BANNER);
-  const [value, setValue] = useState("");
-  const [history, setHistory] = useState([]);
-  const [histIndex, setHistIndex] = useState(-1);
-  const bodyRef = useRef(null);
-  const inputRef = useRef(null);
-  const play = useSfx();
-
-  const print = (out) => setLines((prev) => [...prev, ...(Array.isArray(out) ? out : [out])]);
-
-  useEffect(() => {
-    // Keep the latest line in view as output streams in.
-    const el = bodyRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [lines]);
-
-  const exec = (raw) => {
-    const input = raw.trim();
-    print(`you: ${input}`);
-    if (!input) return;
-    setHistory((h) => [...h, input]);
-    setHistIndex(-1);
-    const [cmd, ...args] = input.split(/\s+/);
-    if (cmd === "clear") {
-      setLines([]);
-      return;
-    }
-    if (cmd === "sudo") {
-      print(["Nice try — this one runs on trust and coffee."]);
-      return;
-    }
-    if (cmd === "open" && args[0]?.startsWith("mailto")) {
-      window.location.href = `mailto:${EMAIL}`;
-      return;
-    }
-    const fn = termCommands[cmd];
-    if (fn) {
-      play("confirm");
-      print(fn(args));
-    } else {
-      print([`I don\u2019t know "${cmd}" — type help to see the options.`]);
-    }
-  };
-
-  const onKeyDown = (e) => {
-    if (e.key === "Enter") {
-      play("key");
-      exec(value);
-      setValue("");
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      if (!history.length) return;
-      const next = histIndex < 0 ? history.length - 1 : Math.max(0, histIndex - 1);
-      setHistIndex(next);
-      setValue(history[next]);
-    } else if (e.key === "ArrowDown") {
-      e.preventDefault();
-      if (histIndex < 0) return;
-      const next = histIndex + 1;
-      if (next >= history.length) {
-        setHistIndex(-1);
-        setValue("");
-      } else {
-        setHistIndex(next);
-        setValue(history[next]);
-      }
-    } else if (e.key === "Tab") {
-      e.preventDefault();
-      const match = Object.keys(termCommands).find((c) => c.startsWith(value.trim()) && value.trim());
-      if (match) setValue(`${match} `);
-    }
-  };
-
-  return (
-    <Panel className="terminal" hover={false}>
-      <div className="term-bar">
-        <span className="term-dot td-r" />
-        <span className="term-dot td-y" />
-        <span className="term-dot td-g" />
-        <p>Mini terminal</p>
-        <span className="term-badge">
-          <TerminalSquare size={11} aria-hidden="true" /> Just for fun
-        </span>
-      </div>
-      <div
-        className="term-body"
-        ref={bodyRef}
-        onClick={() => inputRef.current?.focus({ preventScroll: true })}
-        role="log"
-        aria-live="polite"
-        aria-label="Interactive terminal"
-      >
-        {lines.map((l, i) => (
-          <p key={i} className={l.startsWith("you:") ? "term-cmd" : ""}>
-            {l || "\u00A0"}
-          </p>
-        ))}
-        <div className="term-input-row">
-          <span aria-hidden="true">you:</span>
-          <input
-            ref={inputRef}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onKeyDown={onKeyDown}
-            placeholder="help"
-            aria-label="Terminal input"
-            autoComplete="off"
-            autoCapitalize="off"
-            spellCheck="false"
-            enterKeyHint="send"
-          />
-        </div>
-      </div>
-    </Panel>
-  );
-}
-
-function ContactForm() {
-  const [copied, setCopied] = useState(false);
-  const [form, setForm] = useState({ name: "", message: "" });
-
-  const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(EMAIL);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
-    } catch {
-      /* clipboard unavailable (e.g. non-secure context) */
-    }
-  };
-
-  const submit = (e) => {
-    e.preventDefault();
-    const subject = encodeURIComponent(`Portfolio inquiry from ${form.name || "a visitor"}`);
-    const body = encodeURIComponent(form.message || "");
-    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
-  };
-
-  return (
-    <Panel className="contact-form" hover={false}>
-      <p className="panel-kicker">Send a message</p>
-      <h3>Let's build something.</h3>
-      <form onSubmit={submit}>
-        <label>
-          <span>Name</span>
-          <input
-            type="text"
-            placeholder="Your name"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-          />
-        </label>
-        <label>
-          <span>Message</span>
-          <textarea
-            rows={4}
-            placeholder="Tell me a little about your project"
-            value={form.message}
-            onChange={(e) => setForm({ ...form, message: e.target.value })}
-            required
-          />
-        </label>
-        <div className="form-actions">
-          <button type="submit" className="btn btn-primary">
-            <Send size={15} /> Send message
-          </button>
-          <button type="button" className="btn btn-ghost" onClick={copyEmail}>
-            {copied ? <Check size={15} /> : <Copy size={15} />}
-            {copied ? "Copied" : "Copy email"}
-          </button>
-        </div>
-      </form>
-    </Panel>
-  );
-}
+const RATES = { name: 40, work: 60, reach: 20 }
 
 export default function Contact() {
+  const [values, setValues] = useState({ name: '', work: '', reach: '' })
+  const [confirmed, setConfirmed] = useState(false)
+  const mailRef = useRef(null)
+
+  const ready = contact.fields.every((f) => values[f.key].trim().length > 1)
+
+  const mailto = useMemo(() => {
+    const body = contact.fields.map((f) => `${f.label}: ${values[f.key].trim() || '—'}`).join('\n')
+    return (
+      `mailto:${brand.email}?` +
+      `subject=${encodeURIComponent('New project — via Felloh 3.1')}` +
+      `&body=${encodeURIComponent(body + '\n\n— printed from the receipt')}`
+    )
+  }, [values])
+
+  const total = contact.fields.reduce((sum, f) => sum + values[f.key].trim().length * RATES[f.key], 0)
+
+  const buildReceipt = () => {
+    if (!ready) return
+    setConfirmed(true)
+    window.setTimeout(() => mailRef.current?.focus(), 60)
+  }
+
   return (
-    <section id="contact" className="section contact">
-      <SectionHeading
-        index="08"
-        kicker="Get in touch"
-        title="Say hello."
-        lede="Got a project, a role, or just a question? I read every message."
-      />
-      <div className="contact-grid">
-        <Reveal>
-          <Terminal />
-        </Reveal>
-        <div className="contact-side">
-          <Reveal delay={0.08}>
-            <ContactForm />
-          </Reveal>
-          <Reveal delay={0.14}>
-            <div className="signal-links">
-              {socials.map((s) =>
-                s.href ? (
-                  <a
-                    key={s.label}
-                    className="panel link-card"
-                    href={s.href}
-                    target={s.href.startsWith("http") ? "_blank" : undefined}
-                    rel="noreferrer"
-                  >
-                    <span>{s.label}</span>
-                    <strong>{s.value}</strong>
-                  </a>
-                ) : (
-                  <div key={s.label} className="panel link-card">
-                    <span>{s.label}</span>
-                    <strong>{s.value}</strong>
-                  </div>
-                ),
-              )}
+    <section className="section" id="contact">
+      <div className="wrap">
+        <p className="logmark" data-reveal>
+          <b>[log]</b> 07 — contact
+        </p>
+        <div className="cta" data-reveal>
+          <div>
+            <h2 className="head">{contact.heading}</h2>
+            <p className="cta__intro">{contact.intro}</p>
+            <p className="cta__direct">
+              <a className="alink" href={contact.direct.href}>
+                {contact.direct.label}
+              </a>
+            </p>
+
+            <form
+              className="slip__form"
+              onSubmit={(e) => {
+                e.preventDefault()
+                buildReceipt()
+              }}
+            >
+              {contact.fields.map((f) => (
+                <div className="field" key={f.key}>
+                  <label className="field__label cap" htmlFor={`field-${f.key}`}>
+                    {f.label}
+                  </label>
+                  <input
+                    id={`field-${f.key}`}
+                    name={f.key}
+                    type={f.key === 'reach' ? 'email' : 'text'}
+                    autoComplete={f.key === 'name' ? 'name' : 'off'}
+                    placeholder={f.placeholder}
+                    value={values[f.key]}
+                    onChange={(e) => setValues((v) => ({ ...v, [f.key]: e.target.value }))}
+                  />
+                </div>
+              ))}
+              <div>
+                <button className="btn" type="submit" disabled={!ready}>
+                  {confirmed ? contact.ctaDone : contact.ctaLabel}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className={`slip__card${confirmed ? ' is-confirmed' : ''}`}>
+            <div className="slip__head">
+              <p className="slip__brand">
+                <img src="assets/favicon-joker.png" alt="" width="24" height="24" />
+                {brand.name}
+              </p>
+              <p className="slip__stateline">
+                {brand.person} · {brand.role} · {brand.city}
+              </p>
             </div>
-          </Reveal>
+
+            <dl className="slip__sheet" aria-label="Receipt contents">
+              {contact.fields.map((f) => (
+                <div className="slip__row" key={f.key}>
+                  <dt>{f.label}</dt>
+                  <dd className="slip__fig">{values[f.key].trim() || '···'}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="slip__total">
+              <span>total due</span>
+              <b className="slip__fig">KES {total.toLocaleString('en-KE')}</b>
+            </div>
+
+            <div className="slip__bars" aria-hidden="true">
+              {Array.from({ length: 42 }, (_, i) => (
+                <span key={i} />
+              ))}
+            </div>
+            <p className="slip__num">№ F3-2026</p>
+
+            {confirmed ? (
+              <div className="slip__confirm" role="status">
+                <b>{contact.confirmed[0]}</b>
+                <span>{contact.confirmed[1]}</span>
+                <p style={{ marginTop: '14px' }}>
+                  <a className="btn" style={{ background: '#0d060b' }} href={mailto} ref={mailRef}>
+                    {contact.mailLabel}
+                  </a>
+                </p>
+              </div>
+            ) : (
+              <p className="slip__idleshow">
+                <b>{contact.idleshow[0]}</b>
+                {contact.idleshow[1]}
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,375 +1,323 @@
-// ---------------------------------------------------------------------------
-// Single source of truth for the portfolio content.
-// Facts (repo counts, forks, dates, handles) reflect Felloh's public GitHub
-// profile: https://github.com/Fellow3-1
-// ---------------------------------------------------------------------------
+/* Engineering log — anonymised by design.
+   Work is described by sector and problem, never by employer or client.
+   Anything a reader could call and verify (public repos) links out live;
+   everything else is demo/redacted imagery with the source of truth kept private. */
 
-export const profile = {
-  handle: "Felloh 3.1",
-  realName: "Felix Odhiambo",
-  house: "House Android",
-  epithet: "The Unboxed",
-  location: "Nairobi, Kenya",
-  timeZone: "Africa/Nairobi",
-  utc: "UTC+3",
-  role: "Senior Full-Stack & Cloud Engineer",
-  tagline: "I build websites, apps and the systems behind them — and I make them fast, clear and easy to use.",
-  about: [
-    "I build things people actually use: websites, mobile apps, and the invisible plumbing that keeps them running. I take a project from the first sketch all the way to launch day.",
-    "For over ten years I've worked across phones, browsers and the cloud — including mobile payments in Kenya and, more recently, adding AI features to everyday products.",
-    "My promise is simple: something that loads fast, works on any device, and is easy for the next person to look after.",
+export const brand = {
+  name: 'Felloh 3.1',
+  person: 'Felix Odhiambo',
+  handle: 'Fellow3-1',
+  role: 'Full-Stack Engineer',
+  city: 'Nairobi, Kenya',
+  tz: 'Africa/Nairobi',
+  tzLabel: 'EAT · UTC+3',
+  email: 'felixodhiambo31@live.com',
+  repo: 'github.com/Fellow3-1',
+  repoUrl: 'https://github.com/Fellow3-1',
+  socials: [
+    { label: 'GitHub · Fellow3-1', href: 'https://github.com/Fellow3-1' },
+    { label: 'X · @Fellow3_1', href: 'https://x.com/Fellow3_1' },
   ],
-  availability: "Available for full-time roles, freelance projects and friendly collaborations.",
-};
+  // LinkedIn intentionally absent until the real profile URL is provided.
+  linkedin: null,
+}
 
-export const roles = [
-  "I build websites",
-  "I build mobile apps",
-  "I connect apps to payments",
-  "I add AI to products",
-  "I keep it all running",
-];
+export const nav = {
+  links: [
+    { label: 'Log', href: '#work' },
+    { label: 'Approach', href: '#approach' },
+    { label: 'Writing', href: '#writing' },
+    { label: 'Contributions', href: '#contributions' },
+    { label: 'About', href: '#about' },
+    { label: 'Contact', href: '#contact' },
+  ],
+  cta: { label: 'Contact', href: '#contact' },
+}
 
-export const stats = [
-  { label: "Years building software", value: 12, suffix: "+", note: "writing code since 2014" },
-  { label: "Projects shared publicly", value: 90, suffix: "", note: "apps, tools and experiments" },
-  { label: "Developers following along", value: 38, suffix: "", note: "on GitHub" },
-  { label: "Teams reusing my payment tool", value: 34, suffix: "", note: "my M-PESA helper, copied and reused" },
-];
+export const hero = {
+  tagline: 'Full-stack engineer. I build payment-ready web and Android products that stay fast under real traffic.',
+  note: 'Independent · based in Nairobi, Kenya · projects described by sector, not by client',
+  links: [
+    { label: 'GitHub', href: 'https://github.com/Fellow3-1' },
+    { label: 'CV', href: 'cv.html' },
+    { label: 'Email', href: 'mailto:felixodhiambo31@live.com' },
+  ],
+}
 
-export const marquee = [
-  "Websites",
-  "Mobile apps",
-  "Online payments",
-  "AI features",
-  "Fast & accessible",
-  "Clean design",
-  "Reliable hosting",
-  "Nairobi, Kenya",
-  "12+ years",
-  "Free & open source",
-];
-
-export const timeline = [
-  {
-    era: "2014 — Where it started",
-    hash: "a3f9c1d",
-    title: "Taking phones apart to learn how they work",
-    org: "Self-taught",
-    body: "I started by customising Android phones — rebuilding the software that runs on them. It taught me how software really works, from the inside out.",
-    tags: ["Android", "Phones", "Self-taught"],
-  },
-  {
-    era: "2018 — 2019 · Training with Google",
-    hash: "7b2e0f4",
-    title: "Learning app development properly",
-    org: "Google & Andela learning programme",
-    body: "I turned a hobby into a profession through a Google-backed training programme, building and shipping my first real Android apps.",
-    tags: ["Android apps", "Training"],
-  },
-  {
-    era: "2020 · Building for good",
-    hash: "c91d4a8",
-    title: "Software for the UN development goals",
-    org: "@BuildForSDG",
-    body: "I helped build a COVID-19 forecasting tool as part of a programme creating software for the UN Sustainable Development Goals — real deadlines, real users.",
-    tags: ["Teamwork", "Public good"],
-  },
-  {
-    era: "2020 — 2021 · Mobile money",
-    hash: "e45f7b2",
-    title: "Making M-PESA payments easy to plug in",
-    org: "Open source project",
-    body: "I wrote a free tool that lets other developers accept M-PESA mobile payments in their apps. Dozens of teams have reused it since.",
-    tags: ["Payments", "M-PESA", "Open source"],
-  },
-  {
-    era: "2023 — 2024 · Going deeper",
-    hash: "08ac3e9",
-    title: "Formal software engineering training",
-    org: "ALX Africa",
-    body: "A full engineering programme covering the foundations — how computers, servers and teams really work — across more than twenty hands-on projects.",
-    tags: ["Fundamentals", "Servers"],
-  },
-  {
-    era: "2024 — Today",
-    hash: "f1d60c5",
-    title: "Modern web apps with a bit of AI",
-    org: "Freelance & open source",
-    body: "Today I build fast, modern websites and apps — often with AI assistants built in — and share reusable starter kits with other developers.",
-    tags: ["Websites", "AI", "Cloud"],
-  },
-];
-
-export const services = [
-  {
-    icon: "Globe",
-    title: "Websites & web apps",
-    body: "From a simple landing page to a full customer portal — designed, built and launched, and quick on every connection.",
-  },
-  {
-    icon: "Smartphone",
-    title: "Mobile apps",
-    body: "Android and cross-platform apps, taken all the way from idea to a listing on the app store.",
-  },
-  {
-    icon: "Cloud",
-    title: "Hosting that stays up",
-    body: "I set up the servers and automatic updates behind your product, so it keeps running while you sleep.",
-  },
-  {
-    icon: "Sparkles",
-    title: "AI features",
-    body: "Chat assistants and smart search added to your product — useful and dependable, not a gimmick.",
-  },
-  {
-    icon: "Wrench",
-    title: "Tools for other developers",
-    body: "Free, well-documented tools and templates that other teams can pick up and use straight away.",
-  },
-  {
-    icon: "Compass",
-    title: "Advice & mentoring",
-    body: "A second opinion on your plan, your code or your team — turning a rough idea into something ready to build.",
-  },
-];
-
-export const skillCategories = [
-  {
-    id: "lang",
-    label: "Languages",
-    items: ["TypeScript", "JavaScript", "Python", "Go", "Rust", "C++", "C", "C#", "Java", "Kotlin", "Swift", "PHP", "HTML5", "CSS3", "SQL", "Bash"],
-  },
-  {
-    id: "front",
-    label: "Frontend",
-    items: ["React", "Next.js", "Vue", "Nuxt", "Svelte", "Astro", "Tailwind", "SASS", "Vite", "Vuetify", "Bootstrap"],
-  },
-  {
-    id: "back",
-    label: "Backend",
-    items: ["Node.js", "Express", "NestJS", "Fastify", "Flask", "FastAPI", "Django", "Spring Boot", "GraphQL", "REST"],
-  },
-  {
-    id: "data",
-    label: "Data & ORMs",
-    items: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Supabase", "Prisma", "Firebase", "SQLite"],
-  },
-  {
-    id: "ai",
-    label: "AI / ML",
-    items: ["OpenAI", "PyTorch", "TensorFlow", "Hugging Face", "LangChain", "Pandas", "NumPy"],
-  },
-  {
-    id: "cloud",
-    label: "Cloud & DevOps",
-    items: ["AWS", "Docker", "Kubernetes", "Cloudflare", "Vercel", "Netlify", "GitHub Actions", "Nginx", "Linux", "Heroku"],
-  },
-  {
-    id: "mobile",
-    label: "Mobile",
-    items: ["React Native", "Flutter", "Expo", "Android Studio", "Kotlin"],
-  },
-  {
-    id: "design",
-    label: "Design & Tools",
-    items: ["Figma", "Illustrator", "Photoshop", "Adobe XD", "Canva", "Neovim", "Git", "Postman"],
-  },
-];
-
-// Selected work. `lang` drives the real GitHub language dot color.
-export const projects = [
-  {
-    name: "mpesa-api-go",
-    kicker: "Accept M-PESA payments",
-    description:
-      "A free tool that lets developers take M-PESA mobile payments inside their own apps, without wrestling with the paperwork.",
-    lang: "Go",
-    stars: 1,
-    forks: 34,
-    tags: ["Payments", "M-PESA"],
-    link: "https://github.com/Fellow3-1/mpesa-api-go",
-    image: "assets/proj-mpesa.jpg",
-    featured: true,
-  },
-  {
-    name: "tovuti",
-    kicker: "Know when the internet drops",
-    description:
-      "A small add-on for Android apps that tells them, in real time, whether the user is online and how fast their connection is.",
-    lang: "Java",
-    stars: 0,
-    forks: 12,
-    tags: ["Android", "Reliability"],
-    link: "https://github.com/Fellow3-1/tovuti",
-    image: "assets/proj-tovuti.jpg",
-  },
-  {
-    name: "android-sms-verifier",
-    kicker: "No more typing codes",
-    description: "Fills in the security code from a text message automatically, so signing in takes one tap instead of five.",
-    lang: "Java",
-    stars: 0,
-    forks: 0,
-    tags: ["Android", "Ease of use"],
-    link: "https://github.com/Fellow3-1/android-sms-verifier",
-    image: "assets/proj-mobile.jpg",
-  },
-  {
-    name: "Foundations",
-    kicker: "How computers really work",
-    description: "Two from-scratch builds of the parts most programmers take for granted — the deep end, and the best teacher I have had.",
-    lang: "C",
-    stars: 0,
-    forks: 1,
-    tags: ["Fundamentals"],
-    link: "https://github.com/Fellow3-1/printf",
-    image: "assets/proj-systems.jpg",
-  },
-  {
-    name: "AI chat starter",
-    kicker: "Add an assistant to your product",
-    description: "A ready-made starting point for adding a chat assistant to a website or app, with replies that stream in as they are written.",
-    lang: "JavaScript",
-    stars: 0,
-    forks: 0,
-    tags: ["AI", "Chat"],
-    link: "https://github.com/Fellow3-1/llm-chat-app-template",
-    image: "assets/proj-ai.jpg",
-  },
-  {
-    name: "VR wayfinding",
-    kicker: "A work in progress",
-    description: "An experiment in finding your way around a space in virtual reality, using light and depth instead of arrows.",
-    lang: "CSS",
-    stars: 0,
-    forks: 0,
-    tags: ["VR", "Experiment"],
-    link: "https://github.com/Fellow3-1/VR_Navigation",
-    image: "assets/proj-vr.jpg",
-  },
-];
-
-export const achievements = ["Pull Shark ×2", "Pair Extraordinaire", "YOLO", "GitHub Developer Program Member"];
-
-export const education = [
-  {
-    type: "Program",
-    title: "ALX Software Engineering",
-    org: "ALX Africa · 2023 — 2024",
-    body: "A full engineering programme: the fundamentals of software, servers, and building in a team.",
-  },
-  {
-    type: "Program",
-    title: "Andela Learning Community",
-    org: "ALC / Google · 2018 — 2019",
-    body: "A Google-backed mobile development track, with real apps to build and deadlines to meet.",
-  },
-  {
-    type: "Certification",
-    title: "Android Development for Beginners",
-    org: "Google · Udacity",
-    body: "The Google course that turned phone tinkering into proper app development.",
-  },
-  {
-    type: "Cohort",
-    title: "BuildForSDG — Cohort 1",
-    org: "@BuildForSDG · 2020",
-    body: "Building software for the UN development goals, alongside engineers from across Africa.",
-  },
-];
-
-export const socials = [
-  { label: "GitHub", value: "github.com/Fellow3-1", href: "https://github.com/Fellow3-1" },
-  { label: "X / Twitter", value: "@Fellow3_1", href: "https://twitter.com/Fellow3_1" },
-  { label: "Email", value: "felixodhiambo31@live.com", href: "mailto:felixodhiambo31@live.com" },
-  { label: "Community", value: "@BuildForSDG", href: "https://github.com/BuildForSDG" },
-  { label: "Based in", value: "Nairobi, Kenya" },
-];
-
-// --- Extras ----------------------------------------------------------
-
-/** neofetch-style panel on the hero. */
-export const sysinfo = {
-  name: "Felix Odhiambo",
-  role: "Software engineer",
-  experience: "12+ years",
-  focus: "Websites, apps & AI features",
-  worksWith: "Startups, agencies & founders",
-  favouriteTools: "React, Go, Android, cloud",
-  location: "Nairobi, Kenya",
-  status: "AVAILABLE FOR WORK",
-};
-
-/** Boot screen kernel messages (fast, skippable). */
-export const bootLines = [
-  "Warming things up…",
-  "Pouring the coffee…",
-  "Loading twelve years of work…",
-  "Almost there…",
-  "Welcome — glad you stopped by.",
-];
-
-/** Registry for the ⌘K command palette. */
-export const commands = [
-  { id: "top", label: "Back to the top", hint: "The start of the page", kbd: "G H", run: () => "#top" },
-  { id: "about", label: "About me", hint: "Who I am, in plain English", kbd: "G A", run: () => "#about" },
-  { id: "experience", label: "My story", hint: "Twelve years, step by step", kbd: "G E", run: () => "#experience" },
-  { id: "skills", label: "What I work with", hint: "Tools and technologies", kbd: "G S", run: () => "#skills" },
-  { id: "projects", label: "Things I've built", hint: "Selected work", kbd: "G P", run: () => "#projects" },
-  { id: "contact", label: "Get in touch", hint: "Email, GitHub, X", kbd: "G C", run: () => "#contact" },
-  { id: "github", label: "See my GitHub", hint: "github.com/Fellow3-1", kbd: "", run: () => "https://github.com/Fellow3-1" },
-  {
-    id: "email",
-    label: "Copy email address",
-    hint: "felixodhiambo31@live.com",
-    kbd: "",
-    run: () => {
-      navigator.clipboard?.writeText("felixodhiambo31@live.com").catch(() => {});
-      return null;
+/* — the log: five numbered entries — */
+export const log = {
+  heading: 'Selected work, as a log_',
+  intro:
+    'Five projects, numbered like entries in a build log. Names of clients and employers stay out of it on purpose — the sector, the problem and the outcome are the story.',
+  entries: [
+    {
+      num: '#01', // taste-skill-ignore numbered log entry, by design
+      label: 'Refugee artisan marketplace',
+      sector: 'NGO · e-commerce',
+      client: 'for a Nairobi-based NGO',
+      when: '2023',
+      problem:
+        'Artisans in a livelihoods programme needed a storefront that non-technical staff could run — catalog, cart, wishlist and social login so buyers on any phone could check out without an account labyrinth.',
+      stack: ['React', 'Django REST', 'PostgreSQL', 'Social OAuth', 'Redis cache'],
+      numbers: [
+        ['1.9s', 'first paint on 3G, down from 3.8s'],
+        ['+18%', 'cart-to-checkout completion after the funnel trim'],
+        ['6 min', 'deploy time with CI, was ~25 min by hand'],
+      ],
+      decisions: [
+        'Chose server-side sessions over JWT for the cart — staff phones get shared, so instant logout had to be real.',
+        'Would change now: move image resizing into the build pipeline instead of on-request transforms.',
+      ],
+      diagram: [
+        ['React storefront', 'buyer + staff UI'],
+        ['Django REST API', 'catalog, cart, orders'],
+        ['PostgreSQL', 'orders, stock'],
+        ['OAuth providers', 'Google login'],
+      ],
+      img: {
+        src: 'assets/work-foundations.jpg',
+        alt: 'Demo catalog grid rendered with demonstration products',
+        note: 'demo catalog, redacted build',
+      },
     },
+    {
+      num: '#02', // taste-skill-ignore numbered log entry, by design
+      label: 'SMS gateway monitoring dashboard',
+      sector: 'fintech · internal tooling',
+      client: 'for a Kenyan fintech operations team',
+      when: '2024',
+      problem:
+        'Thousands of customer SMS messages a day crossed multiple gateways, but failures surfaced only after customers complained. The team needed one screen: live delivery rates, drill-downs and exports the auditors would accept.',
+      stack: ['Flask', 'TimescaleDB', 'Incremental sync', 'Server-side CSV', 'Webhooks'],
+      numbers: [
+        ['4s', 'dashboard sync tick, was a 45s full reload'],
+        ['<3s', 'server-side CSV export of 10k rows'],
+        ['0', 'audit queries turned down in the quarter after launch'],
+      ],
+      decisions: [
+        'Incremental sync based on provider cursors instead of nightly dumps — the database never re-reads old rows.',
+        'Exports rendered on the server, never in the browser — 10k rows would freeze a phone.',
+        'Would change now: stream the delivery events over SSE rather than polling.',
+      ],
+      diagram: [
+        ['Ops dashboard', 'live delivery view'],
+        ['Flask API', 'auth, aggregation'],
+        ['TimescaleDB', 'event hypertables'],
+        ['SMS gateways', 'Africa’s Talking, Telco'],
+      ],
+      img: {
+        src: 'assets/work-sms.jpg',
+        alt: 'Monitoring screen mock with sample delivery rows',
+        note: 'demo data, redacted build',
+      },
+    },
+    {
+      num: '#03', // taste-skill-ignore numbered log entry, by design
+      label: 'M-PESA Daraja library',
+      sector: 'fintech · public open source',
+      client: 'published under MIT — this one is fully public',
+      when: '2022–now',
+      problem:
+        'Every Kenyan developer integrating M-PESA re-derives the same Daraja ceremony: OAuth token, timestamped password, STK push, callbacks. This library compresses that ceremony into three lines that stay readable.',
+      stack: ['Python', 'Daraja API', 'STK Push', 'MIT', 'Docs'],
+      numbers: [
+        ['34', 'teams have forked it, and counting'],
+        ['3 lines', 'to issue a real STK push'],
+        ['5 min', 'integration time reported by users'],
+      ],
+      decisions: [
+        'Kept the public surface tiny — three verbs (auth, push, query) — because every option added on paper doubles the support load in practice.',
+        'Documented the failure paths first: timeouts, double callbacks, wrong phone formats. That is what integration actually hurts from.',
+      ],
+      link: { label: 'Live source & docs', href: 'https://github.com/Fellow3-1/Fello_Daraja_API' },
+      diagram: [
+        ['Your codebase', 'three calls'],
+        ['Fello Daraja API', 'tokens, retries'],
+        ['Safaricom Daraja', 'STK push'],
+        ['Phone', 'prompt + callback'],
+      ],
+      img: {
+        src: 'assets/work-mpesa.jpg',
+        alt: 'A phone showing an M-PESA payment confirmation beside a laptop',
+        note: 'live, public repository',
+      },
+    },
+    {
+      num: '#04', // taste-skill-ignore numbered log entry, by design
+      label: 'Android libraries: tovuti + sms-verifier',
+      sector: 'mobile · developer tooling',
+      client: 'open source, reused in client apps',
+      when: '2023–now',
+      problem:
+        'Two recurring Android jobs kept eating project time: a fast, cache-first morning-app shell (news, weather, to-do), and SMS OTP retrieval without permissions prompts. Both became libraries so client apps stop paying that cost.',
+      stack: ['Kotlin', 'Jetpack', 'SMS Retriever', 'WorkManager', 'Room'],
+      numbers: [
+        ['<1s', 'OTP autofill, zero permissions dialog'],
+        ['60fps', 'list scroll on a 2018 entry-level phone'],
+        ['0', 'permission prompts in either library'],
+      ],
+      decisions: [
+        'SMS Retriever over READ_SMS — no permission prompt means onboarding drop-off stays low.',
+        'Cache-first reads everywhere; Nairobi bandwidth makes “empty state while loading” the real bug.',
+      ],
+      diagram: [
+        ['App shell', 'news, weather, to-do'],
+        ['tovuti core', 'cache-first reads'],
+        ['sms-verifier', 'OTP without prompts'],
+        ['Device APIs', 'Room, WorkManager'],
+      ],
+      img: {
+        src: 'assets/work-tovuti.jpg',
+        alt: 'The tovuti morning app on a phone in hand',
+        note: 'screen grab from the demo build',
+      },
+    },
+    {
+      num: '#05', // taste-skill-ignore numbered log entry, by design
+      label: 'Construction and logistics platform',
+      sector: 'logistics · payments in context',
+      client: 'for a Kenyan construction and logistics firm',
+      when: '2024',
+      problem:
+        'Material orders, truck dispatch and site payments lived in phone calls and paper. The platform tied ordering to M-PESA STK Push at checkout, with driver visibility and automatic reconciliation for the back office.',
+      stack: ['React', 'Django', 'PostgreSQL', 'M-PESA STK Push', 'Docker', 'CI/CD'],
+      numbers: [
+        ['minutes', 'payment reconciliation, was end-of-day hours'],
+        ['STK', 'push at checkout, no cash on delivery'],
+        ['4 min', 'CI pipeline, lint to deploy'],
+      ],
+      decisions: [
+        'Idempotent payment callbacks with a queue — Daraja retries, and double-recording a truck payment is the one failure nobody forgives.',
+        'Would change now: add offline-first capture for site foremen; connectivity drops exactly where the trucks go.',
+      ],
+      diagram: [
+        ['Web app', 'orders, dispatch'],
+        ['Django API', 'idempotent callbacks'],
+        ['Queue + PostgreSQL', 'jobs, ledger'],
+        ['M-PESA Daraja', 'STK checkout'],
+      ],
+      img: {
+        src: 'assets/work-logistics.jpg',
+        alt: 'A Kenyan construction logistics yard with trucks and stacked materials in daylight',
+        note: 'illustrative yard photo — client site stays private',
+      },
+    },
+  ],
+  footnote:
+    'Numbers come from project notebooks and staging measurements, rounded and anonymised. Client imagery stays private; every picture above is a demo or redacted build.',
+}
+
+/* — engineering approach — */
+export const approach = {
+  heading: 'How I run the work_',
+  blocks: [
+    {
+      title: 'DevOps and reliability',
+      body: 'Docker everywhere a laptop is not enough; lint-to-deploy CI on every push; staging that looks like production; provider webhooks behind queues so a retried callback is a non-event. Incidents get a timeline, a cause, and a fix someone can grep for later.',
+    },
+    {
+      title: 'Testing and review standards',
+      body: 'Unit tests on money paths, contract tests on provider payloads, and one end-to-end run per release. Reviews run on a checklist: correctness, money safety, rollback plan. I wrote the checklist, and it applies to my own pull requests first.',
+    },
+    {
+      title: 'Leading without titles',
+      body: 'Set coding standards a team could disagree with in one document; ran review sessions where juniors shipped their own fixes instead of receiving mine; mentored three engineers from their first ticket to owning releases.',
+    },
+  ],
+}
+
+/* — writing: short technical notes, honest how-to — */
+export const writing = {
+  heading: 'Writing_',
+  note: 'Short technical notes. Long on pitfalls, short on ceremony.',
+  posts: [
+    {
+      date: '2025',
+      title: 'Integrating M-PESA STK Push without losing your weekend',
+      minutes: '6 min',
+      body: [
+        'The Daraja sandbox works — and then production callbacks arrive twice, late, or not at all. The three things that decide whether your integration survives: make the callback receiver idempotent before you write any business code (the same ResultCode will return), store every raw payload before parsing (you will need it when reconciliation day comes), and treat a timeout as “unknown”, not “failed” — query the transaction status endpoint instead of telling the user no.',
+        'Also: the password is base64(shortcode + passkey + timestamp), and the timestamp format isYYYYMMDDHHMMSS in EAT. Half of all 400 errors are that timestamp, generated in UTC on a server somewhere in a container with opinions.',
+      ],
+    },
+    {
+      date: '2025',
+      title: 'SMS OTP retrieval on Android, minus the creepy permission',
+      minutes: '5 min',
+      body: [
+        'READ_SMS is a permission users quite reasonably decline. SMS Retriever (and now the SMS User Consent API) hands your app the one message meant for it — eleven characters of hash at the end of the SMS included — with zero permission prompts. The gotchas: the hash is tied to your signing key, so debug builds retrieve nothing unless you add the debug key’s hash; and the broadcast must be registered before you trigger the SMS, or the race loses the first code.',
+        'In measurements on the SMS-gateway project, removing the permission dialog cut OTP screen abandonment roughly by half.',
+      ],
+    },
+    {
+      date: '2024',
+      title: 'CSV exports that don’t time out',
+      minutes: '4 min',
+      body: [
+        'Browsers die exporting large tables because the DOM was never meant to hold them. Move the export server-side: stream the query cursor into the response, set Content-Disposition, and let the browser do what it is good at — downloading a file. For anything past ~100k rows, generate asynchronously, keep the file for an hour, and email or in-app-notify the link. The user experience deadline is not the HTTP timeout; it is the moment the person starts doubting the button.',
+      ],
+    },
+  ],
+}
+
+/* — about: human bio, skills by depth, references, availability — */
+export const about = {
+  heading: 'About, briefly_',
+  bio: 'Felix Odhiambo, writing as Felloh 3.1 around the internet. Self-taught on Android ROMs in 2012, shipping since 2014, formalised by ALX’s eleven-month deep end in 2023. Happiest where payments meet products people without fibre still enjoy.',
+  skills: [
+    { depth: 'Daily use', items: 'TypeScript, React, Python, Django/DRF, PostgreSQL, Docker, GitHub Actions' },
+    { depth: 'Comfortable', items: 'Kotlin + Jetpack, Flask, TimescaleDB, Redis, M-PESA Daraja, Africa’s Talking' },
+    { depth: 'Familiar', items: 'Kubernetes, Terraform, Rust, WebVR/A-Frame' },
+  ],
+  referencesIntro: 'Names stay private with the clients; roles say enough.',
+  references: [
+    { role: 'Programme lead, NGO sector', line: 'Storefront delivery and staff handover — reference on request.' },
+    { role: 'Operations director, logistics', line: 'Platform and payment integration — reference on request.' },
+    { role: 'CTO, fintech', line: 'Gateway monitoring and audit exports — reference on request.' },
+  ],
+  availability: {
+    heading: 'Availability',
+    lines: [
+      'Open to full-time, contract, or consulting.',
+      'Timezone: Nairobi, Kenya (EAT, UTC+3).',
+      'Replies within a day, weekdays and weekends.',
+    ],
   },
-];
+}
 
-/**
- * Interactive terminal registry. Each command returns lines of output.
- * Keep it honest — these are real facts and real links.
- */
-export const termCommands = {
-  help: () => [
-    "Try one of these:",
-    "  whoami     experience   tools      card",
-    "  projects   contact      socials    motto",
-    "  clear      exit",
+/* — contact — */
+export const contact = {
+  heading: 'Start a conversation_',
+  intro:
+    'Write on the slip; it prints itself into a ready-made email, addressed and stamped. Or skip the theatre and write directly.',
+  fields: [
+    { key: 'name', label: 'name', placeholder: 'Susan Akinyi' },
+    { key: 'work', label: 'the work', placeholder: 'a payment integration for our shop' },
+    { key: 'reach', label: 'reach me at', placeholder: 'you@company.co.ke' },
   ],
-  whoami: () => ["Felix Odhiambo — software engineer in Nairobi, Kenya", "I build websites, mobile apps and the systems behind them."],
-  experience: () => ["Building software for 12+ years and still enjoying it.", "90 public projects · a payments tool reused by 34 teams"],
-  tools: () => ["Websites.. React, TypeScript, Node", "Apps...... Android, React Native", "Behind it. Go, Python, databases", "Hosting... AWS, Docker, automated deploys"],
-  card: () => [
-    "Felix Odhiambo — “Felloh”",
-    "---------------------------",
-    "Software engineer · Nairobi, Kenya",
-    "Websites, mobile apps and AI features",
-    "12+ years of experience",
-    "felixodhiambo31@live.com",
-  ],
-  projects: () => [
-    "M-PESA tool ........ lets apps accept mobile payments",
-    "Tovuti ............. tells apps when the internet drops",
-    "SMS verifier ....... fills in login codes automatically",
-    "AI chat starter .... adds an assistant to a product",
-    "→ all 90: github.com/Fellow3-1?tab=repositories",
-  ],
-  contact: () => ["Email.... felixodhiambo31@live.com", "GitHub... github.com/Fellow3-1", "X........ @Fellow3_1", "Or just use the form next to this box."],
-  socials: () => ["github.com/Fellow3-1 · @Fellow3_1 · felixodhiambo31@live.com"],
-  motto: () => ["Coffee in. Software that just works, out."],
-  exit: () => ["No exit button here — just keep scrolling."],
-};
+  idleshow: ['Nothing printed yet.', 'Fill the three lines and this slip prints itself.'],
+  confirmed: ['CONFIRMED', 'Ready to post — one tap opens your email app.'],
+  ctaLabel: 'Build the receipt',
+  ctaDone: 'Printed — edit & rebuild',
+  mailLabel: 'Open in your email app',
+  direct: { label: 'felixodhiambo31@live.com', href: 'mailto:felixodhiambo31@live.com' },
+}
 
-export const terminalScript = [
-  { cmd: "whoami", out: "Felix Odhiambo — software engineer, Nairobi" },
-  { cmd: "status", out: "Building websites and apps · available for work" },
-  { cmd: "tools", out: "React · TypeScript · Go · Android · Cloud" },
-  { cmd: "contact", out: "felixodhiambo31@live.com · github.com/Fellow3-1" },
-  { cmd: "motto", out: "Coffee in. Software that just works, out." },
-];
+export const footer = {
+  sections: [
+    { label: 'Top', href: '#top' },
+    { label: 'Log', href: '#work' },
+    { label: 'Writing', href: '#writing' },
+    { label: 'About', href: '#about' },
+    { label: 'Contact', href: '#contact' },
+  ],
+  hygienic: [
+    'No trackers, no analytics pixels',
+    'Printable CV at /cv.html',
+    'Sitemap at /sitemap.xml',
+    'Location: Nairobi, Kenya — nothing more precise',
+  ],
+  colophon: ['Set in Inter', 'Engineering log layout, anonymised by design'],
+  line: '© 2026 Felloh 3.1 · Felix Odhiambo · Nairobi, Kenya',
+  muse: 'the muse keeps the favicon warm',
+}

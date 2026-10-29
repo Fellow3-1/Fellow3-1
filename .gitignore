@@ -27,3 +27,6 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# design-skill working dir
+.taste-skill

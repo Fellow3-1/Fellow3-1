@@ -1,85 +1,50 @@
-import { Reveal, SectionHeading, Panel, Chip } from "./ui.jsx";
-import { profile } from "../data/content.js";
-import { useUptime } from "../hooks.js";
-
-const FACTS = [
-  ["Working on", "Websites and mobile apps"],
-  ["Learning", "AI features and better hosting"],
-  ["Open to", "Jobs, freelance work and collaborations"],
-  ["Based in", "Nairobi, Kenya"],
-  ["Reply time", "Usually within a day"],
-];
+import { about } from '../data/content.js'
 
 export default function About() {
-  const uptime = useUptime();
   return (
-    <section id="about" className="section about">
-      <SectionHeading
-        index="01"
-        kicker="About me"
-        title="Hi, I'm Felix."
-        lede="A software engineer from Nairobi who likes making complicated things feel simple."
-      />
-
-      <div className="about-grid">
-        <Reveal>
-          <Panel className="about-panel">
-            <p className="panel-kicker">A little background</p>
-            <h3 className="about-name">
-              {profile.handle}
-              <span> — {profile.realName}</span>
-            </h3>
-            {profile.about.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-            <p className="fun">Fun fact: coffee goes in, software that just works comes out.</p>
-            <ul className="chips">
-              <Chip>@BuildForSDG</Chip>
-              <Chip>Open source</Chip>
-              <Chip>GitHub developer</Chip>
-              <Chip>Nairobi, Kenya</Chip>
+    <section className="section" id="about">
+      <div className="wrap">
+        <p className="logmark" data-reveal>
+          <b>[log]</b> 06 — about
+        </p>
+        <h2 className="head" data-reveal>
+          {about.heading}
+        </h2>
+        <div className="about__grid">
+          <div data-reveal>
+            <p className="about__bio">{about.bio}</p>
+            <div className="depth">
+              {about.skills.map((s) => (
+                <div className="depth__row" key={s.depth}>
+                  <span className="cap">{s.depth}</span>
+                  <p>{s.items}</p>
+                </div>
+              ))}
+            </div>
+            <div className="refs">
+              <p className="refs__intro">{about.referencesIntro}</p>
+              {about.references.map((r) => (
+                <div className="refs__row" key={r.role}>
+                  <span className="refs__role">{r.role}</span>
+                  <span className="refs__line">{r.line}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <aside className="about__card" data-reveal>
+            <figure className="about__shot">
+              <img src="assets/intro-desk.jpg" alt="The desk where most of it happens: laptop, phones, notebooks" loading="lazy" decoding="async" />
+              <figcaption>the desk itself — anonymised like everything else</figcaption>
+            </figure>
+            <h3>{about.availability.heading}</h3>
+            <ul>
+              {about.availability.lines.map((l) => (
+                <li key={l}>{l}</li>
+              ))}
             </ul>
-          </Panel>
-        </Reveal>
-
-        <div className="about-side">
-          <Reveal delay={0.1}>
-            <Panel className="status-panel">
-              <p className="panel-kicker">Right now</p>
-              <ul className="status-list">
-                {FACTS.map(([k, v]) => (
-                  <li key={k}>
-                    <span>{k}</span>
-                    <strong>{v}</strong>
-                  </li>
-                ))}
-                <li>
-                  <span>Doing this for</span>
-                  <strong className="mono">{uptime || "12+ years"}</strong>
-                </li>
-              </ul>
-            </Panel>
-          </Reveal>
-
-          <Reveal delay={0.18}>
-            <Panel className="portrait-panel">
-              <img
-                src="https://avatars.githubusercontent.com/u/9266440?v=4"
-                alt={profile.handle}
-                loading="lazy"
-                decoding="async"
-                width="72"
-                height="72"
-                onError={(e) => (e.currentTarget.src = "assets/HD-Joker-Wallpapers-scaled.jpg")}
-              />
-              <div>
-                <strong>Felix Odhiambo</strong>
-                <span>{profile.availability}</span>
-              </div>
-            </Panel>
-          </Reveal>
+          </aside>
         </div>
       </div>
     </section>
-  );
+  )
 }
