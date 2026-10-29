@@ -52,7 +52,13 @@ function Entry({ e }) {
           </div>
         </div>
 
-        <figure className="entry__shot">
+        <figure className="entry__shot macwin">
+          <div className="macwin__chrome" aria-hidden="true">
+            <span className="slip__light slip__light--red" />
+            <span className="slip__light slip__light--amber" />
+            <span className="slip__light slip__light--green" />
+            <span className="macwin__title">preview.app</span>
+          </div>
           <img src={e.img.src} alt={e.img.alt} loading="lazy" decoding="async" />
           <figcaption>{e.img.note}</figcaption>
         </figure>

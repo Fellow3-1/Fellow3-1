@@ -2,7 +2,7 @@
 Felloh 3.1: Felix Odhiambo
 Role: Full-stack engineer, sole occupant of this repository
 Location: Nairobi, Kenya (EAT, UTC+3)
-Contact: felixodhiambo31@live.com
+Contact: via the channels on the site
 
 /* SITE */
 Last major update: 2026-10

@@ -855,8 +855,30 @@ html.js .entry.is-in .entry__decisions p {
   width: 100%;
   aspect-ratio: 16 / 11;
   object-fit: cover;
-  border-radius: 10px;
   background: var(--well);
+}
+
+/* any frame can dress as a mac window: chrome row on paper, media below */
+.macwin {
+  overflow: clip;
+  border-radius: 10px;
+}
+
+.macwin__chrome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px 8px;
+  background: linear-gradient(180deg, #fbfbfc 0%, #f3f3f5 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+  border-radius: 10px 10px 0 0;
+}
+
+.macwin__title {
+  margin-left: 6px;
+  font-size: var(--fs-3);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--mut);
 }
 
 .entry__shot figcaption {
@@ -1261,6 +1283,8 @@ html.js .entry.is-in .entry__decisions p {
 }
 
 .macpill {
+  font: inherit;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 9px;
@@ -1332,6 +1356,25 @@ html.js .entry.is-in .entry__decisions p {
 .maclights:hover .macpill__dot::after,
 .macpill:focus-visible .macpill__dot::after {
   opacity: 1;
+}
+
+.macpill:disabled {
+  opacity: 0.5;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* aqua focus glow, macOS style, on controls that take keys */
+.macpill:focus-visible,
+.field input:focus-visible {
+  outline: 3px solid rgba(0, 102, 204, 0.35);
+  outline-offset: 2px;
+}
+
+@media (hover: none) {
+  .macpill:hover {
+    transform: none;
+  }
 }
 
 /* the receipt dressed as a little mac window */

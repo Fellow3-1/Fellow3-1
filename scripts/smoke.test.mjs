@@ -65,7 +65,7 @@ check(
     'Full-stack engineer. I build payment-ready web and Android products that stay fast under real traffic.',
 )
 check('hero: name carries Felloh 3.1', text($('.hero__name')).includes('Felloh 3.1'))
-check('hero: three route links (GitHub, CV, Email)', $$('.hero__links a').length === 3)
+check('hero: three route links (GitHub, CV, LinkedIn)', $$('.hero__links a').length === 3)
 check('hero: anonymised-positioning note shown', /described by sector, not by client/.test(text($('.hero__note')) || ''))
 check(
   'hero: joker polaroid sits opposite the name',
@@ -141,7 +141,7 @@ check('about: references are anonymised by role', $$('.refs__row').length === 3 
 
 /* — contact + receipt flow — */
 check('contact: name placeholder is Susan Akinyi', $('#field-name')?.placeholder === 'Susan Akinyi')
-check('receipt: build button disabled until filled', $('.slip__form .btn').disabled === true)
+check('receipt: build button disabled until filled', $('.slip__form button.macpill').disabled === true)
 
 /* jsdom's synthetic input events never trip React's change plugin here, so we
    call the fiber's bound onChange with a target-shaped object; jsdom also
@@ -164,7 +164,7 @@ await act(async () => {
   await new Promise((r) => setTimeout(r, 30))
 })
 
-check('receipt: button unlocks once filled', $('.slip__form .btn').disabled === false)
+check('receipt: button unlocks once filled', $('.slip__form button.macpill').disabled === false)
 
 await act(async () => {
   $('.slip__form').dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }))
@@ -216,24 +216,34 @@ check('skip link points into the page', $('.skiplink')?.getAttribute('href') ===
 
 /* — mac window chrome + receipt honesty — */
 check(
-  'contact: three mac pills (red, amber, green)',
-  $$('.macpill').length === 3 &&
-    $$('.macpill--red').length === 1 &&
-    $$('.macpill--amber').length === 1 &&
-    $$('.macpill--green').length === 1,
+  'contact: two channel pills (red github, amber linkedin)',
+  $$('.maclights .macpill').length === 2 &&
+    $$('.maclights .macpill--red').length === 1 &&
+    $$('.maclights .macpill--amber').length === 1,
 )
 check(
-  'contact: pills point at the real channels',
-  $$('.macpill')
+  'contact: pills point at the real channels, no exposed email',
+  $$('.maclights .macpill')
     .map((a) => a.getAttribute('href'))
-    .join(' ') === 'https://github.com/Fellow3-1 https://x.com/Fellow3_1 mailto:felixodhiambo31@live.com',
+    .join(' ') === 'https://github.com/Fellow3-1 https://linkedin.com/in/felloh31' &&
+    !/x\.com\/Fellow3_1/.test(text($('#contact'))) &&
+    !/felixodhiambo31@live\.com/.test(text($('#contact'))),
 )
+check('contact: green macpills drive the receipt actions', $$('button.macpill, a.macpill--green').length === 2)
 check('contact: dots carry hover glyphs', $$('.macpill__dot').every((d) => d.getAttribute('data-glyph')))
 check(
   'receipt: mac chrome row tops the slip',
   $$('.slip__chrome .slip__light').length === 3 && text($('.slip__title')) === 'receipt.app',
 )
 check('receipt: illustrative disclaimer printed plain', /not an invoice/.test(text($('.cta__note'))))
+check('mac: entry shots and desk photo wear window chrome', $$('.macwin .macwin__chrome').length === 6)
+check('mac: window titles are app-flavoured', /preview\.app/.test(text($('.macwin__title'))) && /photos\.app/.test(text($$('.macwin__title').at(-1))))
+check('hero: linkedin replaced x, email unlisted', (() => {
+  const links = $$('.hero__links a')
+  return links.length === 3 &&
+    links.some((a) => a.getAttribute('href').includes('linkedin.com/in/')) &&
+    !links.some((a) => /@|x\.com\/Fellow3_1/.test(a.getAttribute('href')))
+})())
 
 /* — tally — */
 let pass = 0

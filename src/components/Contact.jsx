@@ -40,11 +40,6 @@ export default function Contact() {
           <div>
             <h2 className="head">{contact.heading}</h2>
             <p className="cta__intro">{contact.intro}</p>
-            <p className="cta__direct">
-              <a className="alink" href={contact.direct.href}>
-                {contact.direct.label}
-              </a>
-            </p>
             {/* macOS window chrome: red/amber/green dots, glyphs reveal on group hover */}
             <div className="maclights" role="navigation" aria-label="Channels">
               {contact.pills.map((p) => (
@@ -85,7 +80,8 @@ export default function Contact() {
                 </div>
               ))}
               <div>
-                <button className="btn" type="submit" disabled={!ready}>
+                <button className="macpill macpill--green" type="submit" disabled={!ready}>
+                  <span className="macpill__dot" data-glyph="+" aria-hidden="true" />
                   {confirmed ? contact.ctaDone : contact.ctaLabel}
                 </button>
               </div>
@@ -136,7 +132,8 @@ export default function Contact() {
                 <b>{contact.confirmed[0]}</b>
                 <span>{contact.confirmed[1]}</span>
                 <p style={{ marginTop: '14px' }}>
-                  <a className="btn" style={{ background: '#0d060b' }} href={mailto} ref={mailRef}>
+                  <a className="macpill macpill--green" href={mailto} ref={mailRef}>
+                    <span className="macpill__dot" data-glyph="+" aria-hidden="true" />
                     {contact.mailLabel}
                   </a>
                 </p>

@@ -16,10 +16,9 @@ export const brand = {
   repoUrl: 'https://github.com/Fellow3-1',
   socials: [
     { label: 'GitHub · Fellow3-1', href: 'https://github.com/Fellow3-1' },
-    { label: 'X · @Fellow3_1', href: 'https://x.com/Fellow3_1' },
+    { label: 'LinkedIn · felloh31', href: 'https://linkedin.com/in/felloh31' },
   ],
-  // LinkedIn intentionally absent until the real profile URL is provided.
-  linkedin: null,
+  linkedin: 'https://linkedin.com/in/felloh31',
 }
 
 export const nav = {
@@ -29,7 +28,6 @@ export const nav = {
     { label: 'Writing', href: '#writing' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Contributions', href: '#contributions' },
-    { label: 'FAQ', href: '#faq' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ],
@@ -42,7 +40,7 @@ export const hero = {
   links: [
     { label: 'GitHub', href: 'https://github.com/Fellow3-1' },
     { label: 'CV', href: 'cv.html' },
-    { label: 'Email', href: 'mailto:felixodhiambo31@live.com' },
+    { label: 'LinkedIn', href: 'https://linkedin.com/in/felloh31' },
   ],
 }
 
@@ -336,12 +334,10 @@ export const contact = {
   mailLabel: 'Open in your email app',
   pills: [
     { label: 'GitHub', dot: 'red', glyph: '×', href: 'https://github.com/Fellow3-1' },
-    { label: 'X', dot: 'amber', glyph: '−', href: 'https://x.com/Fellow3_1' },
-    { label: 'Email', dot: 'green', glyph: '+', href: 'mailto:felixodhiambo31@live.com' },
+    { label: 'LinkedIn', dot: 'amber', glyph: '−', href: 'https://linkedin.com/in/felloh31' },
   ],
   disclaimer:
-    'The printed receipt is a design sketch, not an invoice; the totals are playful. The email it drafts is real, and it reaches felixodhiambo31@live.com.',
-  direct: { label: 'felixodhiambo31@live.com', href: 'mailto:felixodhiambo31@live.com' },
+    'The printed receipt is a design sketch, not an invoice; the totals are playful. The email it drafts is real, and it reaches the engineer directly.',
 }
 
 export const footer = {

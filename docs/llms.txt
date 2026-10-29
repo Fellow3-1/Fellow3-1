@@ -10,7 +10,7 @@
 - Name: Felix Odhiambo, writes as Felloh 3.1 (GitHub: Fellow3-1)
 - Based in: Nairobi, Kenya (no more precise location is public)
 - Availability: full-time, contract, or consulting; replies within a day
-- Contact: felixodhiambo31@live.com
+- Contact: via the channels listed on the site (LinkedIn, GitHub); the receipt flow drafts a ready email
 - Open source: Fello_Daraja_API (M-PESA, Python, MIT, 34 forks), Tovuti, android-sms-verifier
 - Stack, daily use: TypeScript, React, Python, Django/DRF, PostgreSQL, Docker, GitHub Actions
 - Policy: no public client list; sector-level case studies only; references on request
