@@ -242,7 +242,7 @@ html.js [data-reveal].is-in {
 }
 
 .tagrow span {
-  background: var(--well);
+  background: rgba(255, 72, 139, 0.14);
   border-radius: 6px;
   padding: 5px 10px;
   font-size: 13px;
@@ -655,7 +655,7 @@ html.js .entry.is-in .entry__decisions p {
 }
 
 .tagrow span:hover {
-  background: rgba(255, 72, 139, 0.14);
+  background: rgba(255, 72, 139, 0.24);
   transform: translateY(-1px);
 }
 
@@ -664,7 +664,7 @@ html.js .entry.is-in .entry__decisions p {
 }
 
 .entry:hover .entry__num-cell {
-  background: #f6e9ef;
+  background: #f9dde6;
 }
 
 .entry__shot img {
@@ -683,7 +683,7 @@ html.js .entry.is-in .entry__decisions p {
 }
 
 .entry__num-cell {
-  background: var(--well);
+  background: #f6e9ef;
   border-radius: 10px;
   padding: 14px 16px;
 }
