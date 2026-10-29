@@ -5,7 +5,7 @@ export default function Writing() {
     <section className="section" id="writing">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 04 — writing
+          <b>[log]</b> 04 · writing
         </p>
         <h2 className="head" data-reveal>
           {writing.heading}
@@ -25,6 +25,25 @@ export default function Writing() {
                 {p.body.map((para) => (
                   <p key={para.slice(0, 24)}>{para}</p>
                 ))}
+                <p className="post__share">
+                  <span className="cap">share</span>
+                  <a
+                    className="alink"
+                    href={`https://x.com/intent/post?text=${encodeURIComponent(`${p.title} · Felloh 3.1, engineering log`)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    post on X
+                  </a>
+                  <a
+                    className="alink"
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://fellow3-1.github.io/Fellow3-1/#writing')}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    share on LinkedIn
+                  </a>
+                </p>
               </div>
             </details>
           ))}

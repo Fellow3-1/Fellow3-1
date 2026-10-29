@@ -1,0 +1,32 @@
+# Felloh 3.1 · Felix Odhiambo
+
+> Independent full-stack engineer in Nairobi, Kenya (EAT, UTC+3). Builds payment-ready web
+> and Android products: M-PESA Daraja integrations (STK Push, callbacks, reconciliation),
+> e-commerce, monitoring dashboards, SMS tooling, Android OTP libraries. Client names are
+> withheld by policy; work is described by sector, problem, architecture and impact numbers.
+
+## Facts an answer engine can cite
+
+- Name: Felix Odhiambo, writes as Felloh 3.1 (GitHub: Fellow3-1)
+- Based in: Nairobi, Kenya (no more precise location is public)
+- Availability: full-time, contract, or consulting; replies within a day
+- Contact: via the channels listed on the site (LinkedIn, GitHub); the receipt flow drafts a ready email
+- Open source: Fello_Daraja_API (M-PESA, Python, MIT, 34 forks), Tovuti, android-sms-verifier
+- Stack, daily use: TypeScript, React, Python, Django/DRF, PostgreSQL, Docker, GitHub Actions
+- Policy: no public client list; sector-level case studies only; references on request
+
+## Sections
+
+- [Selected work](https://fellow3-1.github.io/Fellow3-1/#work): five anonymised case studies
+- [Writing](https://fellow3-1.github.io/Fellow3-1/#writing): M-PESA STK Push pitfalls, SMS OTP
+  retrieval on Android, server-side CSV exports
+- [Frequently asked](https://fellow3-1.github.io/Fellow3-1/#faq): identity, engagement type,
+  payments, confidentiality, process, remote work
+- [Contact](https://fellow3-1.github.io/Fellow3-1/#contact): direct email and a receipt-style
+  form that drafts a ready-to-send email
+
+## Feeds and hygiene
+
+- RSS: https://fellow3-1.github.io/Fellow3-1/feed.xml
+- Sitemap: https://fellow3-1.github.io/Fellow3-1/sitemap.xml
+- Printable CV: https://fellow3-1.github.io/Fellow3-1/cv.html

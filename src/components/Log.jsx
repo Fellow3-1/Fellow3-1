@@ -27,14 +27,16 @@ function Entry({ e }) {
           <p className="entry__problem">{e.problem}</p>
 
           <p className="tagrow" aria-label="Stack">
-            {e.stack.map((s) => (
-              <span key={s}>{s}</span>
+            {e.stack.map((s, i) => (
+              <span key={s} style={{ '--n': i }}>
+                {s}
+              </span>
             ))}
           </p>
 
           <div className="entry__nums" aria-label="Impact numbers">
-            {e.numbers.map(([v, k]) => (
-              <div className="entry__num-cell" key={k}>
+            {e.numbers.map(([v, k], i) => (
+              <div className="entry__num-cell" key={k} style={{ '--n': i }}>
                 <b>{v}</b>
                 <span>{k}</span>
               </div>
@@ -42,13 +44,21 @@ function Entry({ e }) {
           </div>
 
           <div className="entry__decisions">
-            {e.decisions.map((d) => (
-              <p key={d}>{d}</p>
+            {e.decisions.map((d, i) => (
+              <p key={d} style={{ '--n': i }}>
+                {d}
+              </p>
             ))}
           </div>
         </div>
 
-        <figure className="entry__shot">
+        <figure className="entry__shot macwin">
+          <div className="macwin__chrome" aria-hidden="true">
+            <span className="slip__light slip__light--red" />
+            <span className="slip__light slip__light--amber" />
+            <span className="slip__light slip__light--green" />
+            <span className="macwin__title">preview.app</span>
+          </div>
           <img src={e.img.src} alt={e.img.alt} loading="lazy" decoding="async" />
           <figcaption>{e.img.note}</figcaption>
         </figure>
@@ -67,7 +77,7 @@ function Entry({ e }) {
             <p className="flow__title">Architecture</p>
             <div className="flow__nodes">
               {e.diagram.map(([label, sub], i) => (
-                <span key={label} style={{ display: 'contents' }}>
+                <span key={label} style={{ display: 'contents', '--n': i }}>
                   {i > 0 ? <FlowArrow /> : null}
                   <span className="flow__node">
                     {label}
@@ -88,7 +98,7 @@ export default function Log() {
     <section className="section" id="work">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 02 — selected work
+          <b>[log]</b> 02 · selected work
         </p>
         <h2 className="head" data-reveal>
           {log.heading}

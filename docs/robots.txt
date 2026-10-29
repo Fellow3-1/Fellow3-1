@@ -1,4 +1,29 @@
 User-agent: *
 Allow: /
 
+# Answer engines are welcome here; the FAQ and llms.txt are written for them.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 Sitemap: https://fellow3-1.github.io/Fellow3-1/sitemap.xml

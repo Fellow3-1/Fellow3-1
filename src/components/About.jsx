@@ -5,7 +5,7 @@ export default function About() {
     <section className="section" id="about">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 06 — about
+          <b>[log]</b> 07 · about
         </p>
         <h2 className="head" data-reveal>
           {about.heading}
@@ -32,9 +32,20 @@ export default function About() {
             </div>
           </div>
           <aside className="about__card" data-reveal>
-            <figure className="about__shot">
-              <img src="assets/intro-desk.jpg" alt="The desk where most of it happens: laptop, phones, notebooks" loading="lazy" decoding="async" />
-              <figcaption>the desk itself — anonymised like everything else</figcaption>
+            <figure className="about__shot macwin">
+              <div className="macwin__chrome" aria-hidden="true">
+                <span className="slip__light slip__light--red" />
+                <span className="slip__light slip__light--amber" />
+                <span className="slip__light slip__light--green" />
+                <span className="macwin__title">photos.app</span>
+              </div>
+              <img
+                src="assets/intro-desk.jpg"
+                alt="The desk where most of it happens: laptop, phones, notebooks"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>the desk itself, anonymised like everything else</figcaption>
             </figure>
             <h3>{about.availability.heading}</h3>
             <ul>

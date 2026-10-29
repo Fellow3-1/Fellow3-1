@@ -17,8 +17,8 @@ export default function Contact() {
     const body = contact.fields.map((f) => `${f.label}: ${values[f.key].trim() || '—'}`).join('\n')
     return (
       `mailto:${brand.email}?` +
-      `subject=${encodeURIComponent('New project — via Felloh 3.1')}` +
-      `&body=${encodeURIComponent(body + '\n\n— printed from the receipt')}`
+      `subject=${encodeURIComponent('New project: via Felloh 3.1')}` +
+      `&body=${encodeURIComponent(body + '\n\n(printed from the receipt)')}`
     )
   }, [values])
 
@@ -34,17 +34,27 @@ export default function Contact() {
     <section className="section" id="contact">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 07 — contact
+          <b>[log]</b> 08 · contact
         </p>
         <div className="cta" data-reveal>
           <div>
             <h2 className="head">{contact.heading}</h2>
             <p className="cta__intro">{contact.intro}</p>
-            <p className="cta__direct">
-              <a className="alink" href={contact.direct.href}>
-                {contact.direct.label}
-              </a>
-            </p>
+            {/* macOS window chrome: red/amber/green dots, glyphs reveal on group hover */}
+            <div className="maclights" role="navigation" aria-label="Channels">
+              {contact.pills.map((p) => (
+                <a
+                  key={p.label}
+                  className={`macpill macpill--${p.dot}`}
+                  href={p.href}
+                  target={p.href.startsWith('mailto') ? undefined : '_blank'}
+                  rel={p.href.startsWith('mailto') ? undefined : 'noreferrer'}
+                >
+                  <span className="macpill__dot" data-glyph={p.glyph} aria-hidden="true" />
+                  {p.label}
+                </a>
+              ))}
+            </div>
 
             <form
               className="slip__form"
@@ -70,7 +80,8 @@ export default function Contact() {
                 </div>
               ))}
               <div>
-                <button className="btn" type="submit" disabled={!ready}>
+                <button className="macpill macpill--green" type="submit" disabled={!ready}>
+                  <span className="macpill__dot" data-glyph="+" aria-hidden="true" />
                   {confirmed ? contact.ctaDone : contact.ctaLabel}
                 </button>
               </div>
@@ -78,6 +89,13 @@ export default function Contact() {
           </div>
 
           <div className={`slip__card${confirmed ? ' is-confirmed' : ''}`}>
+            {/* window chrome: the receipt is a little mac window */}
+            <div className="slip__chrome" aria-hidden="true">
+              <span className="slip__light slip__light--red" />
+              <span className="slip__light slip__light--amber" />
+              <span className="slip__light slip__light--green" />
+              <span className="slip__title">receipt.app</span>
+            </div>
             <div className="slip__head">
               <p className="slip__brand">
                 <img src="assets/favicon-joker.png" alt="" width="24" height="24" />
@@ -114,7 +132,8 @@ export default function Contact() {
                 <b>{contact.confirmed[0]}</b>
                 <span>{contact.confirmed[1]}</span>
                 <p style={{ marginTop: '14px' }}>
-                  <a className="btn" style={{ background: '#0d060b' }} href={mailto} ref={mailRef}>
+                  <a className="macpill macpill--green" href={mailto} ref={mailRef}>
+                    <span className="macpill__dot" data-glyph="+" aria-hidden="true" />
                     {contact.mailLabel}
                   </a>
                 </p>
@@ -127,6 +146,9 @@ export default function Contact() {
             )}
           </div>
         </div>
+        <p className="cta__note" data-reveal>
+          {contact.disclaimer}
+        </p>
       </div>
     </section>
   )
