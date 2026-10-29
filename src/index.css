@@ -1,8 +1,8 @@
-/* Felloh 3.1 — engineering log.
+/* Felloh 3.1 · engineering log.
    Light paper, fixed nav, log-line section markers, numbered entries.
    Flat fields only: no gradient, no resting shadow. Inter one family. */
 
-/* 1 — load + reset */
+/* 1 · load + reset */
 @font-face {
   font-family: 'Inter Fallback';
   src: local('Arial');
@@ -39,7 +39,7 @@ img {
   max-width: 100%;
 }
 
-/* 2 — the sheet */
+/* 2 · the sheet */
 :root {
   --paper: #f6f6f3;
   --card: #ffffff;
@@ -63,7 +63,7 @@ img {
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 3 — base */
+/* 3 · base */
 body {
   font-family: var(--sans);
   font-size: var(--fs-2);
@@ -144,7 +144,7 @@ html.js [data-reveal].is-in {
   color: var(--mut);
 }
 
-/* log-line section marker: "// 02 — selected work" */
+/* log-line section marker: "// 02 · selected work" */
 .logmark {
   display: flex;
   align-items: baseline;
@@ -251,7 +251,7 @@ html.js [data-reveal].is-in {
   color: var(--ink);
 }
 
-/* 4 — fixed nav */
+/* 4 · fixed nav */
 .nav {
   position: fixed;
   inset: 0 0 auto 0;
@@ -307,14 +307,46 @@ html.js [data-reveal].is-in {
   font-feature-settings: 'tnum';
 }
 
+.nav__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  pointer-events: none;
+}
+
+.nav__bar {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+
 .nav__dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: var(--go);
+  animation: dot-breathe 2.4s ease-in-out infinite;
 }
 
-/* 5 — hero */
+@keyframes dot-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(0.68);
+    opacity: 0.6;
+  }
+}
+
+/* 5 · hero */
 .hero {
   padding-top: clamp(120px, 18vh, 180px);
   padding-bottom: clamp(40px, 7vh, 72px);
@@ -339,6 +371,28 @@ html.js [data-reveal].is-in {
   font-weight: 600;
 }
 
+.hero__typed {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.hero__typed::after {
+  content: '';
+  display: inline-block;
+  width: 0.55ch;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: currentColor;
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 .hero__name {
   margin-top: 18px;
   font-size: var(--fs-5);
@@ -350,6 +404,28 @@ html.js [data-reveal].is-in {
 .hero__name i {
   font-style: normal;
   color: var(--accent);
+}
+
+.hero__name .ltr {
+  display: inline-block;
+  will-change: transform;
+}
+
+html.js .hero__name .ltr {
+  opacity: 0;
+  transform: translateY(0.35em);
+}
+
+html.js .hero__name.is-in .ltr {
+  animation: ltr-in 0.66s var(--ease-out) forwards;
+  animation-delay: calc(160ms + var(--i) * 55ms);
+}
+
+@keyframes ltr-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero__tag {
@@ -400,6 +476,26 @@ html.js [data-reveal].is-in {
   rotate: 0deg;
 }
 
+@media (hover: hover) {
+  .polaroid {
+    animation: sway 7s ease-in-out infinite alternate;
+  }
+
+  .polaroid:hover {
+    animation: none;
+  }
+
+  @keyframes sway {
+    from {
+      rotate: 3deg;
+    }
+
+    to {
+      rotate: 1.2deg;
+    }
+  }
+}
+
 /* the tape, flat colour only */
 .polaroid::before {
   content: '';
@@ -448,7 +544,7 @@ html.js [data-reveal].is-in {
   color: var(--mut);
 }
 
-/* 6 — the log entries */
+/* 6 · the log entries */
 .log__intro {
   max-width: 54ch;
   color: var(--mut);
@@ -516,6 +612,67 @@ html.js [data-reveal].is-in {
 
 .entry .tagrow {
   margin-top: 18px;
+}
+
+html.js .entry .tagrow span,
+html.js .entry .entry__num-cell,
+html.js .entry .entry__decisions p {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+html.js .entry.is-in .tagrow span {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 480ms ease,
+    transform 480ms var(--ease-out);
+  transition-delay: calc(120ms + var(--n) * 60ms);
+}
+
+html.js .entry.is-in .entry__num-cell {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 560ms ease,
+    transform 560ms var(--ease-out);
+  transition-delay: calc(180ms + var(--n) * 90ms);
+}
+
+html.js .entry.is-in .entry__decisions p {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 560ms ease,
+    transform 560ms var(--ease-out);
+  transition-delay: calc(320ms + var(--n) * 110ms);
+}
+
+.tagrow span {
+  transition:
+    background 200ms ease,
+    transform 200ms var(--ease-out);
+}
+
+.tagrow span:hover {
+  background: rgba(255, 72, 139, 0.14);
+  transform: translateY(-1px);
+}
+
+.entry__num-cell {
+  transition: background 240ms ease;
+}
+
+.entry:hover .entry__num-cell {
+  background: #f6e9ef;
+}
+
+.entry__shot img {
+  transition: transform 640ms var(--ease-out);
+}
+
+.entry:hover .entry__shot img {
+  transform: scale(1.02);
 }
 
 .entry__nums {
@@ -655,6 +812,40 @@ html.js [data-reveal].is-in {
   flex: none;
 }
 
+.entry details[open] .flow {
+  animation: pop-in 380ms var(--ease-out);
+}
+
+.entry details[open] .flow__node {
+  animation: pop-in 420ms var(--ease-out) backwards;
+  animation-delay: calc(var(--n) * 60ms);
+}
+
+.entry details[open] .flow__arr path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: draw-arr 500ms ease forwards;
+  animation-delay: calc(var(--n) * 60ms);
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes draw-arr {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 .entry__shot {
   position: sticky;
   top: 90px;
@@ -681,7 +872,7 @@ html.js [data-reveal].is-in {
   max-width: 70ch;
 }
 
-/* 7 — approach */
+/* 7 · approach */
 .blocks {
   margin-top: clamp(32px, 5vh, 52px);
   display: grid;
@@ -709,7 +900,7 @@ html.js [data-reveal].is-in {
   color: var(--mut);
 }
 
-/* 8 — writing */
+/* 8 · writing */
 .posts {
   margin-top: clamp(32px, 5vh, 52px);
   display: grid;
@@ -772,6 +963,10 @@ html.js [data-reveal].is-in {
   content: '–';
 }
 
+.post[open] .post__body {
+  animation: pop-in 380ms ease;
+}
+
 .post__body {
   margin-top: 16px;
   max-width: 68ch;
@@ -788,7 +983,7 @@ html.js [data-reveal].is-in {
   color: var(--mut);
 }
 
-/* 9 — open source */
+/* 9 · open source */
 .oss__rows {
   margin-top: clamp(32px, 5vh, 52px);
   display: grid;
@@ -839,7 +1034,7 @@ html.js [data-reveal].is-in {
   font-weight: 600;
 }
 
-/* 9b — contributions snake */
+/* 9b · contributions snake */
 .snake {
   margin-top: clamp(32px, 5vh, 52px);
   background: var(--card);
@@ -877,7 +1072,7 @@ html.js [data-reveal].is-in {
   color: var(--mut);
 }
 
-/* 10 — about */
+/* 10 · about */
 .about__grid {
   margin-top: clamp(32px, 5vh, 52px);
   display: grid;
@@ -981,7 +1176,7 @@ html.js [data-reveal].is-in {
   color: var(--mut);
 }
 
-/* 11 — contact + receipt */
+/* 11 · contact + receipt */
 .cta {
   background: var(--card);
   border-radius: var(--radius);
@@ -1195,7 +1390,7 @@ html.js [data-reveal].is-in {
   margin-bottom: 4px;
 }
 
-/* 12 — footer */
+/* 12 · footer */
 .foot {
   background: var(--card);
   padding-block: clamp(48px, 8vh, 84px) 26px;
@@ -1268,7 +1463,7 @@ html.js [data-reveal].is-in {
   font-feature-settings: 'tnum';
 }
 
-/* 13 — small screens */
+/* 13 · small screens */
 @media (max-width: 900px) {
   .nav__links {
     display: none;
@@ -1315,7 +1510,7 @@ html.js [data-reveal].is-in {
   }
 }
 
-/* 14 — motion off */
+/* 14 · motion off */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1336,7 +1531,7 @@ html.js [data-reveal].is-in {
   }
 }
 
-/* 15 — paper */
+/* 15 · paper */
 @media print {
   :root {
     --px: 10mm;

@@ -72,6 +72,14 @@ check(
   $('.hero__top .polaroid img')?.getAttribute('src') === 'assets/HD-Joker-Wallpapers-scaled.jpg' &&
     text($('.polaroid figcaption')) === 'the muse_',
 )
+check('hero: name split into staggered letters', $$('.hero__name .ltr').length === 9)
+check('hero: prompt types in a terminal', text($('.hero__prompt b')) === 'felloh3.1@nairobi')
+check('nav: reading-progress bar mounted', $('.nav__bar') !== null)
+
+await act(async () => {
+  await new Promise((r) => setTimeout(r, 900))
+})
+check('hero: typed command completes', text($('.hero__typed')) === 'whoami')
 
 /* — the log — */
 check('log: five entries', $$('.entry').length === 5)

@@ -5,7 +5,7 @@ export default function Approach() {
     <section className="section" id="approach">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 03 — engineering approach
+          <b>[log]</b> 03 · engineering approach
         </p>
         <h2 className="head" data-reveal>
           {approach.heading}

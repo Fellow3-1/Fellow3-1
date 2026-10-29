@@ -5,7 +5,7 @@ export default function Writing() {
     <section className="section" id="writing">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 04 — writing
+          <b>[log]</b> 04 · writing
         </p>
         <h2 className="head" data-reveal>
           {writing.heading}

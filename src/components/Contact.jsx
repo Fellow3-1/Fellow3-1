@@ -17,8 +17,8 @@ export default function Contact() {
     const body = contact.fields.map((f) => `${f.label}: ${values[f.key].trim() || '—'}`).join('\n')
     return (
       `mailto:${brand.email}?` +
-      `subject=${encodeURIComponent('New project — via Felloh 3.1')}` +
-      `&body=${encodeURIComponent(body + '\n\n— printed from the receipt')}`
+      `subject=${encodeURIComponent('New project: via Felloh 3.1')}` +
+      `&body=${encodeURIComponent(body + '\n\n(printed from the receipt)')}`
     )
   }, [values])
 
@@ -34,7 +34,7 @@ export default function Contact() {
     <section className="section" id="contact">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 07 — contact
+          <b>[log]</b> 07 · contact
         </p>
         <div className="cta" data-reveal>
           <div>
