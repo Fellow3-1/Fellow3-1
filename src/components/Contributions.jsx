@@ -57,13 +57,6 @@ export default function Contributions() {
             />
           )}
         </div>
-        <p className="writing__note" data-reveal>
-          Served from the repo’s output branch, regenerated twice a day by{' '}
-          <a className="alink" href={`${brand.repoUrl}/actions`} target="_blank" rel="noreferrer">
-            the snake workflow
-          </a>
-          . If that branch is between runs, a committed snapshot stands in.
-        </p>
       </div>
     </section>
   )

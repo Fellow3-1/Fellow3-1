@@ -65,7 +65,7 @@ check(
     'Full-stack engineer. I build payment-ready web and Android products that stay fast under real traffic.',
 )
 check('hero: name carries Felloh 3.1', text($('.hero__name')).includes('Felloh 3.1'))
-check('hero: three route links (GitHub, CV, LinkedIn)', $$('.hero__links a').length === 3)
+check('hero: two route links (GitHub, LinkedIn)', $$('.hero__links a').length === 2)
 check('hero: anonymised-positioning note shown', /described by sector, not by client/.test(text($('.hero__note')) || ''))
 check(
   'hero: joker polaroid sits opposite the name',
@@ -222,7 +222,11 @@ check(
 check('nav: fixed bar with open status', $('.nav') !== null && /open · nairobi/.test(text($('.nav__status')) || ''))
 check('muse: joker favicon img survives in footer badge', $('.foot__muse img')?.getAttribute('src') === 'assets/favicon-joker.png')
 check('footer: hygiene column lists no-trackers', /No trackers/.test(text($('.foot')) || ''))
-check('footer: sitemap + CV links', $$('.foot__base a').some((a) => a.getAttribute('href') === 'sitemap.xml') && $$('.foot__base a').some((a) => a.getAttribute('href') === 'cv.html'))
+check(
+  'footer: sitemap link, no CV anywhere',
+  $$('.foot__base a').some((a) => a.getAttribute('href') === 'sitemap.xml') &&
+    !$$('a').some((a) => /cv\.html/.test(a.getAttribute('href'))),
+)
 check('reveal: observers registered on real nodes', $$('[data-reveal]').length >= 18, String($$('[data-reveal]').length))
 check('skip link points into the page', $('.skiplink')?.getAttribute('href') === '#work')
 
@@ -248,6 +252,8 @@ check(
   $$('.slip__chrome .slip__light').length === 3 && text($('.slip__title')) === 'receipt.app',
 )
 check('receipt: illustrative disclaimer printed plain', /not an invoice/.test(text($('.cta__note'))))
+check('copy: the word "independent" is gone from the page', !/independent/i.test(text(document.body)))
+check('snake: the workflow footnote is gone', !/regenerated twice a day|Run workflow/i.test(text($('.snake'))))
 check('mac: entry shots, desk photo and snake wear window chrome', $$('.macwin .macwin__chrome').length === 7)
 check(
   'mac: window titles are app-flavoured',
@@ -257,7 +263,7 @@ check(
 )
 check('hero: linkedin replaced x, email unlisted', (() => {
   const links = $$('.hero__links a')
-  return links.length === 3 &&
+  return links.length === 2 &&
     links.some((a) => a.getAttribute('href').includes('linkedin.com/in/')) &&
     !links.some((a) => /@|x\.com\/Fellow3_1/.test(a.getAttribute('href')))
 })())

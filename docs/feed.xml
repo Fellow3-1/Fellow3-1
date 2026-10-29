@@ -4,7 +4,7 @@
     <title>Felloh 3.1 · writing</title>
     <link>https://fellow3-1.github.io/Fellow3-1/#writing</link>
     <atom:link href="https://fellow3-1.github.io/Fellow3-1/feed.xml" rel="self" type="application/rss+xml" />
-    <description>Short technical notes from an independent full-stack engineer in Nairobi. Long on pitfalls, short on ceremony.</description>
+    <description>Short technical notes from a full-stack engineer in Nairobi. Long on pitfalls, short on ceremony.</description>
     <language>en</language>
     <item>
       <title>Integrating M-PESA STK Push without losing your weekend</title>
