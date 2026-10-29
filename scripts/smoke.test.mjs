@@ -1,170 +1,188 @@
-// Runtime smoke test: mounts the real App into jsdom, walks the DOM, and
-// exercises the receipt interaction end to end. No browser needed.
-//   node scripts/smoke.test.mjs
-import { readFileSync, readdirSync, existsSync } from "node:fs";
-import { JSDOM } from "jsdom";
+/* Smoke test — jsdom render of the real App, asserting the DOM contract
+   of the name-as-monument build. Run: node scripts/smoke.test.mjs */
 
-// --- 1. bundle the app to a plain script ------------------------------------
-const esbuild = await import("esbuild");
-const entry = `
-import React from "react";
-import { createRoot } from "react-dom/client";
-import App from "./src/App.jsx";
-createRoot(document.getElementById("root")).render(React.createElement(App));
-`;
-const bundle = await esbuild.build({
-  stdin: { contents: entry, resolveDir: new URL("..", import.meta.url).pathname, loader: "jsx" },
+import { JSDOM } from 'jsdom'
+import React from 'react'
+import { act } from 'react'
+import { createRoot } from 'react-dom/client'
+import { build } from 'esbuild'
+import { mkdirSync } from 'node:fs'
+
+/* bundle the real components once, then render them in jsdom */
+mkdirSync('node_modules/.smoke', { recursive: true })
+await build({
+  entryPoints: ['src/App.jsx'],
   bundle: true,
-  format: "iife",
-  write: false,
-  jsx: "automatic",
-  define: { "process.env.NODE_ENV": '"production"' },
-  loader: { ".css": "empty" },
-  logLevel: "silent",
-});
-const script = bundle.outputFiles[0].text;
+  format: 'esm',
+  jsx: 'automatic',
+  external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime'],
+  outfile: 'node_modules/.smoke/app.mjs',
+  logLevel: 'silent',
+})
 
-// --- 2. a DOM with the browser APIs jsdom lacks ------------------------------
-const dom = new JSDOM("<!doctype html><html class='js'><body><div id='root'></div></body></html>", {
-  runScripts: "dangerously",
+const dom = new JSDOM('<!doctype html><html><body><div id="root"></div></body></html>', {
+  url: 'http://localhost/',
   pretendToBeVisual: true,
-  url: "http://localhost/",
-});
-const { window } = dom;
+})
+
+globalThis.window = dom.window
+globalThis.document = dom.window.document
+try {
+  Object.defineProperty(globalThis, 'navigator', { value: dom.window.navigator, configurable: true })
+} catch {
+  /* navigator already exists in this Node */
+}
+globalThis.requestAnimationFrame = (cb) => setTimeout(cb, 0)
+globalThis.cancelAnimationFrame = (id) => clearTimeout(id)
 window.matchMedia =
   window.matchMedia ||
-  ((query) => ({
-    matches: false,
-    media: query,
-    addEventListener() {},
-    removeEventListener() {},
-    addListener() {},
-    removeListener() {},
-  }));
-window.IntersectionObserver =
-  window.IntersectionObserver ||
-  class {
-    constructor(cb) {
-      this.cb = cb;
-    }
-    observe(el) {
-      // fire immediately so data-reveal blocks settle visible, as they must
-      this.cb([{ isIntersecting: true, target: el }], this);
-    }
-    unobserve() {}
-    disconnect() {}
-  };
-if (!window.crypto?.getRandomValues) {
-  const { webcrypto } = await import("node:crypto");
-  Object.defineProperty(window, "crypto", { value: webcrypto });
+  ((q) => ({ matches: false, media: q, addListener() {}, removeListener() {} }))
+
+globalThis.IS_REACT_ACT_ENVIRONMENT = true
+
+const results = []
+const check = (name, ok, extra = '') =>
+  results.push({ name, ok: Boolean(ok), extra })
+
+const { default: App } = await import('../node_modules/.smoke/app.mjs')
+
+const root = createRoot(document.getElementById('root'))
+await act(async () => {
+  root.render(React.createElement(App))
+})
+await act(async () => {
+  await new Promise((r) => setTimeout(r, 60))
+})
+
+const $ = (sel) => document.querySelector(sel)
+const $$ = (sel) => Array.from(document.querySelectorAll(sel))
+const text = (el) => (el ? el.textContent.trim() : null)
+
+/* — the stage — */
+const pins = $$('.stage__pin')
+check('stage: name pinned as two halves', pins.length === 2)
+check(
+  'stage: halves spell the name',
+  pins.map((p) => text(p)).join(' ') === 'Felix Odhiambo',
+  pins.map((p) => text(p)).join(' '),
+)
+check('stage: both halves live inside one h1', $('h1.stage__name') !== null)
+check('stage: three trailer panels', $$('.stage .panel').length === 3)
+check(
+  'stage: pinned layer carries no pointer traps',
+  $('.stage__pins') !== null && $('.stage__pins').parentElement.className === 'stage',
+)
+check(
+  'stage: three section links in the white panel',
+  $$('.panel__links a').length === 3 &&
+    $$('.panel__links a').every((a) => a.getAttribute('href').startsWith('#')),
+)
+check('stage: single primary action to contact', text($('.panel__actions .btn')) === 'Start a project')
+check('stage: mail fallback present', $('.panel__mail')?.getAttribute('href') === 'mailto:felixodhiambo31@live.com')
+
+/* — intro — */
+check('intro: heading present', text($('.intro__head')) === 'Twelve years of shipped work.')
+check('intro: four facts', $$('.fact').length === 4)
+const factValues = $$('.fact .roll__sr').map((el) => text(el))
+check(
+  'intro: fact values are plain-readable for assistive tech',
+  ['2014', '90+', '34', 'UTC+3'].every((v) => factValues.includes(v)),
+  factValues.join(','),
+)
+
+/* — work: held picture, passing captions — */
+check('work: six captions', $$('.work__item').length === 6)
+check('work: six held pictures', $$('.work__media img').length === 6)
+check('work: first picture lit without IO (jsdom path)', $('.work__media img').classList.contains('is-on'))
+check('work: count reads 1 of 6', text($('.work__count')) === '1 of 6')
+check(
+  'work: every caption links out to GitHub',
+  $$('.work__item .alink').length === 6 &&
+    $$('.work__item .alink').every((a) => a.href.startsWith('https://github.com/Fellow3-1/')),
+)
+check('work: count uses plain ordinals, no zero padding', !/0\d/.test(text($('.work__count'))))
+
+/* — story + services — */
+check('story: five honest rows', $$('.story__row').length === 5)
+check(
+  'story: certificate link intact',
+  $('.story__cert')?.href === 'https://intranet.alxswe.com/certificates/sG7YpyrSCM',
+)
+check('services: six poster rows', $$('.svc__row').length === 6)
+
+/* — contact: display rows + the receipt flow — */
+check('contact: five display rows (greeting + four)', $$('.crow').length === 5)
+check(
+  'contact: email row is a working mailto',
+  $('.crows a.crow')?.getAttribute('href') === 'mailto:felixodhiambo31@live.com',
+)
+
+/* jsdom's synthetic input events never trip React's change plugin here, so we
+   call the fiber's bound onChange with a target-shaped object (the handler only
+   reads event.target.value). jsdom also skips click→submit wiring, so the form
+   receives a real submit event instead. */
+const setInput = (input, value) => {
+  const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set
+  setter.call(input, value)
+  const propsKey = Object.keys(input).find((k) => k.startsWith('__reactProps$'))
+  if (propsKey && typeof input[propsKey].onChange === 'function') {
+    input[propsKey].onChange({ target: input })
+  } else {
+    input.dispatchEvent(new window.Event('input', { bubbles: true }))
+  }
 }
-window.Element.prototype.scrollIntoView =
-  window.Element.prototype.scrollIntoView || function () {};
-if (!window.HTMLFormElement.prototype.requestSubmit) {
-  window.HTMLFormElement.prototype.requestSubmit = function () {
-    this.dispatchEvent(new window.Event("submit", { bubbles: true, cancelable: true }));
-  };
+
+check('receipt: build button disabled until the slip is filled', $('.slip__form .btn').disabled === true)
+
+await act(async () => {
+  setInput($('#field-name'), 'Wanjiku Mwangi')
+  setInput($('#field-work'), 'a shop site with M-PESA checkout')
+  setInput($('#field-reach'), 'wanjiku@company.co.ke')
+  await new Promise((r) => setTimeout(r, 30))
+})
+
+check('receipt: button unlocks once filled', $('.slip__form .btn').disabled === false)
+
+await act(async () => {
+  $('.slip__form').dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }))
+  await new Promise((r) => setTimeout(r, 40))
+})
+
+check('receipt: CONFIRMED block prints', $('.slip__confirm') !== null)
+const mail = $('.slip__confirm a')
+check('receipt: mail draft is a mailto', mail?.getAttribute('href').startsWith('mailto:felixodhiambo31@live.com'))
+check(
+  'receipt: draft carries the filled values',
+  /Wanjiku%20Mwangi/.test(mail?.getAttribute('href') || '') &&
+    /M-PESA%20checkout/.test(mail?.getAttribute('href') || ''),
+)
+check(
+  'receipt: figures sharpen when confirmed',
+  $('.slip').classList.contains('is-confirmed') && $$('.slip__fig').length >= 4,
+)
+
+/* — footer — */
+check('footer: wordmark at full width', text($('.foot__mark')) === 'FELLOH')
+check('footer: four quiet columns', $$('.foot__col').length === 4)
+check('footer: clock ticking with a colon', /:/.test(text($('.foot__clock')) || ''), text($('.foot__clock')))
+
+/* — page furniture — */
+check('reveal: observers registered on real nodes', $$('[data-reveal]').length >= 14, String($$('[data-reveal]').length))
+check('skip link points into the page', $('.skiplink')?.getAttribute('href') === '#work')
+
+/* — reduced motion — rolls collapse to plain text — */
+document.documentElement.classList.add('reduce')
+await act(async () => {
+  await new Promise((r) => setTimeout(r, 20))
+})
+check('reduced: true values remain in the DOM', $$('.fact .roll__sr').length === 4)
+document.documentElement.classList.remove('reduce')
+
+/* — tally — */
+let pass = 0
+for (const r of results) {
+  if (r.ok) pass += 1
+  console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.extra ? `  → ${r.extra}` : ''}`)
 }
-
-let failures = 0;
-const check = (name, ok, extra = "") => {
-  console.log(`${ok ? "PASS" : "FAIL"}  ${name}${extra ? "  (" + extra + ")" : ""}`);
-  if (!ok) failures++;
-};
-
-// --- 3. run the app -----------------------------------------------------------
-window.eval(script);
-await new Promise((r) => setTimeout(r, 50));
-const doc = window.document;
-
-check("app mounts with real content", doc.querySelector("#root").innerHTML.length > 2000);
-
-const h1s = doc.querySelectorAll("h1");
-check("exactly one h1", h1s.length === 1);
-check("the h1 names the person", /Felix/.test(h1s[0]?.textContent) && /Odhiambo/.test(h1s[0]?.textContent));
-
-const sections = [...doc.querySelectorAll("main section")];
-check(
-  "all sections present",
-  sections.length === 8,
-  sections.map((s) => s.className.split(" ")[0]).join(", ")
-);
-const titled = sections.filter(
-  (s) =>
-    s.querySelector("h1, h2") ||
-    s.classList.contains("intro") ||
-    s.classList.contains("stats") ||
-    s.classList.contains("opening")
-);
-check("every section carries a heading or is a statement", titled.length === 8);
-check("the opening window scene exists with its photograph", !!doc.querySelector(".opening__stage img"));
-check("the hero carries its dim layer for the recede", !!doc.querySelector(".hero__dim"));
-
-const headings = [...doc.querySelectorAll("h2")].map((h) => h.textContent.trim()).join(" | ");
-check("section headings: " + headings, /Work/.test(headings) && /@/.test(headings));
-
-// the work index
-const rows = doc.querySelectorAll(".work__row");
-check("six work rows, all real GitHub links", rows.length === 6 && [...rows].every((r) => r.href.includes("github.com/Fellow3-1")));
-check("work rows are anchors that keep the layout no-JS-safe", [...rows].every((r) => r.tagName === "A"));
-
-// story and services
-check("six story rows with tabular years", doc.querySelectorAll(".story__years").length === 6);
-check("six services", doc.querySelectorAll(".service").length === 6);
-
-// stats sentence keeps its figures readable to assistive tech (the rolling
-// reels are aria-hidden decoration; the real number stays readable)
-const figs = [...doc.querySelectorAll(".stats__sentence .figure")].map(
-  (f) => f.querySelector(".sr-only")?.textContent || f.textContent
-);
-check("stats figures are 2014 / 90 / 34", figs.join() === "2014,90,34", figs.join());
-check(
-  "rolling figures keep the true value in an sr-only span",
-  doc.querySelectorAll(".roll__digits[aria-hidden='true']").length === 3
-);
-
-// imagery referenced exists in public/
-const imgs = [...doc.querySelectorAll("img")].map((i) => i.getAttribute("src"));
-const publicDir = new URL("../public/", import.meta.url).pathname;
-const missing = imgs.filter((src) => src && !existsSync(publicDir + src));
-check("every referenced image exists in public/", missing.length === 0, missing.join(", ") || `${imgs.length} images`);
-
-// --- 4. the live thing: print a confirmation ---------------------------------
-const nameInput = doc.querySelector("#receipt-name");
-const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
-setter.call(nameInput, "Wanjiku from Acme");
-nameInput.dispatchEvent(new window.Event("input", { bubbles: true }));
-
-const needButtons = [...doc.querySelectorAll(".receipt-needs button")];
-needButtons[2].click(); // Payments / M-PESA
-await new Promise((r) => setTimeout(r, 30)); // React flushes state async
-check(
-  "need selection reflects aria-pressed",
-  doc.querySelectorAll(".receipt-needs button")[2].getAttribute("aria-pressed") === "true"
-);
-
-const form = doc.querySelector(".receipt-form");
-const prevented = !form.dispatchEvent(new window.Event("submit", { bubbles: true, cancelable: true }));
-check("receipt form prevents a real navigation", prevented);
-await new Promise((r) => setTimeout(r, 50));
-
-const receipt = doc.querySelector(".receipt");
-check("the receipt prints", !!receipt);
-check("the receipt names the visitor", /Wanjiku from Acme/.test(receipt?.textContent || ""));
-check("the receipt says CONFIRMED", /CONFIRMED/.test(receipt?.querySelector(".receipt__status")?.textContent || ""));
-const no = receipt?.querySelector(".receipt__no")?.textContent || "";
-check("receipt number looks like a payment code", /^[A-Z2-9]{10}$/.test(no), no);
-const send = receipt?.querySelector(".receipt__actions .send");
-check(
-  "send action is a real mailto with the receipt written out",
-  send?.href.startsWith("mailto:felixodhiambo31@live.com") && send.href.includes(encodeURIComponent(no))
-);
-check("copy action exists", !!receipt?.querySelector(".copy"));
-
-// no blank stretches: every section renders taller than its content threshold
-check("nav has wordmark + 3 links + 1 action", !!doc.querySelector(".nav__mark") && doc.querySelectorAll(".nav__links a").length === 3 && !!doc.querySelector(".nav__cta"));
-check("work rows carry a drawn arrow affordance", doc.querySelectorAll(".work__go").length === 6);
-check("the footer carries a live Nairobi clock", !!doc.querySelector(".closer__clock"));
-
-console.log(failures === 0 ? "\nALL CHECKS PASSED" : `\n${failures} CHECK(S) FAILED`);
-process.exit(failures ? 1 : 0);
+console.log(`\n${pass}/${results.length} checks passed`)
+process.exit(pass === results.length ? 0 : 1)

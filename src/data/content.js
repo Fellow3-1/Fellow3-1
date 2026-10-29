@@ -1,204 +1,208 @@
-// ---------------------------------------------------------------------------
-// Single source of truth for the portfolio content.
-// Facts (repo counts, forks, dates, handles) reflect Felloh's public GitHub
-// profile: https://github.com/Fellow3-1
-// ---------------------------------------------------------------------------
-
 export const profile = {
-  firstName: "Felix",
-  lastName: "Odhiambo",
-  handle: "Felloh",
-  realName: "Felix Odhiambo",
-  location: "Nairobi, Kenya",
-  timeZone: "Africa/Nairobi",
-  utc: "UTC+3",
-  email: "felixodhiambo31@live.com",
-  tagline: "Software engineer in Nairobi, building websites, apps and the systems behind them. Building since 2014.",
-  facts: ["M-PESA tool reused by 34 teams", "90 public projects"],
-  availability: "Available for full-time roles and freelance work. I reply within one working day.",
-};
+  name: 'Felix Odhiambo',
+  alias: 'Felloh 3.1',
+  brand: 'FELLOH',
+  first: 'Felix',
+  last: 'Odhiambo',
+  role: 'Software Engineer',
+  city: 'Nairobi, Kenya',
+  tz: 'Africa/Nairobi',
+  tzLabel: 'UTC+3',
+  repo: 'github.com/Fellow3-1',
+  repoUrl: 'https://github.com/Fellow3-1',
+  email: 'felixodhiambo31@live.com',
+  socials: [
+    { label: 'X · @Fellow3_1', href: 'https://x.com/Fellow3_1' },
+    { label: 'GitHub · Fellow3-1', href: 'https://github.com/Fellow3-1' },
+  ],
+  since: 2014,
+}
 
-export const nav = [
-  { label: "Work", href: "#work" },
-  { label: "Story", href: "#story" },
-  { label: "Contact", href: "#contact" },
-];
+/* — opening stage: three trailer panels passing under the pinned name — */
+export const stage = {
+  sentence: 'Websites, apps, payments and AI — built fast, kept simple.',
+  action: { label: 'Start a project', href: '#contact' },
+  mailNote: 'or email me directly',
+  links: [
+    { label: 'Work', href: '#work' },
+    { label: 'Story', href: '#story' },
+    { label: 'Contact', href: '#contact' },
+  ],
+  photoA: {
+    src: 'assets/hero-skyline-day.jpg',
+    alt: 'The Nairobi skyline on a clear day',
+    caption: 'Nairobi, UTC+3 — where I build.',
+  },
+  photoB: {
+    src: 'assets/hero-2.jpg',
+    alt: 'A wall of phones each running a different screen of the same app',
+    caption: 'A grid of real screens — every build ships as swappable modules.',
+  },
+  lines: [
+    'Apps people open every day,',
+    'sites that load before you blink,',
+    'and AI that earns its keep.',
+  ],
+  note: 'Open for new work now.',
+}
 
-// The staircase statement: five lines, ≥12 words, alternating two inks.
-export const introLines = [
-  { text: "Websites, apps,", ink: "full" },
-  { text: "payments, AI:", ink: "soft" },
-  { text: "whatever you need,", ink: "full" },
-  { text: "built fast and", ink: "soft" },
-  { text: "kept simple.", ink: "full" },
-];
+/* — intro chapter — */
+export const intro = {
+  heading: 'Twelve years of shipped work.',
+  note: 'Self-taught on Android ROMs, trained by Google and ALX, still happiest when something I made is in someone else’s hands.',
+  photo: {
+    src: 'assets/intro-desk.jpg',
+    alt: 'Felix’s desk in Nairobi: laptop, two phones and paper notebooks under warm light',
+    caption: 'The desk where most of it happens.',
+  },
+  facts: [
+    { figure: '2014', cap: 'the year I started, flashing ROMs' },
+    { figure: '90+', cap: 'public projects on GitHub' },
+    { figure: '34', cap: 'teams forked my M-PESA tool' },
+    { figure: 'UTC+3', cap: 'Nairobi time, weekdays and weekends' },
+  ],
+}
 
-export const introNote = ["Felix Odhiambo, software engineer", "Nairobi, Kenya · UTC+3"];
-
-// Selected work. Every entry is a real public repository.
+/* — work — held picture, passing captions — */
 export const projects = [
   {
-    name: "mpesa-api-go",
-    title: "M-PESA payments, one import away",
-    description:
-      "A free Go library that lets developers accept M-PESA mobile payments inside their own apps, without wrestling with the paperwork.",
-    detail: "Forked by 34 teams",
-    lang: "Go",
-    tags: ["Payments", "M-PESA", "Open source"],
-    link: "https://github.com/Fellow3-1/mpesa-api-go",
-    image: "assets/work-mpesa.jpg",
-    w: 1376,
-    h: 768,
+    slug: 'mpesa',
+    name: 'Fello Daraja API',
+    kicker: 'Integrate M-PESA into any system in five minutes.',
+    detail: 'The most practical thing I have published — 34 forks and counting.',
+    tags: ['Python', 'Payments', 'Django'],
+    href: 'https://github.com/Fellow3-1/Fello_Daraja_API',
+    picture: {
+      src: 'assets/work-mpesa.jpg',
+      alt: 'A laptop beside a phone showing an M-PESA payment confirmation',
+    },
   },
   {
-    name: "tovuti",
-    title: "Know when the internet drops",
-    description:
-      "A small add-on for Android apps that reports, in real time, whether the user is online and how fast the connection is.",
-    detail: "Forked by 12 teams",
-    lang: "Java",
-    tags: ["Android", "Reliability"],
-    link: "https://github.com/Fellow3-1/tovuti",
-    image: "assets/work-tovuti.jpg",
-    w: 928,
-    h: 1152,
+    slug: 'fond',
+    name: 'Foundations KE',
+    kicker: 'A website that moves real donations to real causes.',
+    detail: 'Clean pages, clear causes, giving kept simple.',
+    tags: ['JavaScript', 'Web'],
+    href: 'https://github.com/Fellow3-1/FoundationsWebsiteKE',
+    picture: {
+      src: 'assets/work-foundations.jpg',
+      alt: 'The Foundations website in dark and light themes on a laptop',
+    },
   },
   {
-    name: "android-sms-verifier",
-    title: "Sign-in codes without the typing",
-    description:
-      "Fills the security code from a text message automatically, so signing in takes one tap instead of five.",
-    lang: "Java",
-    tags: ["Android", "Ease of use"],
-    link: "https://github.com/Fellow3-1/android-sms-verifier",
-    image: "assets/work-sms.jpg",
-    w: 1408,
-    h: 768,
+    slug: 'sms',
+    name: 'SMS Gateway',
+    kicker: 'One flask of glue between Africa’s Talking and Telegram.',
+    detail: 'Customer texts keep flowing even when the internet does not.',
+    tags: ['Flask', 'Messaging', 'Python'],
+    href: 'https://github.com/Fellow3-1/africastalkingTelegramSMS',
+    picture: {
+      src: 'assets/work-sms.jpg',
+      alt: 'A laptop and a phone relaying customer messages into a chat window',
+    },
   },
   {
-    name: "printf & simple_shell",
-    title: "How computers really work",
-    description:
-      "Two from-scratch builds of the parts most programmers take for granted: the deep end, and the best teacher I have had.",
-    lang: "C",
-    tags: ["Fundamentals", "ALX"],
-    link: "https://github.com/Fellow3-1/printf",
-    image: "assets/work-foundations.jpg",
-    w: 1376,
-    h: 768,
+    slug: 'tovuti',
+    name: 'Tovuti App',
+    kicker: 'A first-thing app — news, weather and a to-do.',
+    detail: 'React Native; in one hand before the day starts.',
+    tags: ['React Native', 'Mobile'],
+    href: 'https://github.com/Fellow3-1/Tovuti',
+    picture: {
+      src: 'assets/work-tovuti.jpg',
+      alt: 'A phone in one hand showing the Tovuti morning app',
+    },
   },
   {
-    name: "llm-chat-app-template",
-    title: "An assistant for your product",
-    description:
-      "A ready-made starting point for adding a chat assistant to a website or app, with replies that stream in as they are written.",
-    lang: "JavaScript",
-    tags: ["AI", "Chat"],
-    link: "https://github.com/Fellow3-1/llm-chat-app-template",
-    image: "assets/work-ai.jpg",
-    w: 928,
-    h: 1152,
+    slug: 'nai',
+    name: 'Nairobi AI Agents',
+    kicker: 'Agents wired for local data, local phones, local work.',
+    detail: 'Built for the machine I am newer to — and learning fast.',
+    tags: ['AI', 'Agents', 'Python'],
+    href: 'https://github.com/Fellow3-1/nairobi-ai-agents',
+    picture: {
+      src: 'assets/work-ai.jpg',
+      alt: 'An agent dashboard drafting a reply in Sheng on a laptop',
+    },
   },
   {
-    name: "VR_Navigation",
-    title: "Wayfinding inside virtual reality",
-    description:
-      "An experiment in finding your way around a space in VR, using light and depth instead of arrows.",
-    lang: "CSS",
-    tags: ["VR", "Experiment"],
-    link: "https://github.com/Fellow3-1/VR_Navigation",
-    image: "assets/work-vr.jpg",
-    w: 1376,
-    h: 768,
+    slug: 'vr',
+    name: 'VR Nairobi',
+    kicker: 'WebVR walks through the city, no headset required.',
+    detail: 'A-Frame and a browser; made for the machines people already own.',
+    tags: ['A-Frame', 'WebVR', 'JavaScript'],
+    href: 'https://github.com/Fellow3-1/VR',
+    picture: {
+      src: 'assets/work-vr.jpg',
+      alt: 'A laptop rendering a simple 3D Nairobi street scene',
+    },
   },
-];
+]
 
-// twelve years, six rows; years are right-aligned with tabular figures.
-export const story = [
-  {
-    title: "Taking phones apart",
-    org: "Self-taught",
-    body: "Android software rebuilt from the inside out",
-    years: "2014",
-  },
-  {
-    title: "Android, done properly",
-    org: "Google × Andela",
-    body: "Backed training; first real apps shipped",
-    years: "2018–19",
-  },
-  {
-    title: "Built for the UN goals",
-    org: "BuildForSDG",
-    body: "A COVID-19 forecasting tool, on a pan-African team",
-    years: "2020",
-  },
-  {
-    title: "Mobile money for everyone",
-    org: "Open source",
-    body: "The M-PESA helper other teams still fork",
-    years: "2020–21",
-  },
-  {
-    title: "The deep end",
-    org: "ALX Africa",
-    body: "Formal engineering training, twenty hands-on projects",
-    years: "2023–24",
-  },
-  {
-    title: "Fast sites with AI inside",
-    org: "Freelance",
-    body: "Websites, apps and assistants, launched",
-    years: "2024–now",
-  },
-];
-
-// One-size name columns: name + one honest sentence that names real tools.
-export const services = [
-  {
-    name: "Websites & web apps",
-    body: "Landing pages to customer portals in React, Next.js or Astro, quick on any connection.",
-  },
-  {
-    name: "Mobile apps",
-    body: "Android and cross-platform apps, taken from a rough idea to a store listing.",
-  },
-  {
-    name: "Payments & M-PESA",
-    body: "Mobile-money checkout wired into your product, with the library 34 teams already reuse.",
-  },
-  {
-    name: "AI features",
-    body: "Assistants and smart search with OpenAI and LangChain. Useful and dependable, never a gimmick.",
-  },
-  {
-    name: "Hosting that stays up",
-    body: "AWS, Docker and automated deploys that keep the lights on while you sleep.",
-  },
-  {
-    name: "Advice & code review",
-    body: "A second opinion on your plan, your code or your team, before you spend the budget.",
-  },
-];
-
-// The figures-inside-a-sentence statement. Figures roll up once on entry.
-export const statsSentence = {
-  before: "Since",
-  parts: [
-    { figure: "2014", text: "I’ve shipped" },
-    { figure: "90", text: "public projects, and the M-PESA helper I wrote in Go is now forked by" },
-    { figure: "34", text: "teams." },
+/* — story chapter — */
+export const story = {
+  headingA: 'From phone tinkerer',
+  headingB: 'to the deep end.',
+  rows: [
+    { year: '2012', what: 'Flashing custom Android ROMs and breaking things on purpose', org: 'Self-taught' },
+    { year: '2014', what: 'Built the first thing people actually used, and never stopped', org: 'First builds' },
+    { year: '2023', what: 'ALX — the eleven-month software engineering deep end', org: 'ALX Africa' },
+    {
+      year: '2024–25',
+      what: 'AI Agents & Automation — new machine, old habit: ship it',
+      org: 'AI Agents & Automation',
+      certificate: { label: 'View certificate', href: 'https://intranet.alxswe.com/certificates/sG7YpyrSCM' },
+    },
+    { year: 'Now', what: 'Engineer-at-large from Nairobi, open to full-time and freelance', org: 'Freelance & open' },
   ],
-};
+}
 
-// The live thing: an M-PESA-style confirmation the visitor actually sends.
-export const receiptNeeds = ["A website", "A mobile app", "Payments / M-PESA", "An AI feature"];
+/* — services — one poster-scale list — */
+export const services = {
+  lead: 'What I do,',
+  rows: [
+    { name: 'Websites & web apps', tail: 'quick on any connection' },
+    { name: 'Mobile apps', tail: 'React Native, one hand, no manual' },
+    { name: 'Payments & integrations', tail: 'M-PESA, SMS, email, APIs' },
+    { name: 'AI agents & automation', tail: 'that earn their keep' },
+    { name: 'E-commerce & dashboards', tail: 'real numbers, not vanity' },
+    { name: 'Design & maintenance', tail: 'kept simple, kept running' },
+  ],
+  photo: {
+    src: 'assets/window-nairobi.jpg',
+    alt: 'Traffic light trails through a Nairobi junction at night from above',
+    caption: 'Rush hour, from above — the city never really stops.',
+  },
+}
 
-export const socials = [
-  { label: "GitHub", value: "github.com/Fellow3-1", href: "https://github.com/Fellow3-1" },
-  { label: "X / Twitter", value: "@Fellow3_1", href: "https://twitter.com/Fellow3_1" },
-  { label: "CV", value: "Plain text, one page", href: "assets/cv-felix-odhiambo.txt" },
-  { label: "Community", value: "@BuildForSDG", href: "https://github.com/BuildForSDG" },
-];
+/* — contact chapter — display rows + the receipt — */
+export const contact = {
+  hello: 'Say hello.',
+  rows: [
+    { label: 'Email', value: 'felixodhiambo31@live.com', href: 'mailto:felixodhiambo31@live.com' },
+    { label: 'Place', value: 'Nairobi, Kenya — UTC+3' },
+    { label: 'Work', value: 'Open to full-time & freelance' },
+    { label: 'Code', value: 'github.com/Fellow3-1', href: 'https://github.com/Fellow3-1' },
+  ],
+  receiptIntro:
+    'Prefer paper? Write on this slip — it prints itself into the email, addressed and stamped, ready to send.',
+  fields: [
+    { key: 'name', label: 'name', placeholder: 'Wanjiku Mwangi' },
+    { key: 'work', label: 'the work', placeholder: 'a shop site with M-PESA checkout' },
+    { key: 'reach', label: 'reach me at', placeholder: 'you@company.co.ke' },
+  ],
+  note: 'No managers, no queue — I reply myself, from Nairobi. Usually within a day.',
+}
 
-export const credits = ["Set in Inter", "Imagery made for this site"];
+/* — footer — small columns, then the wordmark at full width — */
+export const footer = {
+  sections: [
+    { label: 'Top', href: '#top' },
+    { label: 'Work', href: '#work' },
+    { label: 'Story', href: '#story' },
+    { label: 'Contact', href: '#contact' },
+  ],
+  recognition: ['GitHub Developer Program Member', 'Pull Shark ×2', 'Pair Extraordinaire', 'YOLO'],
+  colophon: ['Set in Inter', 'Imagery made for this site'],
+  line: '© 2026 Felix Odhiambo · Nairobi, Kenya',
+}

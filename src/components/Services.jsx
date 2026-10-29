@@ -1,19 +1,28 @@
-import { services } from "../data/content.js";
+import { services } from '../data/content.js'
 
-// One-size name columns: pure text, three columns, the right quarter left
-// empty on purpose. The heading is the first line of the list itself.
 export default function Services() {
   return (
-    <section className="services" aria-label="What I do">
-      <h2 className="head" data-reveal>
-        What I do, <strong>honestly listed</strong>
-      </h2>
-      {services.map((s, i) => (
-        <div className="service" key={s.name} data-reveal style={{ "--d": `${i * 55}ms` }}>
-          <h3>{s.name}</h3>
-          <p>{s.body}</p>
-        </div>
-      ))}
+    <section className="section chapter chapter--paper" id="services">
+      <div className="grid">
+        <h2 className="svc__lead head" data-reveal>
+          {services.lead}
+        </h2>
+        {services.rows.map((r, i) => (
+          <div
+            className="svc__row"
+            key={r.name}
+            data-reveal
+            style={{ '--rd': `${Math.min(i * 60, 300)}ms` }}
+          >
+            <h3 className="svc__name">{r.name}</h3>
+            <p className="svc__tail">{r.tail}</p>
+          </div>
+        ))}
+        <figure className="svc__photo" data-reveal>
+          <img src={services.photo.src} alt={services.photo.alt} loading="lazy" decoding="async" />
+          <figcaption className="cap">{services.photo.caption}</figcaption>
+        </figure>
+      </div>
     </section>
-  );
+  )
 }

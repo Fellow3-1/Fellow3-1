@@ -1,98 +1,72 @@
-import { useRef, useState } from "react";
-import { projects } from "../data/content.js";
+import { useEffect, useRef, useState } from 'react'
+import { projects } from '../data/content.js'
+import Arrow from './Arrow.jsx'
 
-// Big names, fixed preview: the names are the index; the hovered or focused
-// row lights the preview frame level with it (the frame follows the row,
-// never the pointer). Touch and narrow screens get each still above its name.
+/* Held picture, passing captions: one photograph pinned at mid-screen
+   while the project captions travel past it. */
+
 export default function Work() {
-  const rootRef = useRef(null);
-  const frameRef = useRef(null);
-  const [active, setActive] = useState(-1);
+  const [active, setActive] = useState(0)
+  const listRef = useRef(null)
 
-  const show = (i, row) => {
-    const frame = frameRef.current;
-    const root = rootRef.current;
-    if (frame && root) {
-      const y = row.offsetTop + row.offsetHeight / 2 - frame.offsetHeight / 2;
-      const max = Math.max(0, root.offsetHeight - frame.offsetHeight);
-      frame.style.transform = `translateY(${Math.min(max, Math.max(0, y))}px)`;
-    }
-    setActive(i);
-  };
-
-  const hide = () => setActive(-1);
+  useEffect(() => {
+    const list = listRef.current
+    if (!list || typeof IntersectionObserver === 'undefined') return undefined
+    const items = Array.from(list.querySelectorAll('.work__item'))
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          const idx = Number(entry.target.getAttribute('data-i'))
+          setActive((prev) => (prev === idx ? prev : idx))
+        })
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+    )
+    items.forEach((it) => io.observe(it))
+    return () => io.disconnect()
+  }, [])
 
   return (
-    <section className="work" id="work" aria-label="Selected work" ref={rootRef}>
-      <h2 className="head" data-reveal>
-        Work
+    <section className="section chapter" id="work">
+      <h2 className="work__head head" data-reveal>
+        Selected work
       </h2>
-
-      <ul
-        className="work__list"
-        onPointerLeave={hide}
-        onBlur={(e) => {
-          if (!e.currentTarget.contains(e.relatedTarget)) hide();
-        }}
-      >
-        {projects.map((p, i) => (
-          <li key={p.name} data-reveal style={{ "--d": `${i * 60}ms` }}>
-            <a
-              className="work__row"
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              onPointerEnter={(e) => show(i, e.currentTarget)}
-              onFocus={(e) => show(i, e.currentTarget)}
-            >
-              <img
-                className="work__thumb"
-                src={p.image}
-                alt={`${p.title}, a still from the project`}
-                width={p.w}
-                height={p.h}
-                loading="lazy"
-                decoding="async"
-              />
-              <span className="work__name">{p.name}</span>
-              <small>
-                {p.lang}
-                {p.detail ? ` · ${p.detail}` : ""}
-              </small>
-              <svg
-                className="work__go"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M7 17 17 7" />
-                <path d="M9 7h8v8" />
-              </svg>
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <div className={`work__frame${active >= 0 ? " is-open" : ""}`} ref={frameRef} aria-hidden="true">
-        {active >= 0 && (
-          <figure key={projects[active].name}>
-            <img src={projects[active].image} alt="" width={projects[active].w} height={projects[active].h} />
-            <figcaption>
-              <p className="work__frame-title">{projects[active].title}</p>
-              <p className="work__frame-desc">{projects[active].description}</p>
-              {projects[active].detail && (
-                <p className="work__frame-detail">{projects[active].detail}</p>
-              )}
-            </figcaption>
-          </figure>
-        )}
+      <div className="work__split">
+        <figure className="work__media" aria-hidden="true">
+          {projects.map((p, i) => (
+            <img
+              key={p.slug}
+              src={p.picture.src}
+              alt=""
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              className={i === active ? 'is-on' : ''}
+            />
+          ))}
+          <figcaption className="work__count">
+            {active + 1} of {projects.length}
+          </figcaption>
+        </figure>
+        <ol className="work__list" ref={listRef}>
+          {projects.map((p, i) => (
+            <li className={`work__item${i === active ? ' is-active' : ''}`} data-i={i} key={p.slug}>
+              <h3>{p.name}</h3>
+              <p className="work__kicker">{p.kicker}</p>
+              <p className="work__detail">{p.detail}</p>
+              <p className="work__tags">
+                {p.tags.map((t) => (
+                  <span key={t}>{t}</span>
+                ))}
+              </p>
+              <a className="alink" href={p.href} target="_blank" rel="noreferrer">
+                View on GitHub
+                <Arrow />
+              </a>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
-  );
+  )
 }
