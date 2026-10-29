@@ -122,7 +122,19 @@ await act(async () => {
   $('.snake img').dispatchEvent(new window.Event('error'))
   await new Promise((r) => setTimeout(r, 30))
 })
-check('snake: missing file falls back to an honest note with the real grid link', $('.snake__note') !== null)
+check(
+  'snake: missing output branch falls back to the committed snapshot first',
+  $('.snake img')?.src ===
+    'https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/main/github-snake.svg',
+)
+await act(async () => {
+  $('.snake img').dispatchEvent(new window.Event('error'))
+  await new Promise((r) => setTimeout(r, 30))
+})
+check(
+  'snake: both sources missing falls back to an honest note with the real grid link',
+  $('.snake__note') !== null && /snake is between runs/i.test(text($('.snake__note'))),
+)
 
 /* — added imagery — */
 check('hero: field photo strip present', $('.hero__strip img')?.getAttribute('src') === 'assets/hero-skyline-day.jpg')
@@ -236,8 +248,13 @@ check(
   $$('.slip__chrome .slip__light').length === 3 && text($('.slip__title')) === 'receipt.app',
 )
 check('receipt: illustrative disclaimer printed plain', /not an invoice/.test(text($('.cta__note'))))
-check('mac: entry shots and desk photo wear window chrome', $$('.macwin .macwin__chrome').length === 6)
-check('mac: window titles are app-flavoured', /preview\.app/.test(text($('.macwin__title'))) && /photos\.app/.test(text($$('.macwin__title').at(-1))))
+check('mac: entry shots, desk photo and snake wear window chrome', $$('.macwin .macwin__chrome').length === 7)
+check(
+  'mac: window titles are app-flavoured',
+  /preview\.app/.test(text($('.macwin__title'))) &&
+    /contributions\.app/.test(text($$('.macwin__title').at(-2))) &&
+    /photos\.app/.test(text($$('.macwin__title').at(-1))),
+)
 check('hero: linkedin replaced x, email unlisted', (() => {
   const links = $$('.hero__links a')
   return links.length === 3 &&
