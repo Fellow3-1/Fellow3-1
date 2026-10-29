@@ -334,6 +334,13 @@ export const contact = {
   ctaLabel: 'Build the receipt',
   ctaDone: 'Printed; edit & rebuild',
   mailLabel: 'Open in your email app',
+  pills: [
+    { label: 'GitHub', dot: 'red', glyph: '×', href: 'https://github.com/Fellow3-1' },
+    { label: 'X', dot: 'amber', glyph: '−', href: 'https://x.com/Fellow3_1' },
+    { label: 'Email', dot: 'green', glyph: '+', href: 'mailto:felixodhiambo31@live.com' },
+  ],
+  disclaimer:
+    'The printed receipt is a design sketch, not an invoice; the totals are playful. The email it drafts is real, and it reaches felixodhiambo31@live.com.',
   direct: { label: 'felixodhiambo31@live.com', href: 'mailto:felixodhiambo31@live.com' },
 }
 

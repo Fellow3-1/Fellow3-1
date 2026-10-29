@@ -214,6 +214,27 @@ check('footer: sitemap + CV links', $$('.foot__base a').some((a) => a.getAttribu
 check('reveal: observers registered on real nodes', $$('[data-reveal]').length >= 18, String($$('[data-reveal]').length))
 check('skip link points into the page', $('.skiplink')?.getAttribute('href') === '#work')
 
+/* — mac window chrome + receipt honesty — */
+check(
+  'contact: three mac pills (red, amber, green)',
+  $$('.macpill').length === 3 &&
+    $$('.macpill--red').length === 1 &&
+    $$('.macpill--amber').length === 1 &&
+    $$('.macpill--green').length === 1,
+)
+check(
+  'contact: pills point at the real channels',
+  $$('.macpill')
+    .map((a) => a.getAttribute('href'))
+    .join(' ') === 'https://github.com/Fellow3-1 https://x.com/Fellow3_1 mailto:felixodhiambo31@live.com',
+)
+check('contact: dots carry hover glyphs', $$('.macpill__dot').every((d) => d.getAttribute('data-glyph')))
+check(
+  'receipt: mac chrome row tops the slip',
+  $$('.slip__chrome .slip__light').length === 3 && text($('.slip__title')) === 'receipt.app',
+)
+check('receipt: illustrative disclaimer printed plain', /not an invoice/.test(text($('.cta__note'))))
+
 /* — tally — */
 let pass = 0
 for (const r of results) {

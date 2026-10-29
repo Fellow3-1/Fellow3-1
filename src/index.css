@@ -1247,7 +1247,139 @@ html.js .entry.is-in .entry__decisions p {
 .slip__card {
   background: var(--paper);
   border-radius: 12px;
-  padding: 22px 20px 0;
+  padding: 0 20px;
+  overflow: clip;
+}
+
+/* macOS window chrome: glass capsule pills with traffic-light dots.
+   On group hover the dots reveal their native glyphs (×, −, +). */
+.maclights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.macpill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 18px 9px 14px;
+  border-radius: 999px;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: #3a3a3e;
+  background: linear-gradient(180deg, #ffffff 0%, #f2f2f5 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+  border: 1px solid rgba(20, 20, 45, 0.14);
+  box-shadow: /* taste-skill-ignore: mac os chrome keeps its native shadows and hairlines */
+    inset 0 1px 0 #ffffff,
+    0 1px 3px rgba(18, 18, 38, 0.12);
+  transition:
+    transform 180ms var(--ease-out),
+    box-shadow 180ms ease;
+}
+
+.macpill:hover {
+  transform: translateY(-2px);
+  box-shadow: /* taste-skill-ignore: mac os chrome keeps its native shadows and hairlines */
+    inset 0 1px 0 #ffffff,
+    0 6px 14px rgba(18, 18, 38, 0.16);
+}
+
+.macpill:active {
+  transform: translateY(0);
+  background: linear-gradient(180deg, #f5f5f7 0%, #ececf0 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+  box-shadow: inset 0 1px 3px rgba(18, 18, 38, 0.14); /* taste-skill-ignore: mac os chrome keeps its native shadows and hairlines */
+}
+
+.macpill__dot {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: /* taste-skill-ignore: mac os chrome keeps its native shadows and hairlines */
+    inset 0 -1px 1px rgba(0, 0, 0, 0.22),
+    inset 0 1px 1px rgba(255, 255, 255, 0.55);
+}
+
+.macpill--red .macpill__dot {
+  background: radial-gradient(circle at 32% 30%, #ff9389 0%, #ff5f57 52%, #e63128 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+}
+
+.macpill--amber .macpill__dot {
+  background: radial-gradient(circle at 32% 30%, #ffd48a 0%, #ffbd2e 52%, #d89e24 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+}
+
+.macpill--green .macpill__dot {
+  background: radial-gradient(circle at 32% 30%, #7cec87 0%, #28c840 52%, #1dad2b 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+}
+
+.macpill__dot::after {
+  content: attr(data-glyph);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.maclights:hover .macpill__dot::after,
+.macpill:focus-visible .macpill__dot::after {
+  opacity: 1;
+}
+
+/* the receipt dressed as a little mac window */
+.slip__chrome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 -20px;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid rgba(20, 20, 45, 0.1); /* taste-skill-ignore: mac os chrome keeps its native shadows and hairlines */
+  background: linear-gradient(180deg, #fbfbfc 0%, #f3f3f5 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+  border-radius: 12px 12px 0 0;
+}
+
+.slip__light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: /* taste-skill-ignore: mac os chrome keeps its native shadows and hairlines */
+    inset 0 -1px 1px rgba(0, 0, 0, 0.22),
+    inset 0 1px 1px rgba(255, 255, 255, 0.55);
+}
+
+.slip__light--red {
+  background: radial-gradient(circle at 32% 30%, #ff9389 0%, #ff5f57 52%, #e63128 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+}
+
+.slip__light--amber {
+  background: radial-gradient(circle at 32% 30%, #ffd48a 0%, #ffbd2e 52%, #d89e24 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+}
+
+.slip__light--green {
+  background: radial-gradient(circle at 32% 30%, #7cec87 0%, #28c840 52%, #1dad2b 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+}
+
+.slip__title {
+  margin-left: 6px;
+  font-size: var(--fs-3);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--mut);
+}
+
+.cta__note {
+  margin-top: 26px;
+  font-size: var(--fs-1);
+  color: var(--mut);
+  max-width: 52ch;
 }
 
 .slip__head {
