@@ -50,7 +50,9 @@ Date of this run: 2026-10-30.
   `src/data/content.js` AND to `feed.xml`, bump `lastmod` in `sitemap.xml`).
 - When the FAQ changes in `content.js`, mirror it in the FAQPage JSON-LD in
   `index.html` (rich results require structured data to match visible content).
-- Give the snake its first run: GitHub Actions → "Generate snake animation" → Run.
+- The snake runs itself: on its own workflow landing, on demand, and every 12 hours. If
+  the section shows the snapshot instead, open Actions → "Generate snake animation" →
+  Run workflow and check the run log.
 - Ask real references for one quotable sentence each; swap the "on request" lines
   only when the quote is real and anonymised by role.
 - Quarterly: review GSC Performance queries; add the questions people used to find

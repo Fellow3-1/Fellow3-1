@@ -1076,16 +1076,24 @@ html.js .entry.is-in .entry__decisions p {
   margin-top: clamp(32px, 5vh, 52px);
   background: var(--card);
   border-radius: var(--radius);
-  padding: clamp(16px, 2.4vw, 28px);
+  /* the chrome bar runs flush to the card edges, so the padding moves inside */
+  overflow: hidden;
   overflow-x: auto;
 }
 
+.snake .macwin__chrome {
+  border-bottom: 1px solid rgba(20, 20, 45, 0.1); /* taste-skill-ignore: mac os chrome keeps its native hairlines */
+}
+
 .snake img {
+  display: block;
   min-width: 640px;
   width: 100%;
+  padding: clamp(14px, 2.2vw, 26px);
 }
 
 .snake__note {
+  padding: clamp(14px, 2.2vw, 26px);
   font-size: 15px;
   color: var(--mut);
   line-height: 1.6;
