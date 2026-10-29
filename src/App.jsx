@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
-import Stage from './components/Stage.jsx'
-import Intro from './components/Intro.jsx'
+import Nav from './components/Nav.jsx'
+import Hero from './components/Hero.jsx'
+import Highlights from './components/Highlights.jsx'
+import Numbers from './components/Numbers.jsx'
 import Work from './components/Work.jsx'
-import Story from './components/Story.jsx'
-import Services from './components/Services.jsx'
+import Timeline from './components/Timeline.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 
@@ -20,14 +21,11 @@ export function useReveals(deps = []) {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return
           const el = entry.target
-          const kin = el.closest('section, footer')
-          const order = kin ? Array.from(kin.querySelectorAll('[data-reveal]')).indexOf(el) : 0
-          el.style.setProperty('--rd', `${Math.min(order * 70, 350)}ms`)
           el.classList.add('is-in')
           io.unobserve(el)
         })
       },
-      { rootMargin: '-14% 0px -14% 0px', threshold: 0.01 },
+      { rootMargin: '-12% 0px -12% 0px', threshold: 0.01 },
     )
     els.forEach((el) => io.observe(el))
     return () => io.disconnect()
@@ -50,12 +48,13 @@ export default function App() {
       <a className="skiplink" href="#work">
         Skip to the work
       </a>
-      <Stage />
+      <Nav />
       <main id="main">
-        <Intro />
+        <Hero />
+        <Highlights />
+        <Numbers />
         <Work />
-        <Story />
-        <Services />
+        <Timeline />
         <Contact />
       </main>
       <Footer />

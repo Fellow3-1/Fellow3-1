@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { footer, profile } from '../data/content.js'
+import { brand, footer } from '../data/content.js'
 
 export default function Footer() {
   const [clock, setClock] = useState('')
@@ -9,7 +9,7 @@ export default function Footer() {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
-      timeZone: profile.tz,
+      timeZone: brand.tz,
     })
     const tick = () => setClock(fmt.format(new Date()))
     tick()
@@ -18,65 +18,70 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer className="chapter chapter--paper" style={{ paddingTop: 'clamp(90px, 14vh, 150px)' }}>
-      <div className="foot__cols">
-        <div className="foot__col">
-          <span className="cap">Sections</span>
-          <ul>
-            {footer.sections.map((s) => (
-              <li key={s.href}>
-                <a href={s.href}>{s.label}</a>
+    <footer className="foot">
+      <div className="wrap">
+        <div className="foot__cols">
+          <div className="foot__col">
+            <span className="cap">Sections</span>
+            <ul>
+              {footer.sections.map((s) => (
+                <li key={s.href}>
+                  <a href={s.href}>{s.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="foot__col">
+            <span className="cap">Reach me</span>
+            <ul>
+              <li>
+                <a href={`mailto:${brand.email}`}>{brand.email}</a>
               </li>
+              {brand.socials.map((s) => (
+                <li key={s.href}>
+                  <a href={s.href} target="_blank" rel="noreferrer">
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="foot__col">
+            <span className="cap">Recognition</span>
+            <ul>
+              {footer.recognition.map((r) => (
+                <li key={r}>
+                  <p style={{ fontSize: '15px', color: 'var(--ink)' }}>{r}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="foot__col">
+            <span className="cap">Colophon</span>
+            {footer.colophon.map((c) => (
+              <p key={c}>{c}</p>
             ))}
-          </ul>
+            <p className="foot__clock">
+              Nairobi — {clock || '· · : · ·'} {brand.tzLabel}
+            </p>
+          </div>
         </div>
-        <div className="foot__col">
-          <span className="cap">Reach me</span>
-          <ul>
-            <li>
-              <a href={`mailto:${profile.email}`}>{profile.email}</a>
-            </li>
-            {profile.socials.map((s) => (
-              <li key={s.href}>
-                <a href={s.href} target="_blank" rel="noreferrer">
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="foot__col">
-          <span className="cap">Recognition</span>
-          <ul>
-            {footer.recognition.map((r) => (
-              <li key={r}>
-                <p style={{ fontSize: 'var(--fs-2)', color: 'var(--ink)' }}>{r}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="foot__col">
-          <span className="cap">Colophon</span>
-          {footer.colophon.map((c) => (
-            <p key={c}>{c}</p>
-          ))}
-          <p className="foot__clock">
-            Nairobi — {clock || '· · : · ·'} {profile.tzLabel}
+
+        <div className="foot__band">
+          <p className="foot__mark" aria-label={brand.name}>
+            Felloh <i>3.1</i>
           </p>
         </div>
-      </div>
 
-      <div className="foot__band">
-        <p className="foot__mark" aria-hidden="true">
-          {profile.brand}
-        </p>
-      </div>
-
-      <div className="foot__base">
-        <p>{footer.line}</p>
-        <p>
-          Built by hand · <a href={profile.repoUrl} target="_blank" rel="noreferrer">source on GitHub</a>
-        </p>
+        <div className="foot__base">
+          <p>{footer.line}</p>
+          <p>
+            Built by hand ·{' '}
+            <a href={brand.repoUrl} target="_blank" rel="noreferrer">
+              source on GitHub
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   )
