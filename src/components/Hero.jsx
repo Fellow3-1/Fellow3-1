@@ -73,6 +73,7 @@ export default function Hero() {
           decoding="async"
           aria-hidden="true"
         />
+        <div className="hero__dim" aria-hidden="true" />
       </figure>
 
       <p className="hero__scrollcue" data-load style={{ "--d": "620ms" }}>

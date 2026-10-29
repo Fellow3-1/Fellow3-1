@@ -390,6 +390,14 @@ section {
   background: var(--accent); /* small markers carry the one accent */
 }
 
+.hero__dim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--bg); /* a flat ink, not a gradient */
+  opacity: 0;
+  pointer-events: none;
+}
 .hero__scrollcue {
   position: absolute;
   left: 50%;
@@ -431,6 +439,50 @@ section {
   @keyframes load-open {
     to {
       clip-path: inset(0);
+    }
+  }
+}
+
+/* the recede: as the first screen leaves, its object sinks and dims a
+   little while the words lift away - the hero recedes, it does not scroll
+   off. Locked to the scrollbar; static everywhere else. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero {
+      view-timeline-name: --hero;
+    }
+    .hero__object {
+      animation: hero-sink linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 100%;
+    }
+    .hero__dim {
+      animation: hero-dim linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 100%;
+    }
+    .hero__title,
+    .hero__merge,
+    .hero__scrollcue {
+      animation: hero-lift linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 70%;
+    }
+    @keyframes hero-sink {
+      to {
+        transform: translateX(-50%) rotate(-8deg) translateY(6%) scale(1.04);
+      }
+    }
+    @keyframes hero-dim {
+      to {
+        opacity: 0.42;
+      }
+    }
+    @keyframes hero-lift {
+      to {
+        transform: translateY(-6%);
+        opacity: 0;
+      }
     }
   }
 }
@@ -523,6 +575,19 @@ section {
   object-fit: cover;
   filter: brightness(0.9) contrast(1.05);
 }
+@media (hover: hover) {
+  /* photographs wake a little under the pointer */
+  .intro__photos img {
+    transition: filter 600ms ease;
+  }
+  .intro__photos img:hover {
+    filter: brightness(1.06) contrast(1.05);
+  }
+  .work__row:hover .work__thumb,
+  .work__row:focus-visible .work__thumb {
+    filter: brightness(1.06);
+  }
+}
 .intro__note {
   position: absolute;
   left: var(--margin);
@@ -566,6 +631,95 @@ section {
   line-height: 1.05;
 }
 
+/* --- opening window: the type page hands over to the one big picture ------ */
+
+.opening__stage {
+  position: relative;
+  height: 100svh;
+  overflow: clip;
+}
+.opening__stage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.72);
+}
+.opening__line {
+  position: absolute;
+  left: var(--margin);
+  bottom: calc(var(--margin) + 1rem);
+  z-index: 1;
+  font-size: var(--fs-4);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--ink);
+  max-width: 14ch;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .opening {
+      height: 200svh;
+      view-timeline-name: --opening;
+      --inset-y: 20%;
+      --inset-x: 28%;
+    }
+    .opening__stage {
+      position: sticky;
+      top: 0;
+      animation: opening-window linear both;
+      animation-timeline: --opening;
+      animation-range: contain 0% contain 75%;
+    }
+    .opening__stage img {
+      animation: opening-settle linear both;
+      animation-timeline: --opening;
+      animation-range: contain 0% contain 75%;
+    }
+    .opening__line {
+      animation: opening-line var(--ease-out) both;
+      animation-timeline: --opening;
+      animation-range: contain 45% contain 80%;
+    }
+    @keyframes opening-window {
+      from {
+        clip-path: inset(var(--inset-y) var(--inset-x));
+      }
+      to {
+        clip-path: inset(0);
+      }
+    }
+    @keyframes opening-settle {
+      from {
+        transform: scale(1.15);
+      }
+      to {
+        transform: none;
+      }
+    }
+    @keyframes opening-line {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}
+@media (max-width: 700px) {
+  .opening {
+    --inset-y: 18%;
+    --inset-x: 8%;
+  }
+  .opening__line {
+    font-size: clamp(1.75rem, 7.5vw, 2.5rem);
+    max-width: 12ch;
+  }
+}
+
 /* --- work: big names, fixed preview -------------------------------------- */
 
 .work {
@@ -607,6 +761,24 @@ section {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   margin-bottom: 0.75rem;
+  filter: brightness(0.92);
+  transition: filter 500ms ease;
+}
+.work__go {
+  align-self: center;
+  flex: 0 0 auto;
+  color: var(--muted);
+  opacity: 0;
+  transform: translate(-5px, 5px);
+  transition: opacity var(--t-ui) var(--ease-out), transform var(--t-ui) var(--ease-out);
+}
+@media (max-width: 900px), (hover: none) {
+  .work__go {
+    opacity: 0.8;
+    transform: none;
+    vertical-align: middle;
+    margin-left: 0.4em;
+  }
 }
 .work__frame {
   display: none;
@@ -623,6 +795,11 @@ section {
   .work__list .work__row:hover,
   .work__list .work__row:focus-visible {
     opacity: 1;
+  }
+  .work__row:hover .work__go,
+  .work__row:focus-visible .work__go {
+    opacity: 1;
+    transform: none;
   }
   .work__frame {
     display: block;
@@ -642,6 +819,22 @@ section {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+  }
+  /* each swap settles in from a whisper of scale, once */
+  @media (prefers-reduced-motion: no-preference) {
+    .work__frame figure {
+      animation: frame-in 480ms var(--ease-out);
+    }
+    @keyframes frame-in {
+      from {
+        opacity: 0;
+        transform: scale(1.04);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
   }
   .work__frame-title {
     font-size: var(--fs-2);
@@ -731,6 +924,18 @@ section {
 @media (hover: none) {
   .story__row:hover {
     background: none;
+  }
+}
+/* the era passing the middle of the screen is lit; the rest wait at 55% */
+.js .story__row {
+  transition: opacity var(--t-ui) ease, background-color var(--t-hover) ease;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .js .story__rows[data-lit] .story__row {
+    opacity: 0.55;
+  }
+  .js .story__rows[data-lit] .story__row.is-active {
+    opacity: 1;
   }
 }
 @media (max-width: 800px) {
@@ -843,6 +1048,35 @@ section {
   font-weight: 400;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+/* the figures roll up to their values once, a column at a time; the real
+   number stays in the text for screen readers and search */
+.roll__digits {
+  display: inline-flex;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  vertical-align: baseline;
+}
+.roll__col {
+  display: inline-block;
+  height: 1em;
+  overflow: clip;
+}
+.roll__strip {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(calc(var(--d) * -1em));
+}
+.roll__strip > span {
+  height: 1em;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .js .roll:not(.is-in) .roll__strip {
+    transform: none;
+  }
+  .js .roll.is-in .roll__strip {
+    transition: transform 1100ms var(--ease-expo) calc(var(--i) * var(--stagger-item));
+  }
 }
 /* the ink fill: one statement paces the reader as it rises past */
 @supports (animation-timeline: view()) {
@@ -1203,6 +1437,10 @@ section {
 .closer__row--bottom {
   padding-block: 1.5rem 1.75rem;
   flex-wrap: wrap;
+}
+.closer__clock {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 @media (max-width: 700px) {
   .closer__name {

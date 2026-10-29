@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Nav from "./components/Nav.jsx";
 import Hero from "./components/Hero.jsx";
 import Intro from "./components/Intro.jsx";
+import Opening from "./components/Opening.jsx";
 import Work from "./components/Work.jsx";
 import Story from "./components/Story.jsx";
 import Services from "./components/Services.jsx";
@@ -43,6 +44,7 @@ export default function App() {
       <main id="content">
         <Hero />
         <Intro />
+        <Opening />
         <Work />
         <Story />
         <Services />

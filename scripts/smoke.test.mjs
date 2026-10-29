@@ -84,12 +84,21 @@ check("exactly one h1", h1s.length === 1);
 check("the h1 names the person", /Felix/.test(h1s[0]?.textContent) && /Odhiambo/.test(h1s[0]?.textContent));
 
 const sections = [...doc.querySelectorAll("main section")];
-check("all sections present", sections.length === 7, sections.map((s) => s.className.split(" ")[0]).join(", "));
+check(
+  "all sections present",
+  sections.length === 8,
+  sections.map((s) => s.className.split(" ")[0]).join(", ")
+);
 const titled = sections.filter(
   (s) =>
-    s.querySelector("h1, h2") || s.classList.contains("intro") || s.classList.contains("stats")
+    s.querySelector("h1, h2") ||
+    s.classList.contains("intro") ||
+    s.classList.contains("stats") ||
+    s.classList.contains("opening")
 );
-check("every section carries a heading or is a statement", titled.length === 7);
+check("every section carries a heading or is a statement", titled.length === 8);
+check("the opening window scene exists with its photograph", !!doc.querySelector(".opening__stage img"));
+check("the hero carries its dim layer for the recede", !!doc.querySelector(".hero__dim"));
 
 const headings = [...doc.querySelectorAll("h2")].map((h) => h.textContent.trim()).join(" | ");
 check("section headings: " + headings, /Work/.test(headings) && /@/.test(headings));
@@ -103,9 +112,16 @@ check("work rows are anchors that keep the layout no-JS-safe", [...rows].every((
 check("six story rows with tabular years", doc.querySelectorAll(".story__years").length === 6);
 check("six services", doc.querySelectorAll(".service").length === 6);
 
-// stats sentence keeps its figures readable to assistive tech
-const figs = [...doc.querySelectorAll(".stats__sentence .figure")].map((f) => f.textContent);
+// stats sentence keeps its figures readable to assistive tech (the rolling
+// reels are aria-hidden decoration; the real number stays readable)
+const figs = [...doc.querySelectorAll(".stats__sentence .figure")].map(
+  (f) => f.querySelector(".sr-only")?.textContent || f.textContent
+);
 check("stats figures are 2014 / 90 / 34", figs.join() === "2014,90,34", figs.join());
+check(
+  "rolling figures keep the true value in an sr-only span",
+  doc.querySelectorAll(".roll__digits[aria-hidden='true']").length === 3
+);
 
 // imagery referenced exists in public/
 const imgs = [...doc.querySelectorAll("img")].map((i) => i.getAttribute("src"));
@@ -147,6 +163,8 @@ check("copy action exists", !!receipt?.querySelector(".copy"));
 
 // no blank stretches: every section renders taller than its content threshold
 check("nav has wordmark + 3 links + 1 action", !!doc.querySelector(".nav__mark") && doc.querySelectorAll(".nav__links a").length === 3 && !!doc.querySelector(".nav__cta"));
+check("work rows carry a drawn arrow affordance", doc.querySelectorAll(".work__go").length === 6);
+check("the footer carries a live Nairobi clock", !!doc.querySelector(".closer__clock"));
 
 console.log(failures === 0 ? "\nALL CHECKS PASSED" : `\n${failures} CHECK(S) FAILED`);
 process.exit(failures ? 1 : 0);

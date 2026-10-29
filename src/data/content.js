@@ -201,4 +201,4 @@ export const socials = [
   { label: "Community", value: "@BuildForSDG", href: "https://github.com/BuildForSDG" },
 ];
 
-export const credits = ["Set in Inter", "Imagery made for this site", "Nairobi, Kenya · UTC+3"];
+export const credits = ["Set in Inter", "Imagery made for this site"];
