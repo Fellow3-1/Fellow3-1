@@ -320,6 +320,13 @@ html.js [data-reveal].is-in {
   padding-bottom: clamp(40px, 7vh, 72px);
 }
 
+.hero__top {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+
 .hero__prompt {
   font-size: var(--fs-1);
   font-weight: 500;
@@ -376,6 +383,51 @@ html.js [data-reveal].is-in {
 .hero__links .alink::after {
   content: ']';
   color: var(--mut);
+}
+
+.polaroid {
+  position: relative;
+  justify-self: end;
+  width: min(100%, 290px);
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 14px 14px 0;
+  rotate: 3deg;
+  transition: rotate 400ms var(--ease-out);
+}
+
+.polaroid:hover {
+  rotate: 0deg;
+}
+
+/* the tape, flat colour only */
+.polaroid::before {
+  content: '';
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 92px;
+  height: 26px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(255, 72, 139, 0.3);
+  border-radius: 2px;
+}
+
+.polaroid img {
+  width: 100%;
+  aspect-ratio: 4 / 4.3;
+  object-fit: cover;
+  object-position: 50% 26%;
+  border-radius: 3px;
+}
+
+.polaroid figcaption {
+  padding: 12px 4px 15px;
+  font-size: 13.5px;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+  text-align: center;
 }
 
 .hero__strip {
@@ -1220,6 +1272,16 @@ html.js [data-reveal].is-in {
 @media (max-width: 900px) {
   .nav__links {
     display: none;
+  }
+
+  .hero__top {
+    grid-template-columns: 1fr;
+  }
+
+  .polaroid {
+    justify-self: start;
+    margin-top: 34px;
+    width: min(64%, 250px);
   }
 
   .entry__nums {

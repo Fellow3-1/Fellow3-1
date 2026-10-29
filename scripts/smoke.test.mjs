@@ -67,6 +67,11 @@ check(
 check('hero: name carries Felloh 3.1', text($('.hero__name')).includes('Felloh 3.1'))
 check('hero: three route links (GitHub, CV, Email)', $$('.hero__links a').length === 3)
 check('hero: anonymised-positioning note shown', /described by sector, not by client/.test(text($('.hero__note')) || ''))
+check(
+  'hero: joker polaroid sits opposite the name',
+  $('.hero__top .polaroid img')?.getAttribute('src') === 'assets/HD-Joker-Wallpapers-scaled.jpg' &&
+    text($('.polaroid figcaption')) === 'the muse_',
+)
 
 /* — the log — */
 check('log: five entries', $$('.entry').length === 5)
