@@ -1,0 +1,300 @@
+/* Felloh 3.1 · standalone writing pages.
+   Self-contained: the same tokens and gradient as the main sheet, nothing
+   more than a note needs. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+:root {
+  --paper: #f6f6f3;
+  --card: #ffffff;
+  --well: #ededeb;
+  --ink: #111318;
+  --mut: #5f6068;
+  --accent: #ff488b;
+  --go: #0e7a48;
+  --iris: #8650a0;
+  --grad: linear-gradient(180deg, var(--accent) 0%, var(--iris) 50%, var(--go) 100%);
+  --grad-x: linear-gradient(90deg, var(--accent) 0%, var(--iris) 50%, var(--go) 100%);
+  --fs-1: 14px;
+  --fs-2: clamp(16px, 1.1vw + 12px, 19px);
+  --fs-3: clamp(24px, 2.4vw + 10px, 36px);
+  --px: clamp(20px, 4vw, 48px);
+  --radius: 14px;
+  --sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+[data-theme='dark'] {
+  --paper: #0d060b;
+  --card: #170f16;
+  --well: #221527;
+  --ink: #f3edf2;
+  --mut: #a795a6;
+  --accent: #ff5796;
+  --go: #3bdb84;
+  --iris: #9b68c9;
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--sans);
+  font-size: var(--fs-2);
+  line-height: 1.7;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 320ms ease, color 320ms ease;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* the scrollbar wears the site gradient here too */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(95, 96, 104, 0.55) var(--paper);
+  scrollbar-color: var(--iris) var(--paper);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--iris);
+  background: var(--grad);
+  border: 3px solid var(--paper);
+  border-radius: 999px;
+}
+
+a {
+  color: inherit;
+}
+
+.wrap {
+  max-width: 760px;
+  margin-inline: auto;
+  padding-inline: var(--px);
+}
+
+/* top bar */
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 20px;
+}
+
+.bar__brand {
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.bar__brand b {
+  color: var(--go);
+  font-weight: 600;
+}
+
+.bar__links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: var(--fs-1);
+}
+
+.bar__links a {
+  color: var(--mut);
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.bar__links a:hover {
+  color: var(--ink);
+}
+
+/* theme toggle, same track-and-orb as the main sheet */
+.nav__theme {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 999px;
+}
+
+.nav__theme-orb {
+  display: block;
+  width: 36px;
+  height: 20px;
+  position: relative;
+  border-radius: 999px;
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px rgba(95, 96, 104, 0.35);
+  transition: background 300ms ease, box-shadow 300ms ease;
+}
+
+.nav__theme-orb::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--iris));
+  transition: transform 300ms var(--ease-out), background 300ms ease;
+}
+
+[data-theme='dark'] .nav__theme-orb {
+  background: #241627;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+[data-theme='dark'] .nav__theme-orb::after {
+  transform: translateX(16px);
+  background: linear-gradient(135deg, var(--iris), var(--go));
+}
+
+.nav__theme:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* the note */
+.note {
+  padding-block: clamp(48px, 9vh, 96px) clamp(64px, 10vh, 110px);
+}
+
+.note .logmark {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-size: var(--fs-1);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--mut);
+  margin-bottom: 10px;
+}
+
+.note .logmark b {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.note h1 {
+  font-size: var(--fs-3);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.note__meta {
+  margin-top: 16px;
+  font-size: var(--fs-1);
+  color: var(--mut);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.note__rule {
+  width: 44px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--iris);
+  background: var(--grad-x);
+}
+
+.note__body {
+  margin-top: 28px;
+  display: grid;
+  gap: 18px;
+}
+
+.note__body p {
+  max-width: 68ch;
+}
+
+.note__back {
+  margin-top: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-2);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.28em;
+  text-decoration-color: var(--mut);
+  transition: text-decoration-color 200ms ease;
+}
+
+.note__back:hover {
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
+}
+
+/* footer strip */
+.foot {
+  padding-block: 26px 34px;
+  font-size: var(--fs-1);
+  color: var(--mut);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px 20px;
+  flex-wrap: wrap;
+}
+
+.foot a {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.28em;
+  transition: text-decoration-color 180ms ease;
+}
+
+.foot a:hover {
+  text-decoration-color: var(--ink);
+}
+
+@media print {
+  :root {
+    --paper: #ffffff;
+    --card: #ffffff;
+    --well: #f4f4f1;
+    --ink: #111318;
+    --mut: #5f6068;
+  }
+
+  .bar__links,
+  .nav__theme {
+    display: none;
+  }
+}

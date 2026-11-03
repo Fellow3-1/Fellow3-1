@@ -59,7 +59,10 @@ function Entry({ e }) {
             <span className="slip__light slip__light--green" />
             <span className="macwin__title">preview.app</span>
           </div>
-          <img src={e.img.src} alt={e.img.alt} loading="lazy" decoding="async" />
+          <picture>
+            <source srcSet={e.img.src.replace(/\.jpg$/, '.webp')} type="image/webp" />
+            <img src={e.img.src} alt={e.img.alt} loading="lazy" decoding="async" />
+          </picture>
           <figcaption>{e.img.note}</figcaption>
         </figure>
       </div>

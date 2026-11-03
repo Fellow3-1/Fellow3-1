@@ -7,6 +7,7 @@ import Approach from './components/Approach.jsx'
 import Writing from './components/Writing.jsx'
 import Contributions from './components/Contributions.jsx'
 import FAQ from './components/FAQ.jsx'
+import Testimonials from './components/Testimonials.jsx'
 import About from './components/About.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
@@ -53,6 +54,7 @@ export default function App() {
         <Writing />
         <Contributions />
         <FAQ />
+        <Testimonials />
         <About />
         <Contact />
       </main>

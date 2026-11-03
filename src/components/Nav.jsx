@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { brand, nav } from '../data/content.js'
+import { useTheme, flipTheme } from '../theme.js'
 
 export default function Nav() {
   const [clock, setClock] = useState('')
+  const [active, setActive] = useState('')
+  const [theme] = useTheme()
   const barRef = useRef(null)
 
   useEffect(() => {
@@ -42,6 +45,25 @@ export default function Nav() {
     }
   }, [])
 
+  /* scrollspy: mark the nav link whose section owns the viewport middle band */
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return undefined
+    const targets = nav.links
+      .map((l) => document.getElementById(l.href.slice(1)))
+      .filter(Boolean)
+    if (!targets.length) return undefined
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`)
+        })
+      },
+      { rootMargin: '-25% 0px -60% 0px', threshold: 0 }
+    )
+    targets.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+
   return (
     <header className="nav">
       <div className="nav__inner">
@@ -51,7 +73,12 @@ export default function Nav() {
         </a>
         <nav className="nav__links" aria-label="Sections">
           {nav.links.map((l) => (
-            <a key={l.href} href={l.href}>
+            <a
+              key={l.href}
+              href={l.href}
+              className={active === l.href ? 'is-here' : undefined}
+              aria-current={active === l.href ? 'location' : undefined}
+            >
               {l.label}
             </a>
           ))}
@@ -60,6 +87,16 @@ export default function Nav() {
           <span className="nav__dot" aria-hidden="true" />
           open · nairobi {clock || '· ·:··'}
         </span>
+        <button
+          className="nav__theme"
+          type="button"
+          id="theme-flip"
+          onClick={flipTheme}
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          title={theme === 'dark' ? 'Lights on' : 'Lights out'}
+        >
+          <span className="nav__theme-orb" aria-hidden="true" />
+        </button>
       </div>
       <div className="nav__progress" aria-hidden="true">
         <span className="nav__bar" ref={barRef} />

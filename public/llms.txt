@@ -24,18 +24,21 @@
 - Networking: LAN/WAN, TCP/IP, DNS, DHCP, VPN, firewall concepts and connectivity troubleshooting
 - Cloud and delivery: AWS, Docker, Git, CI/CD and Linux web-server environments
 
-## Education and certification
-
-- Degree in Business Information Technology
-- Associate Android Developer Certification (Java), Andela Learning Community with Google
-
 ## Privacy policy
 
 No employer names, employment dates, client identities, private infrastructure diagrams, internal records or unsupported client metrics are published. The infrastructure section is a capability overview and does not imply production use of every named vendor or platform. Detailed employment information can be shared privately during recruitment.
+
+## Writing
+
+- Designing safer M-PESA callback handling: https://fellow3-1.github.io/Fellow3-1/writing/safer-mpesa-callbacks/
+- A practical network troubleshooting sequence: https://fellow3-1.github.io/Fellow3-1/writing/network-troubleshooting-sequence/
+- Linux service diagnostics: https://fellow3-1.github.io/Fellow3-1/writing/linux-service-diagnostics/
+- Feed: https://fellow3-1.github.io/Fellow3-1/feed.xml
 
 ## Main sections
 
 - Projects: https://fellow3-1.github.io/Fellow3-1/#work
 - Infrastructure: https://fellow3-1.github.io/Fellow3-1/#infrastructure
+- Testimonials: https://fellow3-1.github.io/Fellow3-1/#testimonials
 - Skills and profile: https://fellow3-1.github.io/Fellow3-1/#about
 - Contact: https://fellow3-1.github.io/Fellow3-1/#contact

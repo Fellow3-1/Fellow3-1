@@ -4,7 +4,7 @@ export default function About() {
   return (
     <section className="section" id="about">
       <div className="wrap">
-        <p className="logmark" data-reveal><b>[log]</b> 07 · profile</p>
+        <p className="logmark" data-reveal><b>[log]</b> 09 · profile</p>
         <h2 className="head" data-reveal>{about.heading}</h2>
         <div className="about__grid">
           <div data-reveal>
@@ -17,12 +17,6 @@ export default function About() {
                 </div>
               ))}
             </div>
-            <div className="profile__credentials">
-              <h3>Education</h3>
-              <ul>{about.education.map((item) => <li key={item}>{item}</li>)}</ul>
-              <h3>Certification</h3>
-              <ul>{about.certifications.map((item) => <li key={item}>{item}</li>)}</ul>
-            </div>
           </div>
           <aside className="about__card" data-reveal>
             <figure className="about__shot macwin">
@@ -32,7 +26,10 @@ export default function About() {
                 <span className="slip__light slip__light--green" />
                 <span className="macwin__title">profile.app</span>
               </div>
-              <img src="assets/intro-desk.jpg" alt="A desk with a laptop, phones and notebooks" loading="lazy" decoding="async" />
+              <picture>
+                <source srcSet="assets/intro-desk.webp" type="image/webp" />
+                <img src="assets/intro-desk.jpg" alt="A desk with a laptop, phones and notebooks" loading="lazy" decoding="async" />
+              </picture>
               <figcaption>an engineer's workspace</figcaption>
             </figure>
             <h3>{about.availability.heading}</h3>
