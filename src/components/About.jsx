@@ -4,12 +4,8 @@ export default function About() {
   return (
     <section className="section" id="about">
       <div className="wrap">
-        <p className="logmark" data-reveal>
-          <b>[log]</b> 07 · about
-        </p>
-        <h2 className="head" data-reveal>
-          {about.heading}
-        </h2>
+        <p className="logmark" data-reveal><b>[log]</b> 07 · profile</p>
+        <h2 className="head" data-reveal>{about.heading}</h2>
         <div className="about__grid">
           <div data-reveal>
             <p className="about__bio">{about.bio}</p>
@@ -21,14 +17,11 @@ export default function About() {
                 </div>
               ))}
             </div>
-            <div className="refs">
-              <p className="refs__intro">{about.referencesIntro}</p>
-              {about.references.map((r) => (
-                <div className="refs__row" key={r.role}>
-                  <span className="refs__role">{r.role}</span>
-                  <span className="refs__line">{r.line}</span>
-                </div>
-              ))}
+            <div className="profile__credentials">
+              <h3>Education</h3>
+              <ul>{about.education.map((item) => <li key={item}>{item}</li>)}</ul>
+              <h3>Certification</h3>
+              <ul>{about.certifications.map((item) => <li key={item}>{item}</li>)}</ul>
             </div>
           </div>
           <aside className="about__card" data-reveal>
@@ -37,22 +30,13 @@ export default function About() {
                 <span className="slip__light slip__light--red" />
                 <span className="slip__light slip__light--amber" />
                 <span className="slip__light slip__light--green" />
-                <span className="macwin__title">photos.app</span>
+                <span className="macwin__title">profile.app</span>
               </div>
-              <img
-                src="assets/intro-desk.jpg"
-                alt="The desk where most of it happens: laptop, phones, notebooks"
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption>the desk itself, anonymised like everything else</figcaption>
+              <img src="assets/intro-desk.jpg" alt="A desk with a laptop, phones and notebooks" loading="lazy" decoding="async" />
+              <figcaption>an engineer's workspace</figcaption>
             </figure>
             <h3>{about.availability.heading}</h3>
-            <ul>
-              {about.availability.lines.map((l) => (
-                <li key={l}>{l}</li>
-              ))}
-            </ul>
+            <ul>{about.availability.lines.map((line) => <li key={line}>{line}</li>)}</ul>
           </aside>
         </div>
       </div>
