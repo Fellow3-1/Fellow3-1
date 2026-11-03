@@ -4,8 +4,6 @@ import { brand, contact } from '../data/content.js'
 /* The receipt survives yet another redesign: fill the slip, it prints
    into a ready-made email. Same proven flow, log-paper dressing. */
 
-const RATES = { name: 40, work: 60, reach: 20 }
-
 export default function Contact() {
   const [values, setValues] = useState({ name: '', work: '', reach: '' })
   const [confirmed, setConfirmed] = useState(false)
@@ -21,8 +19,6 @@ export default function Contact() {
       `&body=${encodeURIComponent(body + '\n\n(printed from the receipt)')}`
     )
   }, [values])
-
-  const total = contact.fields.reduce((sum, f) => sum + values[f.key].trim().length * RATES[f.key], 0)
 
   const buildReceipt = () => {
     if (!ready) return
