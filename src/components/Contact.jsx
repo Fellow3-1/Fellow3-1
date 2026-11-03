@@ -116,8 +116,8 @@ export default function Contact() {
             </dl>
 
             <div className="slip__total">
-              <span>total due</span>
-              <b className="slip__fig">KES {total.toLocaleString('en-KE')}</b>
+              <span>status</span>
+              <b className="slip__fig">email draft</b>
             </div>
 
             <div className="slip__bars" aria-hidden="true">
@@ -125,7 +125,7 @@ export default function Contact() {
                 <span key={i} />
               ))}
             </div>
-            <p className="slip__num">№ F3-2026</p>
+            <p className="slip__num">LOCAL DRAFT</p>
 
             {confirmed ? (
               <div className="slip__confirm" role="status">
