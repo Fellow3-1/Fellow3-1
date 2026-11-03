@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { brand } from '../data/content.js'
+import { useTheme } from '../theme.js'
 
 /* The classic contribution snake. Two sources, in order of preference:
    1. the `output` branch, rebuilt twice a day by .github/workflows/snake.yml
@@ -9,17 +10,32 @@ import { brand } from '../data/content.js'
    Only if both are unreachable does the section admit it and point at the
    real graph. */
 
-const SNAKE_SRC =
-  'https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake.svg'
-const SNAKE_SNAPSHOT = 'https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/main/github-snake.svg'
+/* light and dark variants, so the grid dresses to the page theme */
+const SNAKE = {
+  light: 'https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake.svg',
+  dark: 'https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/output/github-contribution-grid-snake-dark.svg',
+}
+const SNAPSHOT = {
+  light: 'https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/main/github-snake.svg',
+  dark: 'https://raw.githubusercontent.com/Fellow3-1/Fellow3-1/main/github-snake-dark.svg',
+}
 
 export default function Contributions() {
-  const [src, setSrc] = useState(SNAKE_SRC)
-  const [failed, setFailed] = useState(false)
+  const [theme] = useTheme()
+  const [errored, setErrored] = useState(false)
+  const [snapFailed, setSnapFailed] = useState(false)
 
+  /* a theme change resets the fallback ladder back to the fresh source */
+  useEffect(() => {
+    setErrored(false)
+    setSnapFailed(false)
+  }, [theme])
+
+  const src = errored ? SNAPSHOT[theme] : SNAKE[theme]
+  const failed = errored && snapFailed
   const step = () => {
-    if (src === SNAKE_SRC) return setSrc(SNAKE_SNAPSHOT)
-    setFailed(true)
+    if (!errored) return setErrored(true)
+    setSnapFailed(true)
   }
 
   return (

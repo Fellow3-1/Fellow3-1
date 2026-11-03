@@ -141,7 +141,7 @@ a {
   z-index: 999;
   padding: 10px 14px;
   background: var(--ink);
-  color: #ffffff;
+  color: var(--paper);
   font-size: var(--fs-1);
   transform: translateY(-72px);
   transition: transform 260ms ease;
@@ -1733,6 +1733,12 @@ html.js .entry.is-in .entry__decisions p {
 @media print {
   :root {
     --px: 10mm;
+    /* print always gets the light tokens, whatever the on-screen theme */
+    --paper: #ffffff;
+    --card: #ffffff;
+    --well: #f4f4f1;
+    --ink: #111318;
+    --mut: #5f6068;
   }
 
   body {
@@ -1790,4 +1796,280 @@ html.js .entry.is-in .entry__decisions p {
 .infra__note { margin-top: 22px; }
 @media (max-width: 900px) {
   .infra__grid { grid-template-columns: 1fr; }
+}
+
+/* 17 · the hairline between sections: one quiet run of the site gradient */
+main .section {
+  position: relative;
+}
+
+main .section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(1120px, calc(100% - 2 * var(--px)));
+  transform: translateX(-50%);
+  height: 1px;
+  background: var(--iris);
+  background: var(--grad-x);
+  opacity: 0.26;
+}
+
+/* picture wrappers stay layout-transparent */
+.polaroid picture,
+.hero__strip picture,
+.entry__shot picture,
+.about__shot picture {
+  display: contents;
+}
+
+/* 18 · the "now" line: live EAT clock + standing status */
+.hero__now {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: var(--fs-1);
+  color: var(--mut);
+  font-feature-settings: 'tnum';
+}
+
+.hero__now-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--go);
+  animation: dot-breathe 2.4s ease-in-out infinite;
+}
+
+/* 19 · word of mouth */
+.tlist__note {
+  margin-top: 14px;
+  max-width: 54ch;
+  color: var(--mut);
+}
+
+.tlist {
+  margin-top: clamp(32px, 5vh, 52px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 24px);
+}
+
+.tcard {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: clamp(20px, 2.6vw, 30px);
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  position: relative;
+}
+
+.tcard > p {
+  font-size: var(--fs-2);
+  line-height: 1.6;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+/* the open quote, dressed in the site gradient */
+.tcard > p::before {
+  content: '\201C';
+  display: block;
+  height: 0.45em;
+  font-size: 64px;
+  line-height: 0.8;
+  font-weight: 500;
+  color: var(--iris);
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tcard footer {
+  margin-top: auto;
+  padding-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tcard__rule {
+  width: 44px;
+  height: 2px;
+  flex: none;
+  border-radius: 2px;
+  background: var(--iris);
+  background: var(--grad-x);
+}
+
+.tcard .cap {
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 900px) {
+  .tlist {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 20 · the theme toggle: a small track, the gradient orb inside */
+.nav__theme {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 999px;
+  flex: none;
+}
+
+.nav__theme-orb {
+  display: block;
+  width: 36px;
+  height: 20px;
+  position: relative;
+  border-radius: 999px;
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px rgba(95, 96, 104, 0.35);
+  transition:
+    background 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.nav__theme-orb::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--iris));
+  transition:
+    transform 300ms var(--ease-out),
+    background 300ms ease;
+}
+
+[data-theme='dark'] .nav__theme-orb {
+  background: #241627;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+[data-theme='dark'] .nav__theme-orb::after {
+  transform: translateX(16px);
+  background: linear-gradient(135deg, var(--iris), var(--go));
+}
+
+.nav__theme:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* theme flips animate surfaces only around the moment of the switch */
+html.theming body,
+html.theming .nav,
+html.theming .entry,
+html.theming .block,
+html.theming .post,
+html.theming .tcard,
+html.theming .cta,
+html.theming .foot,
+html.theming .about__card,
+html.theming .depth__row,
+html.theming .infra__card,
+html.theming .snake,
+html.theming .flow,
+html.theming .entry__num-cell,
+html.theming .slip__card,
+html.theming .field input {
+  transition:
+    background-color 320ms ease,
+    border-color 320ms ease;
+}
+
+/* 21 · lights out: joker-neon. Plum-black sheet, the muse's own backdrop,
+   pink pushed warmer and the green pushed phosphor so both clear contrast
+   on the dark sheets. */
+html[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+[data-theme='dark'] {
+  --paper: #0d060b;
+  --card: #170f16;
+  --well: #221527;
+  --ink: #f3edf2;
+  --mut: #a795a6;
+  --accent: #ff5796;
+  --go: #3bdb84;
+  --iris: #9b68c9;
+}
+
+[data-theme='dark'] .entry__num-cell {
+  background: #241327;
+}
+
+[data-theme='dark'] .entry:hover .entry__num-cell {
+  background: #301a31;
+}
+
+[data-theme='dark'] .field input:hover {
+  background: #1a1220;
+}
+
+/* the macOS chrome goes dark like the real thing */
+[data-theme='dark'] .macwin__chrome {
+  background: linear-gradient(180deg, #251a2b 0%, #1b1220 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+}
+
+[data-theme='dark'] .snake .macwin__chrome {
+  border-bottom-color: rgba(255, 255, 255, 0.12); /* taste-skill-ignore: mac os chrome keeps its native hairlines */
+}
+
+[data-theme='dark'] .slip__chrome {
+  background: linear-gradient(180deg, #251a2b 0%, #1b1220 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+  border-bottom-color: rgba(255, 255, 255, 0.12); /* taste-skill-ignore: mac os chrome keeps its native hairlines */
+}
+
+[data-theme='dark'] .macpill {
+  color: #ece5ee;
+  background: linear-gradient(180deg, #2b1f31 0%, #211827 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+  border-color: rgba(255, 255, 255, 0.16); /* taste-skill-ignore: mac os chrome keeps its native hairlines */
+  box-shadow: /* taste-skill-ignore: mac os chrome keeps its native shadows */
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme='dark'] .macpill:hover {
+  box-shadow: /* taste-skill-ignore: mac os chrome keeps its native shadows */
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 6px 14px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme='dark'] .macpill:active {
+  background: linear-gradient(180deg, #1e1524 0%, #180f1e 100%); /* taste-skill-ignore: mac os window chrome gloss is the requested aesthetic */
+}
+
+[data-theme='dark'] .slip__sheet {
+  border-top-color: rgba(255, 255, 255, 0.22); /* taste-skill-ignore receipt line-art */
+}
+
+[data-theme='dark'] .slip__row {
+  border-bottom-color: rgba(255, 255, 255, 0.16); /* taste-skill-ignore receipt line-art */
+}
+
+[data-theme='dark'] .slip__confirm {
+  color: #0d060b;
+}
+
+@media print {
+  html[data-theme='dark'] body {
+    background: #ffffff;
+    color: #111318;
+  }
 }

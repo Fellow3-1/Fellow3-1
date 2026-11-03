@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { brand, nav } from '../data/content.js'
+import { useTheme, flipTheme } from '../theme.js'
 
 export default function Nav() {
   const [clock, setClock] = useState('')
   const [active, setActive] = useState('')
+  const [theme] = useTheme()
   const barRef = useRef(null)
 
   useEffect(() => {
@@ -85,6 +87,16 @@ export default function Nav() {
           <span className="nav__dot" aria-hidden="true" />
           open · nairobi {clock || '· ·:··'}
         </span>
+        <button
+          className="nav__theme"
+          type="button"
+          id="theme-flip"
+          onClick={flipTheme}
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          title={theme === 'dark' ? 'Lights on' : 'Lights out'}
+        >
+          <span className="nav__theme-orb" aria-hidden="true" />
+        </button>
       </div>
       <div className="nav__progress" aria-hidden="true">
         <span className="nav__bar" ref={barRef} />

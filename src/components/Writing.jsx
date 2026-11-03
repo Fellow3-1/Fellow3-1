@@ -1,4 +1,5 @@
 import { writing } from '../data/content.js'
+import Arrow from './Arrow.jsx'
 
 export default function Writing() {
   return (
@@ -25,6 +26,12 @@ export default function Writing() {
                 {p.body.map((para) => (
                   <p key={para.slice(0, 24)}>{para}</p>
                 ))}
+                <p className="post__open">
+                  <a className="alink" href={`writing/${p.slug}/`}>
+                    read it as its own page
+                    <Arrow />
+                  </a>
+                </p>
                 <p className="post__share">
                   <span className="cap">share</span>
                   <a

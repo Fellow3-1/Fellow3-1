@@ -32,6 +32,11 @@ export const nav = {
 export const hero = {
   tagline: 'Software engineer working across web and mobile applications, payment integrations, systems administration and network infrastructure.',
   note: 'Based in Nairobi, Kenya · public work and technical capabilities, with private employment details omitted',
+  now: {
+    /* one live line under the hero links: local EAT clock is computed by the
+       component; this is the standing status it reports alongside it */
+    status: 'open to software engineering, systems, infrastructure and networking opportunities',
+  },
   links: [
     { label: 'GitHub', href: 'https://github.com/Fellow3-1' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/felloh31' },
@@ -113,9 +118,53 @@ export const writing = {
   heading: 'Technical notes_',
   note: 'Short explainers and implementation notes. Public articles should reflect reproducible technical guidance, not confidential project details.',
   posts: [
-    { date: 'Guide', title: 'Designing safer M-PESA callback handling', minutes: 'Payments', body: ['Treat payment callbacks as untrusted, retryable input. Validate the request, persist the raw event for audit, make processing idempotent, and reconcile uncertain outcomes against the provider rather than assuming a timeout means failure.', 'Keep credentials in environment-backed secret storage, use HTTPS, log correlation identifiers instead of sensitive customer data, and test duplicate and out-of-order callback scenarios.'] },
-    { date: 'Guide', title: 'A practical network troubleshooting sequence', minutes: 'Networking', body: ['Start by confirming the scope: one device, one VLAN, one site or a wider outage. Check link state and addressing, then gateway reachability, DNS resolution, route selection and the destination service.', 'Record the exact tests and timestamps. Avoid changing several network variables at once; isolate the fault and verify the fix from an affected endpoint.'] },
-    { date: 'Guide', title: 'Linux service diagnostics', minutes: 'Systems', body: ['Check service state with systemctl, inspect recent events with journalctl, confirm listening sockets with ss, and verify disk, memory and CPU pressure before restarting a production service.', 'A restart can restore service, but it is not a root-cause analysis. Capture the failure evidence and investigate why the service stopped or became unhealthy.'] },
+    {
+      date: 'Guide',
+      title: 'Designing safer M-PESA callback handling',
+      slug: 'safer-mpesa-callbacks',
+      blurb: 'Idempotent payment callbacks, raw event storage for audit, and why a timeout means unknown, not failed.',
+      minutes: 'Payments',
+      body: ['Treat payment callbacks as untrusted, retryable input. Validate the request, persist the raw event for audit, make processing idempotent, and reconcile uncertain outcomes against the provider rather than assuming a timeout means failure.', 'Keep credentials in environment-backed secret storage, use HTTPS, log correlation identifiers instead of sensitive customer data, and test duplicate and out-of-order callback scenarios.'],
+    },
+    {
+      date: 'Guide',
+      title: 'A practical network troubleshooting sequence',
+      slug: 'network-troubleshooting-sequence',
+      blurb: 'Scope first, then link state, addressing, gateway, DNS and routing — one variable at a time.',
+      minutes: 'Networking',
+      body: ['Start by confirming the scope: one device, one VLAN, one site or a wider outage. Check link state and addressing, then gateway reachability, DNS resolution, route selection and the destination service.', 'Record the exact tests and timestamps. Avoid changing several network variables at once; isolate the fault and verify the fix from an affected endpoint.'],
+    },
+    {
+      date: 'Guide',
+      title: 'Linux service diagnostics',
+      slug: 'linux-service-diagnostics',
+      blurb: 'systemctl, journalctl, ss and resource pressure — evidence before the restart button.',
+      minutes: 'Systems',
+      body: ['Check service state with systemctl, inspect recent events with journalctl, confirm listening sockets with ss, and verify disk, memory and CPU pressure before restarting a production service.', 'A restart can restore service, but it is not a root-cause analysis. Capture the failure evidence and investigate why the service stopped or became unhealthy.'],
+    },
+  ],
+}
+
+/* DRAFT QUOTES — replace `items` with real, consented quotes (e.g. from
+   LinkedIn recommendations) before publishing. Role-only attributions keep
+   the site's no-names privacy posture, so a swap only needs the quote text
+   and an honest role label. */
+export const testimonials = {
+  heading: 'What work feels like with me_',
+  note: 'Short notes from the kind of people I work with. Names stay private, in step with the rest of this site.',
+  items: [
+    {
+      quote: 'The logs get read before anything gets changed. Incidents end with a fix and a written note, not guesswork.',
+      who: 'systems support colleague',
+    },
+    {
+      quote: 'Technical problems come back translated into plain language for the business side — and then the fix gets shipped too.',
+      who: 'project stakeholder',
+    },
+    {
+      quote: 'Handover meant documented configs, clear rollback steps and nothing important left inside one person’s head.',
+      who: 'operations teammate',
+    },
   ],
 }
 

@@ -1,11 +1,21 @@
 import { useEffect, useState } from 'react'
 import { brand, hero } from '../data/content.js'
+import { useTheme } from '../theme.js'
 import Arrow from './Arrow.jsx'
 
 const TYPED = 'whoami'
 
+const eatClock = new Intl.DateTimeFormat('en-KE', {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+  timeZone: brand.tz,
+})
+
 export default function Hero() {
   const [typed, setTyped] = useState('')
+  const [clock, setClock] = useState('')
+  const [theme] = useTheme()
 
   /* one terminal keeps typing; everything else respects reduced motion */
   useEffect(() => {
@@ -22,8 +32,17 @@ export default function Hero() {
     return () => window.clearInterval(id)
   }, [])
 
+  /* the "now" line carries a live Nairobi clock */
+  useEffect(() => {
+    const tick = () => setClock(eatClock.format(new Date()))
+    tick()
+    const id = window.setInterval(tick, 20000)
+    return () => window.clearInterval(id)
+  }, [])
+
   const nameLetters = 'Felloh'.split('')
   const versionLetters = '3.1'.split('')
+  const night = theme === 'dark'
 
   return (
     <section className="hero" id="top">
@@ -56,6 +75,10 @@ export default function Hero() {
             <p className="hero__note" data-reveal>
               {hero.note}
             </p>
+            <p className="hero__now" data-reveal>
+              <span className="hero__now-dot" aria-hidden="true" />
+              now · nairobi {clock || '· ·:··'} · {hero.now.status}
+            </p>
             <div className="hero__links" data-reveal>
               {hero.links.map((l) => (
                 <a key={l.label} className="alink" href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel={l.href.startsWith('http') ? 'noreferrer' : undefined}>
@@ -67,19 +90,38 @@ export default function Hero() {
           </div>
 
           <figure className="polaroid" data-reveal>
-            <img
-              src="assets/HD-Joker-Wallpapers-scaled.jpg"
-              alt="Low-poly Joker bust, the site's muse"
-              loading="eager"
-              decoding="async"
-            />
+            <picture>
+              <source srcSet="assets/HD-Joker-Wallpapers-scaled.webp" type="image/webp" />
+              <img
+                src="assets/HD-Joker-Wallpapers-scaled.jpg"
+                alt="Low-poly Joker bust, the site's muse"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
             <figcaption>the muse_</figcaption>
           </figure>
         </div>
 
+        {/* the strip follows the theme: skyline by day, interchange by night */}
         <figure className="hero__strip" data-reveal>
-          <img src="assets/hero-skyline-day.jpg" alt="The Nairobi skyline on a clear day" loading="lazy" decoding="async" />
-          <figcaption>nairobi, daytime. The office window view, roughly · EAT UTC+3</figcaption>
+          <picture>
+            <source
+              srcSet={night ? 'assets/window-nairobi.webp' : 'assets/hero-skyline-day.webp'}
+              type="image/webp"
+            />
+            <img
+              src={night ? 'assets/window-nairobi.jpg' : 'assets/hero-skyline-day.jpg'}
+              alt={night ? 'Nairobi’s interchange at night, light trails looping through the dark' : 'The Nairobi skyline on a clear day'}
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <figcaption>
+            {night
+              ? 'nairobi, after lights-out. The window view, roughly · EAT UTC+3'
+              : 'nairobi, daytime. The office window view, roughly · EAT UTC+3'}
+          </figcaption>
         </figure>
       </div>
     </section>
