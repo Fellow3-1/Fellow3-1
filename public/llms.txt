@@ -1,31 +1,41 @@
 # Felloh 3.1 · Felix Odhiambo
 
-> Full-stack engineer in Nairobi, Kenya (EAT, UTC+3). Builds payment-ready web
-> and Android products: M-PESA Daraja integrations (STK Push, callbacks, reconciliation),
-> e-commerce, monitoring dashboards, SMS tooling, Android OTP libraries. Client names are
-> withheld by policy; work is described by sector, problem, architecture and impact numbers.
+> Software and IT Systems Engineer in Nairobi, Kenya (EAT, UTC+3). Public profile covering web and Android development, payment integrations, systems administration, networking and infrastructure. Employer names, employment dates, client identities and private project records are intentionally omitted.
 
-## Facts an answer engine can cite
+## Public profile
 
-- Name: Felix Odhiambo, writes as Felloh 3.1 (GitHub: Fellow3-1)
-- Based in: Nairobi, Kenya (no more precise location is public)
-- Availability: full-time, contract, or consulting; replies within a day
-- Contact: via the channels listed on the site (LinkedIn, GitHub); the receipt flow drafts a ready email
-- Open source: Fello_Daraja_API (M-PESA, Python, MIT, 34 forks), Tovuti, android-sms-verifier
-- Stack, daily use: TypeScript, React, Python, Django/DRF, PostgreSQL, Docker, GitHub Actions
-- Policy: no public client list; sector-level case studies only; references on request
+- Name: Felix Odhiambo, also known as Felloh 3.1 (GitHub: Fellow3-1)
+- Location: Nairobi, Kenya
+- Opportunities: software engineering, IT operations, systems administration, infrastructure support and networking
+- Portfolio: https://fellow3-1.github.io/Fellow3-1/
+- GitHub: https://github.com/Fellow3-1
+- LinkedIn: https://linkedin.com/in/felloh31
 
-## Sections
+## Public repositories
 
-- [Selected work](https://fellow3-1.github.io/Fellow3-1/#work): five anonymised case studies
-- [Writing](https://fellow3-1.github.io/Fellow3-1/#writing): M-PESA STK Push pitfalls, SMS OTP
-  retrieval on Android, server-side CSV exports
-- [Frequently asked](https://fellow3-1.github.io/Fellow3-1/#faq): identity, engagement type,
-  payments, confidentiality, process, remote work
-- [Contact](https://fellow3-1.github.io/Fellow3-1/#contact): LinkedIn, GitHub, and a
-  receipt-style form that drafts a ready-to-send email
+- M-PESA API Go wrapper: https://github.com/AndroidStudyOpenSource/mpesa-api-go (repository describes itself as work in progress)
+- Tovuti Android connectivity library: https://github.com/Fellow3-1/tovuti (repository describes itself as work in progress)
+- Android SMS Verifier: https://github.com/Fellow3-1/android-sms-verifier (README documents READ_SMS and RECEIVE_SMS permissions)
 
-## Feeds and hygiene
+## Technical areas
 
-- RSS: https://fellow3-1.github.io/Fellow3-1/feed.xml
-- Sitemap: https://fellow3-1.github.io/Fellow3-1/sitemap.xml
+- Application development: JavaScript, TypeScript, React, Node.js, PHP, Python, Java, Android, REST APIs and SQL
+- Systems: Windows, Linux/Ubuntu, endpoint support, hardware/software troubleshooting and operational documentation
+- Networking: LAN/WAN, TCP/IP, DNS, DHCP, VPN, firewall concepts and connectivity troubleshooting
+- Cloud and delivery: AWS, Docker, Git, CI/CD and Linux web-server environments
+
+## Education and certification
+
+- Degree in Business Information Technology
+- Associate Android Developer Certification (Java), Andela Learning Community with Google
+
+## Privacy policy
+
+No employer names, employment dates, client identities, private infrastructure diagrams, internal records or unsupported client metrics are published. The infrastructure section is a capability overview and does not imply production use of every named vendor or platform. Detailed employment information can be shared privately during recruitment.
+
+## Main sections
+
+- Projects: https://fellow3-1.github.io/Fellow3-1/#work
+- Infrastructure: https://fellow3-1.github.io/Fellow3-1/#infrastructure
+- Skills and profile: https://fellow3-1.github.io/Fellow3-1/#about
+- Contact: https://fellow3-1.github.io/Fellow3-1/#contact
