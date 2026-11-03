@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
 import Log from './components/Log.jsx'
+import Infrastructure from './components/Infrastructure.jsx'
 import Approach from './components/Approach.jsx'
 import Writing from './components/Writing.jsx'
 import Contributions from './components/Contributions.jsx'
@@ -18,20 +19,15 @@ export function useReveals(deps = []) {
       els.forEach((el) => el.classList.add('is-in'))
       return
     }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return
-          const el = entry.target
-          el.classList.add('is-in')
-          io.unobserve(el)
-        })
-      },
-      { rootMargin: '-12% 0px -12% 0px', threshold: 0.01 },
-    )
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        entry.target.classList.add('is-in')
+        io.unobserve(entry.target)
+      })
+    }, { rootMargin: '-12% 0px -12% 0px', threshold: 0.01 })
     els.forEach((el) => io.observe(el))
     return () => io.disconnect()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps)
 }
 
@@ -47,13 +43,12 @@ export default function App() {
 
   return (
     <>
-      <a className="skiplink" href="#work">
-        Skip to the work
-      </a>
+      <a className="skiplink" href="#work">Skip to the work</a>
       <Nav />
       <main id="main">
         <Hero />
         <Log />
+        <Infrastructure />
         <Approach />
         <Writing />
         <Contributions />
