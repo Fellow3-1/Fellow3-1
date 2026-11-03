@@ -1,6 +1,7 @@
 /* Felloh 3.1 · engineering log.
    Light paper, fixed nav, log-line section markers, numbered entries.
-   Flat fields only: no gradient, no resting shadow. Inter one family. */
+   Flat paper fields; the brand gradient lives on the chrome —
+   scrollbar, progress bar and the nav marker. Inter one family. */
 
 /* 1 · load + reset */
 @font-face {
@@ -48,6 +49,11 @@ img {
   --mut: #5f6068;
   --accent: #ff488b;
   --go: #0e7a48;
+  /* the site gradient: accent pink, bridged through violet, into the
+     "go" green — the same pairing the favicon and the artwork use */
+  --iris: #8650a0;
+  --grad: linear-gradient(180deg, var(--accent) 0%, var(--iris) 50%, var(--go) 100%);
+  --grad-x: linear-gradient(90deg, var(--accent) 0%, var(--iris) 50%, var(--go) 100%);
 
   --fs-1: 14px;
   --fs-2: clamp(16px, 1.1vw + 12px, 19px);
@@ -80,12 +86,14 @@ body {
   color: #ffffff;
 }
 
-/* the scrollbar, dressed in the same sheet: paper track, ink thumb,
-   accent on hover. Firefox gets the two-value property, everything
-   else the pseudo-elements. */
+/* the scrollbar, dressed in the same sheet: paper track, and a thumb
+   running the site gradient — pink through violet into go green.
+   Firefox's two-value property cannot paint a gradient, so it takes
+   the violet bridge colour flat; WebKit and Blink get the full run. */
 html {
   scrollbar-width: thin;
   scrollbar-color: rgba(95, 96, 104, 0.55) var(--paper);
+  scrollbar-color: var(--iris) var(--paper);
 }
 
 ::-webkit-scrollbar {
@@ -98,13 +106,14 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(95, 96, 104, 0.45);
+  background: var(--iris);
+  background: var(--grad);
   border: 3px solid var(--paper);
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: linear-gradient(180deg, var(--go) 0%, var(--iris) 50%, var(--accent) 100%);
 }
 
 ::-webkit-scrollbar-corner {
@@ -320,13 +329,40 @@ html.js [data-reveal].is-in {
 }
 
 .nav__links a {
+  position: relative;
   font-size: var(--fs-1);
   color: var(--mut);
   transition: color 180ms ease;
 }
 
-.nav__links a:hover {
+/* gradient tick under the link you are hovering or reading */
+.nav__links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--iris);
+  background: var(--grad-x);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 240ms var(--ease-out);
+}
+
+.nav__links a:hover::after,
+.nav__links a.is-here::after {
+  transform: scaleX(1);
+}
+
+.nav__links a:hover,
+.nav__links a.is-here {
   color: var(--ink);
+}
+
+.nav__links a.is-here {
+  font-weight: 500;
 }
 
 .nav__status {
@@ -350,7 +386,8 @@ html.js [data-reveal].is-in {
 .nav__bar {
   display: block;
   height: 100%;
-  background: var(--accent);
+  background: var(--iris);
+  background: var(--grad-x);
   transform: scaleX(0);
   transform-origin: 0 50%;
   will-change: transform;
@@ -1051,58 +1088,7 @@ html.js .entry.is-in .entry__decisions p {
   font-size: var(--fs-1);
 }
 
-/* 9 · open source */
-.oss__rows {
-  margin-top: clamp(32px, 5vh, 52px);
-  display: grid;
-  gap: 12px;
-}
-
-.oss__row {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 18px 22px;
-  display: flex;
-  align-items: baseline;
-  gap: 8px 18px;
-  flex-wrap: wrap;
-  transition: transform 240ms var(--ease-out);
-}
-
-.oss__row:hover {
-  transform: translateX(6px);
-}
-
-.oss__name {
-  font-size: var(--fs-2);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.oss__desc {
-  font-size: 15px;
-  color: var(--mut);
-  flex: 1 1 260px;
-}
-
-.oss__meta {
-  font-size: var(--fs-1);
-  color: var(--mut);
-  font-feature-settings: 'tnum';
-}
-
-.oss__live {
-  margin-top: 14px;
-  font-size: var(--fs-1);
-  color: var(--mut);
-}
-
-.oss__live b {
-  color: var(--go);
-  font-weight: 600;
-}
-
-/* 9b · contributions snake */
+/* 9 · contributions snake */
 .snake {
   margin-top: clamp(32px, 5vh, 52px);
   background: var(--card);
@@ -1216,40 +1202,6 @@ html.js .entry.is-in .entry__decisions p {
   color: var(--go);
   font-weight: 600;
   font-size: 13.5px;
-}
-
-.refs {
-  margin-top: 30px;
-}
-
-.refs__intro {
-  font-size: var(--fs-1);
-  color: var(--mut);
-  margin-bottom: 12px;
-}
-
-.refs__row {
-  background: var(--card);
-  border-radius: 10px;
-  padding: 14px 18px;
-  display: flex;
-  gap: 6px 18px;
-  flex-wrap: wrap;
-  align-items: baseline;
-}
-
-.refs__row + .refs__row {
-  margin-top: 8px;
-}
-
-.refs__role {
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.refs__line {
-  font-size: var(--fs-1);
-  color: var(--mut);
 }
 
 /* 11 · contact + receipt */
@@ -1688,13 +1640,30 @@ html.js .entry.is-in .entry__decisions p {
   color: var(--mut);
 }
 
-.foot__clock {
-  font-feature-settings: 'tnum';
-}
-
 /* 13 · small screens */
 @media (max-width: 900px) {
+  html {
+    scroll-padding-top: 112px;
+  }
+
+  .nav__inner {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  /* the section links stay reachable on phones: an edge-to-edge
+     scrollable row, its own scrollbar left undressed on purpose */
   .nav__links {
+    order: 3;
+    flex: 1 1 100%;
+    gap: 18px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  .nav__links::-webkit-scrollbar {
     display: none;
   }
 
@@ -1777,10 +1746,6 @@ html.js .entry.is-in .entry__decisions p {
     display: none;
   }
 
-  .entry details .entry__detail {
-    display: grid;
-  }
-
   .entry,
   .block,
   .post {
@@ -1808,15 +1773,13 @@ html.js .entry.is-in .entry__decisions p {
   background: var(--card);
   border-radius: var(--radius);
 }
-.infra__card h3,
-.profile__credentials h3 {
+.infra__card h3 {
   font-size: var(--fs-3);
   font-weight: 500;
   letter-spacing: -0.025em;
   line-height: 1.15;
 }
-.infra__card ul,
-.profile__credentials ul {
+.infra__card ul {
   margin-top: 16px;
   padding-left: 1.2em;
   display: grid;
@@ -1825,13 +1788,6 @@ html.js .entry.is-in .entry__decisions p {
   font-size: 15px;
 }
 .infra__note { margin-top: 22px; }
-.profile__credentials {
-  margin-top: 28px;
-  display: grid;
-  gap: 12px;
-}
-.profile__credentials h3:not(:first-child) { margin-top: 12px; }
-.profile__credentials ul { margin-top: 0; }
 @media (max-width: 900px) {
   .infra__grid { grid-template-columns: 1fr; }
 }

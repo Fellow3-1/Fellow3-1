@@ -127,8 +127,6 @@ export const about = {
     { depth: 'Systems and networks', items: 'Windows, Linux/Ubuntu, LAN/WAN, TCP/IP, DNS, DHCP, VPN, firewalls, hardware and end-user support' },
     { depth: 'Cloud and delivery', items: 'AWS, Docker, Git, CI/CD, Linux web servers and deployment workflows' },
   ],
-  education: ['Degree in Business Information Technology'],
-  certifications: ['Associate Android Developer Certification (Java) · Andela Learning Community with Google'],
   availability: {
     heading: 'Availability',
     lines: ['Open to full-time, contract and consulting opportunities.', 'Based in Nairobi, Kenya (EAT, UTC+3).', 'For detailed employment history and references, please request them privately.'],

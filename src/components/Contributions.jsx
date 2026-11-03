@@ -26,7 +26,7 @@ export default function Contributions() {
     <section className="section" id="contributions">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 05 · contributions
+          <b>[log]</b> 06 · contributions
         </p>
         <h2 className="head" data-reveal>
           The contribution snake_

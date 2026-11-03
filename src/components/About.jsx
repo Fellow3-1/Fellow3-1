@@ -4,7 +4,7 @@ export default function About() {
   return (
     <section className="section" id="about">
       <div className="wrap">
-        <p className="logmark" data-reveal><b>[log]</b> 07 · profile</p>
+        <p className="logmark" data-reveal><b>[log]</b> 08 · profile</p>
         <h2 className="head" data-reveal>{about.heading}</h2>
         <div className="about__grid">
           <div data-reveal>
@@ -16,12 +16,6 @@ export default function About() {
                   <p>{s.items}</p>
                 </div>
               ))}
-            </div>
-            <div className="profile__credentials">
-              <h3>Education</h3>
-              <ul>{about.education.map((item) => <li key={item}>{item}</li>)}</ul>
-              <h3>Certification</h3>
-              <ul>{about.certifications.map((item) => <li key={item}>{item}</li>)}</ul>
             </div>
           </div>
           <aside className="about__card" data-reveal>

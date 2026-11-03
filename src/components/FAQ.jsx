@@ -7,7 +7,7 @@ export default function FAQ() {
     <section className="section" id="faq">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 06 · frequently asked
+          <b>[log]</b> 07 · frequently asked
         </p>
         <h2 className="head" data-reveal>
           {faq.heading}

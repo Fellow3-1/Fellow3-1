@@ -24,11 +24,6 @@
 - Networking: LAN/WAN, TCP/IP, DNS, DHCP, VPN, firewall concepts and connectivity troubleshooting
 - Cloud and delivery: AWS, Docker, Git, CI/CD and Linux web-server environments
 
-## Education and certification
-
-- Degree in Business Information Technology
-- Associate Android Developer Certification (Java), Andela Learning Community with Google
-
 ## Privacy policy
 
 No employer names, employment dates, client identities, private infrastructure diagrams, internal records or unsupported client metrics are published. The infrastructure section is a capability overview and does not imply production use of every named vendor or platform. Detailed employment information can be shared privately during recruitment.

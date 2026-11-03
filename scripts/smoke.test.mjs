@@ -51,8 +51,8 @@ check('projects: SMS verifier documents SMS permissions', /READ_SMS and RECEIVE_
 check('infrastructure: four capability groups render', $$('.infra__card').length === 4)
 check('infrastructure: privacy and experience caveat is visible', /does not imply that every product/i.test(text($('#infrastructure'))))
 check('approach: three engineering principles render', $$('.block').length === 3)
-check('profile: education is present', /Business Information Technology/.test(text($('#about'))))
-check('profile: verified Android certification is present', /Associate Android Developer Certification/.test(text($('#about'))))
+check('profile: no education or certification section renders', !/education|certification/i.test(text($('#about'))))
+check('SEO: llms profile carries no education or certification block', !/## Education/i.test(readFileSync('public/llms.txt', 'utf8')))
 check('profile: no employment reference records render', $$('.refs__row').length === 0)
 check('contact: form creates a local email draft', $('#field-name') && $('.slip__form button'))
 check('contact: no mock invoice price is shown', !/KES\s+[0-9,]+/.test(text($('#contact'))))
@@ -60,6 +60,7 @@ check('SEO: privacy-safe title and metadata', /Software & IT Systems Engineer/.t
 check('SEO: FAQ schema describes privacy policy', /Why is there no employment timeline/.test(readFileSync('index.html', 'utf8')))
 check('AEO: llms profile includes project links and privacy policy', existsSync('public/llms.txt') && /Privacy policy/.test(readFileSync('public/llms.txt', 'utf8')))
 check('profile README: no CV download or employment timeline', !/download.*cv|employment timeline/i.test(readFileSync('README.md', 'utf8')))
+check('profile README: no education or certification claims', !/education|certification|\bdegree\b/i.test(readFileSync('README.md', 'utf8')))
 check('footer: no downloadable CV link exists', !$$('a').some((a) => /cv|resume/i.test(a.textContent + a.href)))
 check('skip link points to project section', $('.skiplink')?.getAttribute('href') === '#work')
 
