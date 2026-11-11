@@ -3,23 +3,9 @@ import { brand, nav } from '../data/content.js'
 import { useTheme, flipTheme } from '../theme.js'
 
 export default function Nav() {
-  const [clock, setClock] = useState('')
   const [active, setActive] = useState('')
   const [theme] = useTheme()
   const barRef = useRef(null)
-
-  useEffect(() => {
-    const fmt = new Intl.DateTimeFormat('en-KE', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-      timeZone: brand.tz,
-    })
-    const tick = () => setClock(fmt.format(new Date()))
-    tick()
-    const id = window.setInterval(tick, 20000)
-    return () => window.clearInterval(id)
-  }, [])
 
   /* thin reading-progress bar, direct style writes, rAF-throttled */
   useEffect(() => {
@@ -86,7 +72,6 @@ export default function Nav() {
         <span className="nav__status">
           <span className="nav__dot" aria-hidden="true" />
           open
-          <span className="nav__status-clock"> · nairobi {clock || '· ·:··'}</span>
         </span>
         <button
           className="nav__theme"
