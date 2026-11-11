@@ -64,6 +64,10 @@ html.js body.is-in {
 img {
   display: block;
   max-width: 100%;
+  /* width/height attributes act as presentational hints, so an image with an
+     explicit height attribute would otherwise keep that pixel height and
+     ignore the CSS aspect-ratio below. Let the ratio decide the height. */
+  height: auto;
 }
 
 /* 2 · the sheet */
@@ -648,11 +652,6 @@ html.js .hero__name.is-in .ltr {
     height: auto;
     aspect-ratio: 3 / 2;
     object-position: 50% 50%;
-  }
-
-  /* the clock is the first thing to go when the bar runs out of room */
-  .nav__status-clock {
-    display: none;
   }
 }
 
@@ -2016,7 +2015,7 @@ main .section::before {
   display: contents;
 }
 
-/* 18 · the "now" line: live EAT clock + standing status */
+/* 18 · the "now" line: standing status */
 .hero__now {
   margin-top: 18px;
   display: flex;
@@ -2024,7 +2023,6 @@ main .section::before {
   gap: 9px;
   font-size: var(--fs-1);
   color: var(--mut);
-  font-feature-settings: 'tnum';
 }
 
 .hero__now-dot {

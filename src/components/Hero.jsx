@@ -5,16 +5,8 @@ import Arrow from './Arrow.jsx'
 
 const TYPED = 'whoami'
 
-const eatClock = new Intl.DateTimeFormat('en-KE', {
-  hour: '2-digit',
-  minute: '2-digit',
-  hour12: false,
-  timeZone: brand.tz,
-})
-
 export default function Hero() {
   const [typed, setTyped] = useState('')
-  const [clock, setClock] = useState('')
   const [theme] = useTheme()
 
   /* one terminal keeps typing; everything else respects reduced motion */
@@ -29,14 +21,6 @@ export default function Hero() {
       setTyped(TYPED.slice(0, i))
       if (i >= TYPED.length) window.clearInterval(id)
     }, 120)
-    return () => window.clearInterval(id)
-  }, [])
-
-  /* the "now" line carries a live Nairobi clock */
-  useEffect(() => {
-    const tick = () => setClock(eatClock.format(new Date()))
-    tick()
-    const id = window.setInterval(tick, 20000)
     return () => window.clearInterval(id)
   }, [])
 
@@ -77,7 +61,7 @@ export default function Hero() {
             </p>
             <p className="hero__now" data-reveal>
               <span className="hero__now-dot" aria-hidden="true" />
-              now · nairobi {clock || '· ·:··'} · {hero.now.status}
+              now · nairobi · {hero.now.status}
             </p>
             <div className="hero__links" data-reveal>
               {hero.links.map((l) => (

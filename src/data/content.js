@@ -33,8 +33,7 @@ export const hero = {
   tagline: 'Software engineer working across web and mobile applications, payment integrations, systems administration and network infrastructure.',
   note: 'Based in Nairobi, Kenya · public work and technical capabilities, with private employment details omitted',
   now: {
-    /* one live line under the hero links: local EAT clock is computed by the
-       component; this is the standing status it reports alongside it */
+    /* one quiet line under the hero links: standing availability, no clock */
     status: 'open to software engineering, systems, infrastructure and networking opportunities',
   },
   links: [
