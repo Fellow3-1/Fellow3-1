@@ -127,7 +127,7 @@ globalThis.fetch = window.fetch = async (url, options) => {
 const sent = await deliver({ name: 'Amina', brief: 'Frontend contract', email: 'amina@example.com', page: 'portfolio' })
 check('contact: the message is inserted through the REST endpoint', sent === 'sent' && calls.length === 1)
 check('contact: the request targets the portfolio table', /\/rest\/v1\/portfolio_messages$/.test(calls[0].url))
-check('contact: the publishable key travels as apikey and bearer', Boolean(calls[0].options.headers.apikey) && calls[0].options.headers.Authorization?.startsWith('Bearer '))
+check('contact: the publishable key travels on apikey only', Boolean(calls[0].options.headers.apikey) && !calls[0].options.headers.Authorization)
 check('contact: the message carries no extra fields', Object.keys(JSON.parse(calls[0].options.body)).sort().join(',') === 'brief,email,name,page')
 
 globalThis.fetch = window.fetch = async () => { throw new Error('offline') }

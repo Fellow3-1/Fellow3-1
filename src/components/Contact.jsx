@@ -46,8 +46,8 @@ export async function deliver(message) {
     const response = await fetch(CONTACT_ENDPOINT, {
       method: 'POST',
       headers: {
+        /* publishable keys are not JWTs: apikey only, never Authorization */
         apikey: CONTACT_KEY,
-        Authorization: `Bearer ${CONTACT_KEY}`,
         'Content-Type': 'application/json',
         Prefer: 'return=minimal',
       },

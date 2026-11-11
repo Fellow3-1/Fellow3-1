@@ -33,7 +33,9 @@ Mail-to-only loses everyone reading mail in a browser tab. The form now:
 
 - validates on submit (the button is never silently disabled), with announced errors,
   `aria-invalid`, `aria-describedby`, focus moved to the first bad field;
-- posts `{ name, brief, email, page }` to Supabase table **`portfolio_messages`**;
+- posts `{ name, brief, email, page }` to Supabase table **`portfolio_messages`** — the
+  publishable key travels on `apikey` only, since it is not a JWT and PostgREST rejects it
+  as a bearer token;
 - keeps the local email draft as a first-class fallback, and says plainly when delivery
   failed rather than pretending;
 - carries a honeypot field (offscreen, out of the tab order) that silently succeeds without
