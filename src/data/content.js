@@ -275,7 +275,8 @@ export const caseStudy = {
       body: [
         'One React page, hand-written CSS, no utility framework — the design is a paper log with terminal chrome, and it is cheaper to write that directly than to fight a framework into it. All copy lives in a single content module, so privacy rules can be checked in one file instead of hunted across components.',
         'Each note is also generated as a standalone static page by a small Node script at build time, with its own canonical URL, Open Graph tags and JSON-LD. Search engines and answer engines get real documents; the reader gets a page with no bundle.',
-        'Structured data covers the person, the profile page, the notes, the FAQ and the three public repositories. There is an llms.txt, a sitemap, an RSS feed and a robots file that explicitly welcomes crawlers.',
+        'Structured data covers the person, the profile page, the notes, the FAQ, the case study and the three public repositories. There is an llms.txt, a sitemap, an RSS feed and a robots file that explicitly welcomes crawlers.',
+        'The contact form writes to a table the browser can only insert into: row-level security gives the public key no read, update or delete rights, so the same key that ships in the bundle cannot enumerate what visitors sent. The email draft stays as a fallback for the day the database is not reachable.',
       ],
     },
     {
@@ -289,14 +290,16 @@ export const caseStudy = {
     {
       heading: 'What is checked, and how',
       body: [
-        'A smoke test builds the real app with esbuild, renders it in jsdom and asserts the things that matter: the privacy rules (no employment timeline, no education or certification claims, no CV download), the structure (three repositories, four infrastructure groups, four FAQ answers), the schema, the feed and sitemap, and the contact form — including that it can never be mounted with a silently disabled button, and that a draft can be both opened and copied.',
-        'The suite is deliberately blunt. It does not check pixels; it checks that a promise the page makes in prose still has something behind it. There are 46 of those checks, and they run on every push before the deploy job is allowed to start.',
+        'A smoke test builds the real app with esbuild, renders it in jsdom and asserts the things that matter: the privacy rules (no employment timeline, no education or certification claims, no CV download), the structure (three repositories, four infrastructure groups, five FAQ answers), the schema, the feed and sitemap, and the contact form — the exact request it makes, the key travelling on the header that key belongs on, the failure path falling back to the draft, and a submit button that can never be silently disabled.',
+        'The suite is deliberately blunt. It does not check pixels; it checks that a promise the page makes in prose still has something behind it. There are 60 of those checks, and they run on every push before the deploy job is allowed to start.',
       ],
     },
     {
-      heading: 'What I would do differently',
+      heading: 'What is still open',
       body: [
-        'Generate the feed and sitemap from the content module instead of maintaining them by hand, so a new note cannot exist in one place and not the other. Self-host the typeface rather than route the critical path through a third-party font host. And decide the deployment story before the first deploy, not after the second one silently wins.',
+        'The deploy path is guarded, not fixed. GitHub Pages still serves the committed docs/ build; the workflow now rebuilds it and fails when the committed copy is stale, but deleting docs/ entirely needs a one-off change in the repository settings that the automation cannot make.',
+        'Messages land in the database and wait to be read. An email notification means a mail-provider key and a trigger, which is a decision about credentials rather than code.',
+        'And the commitments section is the honest placeholder. It stays first-person until two people agree to be quoted — at which point the layout needs no change at all.',
       ],
     },
   ],
