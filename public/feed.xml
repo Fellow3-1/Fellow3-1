@@ -5,7 +5,8 @@
     <link>https://fellow3-1.github.io/Fellow3-1/#writing</link>
     <atom:link href="https://fellow3-1.github.io/Fellow3-1/feed.xml" rel="self" type="application/rss+xml" />
     <description>Short technical notes from a software and IT systems engineer in Nairobi. Long on pitfalls, short on ceremony.</description>
-    <language>en</language>
+    <language>en-KE</language>
+    <lastBuildDate>Wed, 11 Nov 2026 09:00:00 +0300</lastBuildDate>
     <item>
       <title>Designing safer M-PESA callback handling</title>
       <link>https://fellow3-1.github.io/Fellow3-1/writing/safer-mpesa-callbacks/</link>

@@ -85,7 +85,8 @@ export default function Nav() {
         </nav>
         <span className="nav__status">
           <span className="nav__dot" aria-hidden="true" />
-          open · nairobi {clock || '· ·:··'}
+          open
+          <span className="nav__status-clock"> · nairobi {clock || '· ·:··'}</span>
         </span>
         <button
           className="nav__theme"

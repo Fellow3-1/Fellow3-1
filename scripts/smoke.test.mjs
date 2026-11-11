@@ -34,7 +34,7 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const results = []
 const check = (name, ok) => results.push({ name, ok: Boolean(ok) })
 const { default: App } = await import('../node_modules/.smoke/App.mjs')
-const { default: Contact, validateDraft } = await import('../node_modules/.smoke/Contact.mjs')
+const { default: Contact, validateDraft, deliver } = await import('../node_modules/.smoke/Contact.mjs')
 const root = createRoot(document.getElementById('root'))
 await act(async () => { root.render(React.createElement(App)) })
 await act(async () => { await new Promise((resolve) => setTimeout(resolve, 50)) })
@@ -112,6 +112,78 @@ check('contact: the draft can be opened from the form', Boolean(host.querySelect
 check('contact: the draft can be copied when no mail app exists', Array.from(host.querySelectorAll('.slip__actions button')).some((b) => /copy draft/i.test(b.textContent)))
 await act(async () => contactRoot.unmount())
 host.remove()
+
+/* --- delivery: the table only accepts inserts, the UI must still work ---- */
+check('contact: a honeypot field exists and is out of the tab order', (() => {
+  const trap = document.querySelector('#field-company')
+  return Boolean(trap) && trap.getAttribute('tabindex') === '-1'
+})())
+
+const calls = []
+globalThis.fetch = window.fetch = async (url, options) => {
+  calls.push({ url: String(url), options })
+  return { ok: true, status: 201 }
+}
+const sent = await deliver({ name: 'Amina', brief: 'Frontend contract', email: 'amina@example.com', page: 'portfolio' })
+check('contact: the message is inserted through the REST endpoint', sent === 'sent' && calls.length === 1)
+check('contact: the request targets the portfolio table', /\/rest\/v1\/portfolio_messages$/.test(calls[0].url))
+check('contact: the publishable key travels as apikey and bearer', Boolean(calls[0].options.headers.apikey) && calls[0].options.headers.Authorization?.startsWith('Bearer '))
+check('contact: the message carries no extra fields', Object.keys(JSON.parse(calls[0].options.body)).sort().join(',') === 'brief,email,name,page')
+
+globalThis.fetch = window.fetch = async () => { throw new Error('offline') }
+check('contact: a failed delivery is reported, not disguised', (await deliver({ name: 'A', brief: 'B', email: 'c@d.ee', page: 'portfolio' })) === 'failed')
+globalThis.fetch = window.fetch = undefined
+
+/* the section rendered with a delivered message */
+const deliveredHost = document.createElement('div')
+document.body.appendChild(deliveredHost)
+const deliveredRoot = createRoot(deliveredHost)
+await act(async () => {
+  deliveredRoot.render(
+    React.createElement(Contact, {
+      initialValues: base,
+      deliverMessage: async () => 'sent',
+    })
+  )
+})
+await act(async () => {
+  deliveredHost.querySelector('.slip__form').dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }))
+  await new Promise((resolve) => setTimeout(resolve, 20))
+})
+check('contact: a delivered message is confirmed on screen', Boolean(deliveredHost.querySelector('.slip__status.is-sent')))
+check('contact: the receipt reports delivery', /delivered/i.test(deliveredHost.querySelector('.slip__total b')?.textContent || ''))
+await act(async () => deliveredRoot.unmount())
+deliveredHost.remove()
+
+/* and one where the inbox is unreachable */
+const failedHost = document.createElement('div')
+document.body.appendChild(failedHost)
+const failedRoot = createRoot(failedHost)
+await act(async () => {
+  failedRoot.render(
+    React.createElement(Contact, {
+      initialValues: base,
+      deliverMessage: async () => 'failed',
+    })
+  )
+})
+await act(async () => {
+  failedHost.querySelector('.slip__form').dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }))
+  await new Promise((resolve) => setTimeout(resolve, 20))
+})
+check('contact: a failed delivery falls back to the email draft', Boolean(failedHost.querySelector('.slip__status.is-failed')) && Boolean(failedHost.querySelector('.slip__actions a[href^="mailto:"]')))
+await act(async () => failedRoot.unmount())
+failedHost.remove()
+
+/* --- the reframed section, the case study, the generated files ----------- */
+check('working together: three first-person commitments render', $$('#testimonials .tcard').length === 3)
+check('working together: no quote marks or "colleague" attributions remain', !/colleague|stakeholder|teammate/i.test(text($('#testimonials'))))
+check('case study: the work section links to its own page', /case-study\/a-portfolio-that-refuses-to-invent-numbers\//.test($('.casecard a')?.getAttribute('href') || ''))
+
+const feedXml = readFileSync('public/feed.xml', 'utf8')
+const sitemapXml = readFileSync('public/sitemap.xml', 'utf8')
+check('feed: every published note appears', ['safer-mpesa-callbacks', 'network-troubleshooting-sequence', 'linux-service-diagnostics'].every((slug) => feedXml.includes(`/writing/${slug}/`)))
+check('sitemap: every note and the case study appear', ['safer-mpesa-callbacks', 'network-troubleshooting-sequence', 'linux-service-diagnostics'].every((slug) => sitemapXml.includes(`/writing/${slug}/`)) && sitemapXml.includes('/case-study/a-portfolio-that-refuses-to-invent-numbers/'))
 
 /* --- resilience and structured data ------------------------------------- */
 const indexHtml = readFileSync('index.html', 'utf8')

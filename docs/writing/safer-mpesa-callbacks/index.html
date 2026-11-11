@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-KE">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -13,30 +13,26 @@
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Designing safer M-PESA callback handling" />
     <meta property="og:description" content="Idempotent payment callbacks, raw event storage for audit, and why a timeout means unknown, not failed." />
-    <meta property="og:image" content="https://fellow3-1.github.io/Fellow3-1/assets/og.jpg" />
+    <meta property="og:image" content="https://fellow3-1.github.io/Fellow3-1/assets/og/safer-mpesa-callbacks.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_KE" />
     <meta property="og:site_name" content="Felloh 3.1" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@Fellow3_1" />
     <meta name="twitter:title" content="Designing safer M-PESA callback handling" />
     <meta name="twitter:description" content="Idempotent payment callbacks, raw event storage for audit, and why a timeout means unknown, not failed." />
-    <meta name="twitter:image" content="https://fellow3-1.github.io/Fellow3-1/assets/og.jpg" />
+    <meta name="twitter:image" content="https://fellow3-1.github.io/Fellow3-1/assets/og/safer-mpesa-callbacks.png" />
     <link rel="icon" type="image/png" sizes="64x64" href="../../assets/favicon-joker.png" />
     <link rel="apple-touch-icon" href="../../assets/joker-apple-touch.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="../../assets/fonts/inter-latin-400-normal.woff2"
+      crossorigin
     />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
     <link rel="stylesheet" href="../../assets/post.css" />
     <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -46,6 +42,7 @@
       "headline": "Designing safer M-PESA callback handling",
       "description": "Idempotent payment callbacks, raw event storage for audit, and why a timeout means unknown, not failed.",
       "inLanguage": "en",
+      "datePublished": "2025-11-03",
       "author": {
         "@type": "Person",
         "name": "Felix Odhiambo",
@@ -124,6 +121,7 @@ try {
             <span class="note__rule" aria-hidden="true"></span>
             Felix Odhiambo · Nairobi, Kenya · Guide · Payments
           </p>
+          
           <div class="note__body">
             <p>Treat payment callbacks as untrusted, retryable input. Validate the request, persist the raw event for audit, make processing idempotent, and reconcile uncertain outcomes against the provider rather than assuming a timeout means failure.</p>
             <p>Keep credentials in environment-backed secret storage, use HTTPS, log correlation identifiers instead of sensitive customer data, and test duplicate and out-of-order callback scenarios.</p>

@@ -1,29 +1,30 @@
-import { testimonials } from '../data/content.js'
+import { commitments } from '../data/content.js'
 
-/* Short role-based quotes, anonymous by the same privacy rule as the rest
-   of the site. The content drafts live in src/data/content.js. */
+/* Commitments in the first person. Anonymous quotes are not published
+   here; the content lives in src/data/content.js. */
 export default function Testimonials() {
   return (
     <section className="section" id="testimonials">
       <div className="wrap">
         <p className="logmark" data-reveal>
-          <b>[log]</b> 08 · word of mouth
+          <b>[log]</b> 08 · working together
         </p>
         <h2 className="head" data-reveal>
-          {testimonials.heading}
+          {commitments.heading}
         </h2>
         <p className="tlist__note" data-reveal>
-          {testimonials.note}
+          {commitments.note}
         </p>
         <div className="tlist">
-          {testimonials.items.map((t, i) => (
-            <blockquote className="tcard" key={t.who} data-reveal style={{ '--rd': `${i * 70}ms` }}>
-              <p>{t.quote}</p>
+          {commitments.items.map((t, i) => (
+            <article className="tcard" key={t.label} data-reveal style={{ '--rd': `${i * 70}ms` }}>
+              <span className="tcard__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <p>{t.line}</p>
               <footer>
                 <span className="tcard__rule" aria-hidden="true" />
-                <span className="cap">— {t.who}</span>
+                <span className="cap">{t.label}</span>
               </footer>
-            </blockquote>
+            </article>
           ))}
         </div>
       </div>

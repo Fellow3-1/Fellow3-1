@@ -169,35 +169,24 @@
             { "@type": "Question", "name": "Why is there no employment timeline?", "acceptedAnswer": { "@type": "Answer", "text": "To protect personal and client privacy, this site does not publish employer names, job titles tied to employers, employment dates or internal project records. Detailed employment information can be shared privately during a recruitment process." } },
             { "@type": "Question", "name": "What can I review publicly?", "acceptedAnswer": { "@type": "Answer", "text": "The linked GitHub repositories, their README files and source code are the primary evidence presented here. The site avoids unsupported client metrics and confidential screenshots." } },
             { "@type": "Question", "name": "Does the infrastructure section represent every vendor as production experience?", "acceptedAnswer": { "@type": "Answer", "text": "No. It is a high-level capability overview. Specific vendor platforms and production environments should be assessed through a direct technical discussion." } },
-            { "@type": "Question", "name": "What opportunities are of interest?", "acceptedAnswer": { "@type": "Answer", "text": "Software engineering, systems administration, IT operations, infrastructure support and network-focused roles, as well as relevant consulting engagements." } }
+            { "@type": "Question", "name": "What opportunities are of interest?", "acceptedAnswer": { "@type": "Answer", "text": "Software engineering, systems administration, IT operations, infrastructure support and network-focused roles, as well as relevant consulting engagements." } },
+            { "@type": "Question", "name": "What happens to a message sent through this site?", "acceptedAnswer": { "@type": "Answer", "text": "It is stored in a database only I can read, used only to reply, and deleted when the conversation ends. No analytics, cookies or third-party scripts receive it. The email draft the form prepares stays on your device." } }
           ]
         }
       ]
     }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" as="image" href="assets/hero-skyline-day.webp" type="image/webp" />
     <!-- Inter is the only face on the page (300 display, 400 text, 500 emphasis).
-         Loaded without blocking, with a synchronous fallback for print / no-JS. -->
+         Self-hosted latin subset: one preload, no third-party round trip. -->
     <link
       rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
+      as="font"
+      type="font/woff2"
+      href="assets/fonts/inter-latin-400-normal.woff2"
+      crossorigin
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
     <script>
       // One gate, set before paint: CSS reveals only apply when JS is alive to fire them.
       document.documentElement.classList.replace("no-js", "js");

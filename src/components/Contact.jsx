@@ -1,12 +1,13 @@
 import { useMemo, useRef, useState } from 'react'
 import { brand, contact } from '../data/content.js'
+import { CONTACT_ENDPOINT, CONTACT_KEY, CONTACT_TIMEOUT } from '../data/contactEndpoint.js'
 
-/* The receipt survives yet another redesign: fill the slip, it prints
-   into a ready-made email. Same proven flow, log-paper dressing.
+/* The receipt survives yet another redesign: fill the slip, it prints.
 
-   Nothing is sent to this site. The form validates on submit (so the
-   button is never silently disabled), then hands the visitor two ways
-   out: open the mail app, or copy the draft if there is no mail app. */
+   Submitting does two things at once: the message is inserted into a table
+   only the owner can read (row-level security gives the public key insert
+   rights and nothing else), and a local email draft is prepared so a visitor
+   is never stuck if the network or the database is having a bad day. */
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i
 const LIMITS = { name: 80, work: 800, reach: 160 }
@@ -32,15 +33,47 @@ export function validateDraft(values) {
   return errors
 }
 
+/* returns 'sent' | 'failed' | 'offline'. Exported so the smoke tests can
+   exercise the request the browser actually makes. */
+export async function deliver(message) {
+  if (typeof fetch !== 'function') return 'offline'
+
+  const controller = typeof AbortController === 'function' ? new AbortController() : null
+  let timer = 0
+  if (controller) timer = window.setTimeout(() => controller.abort(), CONTACT_TIMEOUT)
+
+  try {
+    const response = await fetch(CONTACT_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        apikey: CONTACT_KEY,
+        Authorization: `Bearer ${CONTACT_KEY}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify(message),
+      signal: controller?.signal,
+    })
+    return response.ok ? 'sent' : 'failed'
+  } catch {
+    return 'failed'
+  } finally {
+    if (timer) window.clearTimeout(timer)
+  }
+}
+
 /* `initialValues` exists so the smoke tests can mount the slip with a
    complete draft; the app itself never passes it. */
-export default function Contact({ initialValues }) {
+export default function Contact({ initialValues, deliverMessage = deliver }) {
   const [values, setValues] = useState(() => ({ name: '', work: '', reach: '', ...initialValues }))
   const [errors, setErrors] = useState({})
   const [confirmed, setConfirmed] = useState(false)
   const [copied, setCopied] = useState('')
+  const [status, setStatus] = useState('')
+  const [trap, setTrap] = useState('')
   const mailRef = useRef(null)
   const fieldRefs = useRef({})
+  const sendId = useRef(0)
 
   const draftBody = useMemo(
     () =>
@@ -61,6 +94,7 @@ export default function Contact({ initialValues }) {
   const update = (key, value) => {
     setValues((current) => ({ ...current, [key]: value }))
     setCopied('')
+    setStatus('')
     /* the draft described the old text; make the visitor print it again */
     setConfirmed(false)
     /* clear the complaint as soon as the visitor starts fixing the field */
@@ -72,7 +106,7 @@ export default function Contact({ initialValues }) {
     })
   }
 
-  const buildReceipt = () => {
+  const buildReceipt = async () => {
     const found = validateDraft(values)
     const firstBad = contact.fields.find((f) => found[f.key])
 
@@ -80,6 +114,7 @@ export default function Contact({ initialValues }) {
       setErrors(found)
       setConfirmed(false)
       setCopied('')
+      setStatus('')
       fieldRefs.current[firstBad.key]?.focus()
       return
     }
@@ -88,6 +123,27 @@ export default function Contact({ initialValues }) {
     setCopied('')
     setConfirmed(true)
     window.setTimeout(() => mailRef.current?.focus(), 60)
+
+    /* the honeypot behaves exactly like a success, and sends nothing */
+    if (trap) {
+      setStatus('sent')
+      return
+    }
+
+    const id = sendId.current + 1
+    sendId.current = id
+    setStatus('sending')
+
+    const outcome = await deliverMessage({
+      name: trim(values.name),
+      brief: trim(values.work),
+      email: trim(values.reach),
+      page: 'portfolio',
+    })
+
+    /* a newer submit won the race; do not overwrite its status */
+    if (sendId.current !== id) return
+    setStatus(outcome)
   }
 
   const copyDraft = async () => {
@@ -100,6 +156,8 @@ export default function Contact({ initialValues }) {
       setCopied('copy blocked by the browser — use “open email draft”.')
     }
   }
+
+  const delivered = status === 'sent'
 
   return (
     <section className="section" id="contact">
@@ -174,8 +232,28 @@ export default function Contact({ initialValues }) {
                 )
               })}
 
+              {/* a field a person never sees and never tabs to; bots fill it */}
+              <div className="field field--trap" aria-hidden="true">
+                <label className="field__label cap" htmlFor="field-company">
+                  company
+                </label>
+                <input
+                  id="field-company"
+                  name="company"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={trap}
+                  onChange={(e) => setTrap(e.target.value)}
+                />
+              </div>
+
               <div className="slip__actions">
-                <button className="macpill macpill--green" type="submit">
+                <button
+                  className="macpill macpill--green"
+                  type="submit"
+                  aria-busy={status === 'sending' ? 'true' : undefined}
+                >
                   <span className="macpill__dot" data-glyph="+" aria-hidden="true" />
                   {confirmed ? contact.ctaDone : contact.ctaLabel}
                 </button>
@@ -193,6 +271,12 @@ export default function Contact({ initialValues }) {
                   </>
                 ) : null}
               </div>
+
+              {status ? (
+                <p className={`slip__status is-${status}`} role="status" aria-live="polite">
+                  {contact.delivery[status]}
+                </p>
+              ) : null}
 
               <p className="slip__hint" id="slip-hint">
                 {contact.hint}
@@ -232,7 +316,9 @@ export default function Contact({ initialValues }) {
 
             <div className="slip__total">
               <span>status</span>
-              <b className="slip__fig">email draft</b>
+              <b className="slip__fig">
+                {delivered ? contact.delivery.delivered : contact.delivery.draft}
+              </b>
             </div>
 
             <div className="slip__bars" aria-hidden="true">

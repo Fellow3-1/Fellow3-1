@@ -120,6 +120,7 @@ export const writing = {
   posts: [
     {
       date: 'Guide',
+      published: '2025-11-03',
       title: 'Designing safer M-PESA callback handling',
       slug: 'safer-mpesa-callbacks',
       blurb: 'Idempotent payment callbacks, raw event storage for audit, and why a timeout means unknown, not failed.',
@@ -128,6 +129,7 @@ export const writing = {
     },
     {
       date: 'Guide',
+      published: '2025-11-03',
       title: 'A practical network troubleshooting sequence',
       slug: 'network-troubleshooting-sequence',
       blurb: 'Scope first, then link state, addressing, gateway, DNS and routing — one variable at a time.',
@@ -136,6 +138,7 @@ export const writing = {
     },
     {
       date: 'Guide',
+      published: '2025-11-03',
       title: 'Linux service diagnostics',
       slug: 'linux-service-diagnostics',
       blurb: 'systemctl, journalctl, ss and resource pressure — evidence before the restart button.',
@@ -145,25 +148,25 @@ export const writing = {
   ],
 }
 
-/* DRAFT QUOTES — replace `items` with real, consented quotes (e.g. from
-   LinkedIn recommendations) before publishing. Role-only attributions keep
-   the site's no-names privacy posture, so a swap only needs the quote text
-   and an honest role label. */
-export const testimonials = {
-  heading: 'What work feels like with me_',
-  note: 'Short notes from the kind of people I work with. Names stay private, in step with the rest of this site.',
+/* Commitments, in the first person, instead of other people's words.
+   The site's rule is that nothing is published on someone else's behalf
+   without their consent — so this section states the working habits those
+   references would describe, and offers the references privately. */
+export const commitments = {
+  heading: 'How working together feels_',
+  note: 'No quotes appear here until the people behind them agree to be named. What follows is my side of that bargain; references are available on request.',
   items: [
     {
-      quote: 'The logs get read before anything gets changed. Incidents end with a fix and a written note, not guesswork.',
-      who: 'systems support colleague',
+      label: 'communication',
+      line: 'Plain language first — what broke, who is affected, what I am doing about it — then the detail and the evidence.',
     },
     {
-      quote: 'Technical problems come back translated into plain language for the business side — and then the fix gets shipped too.',
-      who: 'project stakeholder',
+      label: 'handover',
+      line: 'Written configs, rollback steps and the reason the decision was made. Nothing important left inside one person’s head.',
     },
     {
-      quote: 'Handover meant documented configs, clear rollback steps and nothing important left inside one person’s head.',
-      who: 'operations teammate',
+      label: 'change',
+      line: 'Nothing gets restarted, deleted or migrated before the failure has been read. Every fix ends with a short written record.',
     },
   ],
 }
@@ -190,6 +193,7 @@ export const faq = {
     { q: 'What can I review publicly?', a: 'The linked GitHub repositories, their README files and source code are the primary evidence presented here. The site avoids unsupported client metrics and confidential screenshots.' },
     { q: 'Does the infrastructure section represent every vendor as production experience?', a: 'No. It is a high-level capability overview. Specific vendor platforms and production environments should be assessed through a direct technical discussion.' },
     { q: 'What opportunities are of interest?', a: 'Software engineering, systems administration, IT operations, infrastructure support and network-focused roles, as well as relevant consulting engagements.' },
+    { q: 'What happens to a message sent through this site?', a: 'It is stored in a database only I can read, used only to reply, and deleted when the conversation ends. No analytics, cookies or third-party scripts receive it. The email draft the form prepares stays on your device.' },
   ],
 }
 
@@ -201,20 +205,28 @@ export const contact = {
     { key: 'work', label: 'the opportunity', placeholder: 'Role, project or technical requirement' },
     { key: 'reach', label: 'your email', placeholder: 'you@company.com' },
   ],
-  idleshow: ['Nothing drafted yet.', 'Complete the fields to prepare an email.'],
-  confirmed: ['READY', 'Your email draft is ready to open or copy.'],
-  ctaLabel: 'Prepare email',
-  ctaDone: 'Rebuild email',
+  idleshow: ['Nothing drafted yet.', 'Complete the fields to send a message.'],
+  confirmed: ['READY', 'Message on its way — with a draft you can send yourself.'],
+  ctaLabel: 'Send message',
+  ctaDone: 'Send again',
   mailLabel: 'Open email draft',
   copyLabel: 'Copy draft',
   directLabel: 'Prefer a plain email? Write straight to',
-  hint: 'Your details stay in this browser. Preparing the email only builds a draft on your device.',
+  hint: 'Your name, the brief and your email are sent to a database only I can read — and to nothing else. The email draft stays on your device.',
+  delivery: {
+    sending: 'sending to the inbox…',
+    sent: 'delivered — the message is in my inbox.',
+    failed: 'the inbox did not answer. Open the email draft instead — it is already prepared.',
+    offline: 'this browser cannot reach the inbox. Open the email draft instead.',
+    delivered: 'delivered',
+    draft: 'email draft',
+  },
   pills: [
     { label: 'GitHub', dot: 'red', glyph: '×', href: 'https://github.com/Fellow3-1' },
     { label: 'LinkedIn', dot: 'amber', glyph: '−', href: 'https://linkedin.com/in/felloh31' },
     { label: 'Email', dot: 'green', glyph: '+', href: 'mailto:felixodhiambo31@live.com' },
   ],
-  disclaimer: 'The form prepares an email on your device. It does not submit your information to this website.',
+  disclaimer: 'No analytics, no cookies, no third parties. Messages are used only to reply, and deleted when the conversation ends.',
 }
 
 export const footer = {
@@ -229,4 +241,63 @@ export const footer = {
   colophon: ['Engineering portfolio', 'Public work, private employment details'],
   line: '© 2026 Felloh 3.1 · Felix Odhiambo · Nairobi, Kenya',
   muse: 'the muse keeps the favicon warm',
+}
+
+/* The one piece of work that can be described in full, because it is this
+   site: constraints, rejected options, system, failures, what is checked. */
+export const caseStudy = {
+  slug: 'a-portfolio-that-refuses-to-invent-numbers',
+  kicker: 'case study · this site',
+  title: 'A portfolio that refuses to invent numbers',
+  summary:
+    'Most developer portfolios are built to show outcomes. This one is built around a harder constraint — publish the code and the method, publish nothing about employers, clients or results that cannot be verified — and the engineering that constraint forced.',
+  date: '2026-11-11',
+  dateLabel: '11 November 2026',
+  minutes: '7 min read',
+  sections: [
+    {
+      heading: 'The constraint',
+      body: [
+        'The obvious version of a portfolio is a list of jobs with a timeline, some client logos, and three metrics per project. I am not willing to publish employer names, employment dates, client identities or internal project records. That is not modesty; those things belong to other people.',
+        'So the site had to make an argument without them. Everything on it is either public code the reader can open, a capability stated as a capability, or a decision explained in the first person. Anything that would have needed a private document to verify was cut.',
+      ],
+    },
+    {
+      heading: 'What I rejected',
+      body: [
+        'A timeline with logos and dates, because a portfolio that leaks an employment history to every visitor is not a portfolio I want to host. A downloadable CV, for the same reason — the details are offered in conversation instead.',
+        'Anonymous testimonials presented as quotations. The first draft of this section did exactly that, with lines attributed to "a systems support colleague". Nobody had said them. They read as endorsements and could not be checked, which is the failure mode the rest of the site exists to avoid. They are now first-person commitments, with references offered on request.',
+        'Invented impact numbers. There is no "40 % faster checkout" here because there is no public artifact that proves one. What replaces it is a stack, a stated status, and the reasoning behind the visible decisions.',
+      ],
+    },
+    {
+      heading: 'The system',
+      body: [
+        'One React page, hand-written CSS, no utility framework — the design is a paper log with terminal chrome, and it is cheaper to write that directly than to fight a framework into it. All copy lives in a single content module, so privacy rules can be checked in one file instead of hunted across components.',
+        'Each note is also generated as a standalone static page by a small Node script at build time, with its own canonical URL, Open Graph tags and JSON-LD. Search engines and answer engines get real documents; the reader gets a page with no bundle.',
+        'Structured data covers the person, the profile page, the notes, the FAQ and the three public repositories. There is an llms.txt, a sitemap, an RSS feed and a robots file that explicitly welcomes crawlers.',
+      ],
+    },
+    {
+      heading: 'What broke',
+      body: [
+        'Two deploy paths. GitHub Pages was serving a build committed into docs/ while a workflow uploaded a different build as an artifact. They diverged, and the live site spent weeks showing a seven-section version of a nine-section page. The fix was not code: pick one deploy path, and let a script, not a human, refresh the output.',
+        'The hero shipped 223 KB of pixels that no viewport displayed — a portrait photograph cropped to a 260-pixel band by CSS object-fit, with the rest downloaded for nothing. It is now cropped at build time to the band that is actually rendered, and phones get a separate 3:2 crop instead of a letterboxed slice.',
+        'The page started at opacity zero and waited for the bundle to reveal it. Correct for a fade-in, catastrophic if the bundle 404s: a blank sheet of paper. There is now a 2.5-second watchdog that reveals the content regardless.',
+      ],
+    },
+    {
+      heading: 'What is checked, and how',
+      body: [
+        'A smoke test builds the real app with esbuild, renders it in jsdom and asserts the things that matter: the privacy rules (no employment timeline, no education or certification claims, no CV download), the structure (three repositories, four infrastructure groups, four FAQ answers), the schema, the feed and sitemap, and the contact form — including that it can never be mounted with a silently disabled button, and that a draft can be both opened and copied.',
+        'The suite is deliberately blunt. It does not check pixels; it checks that a promise the page makes in prose still has something behind it. There are 46 of those checks, and they run on every push before the deploy job is allowed to start.',
+      ],
+    },
+    {
+      heading: 'What I would do differently',
+      body: [
+        'Generate the feed and sitemap from the content module instead of maintaining them by hand, so a new note cannot exist in one place and not the other. Self-host the typeface rather than route the critical path through a third-party font host. And decide the deployment story before the first deploy, not after the second one silently wins.',
+      ],
+    },
+  ],
 }

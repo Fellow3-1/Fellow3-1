@@ -1,4 +1,4 @@
-import { log } from '../data/content.js'
+import { log, caseStudy } from '../data/content.js'
 import Arrow from './Arrow.jsx'
 
 function FlowArrow() {
@@ -121,6 +121,16 @@ export default function Log() {
             <Entry e={e} key={e.label} />
           ))}
         </div>
+        <aside className="casecard" data-reveal>
+          <p className="casecard__kicker">{caseStudy.kicker}</p>
+          <h3 className="casecard__title">{caseStudy.title}</h3>
+          <p className="casecard__body">{caseStudy.summary}</p>
+          <a className="alink" href={`case-study/${caseStudy.slug}/`}>
+            read the case study
+            <Arrow />
+          </a>
+        </aside>
+
         <p className="log__foot" data-reveal>
           {log.footnote}
         </p>

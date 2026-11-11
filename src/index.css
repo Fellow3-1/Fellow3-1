@@ -4,6 +4,32 @@
    scrollbar, progress bar and the nav marker. Inter one family. */
 
 /* 1 · load + reset */
+/* Inter, self-hosted: latin subset, three weights, SIL OFL 1.1
+   (see assets/fonts/OFL.txt). No third-party font host on the critical path. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/assets/fonts/inter-latin-300-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/inter-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/assets/fonts/inter-latin-500-normal.woff2') format('woff2');
+}
+
 @font-face {
   font-family: 'Inter Fallback';
   src: local('Arial');
@@ -374,6 +400,7 @@ html.js [data-reveal].is-in {
   font-size: var(--fs-1);
   color: var(--mut);
   font-feature-settings: 'tnum';
+  white-space: nowrap;
 }
 
 .nav__progress {
@@ -612,6 +639,21 @@ html.js .hero__name.is-in .ltr {
   margin-top: 10px;
   font-size: var(--fs-1);
   color: var(--mut);
+}
+
+/* phones: the strip keeps the photo's own 3:2 shape (art-directed source
+   above) instead of cropping a wide band down to a letterbox */
+@media (max-width: 700px) {
+  .hero__strip img {
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-position: 50% 50%;
+  }
+
+  /* the clock is the first thing to go when the bar runs out of room */
+  .nav__status-clock {
+    display: none;
+  }
 }
 
 /* 6 · the log entries */
@@ -955,6 +997,54 @@ html.js .entry.is-in .entry__decisions p {
   margin-top: 8px;
   font-size: var(--fs-1);
   color: var(--mut);
+}
+
+/* the one piece of work that can be shown end to end: this site */
+.casecard {
+  margin-top: clamp(26px, 4vh, 44px);
+  padding: clamp(24px, 3.4vw, 40px);
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.casecard__kicker {
+  font-size: var(--fs-1);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.casecard__title {
+  font-size: var(--fs-3);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+.casecard__body {
+  max-width: 62ch;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: inherit;
+  opacity: 0.78;
+}
+
+.casecard .alink {
+  margin-top: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration-color: currentColor;
+}
+
+[data-theme='dark'] .casecard {
+  color: var(--paper);
 }
 
 .log__foot {
@@ -1317,6 +1407,35 @@ html.js .entry.is-in .entry__decisions p {
   font-size: 13px;
   line-height: 1.4;
   color: var(--go);
+}
+
+.slip__status {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--mut);
+}
+
+.slip__status.is-sent {
+  color: var(--go);
+}
+
+.slip__status.is-failed,
+.slip__status.is-offline {
+  color: #a81146;
+}
+
+[data-theme='dark'] .slip__status.is-failed,
+[data-theme='dark'] .slip__status.is-offline {
+  color: #ffa2c4;
+}
+
+/* the honeypot: present in the DOM, invisible to people and to tab order */
+.field--trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .slip__result:empty {
@@ -1948,19 +2067,15 @@ main .section::before {
   text-wrap: pretty;
 }
 
-/* the open quote, dressed in the site gradient */
-.tcard > p::before {
-  content: '\201C';
+/* these are statements, not quotations: a number instead of a quote mark */
+.tcard__num {
   display: block;
-  height: 0.45em;
-  font-size: 64px;
-  line-height: 0.8;
-  font-weight: 500;
-  color: var(--iris);
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+  font-size: var(--fs-1);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  font-feature-settings: 'tnum';
 }
 
 .tcard footer {
