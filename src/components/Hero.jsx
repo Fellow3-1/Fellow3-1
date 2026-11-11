@@ -95,6 +95,8 @@ export default function Hero() {
               <img
                 src="assets/HD-Joker-Wallpapers-scaled.jpg"
                 alt="Low-poly Joker bust, the site's muse"
+                width="2560"
+                height="1440"
                 loading="eager"
                 decoding="async"
               />
@@ -113,7 +115,9 @@ export default function Hero() {
             <img
               src={night ? 'assets/window-nairobi.jpg' : 'assets/hero-skyline-day.jpg'}
               alt={night ? 'Nairobi’s interchange at night, light trails looping through the dark' : 'The Nairobi skyline on a clear day'}
-              loading="lazy"
+              width={night ? 1376 : 928}
+              height="360"
+              loading="eager"
               decoding="async"
             />
           </picture>

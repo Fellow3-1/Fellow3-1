@@ -29,6 +29,7 @@
       content="Software engineering, systems administration, networking and infrastructure. Public projects and technical capabilities; private employment details omitted."
     />
     <meta property="og:image" content="https://fellow3-1.github.io/Fellow3-1/assets/og.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Felloh 3.1, an engineering log styled as a terminal, with a low-poly Joker polaroid" />
@@ -119,6 +120,49 @@
           ]
         },
         {
+          "@type": "ItemList",
+          "@id": "https://fellow3-1.github.io/Fellow3-1/#projects",
+          "name": "Public repositories",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "SoftwareSourceCode",
+                "name": "M-PESA Daraja Go wrapper",
+                "description": "Go library wrapping Safaricom M-PESA Daraja API operations; the repository describes it as work in progress.",
+                "codeRepository": "https://github.com/AndroidStudyOpenSource/mpesa-api-go",
+                "programmingLanguage": "Go",
+                "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "SoftwareSourceCode",
+                "name": "Tovuti Android connectivity library",
+                "description": "Android library that checks connection type and internet reachability before an app makes HTTP requests.",
+                "codeRepository": "https://github.com/Fellow3-1/tovuti",
+                "programmingLanguage": "Java",
+                "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "SoftwareSourceCode",
+                "name": "Android SMS verifier",
+                "description": "Android utility for detecting and handling verification messages, documented with READ_SMS and RECEIVE_SMS permissions.",
+                "codeRepository": "https://github.com/Fellow3-1/android-sms-verifier",
+                "programmingLanguage": "Java",
+                "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
+              }
+            }
+          ]
+        },
+        {
           "@type": "FAQPage",
           "@id": "https://fellow3-1.github.io/Fellow3-1/#faq",
           "mainEntity": [
@@ -173,6 +217,15 @@
       } catch (error) {
         document.documentElement.dataset.theme = "light";
       }
+    </script>
+    <script>
+      // Safety net: the sheet starts at opacity 0 and the bundle is what
+      // lifts it. If that bundle is blocked, fails or is very slow, reveal
+      // the content anyway instead of leaving a blank page.
+      window.setTimeout(function () {
+        var body = document.body;
+        if (body && !body.classList.contains("is-in")) body.classList.add("is-in");
+      }, 2500);
     </script>
 
     <!-- privacy-safe analytics, ready when you are: GoatCounter is free,

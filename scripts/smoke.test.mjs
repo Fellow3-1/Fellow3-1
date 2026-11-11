@@ -7,12 +7,14 @@ import { mkdirSync, readFileSync, existsSync } from 'node:fs'
 
 mkdirSync('node_modules/.smoke', { recursive: true })
 await build({
-  entryPoints: ['src/App.jsx'],
+  entryPoints: ['src/App.jsx', 'src/components/Contact.jsx'],
   bundle: true,
   format: 'esm',
   jsx: 'automatic',
   external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime'],
-  outfile: 'node_modules/.smoke/app.mjs',
+  outdir: 'node_modules/.smoke',
+  entryNames: '[name]',
+  outExtension: { '.js': '.mjs' },
   logLevel: 'silent',
 })
 
@@ -31,7 +33,8 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const results = []
 const check = (name, ok) => results.push({ name, ok: Boolean(ok) })
-const { default: App } = await import('../node_modules/.smoke/app.mjs')
+const { default: App } = await import('../node_modules/.smoke/App.mjs')
+const { default: Contact, validateDraft } = await import('../node_modules/.smoke/Contact.mjs')
 const root = createRoot(document.getElementById('root'))
 await act(async () => { root.render(React.createElement(App)) })
 await act(async () => { await new Promise((resolve) => setTimeout(resolve, 50)) })
@@ -69,6 +72,51 @@ check('profile README: no CV download or employment timeline', !/download.*cv|em
 check('profile README: no education or certification claims', !/education|certification|\bdegree\b/i.test(readFileSync('README.md', 'utf8')))
 check('footer: no downloadable CV link exists', !$$('a').some((a) => /cv|resume/i.test(a.textContent + a.href)))
 check('skip link points to project section', $('.skiplink')?.getAttribute('href') === '#work')
+
+/* --- contact: validation, recovery and the two ways out ------------------ */
+const submit = async (scope) => {
+  await act(async () => {
+    scope.querySelector('.slip__form').dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }))
+  })
+}
+
+check('contact: submit is never silently disabled', $('.slip__form button[type="submit"]')?.disabled === false)
+check('contact: a plain mailto address is always on screen', $$('#contact a[href^="mailto:"]').length >= 1)
+check('contact: email field asks the browser for an email address', $('#field-reach')?.getAttribute('autocomplete') === 'email')
+check('contact: fields are marked required', $$('#contact input[required]').length === 3)
+
+await submit(document)
+check('contact: empty submit explains every missing field', $$('.field__err').length === 3)
+check('contact: invalid fields are marked for assistive tech', $('#field-name')?.getAttribute('aria-invalid') === 'true')
+check('contact: failed submit leaves the receipt idle', !$('.slip__card')?.classList.contains('is-confirmed'))
+check('contact: errors are announced, not just coloured', $$('.field__err[role="alert"]').length === 3)
+
+/* the form logic itself, called directly: jsdom cannot replay typing into
+   React's synthetic input events, so the rules are exercised as functions */
+const base = { name: 'Amina', work: 'Frontend contract for a payments dashboard', reach: 'amina@example.com' }
+check('contact: a complete draft passes validation', Object.keys(validateDraft(base)).length === 0)
+check('contact: an address without a domain is rejected', Boolean(validateDraft({ ...base, reach: 'not-an-address' }).reach))
+check('contact: a one-letter name is rejected', Boolean(validateDraft({ ...base, name: 'A' }).name))
+check('contact: an empty brief is rejected', Boolean(validateDraft({ ...base, work: '   ' }).work))
+
+/* render the section once with a complete draft, then submit it for real */
+const host = document.createElement('div')
+document.body.appendChild(host)
+const contactRoot = createRoot(host)
+await act(async () => {
+  contactRoot.render(React.createElement(Contact, { initialValues: base }))
+})
+await submit(host)
+check('contact: valid submit marks the receipt ready', host.querySelector('.slip__card')?.classList.contains('is-confirmed'))
+check('contact: the draft can be opened from the form', Boolean(host.querySelector('.slip__actions a.macpill[href^="mailto:"]')))
+check('contact: the draft can be copied when no mail app exists', Array.from(host.querySelectorAll('.slip__actions button')).some((b) => /copy draft/i.test(b.textContent)))
+await act(async () => contactRoot.unmount())
+host.remove()
+
+/* --- resilience and structured data ------------------------------------- */
+const indexHtml = readFileSync('index.html', 'utf8')
+check('shell: a failed bundle still reveals the page', /classList\.contains\("is-in"\)/.test(indexHtml))
+check('SEO: public repositories are described as source code', /SoftwareSourceCode/.test(indexHtml) && /mpesa-api-go/.test(indexHtml))
 
 let passed = 0
 for (const result of results) {

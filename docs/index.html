@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <!-- primary identity -->
-    <title>Felloh 3.1 · Felix Odhiambo, full-stack engineer in Nairobi (M-PESA, Android, web)</title>
+    <title>Felloh 3.1 · Felix Odhiambo | Software & IT Systems Engineer</title>
     <meta
       name="description"
-      content="Felix Odhiambo (Felloh 3.1, Fellow3-1 on GitHub): full-stack engineer in Nairobi. Payment-ready web and Android products, M-PESA STK Push integration, e-commerce, dashboards, anonymised case studies with real impact numbers. Open to full-time, contract, consulting."
+      content="Felix Odhiambo (Felloh 3.1): software engineering and IT systems profile covering web and Android development, payment integrations, systems administration, networking and infrastructure. Public projects are linked; private employment and client records are omitted."
     />
     <meta name="author" content="Felix Odhiambo" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -23,12 +23,13 @@
     <!-- social graph -->
     <meta property="og:url" content="https://fellow3-1.github.io/Fellow3-1/" />
     <meta property="og:type" content="profile" />
-    <meta property="og:title" content="Felloh 3.1 · full-stack engineer in Nairobi" />
+    <meta property="og:title" content="Felloh 3.1 · Software & IT Systems Engineer in Nairobi" />
     <meta
       property="og:description"
-      content="Full-stack engineer. Payment-ready web and Android products that stay fast under real traffic. Engineering log, anonymised by design."
+      content="Software engineering, systems administration, networking and infrastructure. Public projects and technical capabilities; private employment details omitted."
     />
     <meta property="og:image" content="https://fellow3-1.github.io/Fellow3-1/assets/og.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Felloh 3.1, an engineering log styled as a terminal, with a low-poly Joker polaroid" />
@@ -39,8 +40,8 @@
     <meta property="profile:username" content="Fellow3-1" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@Fellow3_1" />
-    <meta name="twitter:title" content="Felloh 3.1 · full-stack engineer in Nairobi" />
-    <meta name="twitter:description" content="Payment-ready web and Android products. M-PESA, e-commerce, dashboards. Anonymised case studies, real numbers." />
+    <meta name="twitter:title" content="Felloh 3.1 · Software & IT Systems Engineer in Nairobi" />
+    <meta name="twitter:description" content="Software engineering, systems administration, networking and infrastructure. Public code, private employment details." />
     <meta name="twitter:image" content="https://fellow3-1.github.io/Fellow3-1/assets/og.jpg" />
     <meta name="twitter:image:alt" content="Felloh 3.1, an engineering log styled as a terminal" />
 
@@ -68,15 +69,15 @@
           "@id": "https://fellow3-1.github.io/Fellow3-1/#person",
           "name": "Felix Odhiambo",
           "alternateName": "Felloh 3.1",
-          "jobTitle": "Full-Stack Engineer",
+          "jobTitle": "Software and IT Systems Engineer",
           "url": "https://fellow3-1.github.io/Fellow3-1/",
           "image": "https://fellow3-1.github.io/Fellow3-1/assets/HD-Joker-Wallpapers-scaled.jpg",
           "address": { "@type": "PostalAddress", "addressLocality": "Nairobi", "addressCountry": "KE" },
-          "nationality": "Kenyan",
           "sameAs": ["https://github.com/Fellow3-1", "https://linkedin.com/in/felloh31"],
           "knowsAbout": [
-            "M-PESA Daraja integration", "STK Push", "React", "Android (Kotlin)", "Django",
-            "PostgreSQL", "SMS gateways (Africa's Talking)", "Docker", "CI/CD", "AI agents"
+            "Software engineering", "React", "Java", "Python", "PHP", "REST APIs",
+            "M-PESA Daraja", "Android development", "Windows", "Linux", "Networking",
+            "DNS", "DHCP", "VPN", "AWS", "Docker"
           ]
         },
         {
@@ -94,27 +95,70 @@
           "itemListElement": [
             {
               "@type": "BlogPosting",
-              "headline": "Integrating M-PESA STK Push without losing your weekend",
-              "datePublished": "2025",
+              "headline": "Designing safer M-PESA callback handling",
+              "description": "Idempotent payment callbacks, raw event storage for audit, and why a timeout means unknown, not failed.",
               "inLanguage": "en",
               "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" },
-              "url": "https://fellow3-1.github.io/Fellow3-1/#writing"
+              "url": "https://fellow3-1.github.io/Fellow3-1/writing/safer-mpesa-callbacks/"
             },
             {
               "@type": "BlogPosting",
-              "headline": "SMS OTP retrieval on Android, minus the creepy permission",
-              "datePublished": "2025",
+              "headline": "A practical network troubleshooting sequence",
+              "description": "Scope first, then link state, addressing, gateway, DNS and routing — one variable at a time.",
               "inLanguage": "en",
               "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" },
-              "url": "https://fellow3-1.github.io/Fellow3-1/#writing"
+              "url": "https://fellow3-1.github.io/Fellow3-1/writing/network-troubleshooting-sequence/"
             },
             {
               "@type": "BlogPosting",
-              "headline": "CSV exports that don't time out",
-              "datePublished": "2024",
+              "headline": "Linux service diagnostics",
+              "description": "systemctl, journalctl, ss and resource pressure — evidence before the restart button.",
               "inLanguage": "en",
               "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" },
-              "url": "https://fellow3-1.github.io/Fellow3-1/#writing"
+              "url": "https://fellow3-1.github.io/Fellow3-1/writing/linux-service-diagnostics/"
+            }
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://fellow3-1.github.io/Fellow3-1/#projects",
+          "name": "Public repositories",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "SoftwareSourceCode",
+                "name": "M-PESA Daraja Go wrapper",
+                "description": "Go library wrapping Safaricom M-PESA Daraja API operations; the repository describes it as work in progress.",
+                "codeRepository": "https://github.com/AndroidStudyOpenSource/mpesa-api-go",
+                "programmingLanguage": "Go",
+                "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "SoftwareSourceCode",
+                "name": "Tovuti Android connectivity library",
+                "description": "Android library that checks connection type and internet reachability before an app makes HTTP requests.",
+                "codeRepository": "https://github.com/Fellow3-1/tovuti",
+                "programmingLanguage": "Java",
+                "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "SoftwareSourceCode",
+                "name": "Android SMS verifier",
+                "description": "Android utility for detecting and handling verification messages, documented with READ_SMS and RECEIVE_SMS permissions.",
+                "codeRepository": "https://github.com/Fellow3-1/android-sms-verifier",
+                "programmingLanguage": "Java",
+                "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
+              }
             }
           ]
         },
@@ -122,36 +166,10 @@
           "@type": "FAQPage",
           "@id": "https://fellow3-1.github.io/Fellow3-1/#faq",
           "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "Who is Felloh 3.1?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Felix Odhiambo, a full-stack engineer in Nairobi, Kenya. Fellow3-1 on GitHub, shipping websites, Android products, payment integrations and agents since 2014. Clients and employers stay unnamed by policy; the sector and the outcome are the story." }
-            },
-            {
-              "@type": "Question",
-              "name": "Is he open to full-time work, contract, or consulting?",
-              "acceptedAnswer": { "@type": "Answer", "text": "All three. Based in Nairobi (EAT, UTC+3), overlapping comfortably with European mornings and Gulf afternoons. Replies within a day, weekdays and weekends." }
-            },
-            {
-              "@type": "Question",
-              "name": "Can he integrate M-PESA into an existing product?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Yes. STK Push, callbacks, reversals and reconciliation, and a public MIT library (Fello_Daraja_API) that compresses the ceremony to three readable lines. 34 teams have forked it." }
-            },
-            {
-              "@type": "Question",
-              "name": "Why are the client names missing from the work log?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Confidentiality by policy. Each project is described by sector, problem, architecture and impact numbers. References from a programme lead, an operations director and a CTO are available on request once we are in a real conversation." }
-            },
-            {
-              "@type": "Question",
-              "name": "What happens after the receipt or email?",
-              "acceptedAnswer": { "@type": "Answer", "text": "A same-day reply, a short intro call, then a scoped proposal with a fixed price or a weekly rate. No lock-in, no middlemen; the person who writes the quote writes the code." }
-            },
-            {
-              "@type": "Question",
-              "name": "Does he work with teams outside Kenya?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Yes, remotely. Written progress by default, demos on Fridays, code review culture included. Time zones are a feature: the work moves while you sleep." }
-            }
+            { "@type": "Question", "name": "Why is there no employment timeline?", "acceptedAnswer": { "@type": "Answer", "text": "To protect personal and client privacy, this site does not publish employer names, job titles tied to employers, employment dates or internal project records. Detailed employment information can be shared privately during a recruitment process." } },
+            { "@type": "Question", "name": "What can I review publicly?", "acceptedAnswer": { "@type": "Answer", "text": "The linked GitHub repositories, their README files and source code are the primary evidence presented here. The site avoids unsupported client metrics and confidential screenshots." } },
+            { "@type": "Question", "name": "Does the infrastructure section represent every vendor as production experience?", "acceptedAnswer": { "@type": "Answer", "text": "No. It is a high-level capability overview. Specific vendor platforms and production environments should be assessed through a direct technical discussion." } },
+            { "@type": "Question", "name": "What opportunities are of interest?", "acceptedAnswer": { "@type": "Answer", "text": "Software engineering, systems administration, IT operations, infrastructure support and network-focused roles, as well as relevant consulting engagements." } }
           ]
         }
       ]
@@ -160,7 +178,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="image" href="assets/hero-skyline-day.jpg" />
+    <link rel="preload" as="image" href="assets/hero-skyline-day.webp" type="image/webp" />
     <!-- Inter is the only face on the page (300 display, 400 text, 500 emphasis).
          Loaded without blocking, with a synchronous fallback for print / no-JS. -->
     <link
@@ -183,9 +201,40 @@
     <script>
       // One gate, set before paint: CSS reveals only apply when JS is alive to fire them.
       document.documentElement.classList.replace("no-js", "js");
+      // Theme, set before paint to avoid a flash: stored choice wins,
+      // otherwise follow the OS. The nav toggle rewrites this at runtime.
+      try {
+        var savedTheme = localStorage.getItem("f31-theme");
+        if (!savedTheme) {
+          savedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.dataset.theme = savedTheme;
+        if (savedTheme === "dark") {
+          document
+            .querySelector('meta[name="theme-color"]')
+            .setAttribute("content", "#0d060b");
+        }
+      } catch (error) {
+        document.documentElement.dataset.theme = "light";
+      }
     </script>
-    <script type="module" crossorigin src="./assets/index-QDt6saDL.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Rzx8HzqH.css">
+    <script>
+      // Safety net: the sheet starts at opacity 0 and the bundle is what
+      // lifts it. If that bundle is blocked, fails or is very slow, reveal
+      // the content anyway instead of leaving a blank page.
+      window.setTimeout(function () {
+        var body = document.body;
+        if (body && !body.classList.contains("is-in")) body.classList.add("is-in");
+      }, 2500);
+    </script>
+
+    <!-- privacy-safe analytics, ready when you are: GoatCounter is free,
+         cookieless and GDPR-friendly. Create the site `felloh31` at
+         goatcounter.com, then uncomment this line:
+    <script data-goatcounter="https://felloh31.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+    -->
+    <script type="module" crossorigin src="./assets/index-3x-CAt3F.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DwcuLWrb.css">
   </head>
   <body>
     <div id="root"></div>

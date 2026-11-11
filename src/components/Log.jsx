@@ -61,7 +61,14 @@ function Entry({ e }) {
           </div>
           <picture>
             <source srcSet={e.img.src.replace(/\.jpg$/, '.webp')} type="image/webp" />
-            <img src={e.img.src} alt={e.img.alt} loading="lazy" decoding="async" />
+            <img
+              src={e.img.src}
+              alt={e.img.alt}
+              width={e.img.w}
+              height={e.img.h}
+              loading="lazy"
+              decoding="async"
+            />
           </picture>
           <figcaption>{e.img.note}</figcaption>
         </figure>
@@ -98,7 +105,7 @@ function Entry({ e }) {
 
 export default function Log() {
   return (
-    <section className="section" id="work">
+    <section className="section" id="work" tabIndex={-1}>
       <div className="wrap">
         <p className="logmark" data-reveal>
           <b>[log]</b> 02 · selected work

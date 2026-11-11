@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Linux service diagnostics · Felloh 3.1</title>
+    <meta name="description" content="systemctl, journalctl, ss and resource pressure — evidence before the restart button." />
+    <meta name="author" content="Felix Odhiambo" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <link rel="canonical" href="https://fellow3-1.github.io/Fellow3-1/writing/linux-service-diagnostics/" />
+    <meta name="theme-color" content="#f6f6f3" />
+    <meta property="og:url" content="https://fellow3-1.github.io/Fellow3-1/writing/linux-service-diagnostics/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Linux service diagnostics" />
+    <meta property="og:description" content="systemctl, journalctl, ss and resource pressure — evidence before the restart button." />
+    <meta property="og:image" content="https://fellow3-1.github.io/Fellow3-1/assets/og.jpg" />
+    <meta property="og:locale" content="en_KE" />
+    <meta property="og:site_name" content="Felloh 3.1" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Fellow3_1" />
+    <meta name="twitter:title" content="Linux service diagnostics" />
+    <meta name="twitter:description" content="systemctl, journalctl, ss and resource pressure — evidence before the restart button." />
+    <meta name="twitter:image" content="https://fellow3-1.github.io/Fellow3-1/assets/og.jpg" />
+    <link rel="icon" type="image/png" sizes="64x64" href="../../assets/favicon-joker.png" />
+    <link rel="apple-touch-icon" href="../../assets/joker-apple-touch.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    <link rel="stylesheet" href="../../assets/post.css" />
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Linux service diagnostics",
+      "description": "systemctl, journalctl, ss and resource pressure — evidence before the restart button.",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "Felix Odhiambo",
+        "alternateName": "Felloh 3.1",
+        "url": "https://fellow3-1.github.io/Fellow3-1/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Felix Odhiambo",
+        "url": "https://fellow3-1.github.io/Fellow3-1/"
+      },
+      "mainEntityOfPage": "https://fellow3-1.github.io/Fellow3-1/writing/linux-service-diagnostics/",
+      "url": "https://fellow3-1.github.io/Fellow3-1/writing/linux-service-diagnostics/"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Felloh 3.1",
+          "item": "https://fellow3-1.github.io/Fellow3-1/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Writing",
+          "item": "https://fellow3-1.github.io/Fellow3-1/#writing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Linux service diagnostics",
+          "item": "https://fellow3-1.github.io/Fellow3-1/writing/linux-service-diagnostics/"
+        }
+      ]
+    }
+  ]
+}</script>
+<script>
+try {
+  var t = localStorage.getItem("f31-theme");
+  if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  document.documentElement.dataset.theme = t;
+  if (t === "dark") {
+    document.querySelector('meta[name="theme-color"]').setAttribute("content", "#0d060b");
+  }
+} catch (e) {
+  document.documentElement.dataset.theme = "light";
+}
+</script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="bar">
+        <a class="bar__brand" href="../../"><b>$</b> Felloh 3.1</a>
+        <nav class="bar__links" aria-label="Page">
+          <a href="../../#writing">all notes</a>
+          <a href="../../#contact">contact</a>
+          <button
+            class="nav__theme"
+            type="button"
+            id="theme-flip"
+            aria-label="Switch theme"
+            title="Flip the lights"
+          >
+            <span class="nav__theme-orb" aria-hidden="true"></span>
+          </button>
+        </nav>
+      </header>
+      <main>
+        <article class="note">
+          <p class="logmark"><b>[log]</b> writing · systems</p>
+          <h1>Linux service diagnostics</h1>
+          <p class="note__meta">
+            <span class="note__rule" aria-hidden="true"></span>
+            Felix Odhiambo · Nairobi, Kenya · Guide · Systems
+          </p>
+          <div class="note__body">
+            <p>Check service state with systemctl, inspect recent events with journalctl, confirm listening sockets with ss, and verify disk, memory and CPU pressure before restarting a production service.</p>
+            <p>A restart can restore service, but it is not a root-cause analysis. Capture the failure evidence and investigate why the service stopped or became unhealthy.</p>
+          </div>
+          <a class="note__back" href="../../#writing">← back to the log</a>
+        </article>
+      </main>
+      <footer class="foot">
+        <span>© 2026 Felloh 3.1 · Felix Odhiambo · Nairobi, Kenya</span>
+        <a href="../../sitemap.xml">sitemap</a>
+      </footer>
+    </div>
+<script>
+document.getElementById("theme-flip").addEventListener("click", function () {
+  var next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem("f31-theme", next); } catch (e) {}
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute("content", next === "dark" ? "#0d060b" : "#f6f6f3");
+  this.setAttribute("aria-label", next === "dark" ? "Switch to light mode" : "Switch to dark mode");
+});
+</script>
+  </body>
+</html>
