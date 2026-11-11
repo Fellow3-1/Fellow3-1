@@ -1,30 +1,163 @@
 import { useMemo, useRef, useState } from 'react'
 import { brand, contact } from '../data/content.js'
+import { CONTACT_ENDPOINT, CONTACT_KEY, CONTACT_TIMEOUT } from '../data/contactEndpoint.js'
 
-/* The receipt survives yet another redesign: fill the slip, it prints
-   into a ready-made email. Same proven flow, log-paper dressing. */
+/* The receipt survives yet another redesign: fill the slip, it prints.
 
-export default function Contact() {
-  const [values, setValues] = useState({ name: '', work: '', reach: '' })
+   Submitting does two things at once: the message is inserted into a table
+   only the owner can read (row-level security gives the public key insert
+   rights and nothing else), and a local email draft is prepared so a visitor
+   is never stuck if the network or the database is having a bad day. */
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i
+const LIMITS = { name: 80, work: 800, reach: 160 }
+
+const trim = (value) => value.trim()
+
+export function validateDraft(values) {
+  const errors = {}
+  const name = trim(values.name)
+  const work = trim(values.work)
+  const reach = trim(values.reach)
+
+  if (name.length < 2) errors.name = 'Add the name the reply should be addressed to.'
+  else if (name.length > LIMITS.name) errors.name = `Keep this under ${LIMITS.name} characters.`
+
+  if (work.length < 4) errors.work = 'A line about the role, project or requirement.'
+  else if (work.length > LIMITS.work) errors.work = `Keep this under ${LIMITS.work} characters.`
+
+  if (!reach) errors.reach = 'An address to reply to.'
+  else if (reach.length > LIMITS.reach) errors.reach = `Keep this under ${LIMITS.reach} characters.`
+  else if (!EMAIL_RE.test(reach)) errors.reach = 'This address is missing an @ or a domain, like you@company.com.'
+
+  return errors
+}
+
+/* returns 'sent' | 'failed' | 'offline'. Exported so the smoke tests can
+   exercise the request the browser actually makes. */
+export async function deliver(message) {
+  if (typeof fetch !== 'function') return 'offline'
+
+  const controller = typeof AbortController === 'function' ? new AbortController() : null
+  let timer = 0
+  if (controller) timer = window.setTimeout(() => controller.abort(), CONTACT_TIMEOUT)
+
+  try {
+    const response = await fetch(CONTACT_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        apikey: CONTACT_KEY,
+        Authorization: `Bearer ${CONTACT_KEY}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify(message),
+      signal: controller?.signal,
+    })
+    return response.ok ? 'sent' : 'failed'
+  } catch {
+    return 'failed'
+  } finally {
+    if (timer) window.clearTimeout(timer)
+  }
+}
+
+/* `initialValues` exists so the smoke tests can mount the slip with a
+   complete draft; the app itself never passes it. */
+export default function Contact({ initialValues, deliverMessage = deliver }) {
+  const [values, setValues] = useState(() => ({ name: '', work: '', reach: '', ...initialValues }))
+  const [errors, setErrors] = useState({})
   const [confirmed, setConfirmed] = useState(false)
+  const [copied, setCopied] = useState('')
+  const [status, setStatus] = useState('')
+  const [trap, setTrap] = useState('')
   const mailRef = useRef(null)
+  const fieldRefs = useRef({})
+  const sendId = useRef(0)
 
-  const ready = contact.fields.every((f) => values[f.key].trim().length > 1)
+  const draftBody = useMemo(
+    () =>
+      contact.fields
+        .map((f) => `${f.label}: ${trim(values[f.key]) || '—'}`)
+        .join('\n'),
+    [values]
+  )
 
-  const mailto = useMemo(() => {
-    const body = contact.fields.map((f) => `${f.label}: ${values[f.key].trim() || '—'}`).join('\n')
-    return (
+  const mailto = useMemo(
+    () =>
       `mailto:${brand.email}?` +
       `subject=${encodeURIComponent('New project: via Felloh 3.1')}` +
-      `&body=${encodeURIComponent(body + '\n\n(printed from the receipt)')}`
-    )
-  }, [values])
+      `&body=${encodeURIComponent(draftBody + '\n\n(printed from the receipt)')}`,
+    [draftBody]
+  )
 
-  const buildReceipt = () => {
-    if (!ready) return
+  const update = (key, value) => {
+    setValues((current) => ({ ...current, [key]: value }))
+    setCopied('')
+    setStatus('')
+    /* the draft described the old text; make the visitor print it again */
+    setConfirmed(false)
+    /* clear the complaint as soon as the visitor starts fixing the field */
+    setErrors((current) => {
+      if (!current[key]) return current
+      const next = { ...current }
+      delete next[key]
+      return next
+    })
+  }
+
+  const buildReceipt = async () => {
+    const found = validateDraft(values)
+    const firstBad = contact.fields.find((f) => found[f.key])
+
+    if (firstBad) {
+      setErrors(found)
+      setConfirmed(false)
+      setCopied('')
+      setStatus('')
+      fieldRefs.current[firstBad.key]?.focus()
+      return
+    }
+
+    setErrors({})
+    setCopied('')
     setConfirmed(true)
     window.setTimeout(() => mailRef.current?.focus(), 60)
+
+    /* the honeypot behaves exactly like a success, and sends nothing */
+    if (trap) {
+      setStatus('sent')
+      return
+    }
+
+    const id = sendId.current + 1
+    sendId.current = id
+    setStatus('sending')
+
+    const outcome = await deliverMessage({
+      name: trim(values.name),
+      brief: trim(values.work),
+      email: trim(values.reach),
+      page: 'portfolio',
+    })
+
+    /* a newer submit won the race; do not overwrite its status */
+    if (sendId.current !== id) return
+    setStatus(outcome)
   }
+
+  const copyDraft = async () => {
+    const text = `${draftBody}\n\n(printed from the receipt)`
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('clipboard unavailable')
+      await navigator.clipboard.writeText(text)
+      setCopied('draft copied to the clipboard')
+    } catch {
+      setCopied('copy blocked by the browser — use “open email draft”.')
+    }
+  }
+
+  const delivered = status === 'sent'
 
   return (
     <section className="section" id="contact">
@@ -37,7 +170,7 @@ export default function Contact() {
             <h2 className="head">{contact.heading}</h2>
             <p className="cta__intro">{contact.intro}</p>
             {/* macOS window chrome: red/amber/green dots, glyphs reveal on group hover */}
-            <div className="maclights" role="navigation" aria-label="Channels">
+            <nav className="maclights" aria-label="Channels">
               {contact.pills.map((p) => (
                 <a
                   key={p.label}
@@ -50,37 +183,107 @@ export default function Contact() {
                   {p.label}
                 </a>
               ))}
-            </div>
+            </nav>
+            <p className="cta__direct">
+              {contact.directLabel}{' '}
+              <a className="alink" href={`mailto:${brand.email}`}>
+                {brand.email}
+              </a>
+            </p>
 
             <form
               className="slip__form"
+              noValidate
+              aria-describedby="slip-hint"
               onSubmit={(e) => {
                 e.preventDefault()
                 buildReceipt()
               }}
             >
-              {contact.fields.map((f) => (
-                <div className="field" key={f.key}>
-                  <label className="field__label cap" htmlFor={`field-${f.key}`}>
-                    {f.label}
-                  </label>
-                  <input
-                    id={`field-${f.key}`}
-                    name={f.key}
-                    type={f.key === 'reach' ? 'email' : 'text'}
-                    autoComplete={f.key === 'name' ? 'name' : 'off'}
-                    placeholder={f.placeholder}
-                    value={values[f.key]}
-                    onChange={(e) => setValues((v) => ({ ...v, [f.key]: e.target.value }))}
-                  />
-                </div>
-              ))}
-              <div>
-                <button className="macpill macpill--green" type="submit" disabled={!ready}>
+              {contact.fields.map((f) => {
+                const error = errors[f.key]
+                return (
+                  <div className={`field${error ? ' field--bad' : ''}`} key={f.key}>
+                    <label className="field__label cap" htmlFor={`field-${f.key}`}>
+                      {f.label}
+                    </label>
+                    <input
+                      id={`field-${f.key}`}
+                      name={f.key}
+                      type={f.key === 'reach' ? 'email' : 'text'}
+                      required
+                      maxLength={LIMITS[f.key]}
+                      autoComplete={f.key === 'name' ? 'name' : f.key === 'reach' ? 'email' : 'off'}
+                      placeholder={f.placeholder}
+                      value={values[f.key]}
+                      aria-invalid={error ? 'true' : undefined}
+                      aria-describedby={error ? `field-${f.key}-error` : undefined}
+                      ref={(el) => {
+                        fieldRefs.current[f.key] = el
+                      }}
+                      onChange={(e) => update(f.key, e.target.value)}
+                    />
+                    {error ? (
+                      <p className="field__err" id={`field-${f.key}-error`} role="alert">
+                        {error}
+                      </p>
+                    ) : null}
+                  </div>
+                )
+              })}
+
+              {/* a field a person never sees and never tabs to; bots fill it */}
+              <div className="field field--trap" aria-hidden="true">
+                <label className="field__label cap" htmlFor="field-company">
+                  company
+                </label>
+                <input
+                  id="field-company"
+                  name="company"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={trap}
+                  onChange={(e) => setTrap(e.target.value)}
+                />
+              </div>
+
+              <div className="slip__actions">
+                <button
+                  className="macpill macpill--green"
+                  type="submit"
+                  aria-busy={status === 'sending' ? 'true' : undefined}
+                >
                   <span className="macpill__dot" data-glyph="+" aria-hidden="true" />
                   {confirmed ? contact.ctaDone : contact.ctaLabel}
                 </button>
+
+                {confirmed ? (
+                  <>
+                    <a className="macpill macpill--green" href={mailto} ref={mailRef}>
+                      <span className="macpill__dot" data-glyph="+" aria-hidden="true" />
+                      {contact.mailLabel}
+                    </a>
+                    <button className="macpill" type="button" onClick={copyDraft}>
+                      <span className="macpill__dot" data-glyph="−" aria-hidden="true" />
+                      {contact.copyLabel}
+                    </button>
+                  </>
+                ) : null}
               </div>
+
+              {status ? (
+                <p className={`slip__status is-${status}`} role="status" aria-live="polite">
+                  {contact.delivery[status]}
+                </p>
+              ) : null}
+
+              <p className="slip__hint" id="slip-hint">
+                {contact.hint}
+              </p>
+              <p className="slip__result" role="status" aria-live="polite">
+                {copied}
+              </p>
             </form>
           </div>
 
@@ -106,14 +309,16 @@ export default function Contact() {
               {contact.fields.map((f) => (
                 <div className="slip__row" key={f.key}>
                   <dt>{f.label}</dt>
-                  <dd className="slip__fig">{values[f.key].trim() || '···'}</dd>
+                  <dd className="slip__fig">{trim(values[f.key]) || '···'}</dd>
                 </div>
               ))}
             </dl>
 
             <div className="slip__total">
               <span>status</span>
-              <b className="slip__fig">email draft</b>
+              <b className="slip__fig">
+                {delivered ? contact.delivery.delivered : contact.delivery.draft}
+              </b>
             </div>
 
             <div className="slip__bars" aria-hidden="true">
@@ -127,12 +332,6 @@ export default function Contact() {
               <div className="slip__confirm" role="status">
                 <b>{contact.confirmed[0]}</b>
                 <span>{contact.confirmed[1]}</span>
-                <p style={{ marginTop: '14px' }}>
-                  <a className="macpill macpill--green" href={mailto} ref={mailRef}>
-                    <span className="macpill__dot" data-glyph="+" aria-hidden="true" />
-                    {contact.mailLabel}
-                  </a>
-                </p>
               </div>
             ) : (
               <p className="slip__idleshow">

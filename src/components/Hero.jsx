@@ -95,6 +95,8 @@ export default function Hero() {
               <img
                 src="assets/HD-Joker-Wallpapers-scaled.jpg"
                 alt="Low-poly Joker bust, the site's muse"
+                width="2560"
+                height="1440"
                 loading="eager"
                 decoding="async"
               />
@@ -106,14 +108,28 @@ export default function Hero() {
         {/* the strip follows the theme: skyline by day, interchange by night */}
         <figure className="hero__strip" data-reveal>
           <picture>
+            {/* phones get a taller, art-directed crop instead of a letterbox
+                slice of the desktop band */}
+            <source
+              media="(max-width: 700px)"
+              srcSet={night ? 'assets/window-nairobi-mobile.webp' : 'assets/hero-skyline-day-mobile.webp'}
+              type="image/webp"
+            />
             <source
               srcSet={night ? 'assets/window-nairobi.webp' : 'assets/hero-skyline-day.webp'}
               type="image/webp"
             />
+            <source
+              media="(max-width: 700px)"
+              srcSet={night ? 'assets/window-nairobi-mobile.jpg' : 'assets/hero-skyline-day-mobile.jpg'}
+              type="image/jpeg"
+            />
             <img
               src={night ? 'assets/window-nairobi.jpg' : 'assets/hero-skyline-day.jpg'}
               alt={night ? 'Nairobi’s interchange at night, light trails looping through the dark' : 'The Nairobi skyline on a clear day'}
-              loading="lazy"
+              width={night ? 1376 : 928}
+              height="360"
+              loading="eager"
               decoding="async"
             />
           </picture>

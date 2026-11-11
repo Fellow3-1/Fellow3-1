@@ -6,6 +6,9 @@
   "description": "Felix Odhiambo — software engineer in Nairobi building websites, mobile apps and AI features.",
   "scripts": {
     "dev": "vite",
+    "feeds": "node scripts/build-feeds.mjs",
+    "og": "node scripts/build-og.mjs",
+    "prebuild": "npm run feeds",
     "build": "vite build && node scripts/build-posts.mjs",
     "build:pages": "npm run build && rm -rf docs && cp -a dist/. docs",
     "preview": "vite preview",

@@ -2,6 +2,31 @@
    Self-contained: the same tokens and gradient as the main sheet, nothing
    more than a note needs. */
 
+/* Inter, self-hosted latin subset (shared with the main sheet) */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fonts/inter-latin-300-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/inter-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/inter-latin-500-normal.woff2') format('woff2');
+}
+
 *,
 *::before,
 *::after {
@@ -18,6 +43,7 @@
   --accent: #ff488b;
   --go: #0e7a48;
   --iris: #8650a0;
+  --focus: #7b3f97;
   --grad: linear-gradient(180deg, var(--accent) 0%, var(--iris) 50%, var(--go) 100%);
   --grad-x: linear-gradient(90deg, var(--accent) 0%, var(--iris) 50%, var(--go) 100%);
   --fs-1: 14px;
@@ -42,6 +68,7 @@ html[data-theme='dark'] {
   --accent: #ff5796;
   --go: #3bdb84;
   --iris: #9b68c9;
+  --focus: #ff9cc2;
 }
 
 html {
@@ -182,7 +209,7 @@ a {
 
 .nav__theme:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -297,4 +324,27 @@ a:focus-visible {
   .nav__theme {
     display: none;
   }
+}
+
+/* the case study: a lead paragraph, then headed sections */
+.note__lead {
+  margin-top: 22px;
+  max-width: 64ch;
+  color: var(--mut);
+}
+
+.note__section {
+  margin-top: clamp(30px, 5vh, 46px);
+}
+
+.note__section h2 {
+  font-size: var(--fs-3);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.note__section .note__body {
+  margin-top: 16px;
 }

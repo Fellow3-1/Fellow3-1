@@ -1,4 +1,4 @@
-import { log } from '../data/content.js'
+import { log, caseStudy } from '../data/content.js'
 import Arrow from './Arrow.jsx'
 
 function FlowArrow() {
@@ -61,7 +61,14 @@ function Entry({ e }) {
           </div>
           <picture>
             <source srcSet={e.img.src.replace(/\.jpg$/, '.webp')} type="image/webp" />
-            <img src={e.img.src} alt={e.img.alt} loading="lazy" decoding="async" />
+            <img
+              src={e.img.src}
+              alt={e.img.alt}
+              width={e.img.w}
+              height={e.img.h}
+              loading="lazy"
+              decoding="async"
+            />
           </picture>
           <figcaption>{e.img.note}</figcaption>
         </figure>
@@ -98,7 +105,7 @@ function Entry({ e }) {
 
 export default function Log() {
   return (
-    <section className="section" id="work">
+    <section className="section" id="work" tabIndex={-1}>
       <div className="wrap">
         <p className="logmark" data-reveal>
           <b>[log]</b> 02 · selected work
@@ -114,6 +121,16 @@ export default function Log() {
             <Entry e={e} key={e.label} />
           ))}
         </div>
+        <aside className="casecard" data-reveal>
+          <p className="casecard__kicker">{caseStudy.kicker}</p>
+          <h3 className="casecard__title">{caseStudy.title}</h3>
+          <p className="casecard__body">{caseStudy.summary}</p>
+          <a className="alink" href={`case-study/${caseStudy.slug}/`}>
+            read the case study
+            <Arrow />
+          </a>
+        </aside>
+
         <p className="log__foot" data-reveal>
           {log.footnote}
         </p>

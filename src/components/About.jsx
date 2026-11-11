@@ -28,7 +28,14 @@ export default function About() {
               </div>
               <picture>
                 <source srcSet="assets/intro-desk.webp" type="image/webp" />
-                <img src="assets/intro-desk.jpg" alt="A desk with a laptop, phones and notebooks" loading="lazy" decoding="async" />
+                <img
+                  src="assets/intro-desk.jpg"
+                  alt="A desk with a laptop, phones and notebooks"
+                  width="1376"
+                  height="768"
+                  loading="lazy"
+                  decoding="async"
+                />
               </picture>
               <figcaption>an engineer's workspace</figcaption>
             </figure>

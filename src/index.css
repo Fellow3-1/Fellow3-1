@@ -4,6 +4,32 @@
    scrollbar, progress bar and the nav marker. Inter one family. */
 
 /* 1 · load + reset */
+/* Inter, self-hosted: latin subset, three weights, SIL OFL 1.1
+   (see assets/fonts/OFL.txt). No third-party font host on the critical path. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/assets/fonts/inter-latin-300-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/inter-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/assets/fonts/inter-latin-500-normal.woff2') format('woff2');
+}
+
 @font-face {
   font-family: 'Inter Fallback';
   src: local('Arial');
@@ -49,6 +75,8 @@ img {
   --mut: #5f6068;
   --accent: #ff488b;
   --go: #0e7a48;
+  /* focus ring: clears 3:1 against the paper, where accent pink does not */
+  --focus: #7b3f97;
   /* the site gradient: accent pink, bridged through violet, into the
      "go" green — the same pairing the favicon and the artwork use */
   --iris: #8650a0;
@@ -125,7 +153,7 @@ html {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -372,6 +400,7 @@ html.js [data-reveal].is-in {
   font-size: var(--fs-1);
   color: var(--mut);
   font-feature-settings: 'tnum';
+  white-space: nowrap;
 }
 
 .nav__progress {
@@ -602,7 +631,7 @@ html.js .hero__name.is-in .ltr {
   width: 100%;
   height: clamp(180px, 26vh, 260px);
   object-fit: cover;
-  object-position: 50% 38%;
+  object-position: 50% 50%;
   border-radius: var(--radius);
 }
 
@@ -610,6 +639,21 @@ html.js .hero__name.is-in .ltr {
   margin-top: 10px;
   font-size: var(--fs-1);
   color: var(--mut);
+}
+
+/* phones: the strip keeps the photo's own 3:2 shape (art-directed source
+   above) instead of cropping a wide band down to a letterbox */
+@media (max-width: 700px) {
+  .hero__strip img {
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-position: 50% 50%;
+  }
+
+  /* the clock is the first thing to go when the bar runs out of room */
+  .nav__status-clock {
+    display: none;
+  }
 }
 
 /* 6 · the log entries */
@@ -955,6 +999,54 @@ html.js .entry.is-in .entry__decisions p {
   color: var(--mut);
 }
 
+/* the one piece of work that can be shown end to end: this site */
+.casecard {
+  margin-top: clamp(26px, 4vh, 44px);
+  padding: clamp(24px, 3.4vw, 40px);
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.casecard__kicker {
+  font-size: var(--fs-1);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.casecard__title {
+  font-size: var(--fs-3);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+.casecard__body {
+  max-width: 62ch;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: inherit;
+  opacity: 0.78;
+}
+
+.casecard .alink {
+  margin-top: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration-color: currentColor;
+}
+
+[data-theme='dark'] .casecard {
+  color: var(--paper);
+}
+
 .log__foot {
   margin-top: 26px;
   font-size: var(--fs-1);
@@ -1223,6 +1315,22 @@ html.js .entry.is-in .entry__decisions p {
 
 .cta__direct {
   margin-top: 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--mut);
+}
+
+.cta__direct a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.28em;
+  text-decoration-color: var(--mut);
+  transition: text-decoration-color 180ms ease;
+}
+
+.cta__direct a:hover {
+  text-decoration-color: currentColor;
 }
 
 .slip__form {
@@ -1253,8 +1361,85 @@ html.js .entry.is-in .entry__decisions p {
 }
 
 .field input:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--focus);
   outline-offset: 0;
+}
+
+/* a field that failed the submit check: tinted, outlined and explained */
+.field--bad input,
+.field--bad input:hover {
+  background: #fdeef3;
+  box-shadow: inset 0 0 0 1.5px #c0164c;
+}
+
+[data-theme='dark'] .field--bad input,
+[data-theme='dark'] .field--bad input:hover {
+  background: #241018;
+  box-shadow: inset 0 0 0 1.5px #ff5796;
+}
+
+.field__err {
+  margin-top: 7px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: #a81146;
+}
+
+[data-theme='dark'] .field__err {
+  color: #ffa2c4;
+}
+
+.slip__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.slip__hint {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--mut);
+  max-width: 48ch;
+}
+
+.slip__result {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--go);
+}
+
+.slip__status {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--mut);
+}
+
+.slip__status.is-sent {
+  color: var(--go);
+}
+
+.slip__status.is-failed,
+.slip__status.is-offline {
+  color: #a81146;
+}
+
+[data-theme='dark'] .slip__status.is-failed,
+[data-theme='dark'] .slip__status.is-offline {
+  color: #ffa2c4;
+}
+
+/* the honeypot: present in the DOM, invisible to people and to tab order */
+.field--trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.slip__result:empty {
+  display: none;
 }
 
 .slip__card {
@@ -1355,10 +1540,11 @@ html.js .entry.is-in .entry__decisions p {
   cursor: not-allowed;
 }
 
-/* aqua focus glow, macOS style, on controls that take keys */
+/* one focus treatment across buttons, pills and fields: a solid ring that
+   clears contrast on paper and on the dark sheet (the old aqua glow did not) */
 .macpill:focus-visible,
 .field input:focus-visible {
-  outline: 3px solid rgba(0, 102, 204, 0.35);
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 
@@ -1469,16 +1655,13 @@ html.js .entry.is-in .entry__decisions p {
 }
 
 .slip__fig {
-  filter: blur(5px);
-  opacity: 0.55;
+  /* the visitor's own words stay legible: a draft is for proofreading */
+  opacity: 0.7;
 }
 
 .is-confirmed .slip__fig {
-  filter: blur(0);
   opacity: 1;
-  transition:
-    filter 620ms ease,
-    opacity 620ms ease;
+  transition: opacity 420ms ease;
 }
 
 .slip__total {
@@ -1658,9 +1841,13 @@ html.js .entry.is-in .entry__decisions p {
     flex: 1 1 100%;
     gap: 18px;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
     padding-bottom: 2px;
     white-space: nowrap;
     scrollbar-width: none;
+    /* the right edge fades, so it reads as scrollable rather than cut off */
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), transparent 100%);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), transparent 100%);
   }
 
   .nav__links::-webkit-scrollbar {
@@ -1726,6 +1913,11 @@ html.js .entry.is-in .entry__decisions p {
   .slip__fig {
     filter: none;
     opacity: 1;
+  }
+
+  /* anchor jumps stay instant when motion is off */
+  html {
+    scroll-behavior: auto;
   }
 }
 
@@ -1875,19 +2067,15 @@ main .section::before {
   text-wrap: pretty;
 }
 
-/* the open quote, dressed in the site gradient */
-.tcard > p::before {
-  content: '\201C';
+/* these are statements, not quotations: a number instead of a quote mark */
+.tcard__num {
   display: block;
-  height: 0.45em;
-  font-size: 64px;
-  line-height: 0.8;
-  font-weight: 500;
-  color: var(--iris);
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+  font-size: var(--fs-1);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  font-feature-settings: 'tnum';
 }
 
 .tcard footer {
@@ -1966,7 +2154,7 @@ main .section::before {
 }
 
 .nav__theme:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -2008,6 +2196,7 @@ html[data-theme='dark'] {
   --accent: #ff5796;
   --go: #3bdb84;
   --iris: #9b68c9;
+  --focus: #ff9cc2;
 }
 
 [data-theme='dark'] .entry__num-cell {

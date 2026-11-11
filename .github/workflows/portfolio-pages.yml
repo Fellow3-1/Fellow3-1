@@ -32,7 +32,14 @@ jobs:
       - name: Run portfolio smoke tests
         run: npm test
       - name: Build site
-        run: npm run build
+        run: npm run build:pages
+      - name: Fail if the committed Pages build is stale
+        run: |
+          if ! git diff --quiet -- docs; then
+            echo "::error::docs/ is out of date. Run 'npm run build:pages' and commit the result."
+            git --no-pager diff --stat -- docs
+            exit 1
+          fi
 
   deploy:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'

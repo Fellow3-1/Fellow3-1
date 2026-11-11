@@ -4,28 +4,29 @@
     <title>Felloh 3.1 · writing</title>
     <link>https://fellow3-1.github.io/Fellow3-1/#writing</link>
     <atom:link href="https://fellow3-1.github.io/Fellow3-1/feed.xml" rel="self" type="application/rss+xml" />
-    <description>Short technical notes from a full-stack engineer in Nairobi. Long on pitfalls, short on ceremony.</description>
-    <language>en</language>
+    <description>Short technical notes from a software and IT systems engineer in Nairobi. Long on pitfalls, short on ceremony.</description>
+    <language>en-KE</language>
+    <lastBuildDate>Wed, 11 Nov 2026 09:00:00 +0300</lastBuildDate>
     <item>
-      <title>Integrating M-PESA STK Push without losing your weekend</title>
-      <link>https://fellow3-1.github.io/Fellow3-1/#writing</link>
-      <guid>https://fellow3-1.github.io/Fellow3-1/#post-stk-push</guid>
-      <pubDate>Mon, 02 Jun 2025 09:00:00 +0300</pubDate>
-      <description>Idempotent callbacks, raw payload storage, and why a timeout means unknown, not failed.</description>
+      <title>Designing safer M-PESA callback handling</title>
+      <link>https://fellow3-1.github.io/Fellow3-1/writing/safer-mpesa-callbacks/</link>
+      <guid>https://fellow3-1.github.io/Fellow3-1/writing/safer-mpesa-callbacks/</guid>
+      <pubDate>Mon, 03 Nov 2025 09:00:00 +0300</pubDate>
+      <description>Idempotent payment callbacks, raw event storage for audit, and why a timeout means unknown, not failed.</description>
     </item>
     <item>
-      <title>SMS OTP retrieval on Android, minus the creepy permission</title>
-      <link>https://fellow3-1.github.io/Fellow3-1/#writing</link>
-      <guid>https://fellow3-1.github.io/Fellow3-1/#post-sms-otp</guid>
-      <pubDate>Mon, 14 Jul 2025 09:00:00 +0300</pubDate>
-      <description>SMS Retriever and User Consent: zero permission prompts, with the debug-signing gotcha handled.</description>
+      <title>A practical network troubleshooting sequence</title>
+      <link>https://fellow3-1.github.io/Fellow3-1/writing/network-troubleshooting-sequence/</link>
+      <guid>https://fellow3-1.github.io/Fellow3-1/writing/network-troubleshooting-sequence/</guid>
+      <pubDate>Mon, 03 Nov 2025 09:00:00 +0300</pubDate>
+      <description>Scope first, then link state, addressing, gateway, DNS and routing — one variable at a time.</description>
     </item>
     <item>
-      <title>CSV exports that don't time out</title>
-      <link>https://fellow3-1.github.io/Fellow3-1/#writing</link>
-      <guid>https://fellow3-1.github.io/Fellow3-1/#post-csv-exports</guid>
-      <pubDate>Mon, 04 Nov 2024 09:00:00 +0300</pubDate>
-      <description>Server-side streaming exports, async generation past 100k rows, and where the real deadline lives.</description>
+      <title>Linux service diagnostics</title>
+      <link>https://fellow3-1.github.io/Fellow3-1/writing/linux-service-diagnostics/</link>
+      <guid>https://fellow3-1.github.io/Fellow3-1/writing/linux-service-diagnostics/</guid>
+      <pubDate>Mon, 03 Nov 2025 09:00:00 +0300</pubDate>
+      <description>systemctl, journalctl, ss and resource pressure — evidence before the restart button.</description>
     </item>
   </channel>
 </rss>

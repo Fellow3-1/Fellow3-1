@@ -24,9 +24,15 @@
 - Networking: LAN/WAN, TCP/IP, DNS, DHCP, VPN, firewall concepts and connectivity troubleshooting
 - Cloud and delivery: AWS, Docker, Git, CI/CD and Linux web-server environments
 
+## Case study
+
+- A portfolio that refuses to invent numbers: https://fellow3-1.github.io/Fellow3-1/case-study/a-portfolio-that-refuses-to-invent-numbers/ (how this site is constrained, built, and checked)
+
 ## Privacy policy
 
 No employer names, employment dates, client identities, private infrastructure diagrams, internal records or unsupported client metrics are published. The infrastructure section is a capability overview and does not imply production use of every named vendor or platform. Detailed employment information can be shared privately during recruitment.
+
+Contact: the site's form writes to a database only the owner can read — the browser holds an insert-only key and cannot read, update or delete anything. Messages are used only to reply and deleted when the conversation ends; no analytics, cookies or third-party scripts receive them.
 
 ## Writing
 
@@ -39,6 +45,7 @@ No employer names, employment dates, client identities, private infrastructure d
 
 - Projects: https://fellow3-1.github.io/Fellow3-1/#work
 - Infrastructure: https://fellow3-1.github.io/Fellow3-1/#infrastructure
-- Testimonials: https://fellow3-1.github.io/Fellow3-1/#testimonials
+- Working together (commitments, references on request): https://fellow3-1.github.io/Fellow3-1/#testimonials
+- Interview and questions: https://fellow3-1.github.io/Fellow3-1/#faq
 - Skills and profile: https://fellow3-1.github.io/Fellow3-1/#about
 - Contact: https://fellow3-1.github.io/Fellow3-1/#contact
