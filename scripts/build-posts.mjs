@@ -122,7 +122,12 @@ ${themeToggle}
 </html>
 `
 
-const paragraphs = (list) => list.map((p) => `<p>${esc(p)}</p>`).join('\n            ')
+/* `**text**` becomes a strong lead-in after the string has been escaped, so
+   the only markup the content module can produce is emphasis. Everything
+   else stays literal text. */
+const inline = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+
+const paragraphs = (list) => list.map((p) => `<p>${inline(p)}</p>`).join('\n            ')
 
 /* --- writing notes ------------------------------------------------------- */
 for (const post of writing.posts) {
@@ -205,6 +210,7 @@ if (caseStudy) {
         description: caseStudy.summary,
         inLanguage: 'en',
         datePublished: caseStudy.date,
+        dateModified: caseStudy.updated || caseStudy.date,
         author: {
           '@type': 'Person',
           name: brand.person,
@@ -235,7 +241,7 @@ if (caseStudy) {
     kicker: caseStudy.kicker,
     heading: caseStudy.title,
     meta: `${esc(brand.person)} · ${esc(brand.city)} · ${esc(caseStudy.dateLabel)} · ${esc(caseStudy.minutes)}`,
-    lead: caseStudy.summary,
+    lead: caseStudy.lead || caseStudy.summary,
     body: sections,
   })
 

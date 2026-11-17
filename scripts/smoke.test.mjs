@@ -4,6 +4,7 @@ import { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { build } from 'esbuild'
 import { mkdirSync, readFileSync, existsSync } from 'node:fs'
+import { caseStudy } from '../src/data/content.js'
 
 mkdirSync('node_modules/.smoke', { recursive: true })
 await build({
@@ -253,6 +254,16 @@ failedHost.remove()
 check('working together: three first-person commitments render', $$('#testimonials .tcard').length === 3)
 check('working together: no quote marks or "colleague" attributions remain', !/colleague|stakeholder|teammate/i.test(text($('#testimonials'))))
 check('case study: the work section links to its own page', /case-study\/a-portfolio-that-refuses-to-invent-numbers\//.test($('.casecard a')?.getAttribute('href') || ''))
+check(
+  'case study: the lead paragraph and six headed sections are present',
+  caseStudy.sections.length === 6
+    && /a stranger cannot check for themselves/.test(caseStudy.lead)
+    && caseStudy.title === 'A Portfolio That Refuses to Invent Numbers'
+)
+check(
+  'case study: the prose carries no em, en or spaced hyphens used as dashes',
+  !/[\u2014\u2013]|\s-\s/.test(JSON.stringify(caseStudy))
+)
 
 const feedXml = readFileSync('public/feed.xml', 'utf8')
 const sitemapXml = readFileSync('public/sitemap.xml', 'utf8')

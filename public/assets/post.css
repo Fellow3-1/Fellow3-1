@@ -270,6 +270,13 @@ a:focus-visible {
   max-width: 68ch;
 }
 
+/* the bold lead-ins in "What went wrong"; Inter 500 is the heaviest face the
+   page loads, so strong stays at 500 instead of a synthesised 700 */
+.note__body strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
 .note__back {
   margin-top: 44px;
   display: inline-flex;
