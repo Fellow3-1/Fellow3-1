@@ -248,62 +248,66 @@ export const footer = {
 }
 
 /* The one piece of work that can be described in full, because it is this
-   site: constraints, rejected options, system, failures, what is checked. */
+   site: the rule, what was cut for it, the system, the failures, what the
+   smoke tests check and what is still unfinished. `lead` is the opening
+   paragraph that appears above the first heading; `**bold**` in a body
+   string renders as a strong lead-in on the generated page. */
 export const caseStudy = {
   slug: 'a-portfolio-that-refuses-to-invent-numbers',
   kicker: 'case study · this site',
-  title: 'A portfolio that refuses to invent numbers',
+  title: 'A Portfolio That Refuses to Invent Numbers',
   summary:
-    'Most developer portfolios are built to show outcomes. This one is built around a harder constraint — publish the code and the method, publish nothing about employers, clients or results that cannot be verified — and the engineering that constraint forced.',
+    'A portfolio built on a harder rule: publish the code and the method, publish nothing about employers, clients or outcomes a stranger cannot check.',
+  lead: 'Most developer portfolios are built to show off results. Mine is built around a rule that made the work harder: I publish the code and the method, and I publish nothing about employers, clients or outcomes that a stranger cannot check for themselves. This is the story of what that rule cost me and what it taught me.',
   date: '2026-11-11',
   dateLabel: '11 November 2026',
+  updated: '2026-11-17',
   minutes: '7 min read',
   sections: [
     {
-      heading: 'The constraint',
+      heading: 'The rule I set',
       body: [
-        'The obvious version of a portfolio is a list of jobs with a timeline, some client logos, and three metrics per project. I am not willing to publish employer names, employment dates, client identities or internal project records. That is not modesty; those things belong to other people.',
-        'So the site had to make an argument without them. Everything on it is either public code the reader can open, a capability stated as a capability, or a decision explained in the first person. Anything that would have needed a private document to verify was cut.',
+        'The usual portfolio is easy to picture. A timeline of jobs, a row of client logos, three impressive metrics under every project. I wasn’t willing to build that. Employer names, dates, client identities and internal records belong to other people, and it isn’t my place to hand them out to every visitor who lands on the page.',
+        'That left me with a real design problem. The site still had to make a case for me, just without the usual props. So every claim on it had to be one of three things: public code anyone can open, a skill stated plainly as a skill, or a decision explained in my own voice. If proving something would have needed a private document, I cut it.',
       ],
     },
     {
-      heading: 'What I rejected',
+      heading: 'What I threw out',
       body: [
-        'A timeline with logos and dates, because a portfolio that leaks an employment history to every visitor is not a portfolio I want to host. A downloadable CV, for the same reason — the details are offered in conversation instead.',
-        'Anonymous testimonials presented as quotations. The first draft of this section did exactly that, with lines attributed to "a systems support colleague". Nobody had said them. They read as endorsements and could not be checked, which is the failure mode the rest of the site exists to avoid. They are now first-person commitments, with references offered on request.',
-        'Invented impact numbers. There is no "40 % faster checkout" here because there is no public artifact that proves one. What replaces it is a stack, a stated status, and the reasoning behind the visible decisions.',
+        'I dropped the timeline with logos and dates. A portfolio that leaks my work history to everyone who visits is not one I want to host. I dropped the downloadable CV for the same reason, and I share those details in conversation instead.',
+        'I also deleted my own testimonials. My first draft had a section with quotes attributed to “a systems support colleague.” Nobody had actually said those words. They looked like endorsements, nobody could verify them, and they were exactly the kind of thing the whole site exists to avoid. They are now commitments I make in the first person, with references available if you ask.',
+        'And there are no invented impact numbers. You will not find “40% faster checkout” here, because I have no public proof of it. In its place you get the stack, an honest status, and the reasoning behind the choices you can see.',
       ],
     },
     {
-      heading: 'The system',
+      heading: 'How it is built',
       body: [
-        'One React page, hand-written CSS, no utility framework — the design is a paper log with terminal chrome, and it is cheaper to write that directly than to fight a framework into it. All copy lives in a single content module, so privacy rules can be checked in one file instead of hunted across components.',
-        'Each note is also generated as a standalone static page by a small Node script at build time, with its own canonical URL, Open Graph tags and JSON-LD. Search engines and answer engines get real documents; the reader gets a page with no bundle.',
-        'Structured data covers the person, the profile page, the notes, the FAQ, the case study and the three public repositories. There is an llms.txt, a sitemap, an RSS feed and a robots file that explicitly welcomes crawlers.',
-        'The contact form writes to a table the browser can only insert into: row-level security gives the public key no read, update or delete rights, so the same key that ships in the bundle cannot enumerate what visitors sent. The email draft stays as a fallback for the day the database is not reachable.',
+        'It is a single React page with hand-written CSS and no utility framework. The look is a paper log with a little terminal flavour, and writing that by hand was cheaper than bending a framework into shape. All the copy lives in one content file, so when I want to check that I haven’t leaked anything, I only have to read one place.',
+        'Each note also gets built into its own static page by a small Node script, with its own canonical URL, Open Graph tags and JSON-LD. Search engines get real documents and readers get a fast page with no bundle to wait for. The site also ships an llms.txt, a sitemap, an RSS feed and a robots file that openly welcomes crawlers.',
+        'The contact form writes to a table the browser can only add rows to. Row-level security gives the public key no permission to read, change or delete anything, so even though that key ships in the bundle, nobody can use it to see what visitors have sent me. If the database is ever unreachable, the form falls back to opening an email draft.',
       ],
     },
     {
-      heading: 'What broke',
+      heading: 'What went wrong',
       body: [
-        'Two deploy paths. GitHub Pages was serving a build committed into docs/ while a workflow uploaded a different build as an artifact. They diverged, and the live site spent weeks showing a seven-section version of a nine-section page. The fix was not code: pick one deploy path, and let a script, not a human, refresh the output.',
-        'The hero shipped 223 KB of pixels that no viewport displayed — a portrait photograph cropped to a 260-pixel band by CSS object-fit, with the rest downloaded for nothing. It is now cropped at build time to the band that is actually rendered, and phones get a separate 3:2 crop instead of a letterboxed slice.',
-        'The page started at opacity zero and waited for the bundle to reveal it. Correct for a fade-in, catastrophic if the bundle 404s: a blank sheet of paper. There is now a 2.5-second watchdog that reveals the content regardless.',
+        '**Two deploy paths.** GitHub Pages was serving a build I had committed into the docs folder, while a workflow uploaded a different build as an artifact. The two drifted apart, and for weeks the live site showed a seven section version of a nine section page. The fix had nothing to do with code. I picked one path and let a script, not a person, refresh the output.',
+        '**A hero image nobody could see.** My portrait was sending 223 KB of pixels that no screen ever displayed, because CSS cropped it to a thin band after the full image had already downloaded. Now it is cropped at build time to the part that actually shows, and phones get their own 3:2 crop instead of a squashed slice.',
+        '**A blank page waiting to happen.** The page started fully transparent and waited for the JavaScript bundle to fade it in. That is fine until the bundle fails to load, and then visitors get an empty white sheet. I added a watchdog that reveals the content after two and a half seconds no matter what.',
       ],
     },
     {
-      heading: 'What is checked, and how',
+      heading: 'How I know the promises hold',
       body: [
-        'A smoke test builds the real app with esbuild, renders it in jsdom and asserts the things that matter: the privacy rules (no employment timeline, no education or certification claims, no CV download), the structure (three repositories, four infrastructure groups, five FAQ answers), the schema, the feed and sitemap, and the contact form — the exact request it makes, the key travelling on the header that key belongs on, the failure path falling back to the draft, and a submit button that can never be silently disabled.',
-        'The suite is deliberately blunt. It does not check pixels; it checks that a promise the page makes in prose still has something behind it. There are 70 of those checks, and they run on every push before the deploy job is allowed to start.',
+        'I wrote a smoke test that builds the real app, renders it in jsdom and checks the things that matter. It confirms the privacy rules still hold, with no employment timeline, no education or certification claims and no CV download. It checks the structure, the schema, the feed and the sitemap. And it checks the contact form closely: the exact request it sends, the key going in the right header, the fallback working when sending fails, and a submit button that can never get stuck disabled.',
+        'The tests are blunt on purpose. They don’t compare pixels. They check that every promise the page makes in words still has something real behind it. There are 77 of them, and they all have to pass before a deploy is allowed to begin.',
       ],
     },
     {
-      heading: 'What is still open',
+      heading: 'What is still unfinished',
       body: [
-        'The deploy path is guarded, not fixed. GitHub Pages still serves the committed docs/ build; the workflow now rebuilds it and fails when the committed copy is stale, but deleting docs/ entirely needs a one-off change in the repository settings that the automation cannot make.',
-        'Messages land in the database and wait to be read. An email notification means a mail-provider key and a trigger, which is a decision about credentials rather than code.',
-        'And the commitments section is the honest placeholder. It stays first-person until two people agree to be quoted — at which point the layout needs no change at all.',
+        'The deploy path is guarded but not fully fixed. GitHub Pages still serves the committed docs folder. The workflow now rebuilds it and fails if the committed copy is out of date, but removing the folder entirely needs a one time change in the repository settings that automation cannot do for me.',
+        'Messages from the contact form sit in the database until I read them. Email alerts would need a mail provider key and a trigger, and that is a decision about credentials, not a coding problem.',
+        'Finally, the commitments section is an honest placeholder. It stays in my own voice until two people agree to be quoted, and when they do, the layout will not need to change at all.',
       ],
     },
   ],

@@ -85,7 +85,7 @@ ${
   caseStudy
     ? `  <url>
     <loc>${SITE}/case-study/${caseStudy.slug}/</loc>
-    <lastmod>${caseStudy.date}</lastmod>
+    <lastmod>${caseStudy.updated || caseStudy.date}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>`

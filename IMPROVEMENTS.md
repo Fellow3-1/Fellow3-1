@@ -7,7 +7,7 @@ were not taste — they were **what actually shipped**, **what happened after so
 contact you**, and **how much the first screen cost to download**. Everything below is
 either fixed in this branch or documented with the reason it could not be.
 
-Run `npm test` (75 checks) and `npm run build:pages`, then `npm run preview`.
+Run `npm test` (77 checks) and `npm run build:pages`, then `npm run preview`.
 
 ---
 
@@ -63,10 +63,11 @@ request — honest, and the same length on the page.
 
 ### 1.4 One piece of work at depth
 
-New case study: **“A portfolio that refuses to invent numbers”** — constraint, rejected
-options, the system, what broke (including this site's own deploy drift and the 223 KB
-hero), what is checked, what I would do differently. It is about work that can be described
-in full without touching anyone else's data.
+New case study: **“A Portfolio That Refuses to Invent Numbers”** — the rule, what was cut
+for it, how the site is built, what broke (including this site's own deploy drift and the
+223 KB hero), how the promises are checked, and what is still unfinished. It is about work
+that can be described in full without touching anyone else's data. The prose is
+first-person and deliberately dash-free; both are now enforced by the smoke test.
 
 - page: `/case-study/a-portfolio-that-refuses-to-invent-numbers/`
 - linked from the work section as a dark field-note card
