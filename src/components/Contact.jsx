@@ -107,6 +107,7 @@ export default function Contact({ initialValues, deliverMessage = deliver }) {
   }
 
   const buildReceipt = async () => {
+    if (status === 'sending') return
     const found = validateDraft(values)
     const firstBad = contact.fields.find((f) => found[f.key])
 
@@ -326,7 +327,9 @@ export default function Contact({ initialValues, deliverMessage = deliver }) {
                 <span key={i} />
               ))}
             </div>
-            <p className="slip__num">LOCAL DRAFT</p>
+            <p className="slip__num">
+              {delivered ? 'INBOX · DELIVERED' : status === 'sending' ? 'SENDING…' : 'LOCAL DRAFT'}
+            </p>
 
             {confirmed ? (
               <div className="slip__confirm" role="status">

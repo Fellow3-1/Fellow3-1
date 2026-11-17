@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="en-KE" class="no-js">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -60,7 +60,7 @@
           "@type": "ProfilePage",
           "@id": "https://fellow3-1.github.io/Fellow3-1/#profilepage",
           "url": "https://fellow3-1.github.io/Fellow3-1/",
-          "name": "Felloh 3.1 · Felix Odhiambo, full-stack engineer in Nairobi",
+          "name": "Felloh 3.1 · Felix Odhiambo, Software & IT Systems Engineer",
           "inLanguage": "en",
           "mainEntity": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
         },
@@ -177,7 +177,35 @@
     }
     </script>
 
-    <link rel="preload" as="image" href="assets/hero-skyline-day.webp" type="image/webp" />
+    <!-- media-scoped preloads so phones and dark-mode visitors never download an unused hero crop -->
+    <link
+      rel="preload"
+      as="image"
+      href="assets/hero-skyline-day.webp"
+      type="image/webp"
+      media="(min-width: 701px) and (prefers-color-scheme: light)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="assets/hero-skyline-day-mobile.webp"
+      type="image/webp"
+      media="(max-width: 700px) and (prefers-color-scheme: light)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="assets/window-nairobi.webp"
+      type="image/webp"
+      media="(min-width: 701px) and (prefers-color-scheme: dark)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="assets/window-nairobi-mobile.webp"
+      type="image/webp"
+      media="(max-width: 700px) and (prefers-color-scheme: dark)"
+    />
     <!-- Inter is the only face on the page (300 display, 400 text, 500 emphasis).
          Self-hosted latin subset: one preload, no third-party round trip. -->
     <link
@@ -222,8 +250,8 @@
          goatcounter.com, then uncomment this line:
     <script data-goatcounter="https://felloh31.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
     -->
-    <script type="module" crossorigin src="./assets/index-BVK9lTcl.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CAPygn81.css">
+    <script type="module" crossorigin src="./assets/index-Cx19_h8E.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DZh-1pt7.css">
   </head>
   <body>
     <div id="root"></div>

@@ -1,4 +1,10 @@
 import { brand, footer } from '../data/content.js'
+import { openPalette } from './CommandPalette.jsx'
+
+const shortcutLabel =
+  typeof navigator !== 'undefined' && /Mac|iPhone|iPad|iPod/i.test(navigator.platform || navigator.userAgent || '')
+    ? '⌘K'
+    : 'Ctrl K'
 
 export default function Footer() {
   return (
@@ -39,11 +45,19 @@ export default function Footer() {
               <img src="assets/favicon-joker.png" alt="" width="20" height="20" />
               {footer.muse}
             </p>
+            <p className="foot__jump">
+              <button type="button" className="foot__cmdk" onClick={openPalette}>
+                <kbd>{shortcutLabel}</kbd>
+                <span>quick jump</span>
+              </button>
+            </p>
           </div>
         </div>
         <div className="foot__base">
           <p>{footer.line}</p>
-          <p>
+          <p className="foot__meta-links">
+            <a href="feed.xml">rss</a>
+            <span aria-hidden="true">·</span>
             <a href="sitemap.xml">sitemap</a>
           </p>
         </div>

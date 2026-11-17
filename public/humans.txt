@@ -1,11 +1,11 @@
 /* TEAM */
 Felloh 3.1: Felix Odhiambo
-Role: Full-stack engineer, sole occupant of this repository
+Role: Software & IT Systems Engineer, sole occupant of this repository
 Location: Nairobi, Kenya (EAT, UTC+3)
 Contact: via the channels on the site
 
 /* SITE */
-Last major update: 2026-10
-Standards: semantic HTML, Inter, no trackers, no analytics pixels
+Last major update: 2026-11
+Standards: semantic HTML, self-hosted Inter, no trackers, no analytics pixels
 Stack: React + Vite, built by hand
 Muse: a low-poly Joker keeps the favicon warm

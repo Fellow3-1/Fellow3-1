@@ -34,7 +34,7 @@ function Entry({ e }) {
             ))}
           </p>
 
-          <div className="entry__nums" aria-label="Impact numbers">
+          <div className="entry__nums" aria-label="Repository facts">
             {e.numbers.map(([v, k], i) => (
               <div className="entry__num-cell" key={k} style={{ '--n': i }}>
                 <b>{v}</b>
@@ -57,7 +57,7 @@ function Entry({ e }) {
             <span className="slip__light slip__light--red" />
             <span className="slip__light slip__light--amber" />
             <span className="slip__light slip__light--green" />
-            <span className="macwin__title">preview.app</span>
+            <span className="macwin__title">{e.chrome || 'preview.app'}</span>
           </div>
           <picture>
             <source srcSet={e.img.src.replace(/\.jpg$/, '.webp')} type="image/webp" />

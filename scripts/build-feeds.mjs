@@ -6,7 +6,7 @@ import { writing, caseStudy } from '../src/data/content.js'
    (`npm run build` does it for you). */
 
 const SITE = 'https://fellow3-1.github.io/Fellow3-1'
-const HOME_UPDATED = process.env.HOME_UPDATED || '2026-11-11'
+const HOME_UPDATED = process.env.HOME_UPDATED || '2026-11-17'
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
