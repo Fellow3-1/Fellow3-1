@@ -2042,6 +2042,10 @@ html.js .entry.is-in .entry__decisions p {
 .swarm__viewport {
   position: relative;
   height: clamp(188px, 26vh, 244px);
+  /* svh is the small-viewport height: unlike vh it does not change as the
+     mobile URL bar shows/hides during scroll, so the canvas is not resized
+     (and cleared) on every scroll frame. */
+  height: clamp(188px, 26svh, 244px);
   background:
     radial-gradient(60% 90% at 16% 62%, rgba(255, 72, 139, 0.055), transparent 70%),
     radial-gradient(55% 85% at 50% 38%, rgba(134, 80, 160, 0.05), transparent 72%),
