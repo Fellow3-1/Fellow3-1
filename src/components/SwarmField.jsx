@@ -194,6 +194,10 @@ export default function SwarmField({ sectionRef, groups, activeIndex, pinnedInde
       const nextW = Math.max(1, Math.round(rect.width))
       const nextH = Math.max(1, Math.round(rect.height))
       const nextDpr = Math.min(window.devicePixelRatio || 1, 2)
+      /* A resize tick with no real change must not touch the backing store:
+         assigning canvas.width clears the bitmap, which reads as the whole
+         field blinking out. Bail out when nothing actually moved. */
+      if (nextW === width && nextH === height && nextDpr === dpr && count > 0) return
       const prevW = width
       const prevH = height
 
@@ -219,7 +223,12 @@ export default function SwarmField({ sectionRef, groups, activeIndex, pinnedInde
         }
       }
 
+      /* Resetting the backing store clears the bitmap. When the loop is
+         asleep (section off-screen, tab hidden) nothing would repaint it
+         until the next scroll, leaving a blank field — so paint one frame
+         right away instead of waiting for the next tick. */
       if (isReduced()) drawStatic()
+      else step(1 / 60)
     }
 
     const measureScroll = () => {
@@ -802,7 +811,12 @@ export default function SwarmField({ sectionRef, groups, activeIndex, pinnedInde
                 type="button"
                 className={`swarm__chip swarm__chip--${idx}${isHighlighted ? ' is-active' : ''}`}
                 aria-pressed={isPinned}
-                onPointerEnter={() => onHover?.(idx)}
+                onPointerMove={(event) => {
+                  /* Hover focus follows real pointer movement only: pointerenter
+                     also fires when scrolling slides a chip under a stationary
+                     cursor, which made the field flicker while scrolling. */
+                  if (event.pointerType !== 'touch') onHover?.(idx)
+                }}
                 onClick={() => onSelect(isPinned ? -1 : idx)}
               >
                 <span className="swarm__chip-dot" aria-hidden="true" />

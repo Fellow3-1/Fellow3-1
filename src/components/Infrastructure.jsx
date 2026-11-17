@@ -37,7 +37,12 @@ export default function Infrastructure() {
                 key={group.title}
                 data-reveal
                 style={{ '--rd': `${index * 65}ms` }}
-                onPointerEnter={() => setHovered(index)}
+                onPointerMove={(event) => {
+                  /* Hover focus follows real pointer movement only: pointerenter
+                     also fires when scrolling slides a card under a stationary
+                     cursor, which dimmed and rerouted the grid while scrolling. */
+                  if (event.pointerType !== 'touch') setHovered(index)
+                }}
                 onClick={() => {
                   if (window.getSelection?.()?.toString()) return
                   setPinned((cur) => (cur === index ? -1 : index))
