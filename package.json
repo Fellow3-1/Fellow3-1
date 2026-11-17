@@ -3,7 +3,7 @@
   "private": true,
   "version": "3.1.0",
   "type": "module",
-  "description": "Felix Odhiambo — software engineer in Nairobi building websites, mobile apps and AI features.",
+  "description": "Felix Odhiambo (Felloh 3.1) — software engineering, systems administration, networking and infrastructure.",
   "scripts": {
     "dev": "vite",
     "feeds": "node scripts/build-feeds.mjs",

@@ -33,7 +33,7 @@ export const hero = {
   tagline: 'Software engineer working across web and mobile applications, payment integrations, systems administration and network infrastructure.',
   note: 'Based in Nairobi, Kenya · public work and technical capabilities, with private employment details omitted',
   now: {
-    /* one quiet line under the hero links: standing availability, no clock */
+    /* one quiet availability line under the hero note, no location prefix or clock */
     status: 'open to software engineering, systems, infrastructure and networking opportunities',
   },
   links: [
@@ -58,6 +58,7 @@ export const log = {
       decisions: ['The repository is public and can be reviewed directly.', 'Status and supported operations should be checked against the current README before adopting it.'],
       diagram: [['Go application', 'calling code'], ['Library wrapper', 'API client'], ['Daraja API', 'Safaricom endpoints'], ['M-PESA', 'payment flow']],
       link: { label: 'View repository', href: 'https://github.com/AndroidStudyOpenSource/mpesa-api-go' },
+      chrome: 'mpesa-api-go',
       img: { src: 'assets/work-mpesa.jpg', alt: 'Illustrative M-PESA integration visual', note: 'illustrative image · public source linked', w: 1376, h: 768 },
     },
     {
@@ -72,6 +73,7 @@ export const log = {
       decisions: ['The library focuses on connectivity status checks rather than presenting a full application.', 'The repository README is the source of truth for its current API and limitations.'],
       diagram: [['Android app', 'consumer'], ['Tovuti library', 'connectivity checks'], ['Android APIs', 'network state'], ['HTTP client', 'request decision']],
       link: { label: 'View repository', href: 'https://github.com/Fellow3-1/tovuti' },
+      chrome: 'tovuti',
       img: { src: 'assets/work-tovuti.jpg', alt: 'Illustrative Android development visual', note: 'illustrative image · public source linked', w: 928, h: 1152 },
     },
     {
@@ -86,6 +88,7 @@ export const log = {
       decisions: ['Permission requirements are stated explicitly so developers can assess the privacy and Play policy implications.', 'The repository should be reviewed before reuse, particularly for modern Android versions and current Google Play policy.'],
       diagram: [['Android app', 'verification flow'], ['SMS verifier', 'message handling'], ['SMS permissions', 'documented access'], ['Verification UI', 'code entry']],
       link: { label: 'View repository', href: 'https://github.com/Fellow3-1/android-sms-verifier' },
+      chrome: 'android-sms-verifier',
       img: { src: 'assets/work-sms.jpg', alt: 'Illustrative mobile verification interface', note: 'illustrative image · public source linked', w: 1408, h: 768 },
     },
   ],
@@ -96,10 +99,10 @@ export const infrastructure = {
   heading: 'Systems, networks and infrastructure_',
   intro: 'A capability overview rather than a client or employment history. It reflects the technical areas represented in my professional background and CV; it does not imply that every product listed has been used in a production environment.',
   groups: [
-    { title: 'Systems administration', items: ['Windows desktop and server environments', 'Linux and Ubuntu administration', 'Hardware, operating system and application troubleshooting', 'User support, endpoint configuration and maintenance', 'Backup practices and operational documentation'] },
-    { title: 'Networking', items: ['LAN/WAN and TCP/IP fundamentals', 'DNS, DHCP, VPN and firewall concepts', 'Router, switch and wireless network troubleshooting', 'Network availability, connectivity and performance diagnosis'] },
-    { title: 'Cloud and DevOps', items: ['AWS fundamentals and cloud-hosted workloads', 'Docker and containerised development', 'Git-based workflows and CI/CD pipelines', 'Linux web-server environments and deployment support'] },
-    { title: 'Automation and data', items: ['Python, Bash and scripting for operational tasks', 'SQL, relational databases and backup/restore concepts', 'REST API integration and service troubleshooting', 'Monitoring, incident documentation and root-cause analysis'] },
+    { code: 'sys', title: 'Systems administration', items: ['Windows desktop and server environments', 'Linux and Ubuntu administration', 'Hardware, operating system and application troubleshooting', 'User support, endpoint configuration and maintenance', 'Backup practices and operational documentation'] },
+    { code: 'net', title: 'Networking', items: ['LAN/WAN and TCP/IP fundamentals', 'DNS, DHCP, VPN and firewall concepts', 'Router, switch and wireless network troubleshooting', 'Network availability, connectivity and performance diagnosis'] },
+    { code: 'cloud', title: 'Cloud and DevOps', items: ['AWS fundamentals and cloud-hosted workloads', 'Docker and containerised development', 'Git-based workflows and CI/CD pipelines', 'Linux web-server environments and deployment support'] },
+    { code: 'data', title: 'Automation and data', items: ['Python, Bash and scripting for operational tasks', 'SQL, relational databases and backup/restore concepts', 'REST API integration and service troubleshooting', 'Monitoring, incident documentation and root-cause analysis'] },
   ],
   note: 'Specific vendor platforms, enterprise configurations and production environments can be discussed in a technical interview. No client topology, IP address, credential, diagram or internal record is published.',
 }
@@ -233,6 +236,8 @@ export const footer = {
     { label: 'Top', href: '#top' },
     { label: 'Projects', href: '#work' },
     { label: 'Infrastructure', href: '#infrastructure' },
+    { label: 'Approach', href: '#approach' },
+    { label: 'Writing', href: '#writing' },
     { label: 'Skills', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ],
@@ -290,7 +295,7 @@ export const caseStudy = {
       heading: 'What is checked, and how',
       body: [
         'A smoke test builds the real app with esbuild, renders it in jsdom and asserts the things that matter: the privacy rules (no employment timeline, no education or certification claims, no CV download), the structure (three repositories, four infrastructure groups, five FAQ answers), the schema, the feed and sitemap, and the contact form — the exact request it makes, the key travelling on the header that key belongs on, the failure path falling back to the draft, and a submit button that can never be silently disabled.',
-        'The suite is deliberately blunt. It does not check pixels; it checks that a promise the page makes in prose still has something behind it. There are 60 of those checks, and they run on every push before the deploy job is allowed to start.',
+        'The suite is deliberately blunt. It does not check pixels; it checks that a promise the page makes in prose still has something behind it. There are 70 of those checks, and they run on every push before the deploy job is allowed to start.',
       ],
     },
     {

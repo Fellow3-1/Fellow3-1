@@ -67,6 +67,8 @@ export default function Contributions() {
             <img
               src={src}
               alt={`GitHub contribution snake for ${brand.handle}: the grid, animated as a snake eating commits`}
+              width="880"
+              height="192"
               loading="lazy"
               decoding="async"
               onError={step}

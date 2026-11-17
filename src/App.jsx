@@ -11,12 +11,16 @@ import Testimonials from './components/Testimonials.jsx'
 import About from './components/About.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
+import CommandPalette from './components/CommandPalette.jsx'
 
 export function useReveals(deps = []) {
   useEffect(() => {
     const els = Array.from(document.querySelectorAll('[data-reveal]:not(.is-in)'))
     if (!els.length) return
-    if (typeof IntersectionObserver === 'undefined') {
+    if (
+      document.documentElement.classList.contains('reduce') ||
+      typeof IntersectionObserver === 'undefined'
+    ) {
       els.forEach((el) => el.classList.add('is-in'))
       return
     }
@@ -26,7 +30,7 @@ export function useReveals(deps = []) {
         entry.target.classList.add('is-in')
         io.unobserve(entry.target)
       })
-    }, { rootMargin: '-12% 0px -12% 0px', threshold: 0.01 })
+    }, { rootMargin: '-10% 0px -10% 0px', threshold: 0.01 })
     els.forEach((el) => io.observe(el))
     return () => io.disconnect()
   }, deps)
@@ -34,10 +38,15 @@ export function useReveals(deps = []) {
 
 export default function App() {
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    document.documentElement.classList.toggle('reduce', reduced)
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const sync = () => document.documentElement.classList.toggle('reduce', mq.matches)
+    sync()
+    mq.addEventListener?.('change', sync)
     const raf = requestAnimationFrame(() => document.body.classList.add('is-in'))
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      mq.removeEventListener?.('change', sync)
+      cancelAnimationFrame(raf)
+    }
   }, [])
 
   useReveals()
@@ -59,6 +68,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <CommandPalette />
     </>
   )
 }

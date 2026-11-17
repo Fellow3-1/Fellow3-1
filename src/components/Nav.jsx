@@ -5,18 +5,26 @@ import { useTheme, flipTheme } from '../theme.js'
 export default function Nav() {
   const [active, setActive] = useState('')
   const [theme] = useTheme()
+  const headerRef = useRef(null)
+  const linksRef = useRef(null)
   const barRef = useRef(null)
 
-  /* thin reading-progress bar, direct style writes, rAF-throttled */
+  /* reading-progress bar + subtle scrolled glass state, direct style/class writes */
   useEffect(() => {
+    const header = headerRef.current
     const bar = barRef.current
-    if (!bar || document.documentElement.classList.contains('reduce')) return undefined
+    if (!header) return undefined
+    const reduced = () => document.documentElement.classList.contains('reduce')
     let raf = 0
     const update = () => {
       raf = 0
-      const max = document.documentElement.scrollHeight - window.innerHeight
-      const p = max > 0 ? Math.min(1, window.scrollY / max) : 0
-      bar.style.transform = `scaleX(${p})`
+      const y = window.scrollY
+      header.classList.toggle('is-scrolled', y > 12)
+      if (bar && !reduced()) {
+        const max = document.documentElement.scrollHeight - window.innerHeight
+        const p = max > 0 ? Math.min(1, y / max) : 0
+        bar.style.transform = `scaleX(${p})`
+      }
     }
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update)
@@ -50,14 +58,28 @@ export default function Nav() {
     return () => io.disconnect()
   }, [])
 
+  /* keep the active link visible in the horizontal mobile strip */
+  useEffect(() => {
+    const row = linksRef.current
+    if (!active || !row || row.scrollWidth <= row.clientWidth) return
+    const current = row.querySelector(`[href="${active}"]`)
+    if (!current || typeof row.scrollTo !== 'function') return
+    const target = current.offsetLeft - (row.clientWidth - current.offsetWidth) / 2
+    const reduced = document.documentElement.classList.contains('reduce')
+    row.scrollTo({
+      left: Math.max(0, target),
+      behavior: reduced ? 'auto' : 'smooth',
+    })
+  }, [active])
+
   return (
-    <header className="nav">
+    <header className="nav" ref={headerRef}>
       <div className="nav__inner">
         <a className="nav__brand" href="#top">
           <span className="nav__prompt">$</span>
           {brand.name}
         </a>
-        <nav className="nav__links" aria-label="Sections">
+        <nav className="nav__links" aria-label="Sections" ref={linksRef}>
           {nav.links.map((l) => (
             <a
               key={l.href}
@@ -69,16 +91,13 @@ export default function Nav() {
             </a>
           ))}
         </nav>
-        <span className="nav__status">
-          <span className="nav__dot" aria-hidden="true" />
-          open
-        </span>
         <button
           className="nav__theme"
           type="button"
           id="theme-flip"
           onClick={flipTheme}
           aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          aria-pressed={theme === 'dark'}
           title={theme === 'dark' ? 'Lights on' : 'Lights out'}
         >
           <span className="nav__theme-orb" aria-hidden="true" />

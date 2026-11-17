@@ -61,7 +61,7 @@ export default function Hero() {
             </p>
             <p className="hero__now" data-reveal>
               <span className="hero__now-dot" aria-hidden="true" />
-              now · nairobi · {hero.now.status}
+              <span>{hero.now.status}</span>
             </p>
             <div className="hero__links" data-reveal>
               {hero.links.map((l) => (
@@ -114,6 +114,7 @@ export default function Hero() {
               width={night ? 1376 : 928}
               height="360"
               loading="eager"
+              fetchPriority="high"
               decoding="async"
             />
           </picture>
