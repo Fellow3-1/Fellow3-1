@@ -70,6 +70,58 @@ check('infrastructure: selecting a swarm chip highlights the matching card', $('
 await act(async () => {
   $('#infrastructure .swarm__chip')?.click()
 })
+
+/* --- section 03: hover/click must never drop the reveal state --------------
+   React rewrites `className` whenever a card gains or loses `is-active`. If
+   the reveal state lived in that same class attribute, hovering or selecting
+   a card deleted it and the card's content vanished until a reload. The
+   reveal state therefore lives in `data-reveal-in`, which React never writes. */
+const infraCards = $$('#infrastructure .infra__card')
+const pointerMove = async (el) => {
+  await act(async () => {
+    el.dispatchEvent(new dom.window.MouseEvent('pointermove', { bubbles: true }))
+  })
+}
+await pointerMove(infraCards[0])
+check(
+  'infrastructure: hovering a card highlights it and every card stays visible',
+  infraCards[0].classList.contains('is-active') && infraCards.every((card) => card.hasAttribute('data-reveal-in'))
+)
+await pointerMove(infraCards[3])
+check(
+  'infrastructure: moving the hover to another card leaves all four revealed',
+  infraCards[3].classList.contains('is-active')
+    && !infraCards[0].classList.contains('is-active')
+    && infraCards.every((card) => card.hasAttribute('data-reveal-in'))
+)
+const infraChips = $$('#infrastructure .swarm__chip')
+await act(async () => {
+  infraCards[3].click()
+})
+check(
+  'infrastructure: clicking a card pins it without dropping its reveal state',
+  infraChips[3].getAttribute('aria-pressed') === 'true'
+    && infraCards[3].classList.contains('is-active')
+    && infraCards.every((card) => card.hasAttribute('data-reveal-in'))
+)
+await act(async () => {
+  infraCards[3].click()
+})
+check(
+  'infrastructure: unpinning a card leaves every card revealed',
+  infraChips[3].getAttribute('aria-pressed') === 'false'
+    && infraCards.every((card) => card.hasAttribute('data-reveal-in'))
+)
+
+const cssSource = readFileSync('src/index.css', 'utf8')
+check(
+  'reveal: visibility is a data attribute React cannot overwrite',
+  /\[data-reveal\]\[data-reveal-in\]/.test(cssSource)
+    && !/\[data-reveal\]\.is-in/.test(cssSource)
+    && !/infra__card\.is-in/.test(cssSource)
+    && /\[data-reveal\]:not\(\[data-reveal-in\]\)/.test(readFileSync('src/App.jsx', 'utf8'))
+)
+
 check('writing: share links point to standalone note URLs', $$('.post__share a[href*="share-offsite"]').every((a) => /writing%2F/.test(a.href)))
 await act(async () => {
   window.dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true }))

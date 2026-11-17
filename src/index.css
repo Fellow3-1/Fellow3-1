@@ -192,7 +192,7 @@ html.js [data-reveal] {
   transform: translateY(22px);
 }
 
-html.js [data-reveal].is-in {
+html.js [data-reveal][data-reveal-in] {
   opacity: 1;
   transform: translateY(0);
   transition:
@@ -512,7 +512,7 @@ html.js .hero__name .ltr {
   transform: translateY(0.35em);
 }
 
-html.js .hero__name.is-in .ltr {
+html.js .hero__name[data-reveal-in] .ltr {
   animation: ltr-in 0.66s var(--ease-out) forwards;
   animation-delay: calc(160ms + var(--i) * 55ms);
 }
@@ -741,7 +741,7 @@ html.js .entry .entry__decisions p {
   transform: translateY(10px);
 }
 
-html.js .entry.is-in .tagrow span {
+html.js .entry[data-reveal-in] .tagrow span {
   opacity: 1;
   transform: none;
   transition:
@@ -750,7 +750,7 @@ html.js .entry.is-in .tagrow span {
   transition-delay: calc(120ms + var(--n) * 60ms);
 }
 
-html.js .entry.is-in .entry__num-cell {
+html.js .entry[data-reveal-in] .entry__num-cell {
   opacity: 1;
   transform: none;
   transition:
@@ -759,7 +759,7 @@ html.js .entry.is-in .entry__num-cell {
   transition-delay: calc(180ms + var(--n) * 90ms);
 }
 
-html.js .entry.is-in .entry__decisions p {
+html.js .entry[data-reveal-in] .entry__decisions p {
   opacity: 1;
   transform: none;
   transition:
@@ -2209,12 +2209,12 @@ html.js .infra__card[data-reveal] {
   transform: translate3d(var(--qx), 22px, 0);
 }
 
-html.js .infra__card[data-reveal].is-in {
+html.js .infra__card[data-reveal][data-reveal-in] {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
-html.js .infra__grid.has-focus .infra__card.is-in:not(.is-active) {
+html.js .infra__grid.has-focus .infra__card[data-reveal-in]:not(.is-active) {
   opacity: 0.72;
 }
 
