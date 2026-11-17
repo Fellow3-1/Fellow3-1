@@ -7,7 +7,7 @@ were not taste — they were **what actually shipped**, **what happened after so
 contact you**, and **how much the first screen cost to download**. Everything below is
 either fixed in this branch or documented with the reason it could not be.
 
-Run `npm test` (60 checks) and `npm run build:pages`, then `npm run preview`.
+Run `npm test` (75 checks) and `npm run build:pages`, then `npm run preview`.
 
 ---
 
@@ -117,9 +117,23 @@ generic `og.jpg` for every URL.
   fades at its right edge.
 - `SoftwareSourceCode` entries for the three public repositories.
 
-### 1.9 Tests
+### 1.9 Section 03 no longer erases itself on hover or click
 
-**29 → 60 checks**, including: the request the browser actually makes (URL, method, key
+The infrastructure cards animate in through `useReveals`, which added an `is-in`
+class to `[data-reveal]` elements from outside React. The same cards also have a
+React-owned `className` that gains `is-active` when hovered or selected. React
+rewrites the whole `class` attribute when that prop changes, so the first hover
+or click deleted `is-in`, left the card at `opacity: 0`, and the observer had
+already stopped watching it — the four cards stayed invisible until a reload.
+
+The reveal state is now `data-reveal-in`, an attribute React never writes, and
+every reveal selector in `index.css` keys off it. Five checks were added: hover
+on one card, hover moving to another, pin, unpin, and a source guard that fails
+if reveal visibility ever returns to a React-owned class.
+
+### 1.10 Tests
+
+**29 → 75 checks**, including: the request the browser actually makes (URL, method, key
 headers, exact body), the failure path falling back to the draft, the honeypot, the receipt
 reporting delivery, the reframed section, and every note appearing in the feed and sitemap.
 
@@ -162,7 +176,7 @@ the three items and keep role-only attribution — the layout needs no change.
 
 ```bash
 npm ci
-npm test              # 60 checks
+npm test              # 75 checks
 npm run build         # generates feed, sitemap, note pages, case study
 npm run build:pages   # refreshes the committed Pages build in docs/
 npm run preview
