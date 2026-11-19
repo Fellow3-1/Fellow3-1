@@ -31,7 +31,7 @@ export const nav = {
 
 export const hero = {
   tagline: 'Software engineer working across web and mobile applications, payment integrations, systems administration and network infrastructure.',
-  note: 'Based in Nairobi, Kenya · public work and technical capabilities, with private employment details omitted',
+  note: 'Based in Nairobi, Kenya · public work and technical capabilities, with private details omitted',
   now: {
     /* one quiet availability line under the hero note, no location prefix or clock */
     status: 'open to software engineering, systems, infrastructure and networking opportunities',
@@ -44,7 +44,7 @@ export const hero = {
 
 export const log = {
   heading: 'Public projects, with the source attached_',
-  intro: 'A small selection of public repositories. Descriptions are kept close to what the repositories document; private client and employment work is intentionally not listed.',
+  intro: 'A small selection of public repositories. Descriptions are kept close to what the repositories document; private client work is intentionally not listed.',
   entries: [
     {
       num: '#01',
@@ -52,7 +52,7 @@ export const log = {
       sector: 'open source · payments',
       client: 'Public repository',
       when: 'Go',
-      problem: 'A Go library wrapping Safaricom M-PESA Daraja API operations. The repository describes the project as a work in progress, so it is presented as an open-source implementation rather than a production-readiness claim.',
+      problem: 'A Go library wrapping Safaricom M-PESA Daraja API operations. , its presented as an open-source implementation rather than a production-readiness claim.',
       stack: ['Go', 'M-PESA Daraja', 'REST API'],
       numbers: [['Go', 'implementation language'], ['WIP', 'repository status'], ['Daraja', 'API domain']],
       decisions: ['The repository is public and can be reviewed directly.', 'Status and supported operations should be checked against the current README before adopting it.'],
@@ -67,7 +67,7 @@ export const log = {
       sector: 'open source · Android',
       client: 'Public repository',
       when: 'Java',
-      problem: 'An Android library for checking network connection types and internet connectivity before an application makes HTTP requests. The README identifies it as a work in progress.',
+      problem: 'An Android library for checking network connection types and internet connectivity before an application makes HTTP requests. Its still work in progress.',
       stack: ['Java', 'Android', 'Connectivity APIs'],
       numbers: [['Java', 'implementation language'], ['Android', 'platform'], ['WIP', 'repository status']],
       decisions: ['The library focuses on connectivity status checks rather than presenting a full application.', 'The repository README is the source of truth for its current API and limitations.'],
