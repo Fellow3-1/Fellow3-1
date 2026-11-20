@@ -13,13 +13,13 @@
 
 ## Public repositories
 
-- M-PESA API Go wrapper: https://github.com/AndroidStudyOpenSource/mpesa-api-go (repository describes itself as work in progress)
+- M-PESA Daraja Go wrapper: https://github.com/Fellow3-1/mpesa-api-go (unofficial, dependency-free Go client for the Safaricom Daraja API; CI runs gofmt, go vet and the race-enabled test suite)
 - Tovuti Android connectivity library: https://github.com/Fellow3-1/tovuti (repository describes itself as work in progress)
-- Android SMS Verifier: https://github.com/Fellow3-1/android-sms-verifier (README documents READ_SMS and RECEIVE_SMS permissions)
+- Android SMS Verifier: https://github.com/Fellow3-1/android-sms-verifier (AndroidX library; README documents RECEIVE_SMS as the only required permission, with no READ_SMS inbox access)
 
 ## Technical areas
 
-- Application development: JavaScript, TypeScript, React, Node.js, PHP, Python, Java, Android, REST APIs and SQL
+- Application development: JavaScript, TypeScript, React, Node.js, PHP, Python, Java, Go, Android, REST APIs and SQL
 - Systems: Windows, Linux/Ubuntu, endpoint support, hardware/software troubleshooting and operational documentation
 - Networking: LAN/WAN, TCP/IP, DNS, DHCP, VPN, firewall concepts and connectivity troubleshooting
 - Cloud and delivery: AWS, Docker, Git, CI/CD and Linux web-server environments
