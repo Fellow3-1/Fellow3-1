@@ -7,7 +7,7 @@ were not taste — they were **what actually shipped**, **what happened after so
 contact you**, and **how much the first screen cost to download**. Everything below is
 either fixed in this branch or documented with the reason it could not be.
 
-Run `npm test` (77 checks) and `npm run build:pages`, then `npm run preview`.
+Run `npm test` (82 checks) and `npm run build:pages`, then `npm run preview`.
 
 ---
 
@@ -177,7 +177,7 @@ the three items and keep role-only attribution — the layout needs no change.
 
 ```bash
 npm ci
-npm test              # 75 checks
+npm test              # 82 checks
 npm run build         # generates feed, sitemap, note pages, case study
 npm run build:pages   # refreshes the committed Pages build in docs/
 npm run preview

@@ -49,9 +49,11 @@ check('hero: GitHub and LinkedIn links are present', $$('.hero__links a').length
 check('navigation: primary sections include infrastructure', $$('.nav__links a[href="#infrastructure"]').length === 1)
 check('projects: only three public repositories are listed', $$('.entry').length === 3)
 check('projects: every entry links to a public source repository', $$('.entry .alink').length === 3)
-check('projects: Go wrapper points to documented repository', $$('.entry .alink').some((a) => a.href.includes('AndroidStudyOpenSource/mpesa-api-go')))
+check('projects: Go wrapper points to the live repository', $$('.entry .alink').some((a) => a.href === 'https://github.com/Fellow3-1/mpesa-api-go'))
+check('projects: every repository link points at the current owner', $$('.entry .alink').every((a) => /^https:\/\/github\.com\/Fellow3-1\/[a-z0-9._-]+$/.test(a.href)))
+check('projects: the retired AndroidStudyOpenSource org is not linked', !$$('.entry .alink').some((a) => /AndroidStudyOpenSource/.test(a.href)))
 check('projects: Tovuti describes connectivity checks', /connectivity before an application makes HTTP requests/i.test(text($('.entry:nth-child(2)'))))
-check('projects: SMS verifier documents SMS permissions', /READ_SMS and RECEIVE_SMS/i.test(text($('.entry:nth-child(3)'))))
+check('projects: SMS verifier says only RECEIVE_SMS is required', /only RECEIVE_SMS is required/i.test(text($('.entry:nth-child(3)'))))
 check('infrastructure: four capability groups render', $$('.infra__card').length === 4)
 check('infrastructure: privacy and experience caveat is visible', /does not imply that every product/i.test(text($('#infrastructure'))))
 check('approach: three engineering principles render', $$('.block').length === 3)
@@ -272,8 +274,19 @@ check('sitemap: every note and the case study appear', ['safer-mpesa-callbacks',
 
 /* --- resilience and structured data ------------------------------------- */
 const indexHtml = readFileSync('index.html', 'utf8')
+const llmsTxt = readFileSync('public/llms.txt', 'utf8')
 check('shell: a failed bundle still reveals the page', /classList\.contains\("is-in"\)/.test(indexHtml))
-check('SEO: public repositories are described as source code', /SoftwareSourceCode/.test(indexHtml) && /mpesa-api-go/.test(indexHtml))
+check(
+  'SEO: public repositories are described as source code',
+  /SoftwareSourceCode/.test(indexHtml) && /"codeRepository": "https:\/\/github\.com\/Fellow3-1\/mpesa-api-go"/.test(indexHtml)
+)
+check('SEO: index.html carries no retired repository link', !/AndroidStudyOpenSource/.test(indexHtml))
+check('AEO: llms profile links the live repositories', /github\.com\/Fellow3-1\/mpesa-api-go/.test(llmsTxt) && !/AndroidStudyOpenSource/.test(llmsTxt))
+check(
+  'built Pages output: no retired repository link is served',
+  !readFileSync('docs/index.html', 'utf8').includes('AndroidStudyOpenSource')
+    && !readFileSync('docs/llms.txt', 'utf8').includes('AndroidStudyOpenSource')
+)
 
 let passed = 0
 for (const result of results) {
