@@ -51,161 +51,9 @@
     <link rel="manifest" href="site.webmanifest" />
     <link rel="alternate" type="application/rss+xml" title="Felloh 3.1 · writing" href="feed.xml" />
 
-    <!-- structured data: person, profile page, blog notes, FAQ (mirrors the FAQ section) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "ProfilePage",
-          "@id": "https://fellow3-1.github.io/Fellow3-1/#profilepage",
-          "url": "https://fellow3-1.github.io/Fellow3-1/",
-          "name": "Felloh 3.1 · Felix Odhiambo, Software & IT Systems Engineer",
-          "inLanguage": "en",
-          "mainEntity": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
-        },
-        {
-          "@type": "Person",
-          "@id": "https://fellow3-1.github.io/Fellow3-1/#person",
-          "name": "Felix Odhiambo",
-          "alternateName": "Felloh 3.1",
-          "jobTitle": "Software and IT Systems Engineer",
-          "url": "https://fellow3-1.github.io/Fellow3-1/",
-          "image": "https://fellow3-1.github.io/Fellow3-1/assets/HD-Joker-Wallpapers-scaled.jpg",
-          "address": { "@type": "PostalAddress", "addressLocality": "Nairobi", "addressCountry": "KE" },
-          "sameAs": ["https://github.com/Fellow3-1", "https://linkedin.com/in/felloh31"],
-          "knowsAbout": [
-            "Software engineering", "React", "Java", "Python", "PHP", "Go", "REST APIs",
-            "M-PESA Daraja", "Android development", "Windows", "Linux", "Networking",
-            "DNS", "DHCP", "VPN", "AWS", "Docker"
-          ]
-        },
-        {
-          "@type": "WebSite",
-          "@id": "https://fellow3-1.github.io/Fellow3-1/#website",
-          "url": "https://fellow3-1.github.io/Fellow3-1/",
-          "name": "Felloh 3.1 · engineering log",
-          "inLanguage": "en",
-          "publisher": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
-        },
-        {
-          "@type": "ItemList",
-          "@id": "https://fellow3-1.github.io/Fellow3-1/#writing",
-          "name": "Writing",
-          "itemListElement": [
-            {
-              "@type": "BlogPosting",
-              "headline": "Designing safer M-PESA callback handling",
-              "description": "Idempotent payment callbacks, raw event storage for audit, and why a timeout means unknown, not failed.",
-              "inLanguage": "en",
-              "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" },
-              "url": "https://fellow3-1.github.io/Fellow3-1/writing/safer-mpesa-callbacks/"
-            },
-            {
-              "@type": "BlogPosting",
-              "headline": "A practical network troubleshooting sequence",
-              "description": "Scope first, then link state, addressing, gateway, DNS and routing — one variable at a time.",
-              "inLanguage": "en",
-              "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" },
-              "url": "https://fellow3-1.github.io/Fellow3-1/writing/network-troubleshooting-sequence/"
-            },
-            {
-              "@type": "BlogPosting",
-              "headline": "Linux service diagnostics",
-              "description": "systemctl, journalctl, ss and resource pressure — evidence before the restart button.",
-              "inLanguage": "en",
-              "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" },
-              "url": "https://fellow3-1.github.io/Fellow3-1/writing/linux-service-diagnostics/"
-            }
-          ]
-        },
-        {
-          "@type": "ItemList",
-          "@id": "https://fellow3-1.github.io/Fellow3-1/#projects",
-          "name": "Public repositories",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "item": {
-                "@type": "SoftwareSourceCode",
-                "name": "M-PESA Daraja Go wrapper",
-                "description": "Unofficial, dependency-free Go client for the Safaricom Daraja (M-PESA) API, with typed requests, OAuth token caching, callback decoding and support for STK push, C2B, B2C, B2B, reversals, balance, transaction status and QR codes.",
-                "codeRepository": "https://github.com/Fellow3-1/mpesa-api-go",
-                "programmingLanguage": "Go",
-                "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "item": {
-                "@type": "SoftwareSourceCode",
-                "name": "Tovuti Android connectivity library",
-                "description": "Android library that checks connection type and internet reachability before an app makes HTTP requests.",
-                "codeRepository": "https://github.com/Fellow3-1/tovuti",
-                "programmingLanguage": "Java",
-                "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "item": {
-                "@type": "SoftwareSourceCode",
-                "name": "Android SMS verifier",
-                "description": "AndroidX library that intercepts incoming verification SMS, extracts the one-time code, and requires only the RECEIVE_SMS permission.",
-                "codeRepository": "https://github.com/Fellow3-1/android-sms-verifier",
-                "programmingLanguage": "Java",
-                "author": { "@id": "https://fellow3-1.github.io/Fellow3-1/#person" }
-              }
-            }
-          ]
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://fellow3-1.github.io/Fellow3-1/#faq",
-          "mainEntity": [
-            { "@type": "Question", "name": "Why is there no employment timeline?", "acceptedAnswer": { "@type": "Answer", "text": "To protect personal and client privacy, this site does not publish employer names, job titles tied to employers, employment dates or internal project records. Detailed employment information can be shared privately during a recruitment process." } },
-            { "@type": "Question", "name": "What can I review publicly?", "acceptedAnswer": { "@type": "Answer", "text": "The linked GitHub repositories, their README files and source code are the primary evidence presented here. The site avoids unsupported client metrics and confidential screenshots." } },
-            { "@type": "Question", "name": "Does the infrastructure section represent every vendor as production experience?", "acceptedAnswer": { "@type": "Answer", "text": "No. It is a high-level capability overview. Specific vendor platforms and production environments should be assessed through a direct technical discussion." } },
-            { "@type": "Question", "name": "What opportunities are of interest?", "acceptedAnswer": { "@type": "Answer", "text": "Software engineering, systems administration, IT operations, infrastructure support and network-focused roles, as well as relevant consulting engagements." } },
-            { "@type": "Question", "name": "What happens to a message sent through this site?", "acceptedAnswer": { "@type": "Answer", "text": "It is stored in a database only I can read, used only to reply, and deleted when the conversation ends. No analytics, cookies or third-party scripts receive it. The email draft the form prepares stays on your device." } }
-          ]
-        }
-      ]
-    }
-    </script>
+    <!-- structured data is generated from src/data/content.js at build time -->
+    <!--structured-data-->
 
-    <!-- media-scoped preloads so phones and dark-mode visitors never download an unused hero crop -->
-    <link
-      rel="preload"
-      as="image"
-      href="assets/hero-skyline-day.webp"
-      type="image/webp"
-      media="(min-width: 701px) and (prefers-color-scheme: light)"
-    />
-    <link
-      rel="preload"
-      as="image"
-      href="assets/hero-skyline-day-mobile.webp"
-      type="image/webp"
-      media="(max-width: 700px) and (prefers-color-scheme: light)"
-    />
-    <link
-      rel="preload"
-      as="image"
-      href="assets/window-nairobi.webp"
-      type="image/webp"
-      media="(min-width: 701px) and (prefers-color-scheme: dark)"
-    />
-    <link
-      rel="preload"
-      as="image"
-      href="assets/window-nairobi-mobile.webp"
-      type="image/webp"
-      media="(max-width: 700px) and (prefers-color-scheme: dark)"
-    />
     <!-- Inter is the only face on the page (300 display, 400 text, 500 emphasis).
          Self-hosted latin subset: one preload, no third-party round trip. -->
     <link
@@ -236,6 +84,25 @@
       }
     </script>
     <script>
+      // Preload exactly one hero strip. The old static <link media="..."> pair
+      // keyed off prefers-color-scheme, so a visitor who had pinned the other
+      // theme downloaded a crop the <picture> never used. This runs after the
+      // theme is known and picks the same file the markup will.
+      (function () {
+        var dark = document.documentElement.dataset.theme === "dark";
+        var phone = window.matchMedia("(max-width: 700px)").matches;
+        var file = phone
+          ? (dark ? "assets/window-nairobi-mobile.webp" : "assets/hero-skyline-day-mobile.webp")
+          : (dark ? "assets/window-nairobi.webp" : "assets/hero-skyline-day.webp");
+        var link = document.createElement("link");
+        link.rel = "preload";
+        link.as = "image";
+        link.type = "image/webp";
+        link.href = file;
+        document.head.appendChild(link);
+      })();
+    </script>
+    <script>
       // Safety net: the sheet starts at opacity 0 and the bundle is what
       // lifts it. If that bundle is blocked, fails or is very slow, reveal
       // the content anyway instead of leaving a blank page.
@@ -253,6 +120,73 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <main class="nosheet">
+        <p class="nosheet__mark">Felloh 3.1 · engineering log</p>
+        <h1 class="nosheet__title">Felix Odhiambo · Software &amp; IT Systems Engineer</h1>
+        <p class="nosheet__body">
+          This portfolio is one interactive page and needs JavaScript for its animated
+          sections, command palette and contact form. Nothing here requires it to reach
+          me, though.
+        </p>
+        <ul class="nosheet__links">
+          <li><a href="mailto:felixodhiambo31@live.com">felixodhiambo31@live.com</a></li>
+          <li><a href="https://github.com/Fellow3-1" rel="noreferrer">github.com/Fellow3-1</a></li>
+          <li><a href="https://linkedin.com/in/felloh31" rel="noreferrer">linkedin.com/in/felloh31</a></li>
+          <li><a href="writing/">read the technical notes</a></li>
+          <li><a href="case-study/">read the case study</a></li>
+        </ul>
+        <p class="nosheet__note">No analytics, no cookies, no third parties. Nairobi, Kenya · EAT, UTC+3.</p>
+      </main>
+    </noscript>
+    <style>
+      /* Kept inline: if the bundle fails, the stylesheet that React imports
+         never loads either. This is the only styling the fallback has. */
+      .nosheet {
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: clamp(3rem, 10vh, 7rem) 1.5rem 4rem;
+        background: #f6f6f3;
+        color: #111318;
+        font-family: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+      }
+      .nosheet a { color: #111318; text-decoration: underline; }
+      .nosheet__mark {
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #5f6068;
+      }
+      .nosheet__title { font-size: clamp(1.6rem, 5vw, 2.4rem); line-height: 1.15; margin: 0.6rem 0 1rem; }
+      .nosheet__body { max-width: 58ch; }
+      .nosheet__links { margin: 1.2rem 0; padding-left: 1.2rem; }
+      .nosheet__links li { margin: 0.35rem 0; }
+      .nosheet__note { margin-top: 2.5rem; font-size: 13px; color: #5f6068; }
+    </style>
+    <script>
+      // Second safety net: the 2.5s watchdog above reveals the sheet, but if
+      // the bundle itself never boots the root is still empty. Give React three
+      // seconds, then render a readable fallback with the contact links in it.
+      window.setTimeout(function () {
+        var root = document.getElementById("root");
+        if (!root || root.hasChildNodes()) return;
+        document.body.classList.add("is-in");
+        root.innerHTML =
+          '<main class="nosheet">' +
+          '<p class="nosheet__mark">Felloh 3.1 · engineering log</p>' +
+          '<h1 class="nosheet__title">The interactive sheet did not load.</h1>' +
+          '<p class="nosheet__body">The page is one React bundle, and on this connection it was blocked or failed. The contact details are the part that matters:</p>' +
+          '<ul class="nosheet__links">' +
+          '<li><a href="mailto:felixodhiambo31@live.com">felixodhiambo31@live.com</a></li>' +
+          '<li><a href="https://github.com/Fellow3-1" rel="noreferrer">github.com/Fellow3-1</a></li>' +
+          '<li><a href="https://linkedin.com/in/felloh31" rel="noreferrer">linkedin.com/in/felloh31</a></li>' +
+          '<li><a href="writing/">read the technical notes</a></li>' +
+          "</ul>" +
+          '<p class="nosheet__note">No analytics, no cookies, no third parties.</p>' +
+          "</main>";
+      }, 3000);
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

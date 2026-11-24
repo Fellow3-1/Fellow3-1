@@ -1399,10 +1399,11 @@ html.js .entry[data-reveal-in] .entry__decisions p {
   gap: 18px;
 }
 
-.field input {
+.field :is(input, textarea) {
   width: 100%;
   margin-top: 8px;
   padding: 13px 14px;
+  resize: vertical;
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -1415,29 +1416,29 @@ html.js .entry[data-reveal-in] .entry__decisions p {
     border-color 180ms ease;
 }
 
-.field input::placeholder {
+.field :is(input, textarea)::placeholder {
   color: var(--mut);
 }
 
-.field input:hover {
+.field :is(input, textarea):hover {
   background: #efefec;
   border-color: var(--line-strong);
 }
 
-.field input:focus-visible {
+.field :is(input, textarea):focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 0;
 }
 
 /* a field that failed the submit check: tinted, outlined and explained */
-.field--bad input,
-.field--bad input:hover {
+.field--bad :is(input, textarea),
+.field--bad :is(input, textarea):hover {
   background: #fdeef3;
   box-shadow: inset 0 0 0 1.5px #c0164c;
 }
 
-[data-theme='dark'] .field--bad input,
-[data-theme='dark'] .field--bad input:hover {
+[data-theme='dark'] .field--bad :is(input, textarea),
+[data-theme='dark'] .field--bad :is(input, textarea):hover {
   background: #241018;
   box-shadow: inset 0 0 0 1.5px #ff5796;
 }
@@ -1484,12 +1485,16 @@ html.js .entry[data-reveal-in] .entry__decisions p {
 }
 
 .slip__status.is-failed,
-.slip__status.is-offline {
+.slip__status.is-offline,
+.slip__status.is-limited,
+.slip__status.is-rejected {
   color: #a81146;
 }
 
 [data-theme='dark'] .slip__status.is-failed,
-[data-theme='dark'] .slip__status.is-offline {
+[data-theme='dark'] .slip__status.is-offline,
+[data-theme='dark'] .slip__status.is-limited,
+[data-theme='dark'] .slip__status.is-rejected {
   color: #ffa2c4;
 }
 
@@ -1609,7 +1614,7 @@ html.js .entry[data-reveal-in] .entry__decisions p {
 /* one focus treatment across buttons, pills and fields: a solid ring that
    clears contrast on paper and on the dark sheet (the old aqua glow did not) */
 .macpill:focus-visible,
-.field input:focus-visible {
+.field :is(input, textarea):focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
@@ -2250,6 +2255,34 @@ html.js .infra__grid.has-focus .infra__card[data-reveal-in]:not(.is-active) {
   color: var(--ink);
 }
 
+/* keyboard route to the same pin toggle the card click performs */
+.infra__pin {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--mut);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1;
+  padding: 2px 4px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: color 180ms ease;
+}
+
+.infra__pin:hover {
+  color: var(--ink);
+}
+
+.infra__pin[aria-pressed='true'] {
+  color: var(--accent);
+}
+
+.infra__pin:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
 .infra__dot {
   width: 7px;
   height: 7px;
@@ -2492,7 +2525,7 @@ html.theming .snake,
 html.theming .flow,
 html.theming .entry__num-cell,
 html.theming .slip__card,
-html.theming .field input {
+html.theming .field :is(input, textarea) {
   transition:
     background-color 320ms ease,
     border-color 320ms ease;
@@ -2555,7 +2588,7 @@ html[data-theme='dark'] {
   background: #301a31;
 }
 
-[data-theme='dark'] .field input:hover {
+[data-theme='dark'] .field :is(input, textarea):hover {
   background: #1a1220;
 }
 
@@ -2777,6 +2810,9 @@ html[data-theme='dark'] {
 
 .cmdk__group {
   display: block;
+  flex-basis: 100%;
+  order: -1;
+  width: 100%;
   padding: 8px 10px 4px;
   font-size: 11.5px;
   font-weight: 600;
@@ -2787,6 +2823,7 @@ html[data-theme='dark'] {
 
 .cmdk__item {
   width: 100%;
+  flex-wrap: wrap;
   appearance: none;
   border: 0;
   background: transparent;

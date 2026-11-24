@@ -117,6 +117,10 @@ export default function SwarmField({ sectionRef, groups, activeIndex, pinnedInde
     ]
 
     let theme = getTheme()
+    /* one media query for the whole effect, not one per frame */
+    const motionMq = typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)')
+      : null
     let targetP = 0.5
     let smoothP = 0.2
     let scrollVel = 0
@@ -126,12 +130,15 @@ export default function SwarmField({ sectionRef, groups, activeIndex, pinnedInde
     let rafId = 0
     let lastPhaseLabel = ''
     let clock = 0
+    let scrollDirty = false
+    /* the dot grid is static per size/theme: paint it once, then blit it */
+    let gridCanvas = null
+    let gridKey = ''
 
     const pointer = { x: 0, y: 0, active: false }
 
     const isReduced = () =>
-      document.documentElement.classList.contains('reduce') ||
-      Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)
+      document.documentElement.classList.contains('reduce') || Boolean(motionMq?.matches)
 
     const computeHubs = () => {
       const compact = width < 580
@@ -249,13 +256,25 @@ export default function SwarmField({ sectionRef, groups, activeIndex, pinnedInde
     }
 
     const drawGrid = (pal) => {
-      const step = width < 560 ? 26 : 30
-      ctx.fillStyle = pal.grid
-      for (let y = 16; y < height - 10; y += step) {
-        for (let x = 18; x < width - 10; x += step) {
-          ctx.fillRect(x, y, 1.25, 1.25)
+      const key = `${width}x${height}:${dpr}:${pal.grid}`
+      if (key !== gridKey) {
+        gridKey = key
+        if (!gridCanvas) gridCanvas = document.createElement('canvas')
+        gridCanvas.width = Math.max(1, Math.round(width * dpr))
+        gridCanvas.height = Math.max(1, Math.round(height * dpr))
+        const g = gridCanvas.getContext('2d')
+        if (g) {
+          g.setTransform(dpr, 0, 0, dpr, 0, 0)
+          const step = width < 560 ? 26 : 30
+          g.fillStyle = pal.grid
+          for (let y = 16; y < height - 10; y += step) {
+            for (let x = 18; x < width - 10; x += step) {
+              g.fillRect(x, y, 1.25, 1.25)
+            }
+          }
         }
       }
+      if (gridCanvas) ctx.drawImage(gridCanvas, 0, 0, width, height)
     }
 
     const drawBackbone = (pal, meshStrength, focus, t) => {
@@ -666,6 +685,11 @@ export default function SwarmField({ sectionRef, groups, activeIndex, pinnedInde
       if (!inView || hidden || isReduced()) return
       const dt = prevTs ? clamp((ts - prevTs) / 1000, 0.004, 0.05) : 1 / 60
       prevTs = ts
+      /* one layout read per frame, not one per scroll event */
+      if (scrollDirty) {
+        scrollDirty = false
+        measureScroll()
+      }
       step(dt)
       rafId = window.requestAnimationFrame(loop)
     }
@@ -690,7 +714,7 @@ export default function SwarmField({ sectionRef, groups, activeIndex, pinnedInde
     }
 
     const onScroll = () => {
-      measureScroll()
+      scrollDirty = true
       if (!isReduced()) start()
     }
 
@@ -740,7 +764,6 @@ export default function SwarmField({ sectionRef, groups, activeIndex, pinnedInde
       : null
     if (io) io.observe(sectionRef?.current || canvas)
 
-    const motionMq = window.matchMedia?.('(prefers-reduced-motion: reduce)')
     const onMotion = () => {
       if (isReduced()) {
         stop()
@@ -761,6 +784,7 @@ export default function SwarmField({ sectionRef, groups, activeIndex, pinnedInde
 
     return () => {
       stop()
+      gridCanvas = null
       ro?.disconnect()
       io?.disconnect()
       window.removeEventListener('resize', resize)
@@ -811,6 +835,7 @@ export default function SwarmField({ sectionRef, groups, activeIndex, pinnedInde
                 type="button"
                 className={`swarm__chip swarm__chip--${idx}${isHighlighted ? ' is-active' : ''}`}
                 aria-pressed={isPinned}
+                aria-label={`${isPinned ? 'Unpin' : 'Highlight'} ${group.title}`}
                 onPointerMove={(event) => {
                   /* Hover focus follows real pointer movement only: pointerenter
                      also fires when scrolling slides a chip under a stationary

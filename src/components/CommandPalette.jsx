@@ -2,12 +2,13 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { brand, log, writing, caseStudy } from '../data/content.js'
 import { useTheme, flipTheme } from '../theme.js'
 
-/* Lightweight terminal/macOS jump palette (Cmd/Ctrl + K).
-   Opens instantly — keyboard actions stay un-animated so repeat use feels crisp. */
+/* eslint-disable react-hooks/refs -- close() reads lastFocusRef from event handlers only */
 
-export function openPalette() {
-  window.dispatchEvent(new CustomEvent('f31:palette'))
-}
+/* Lightweight terminal/macOS jump palette (Cmd/Ctrl + K).
+   Opens instantly — keyboard actions stay un-animated so repeat use feels crisp.
+
+   `react-hooks/refs` is disabled for this file: `close()` reads the element to
+   restore focus to, and it is only ever called from keyboard/mouse handlers. */
 
 export default function CommandPalette() {
   const [open, setOpen] = useState(false)
@@ -49,7 +50,7 @@ export default function CommandPalette() {
         id: `note-${post.slug}`,
         group: 'Reading',
         label: post.title,
-        hint: post.minutes.toLowerCase(),
+        hint: post.tag.toLowerCase(),
         href: `writing/${post.slug}/`,
       })),
       {
@@ -125,14 +126,20 @@ export default function CommandPalette() {
     inputRef.current?.focus()
     const prevOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+
+    /* Everything behind the dialog is inert: a screen reader cannot wander into
+       the page while the palette is modal, and clicks on the backdrop still work
+       because the backdrop is the dialog element itself. */
+    const behind = Array.from(document.getElementById('root')?.children || []).filter(
+      (el) => !el.classList.contains('cmdk')
+    )
+    behind.forEach((el) => el.setAttribute('inert', ''))
+
     return () => {
       document.body.style.overflow = prevOverflow
+      behind.forEach((el) => el.removeAttribute('inert'))
     }
   }, [open])
-
-  useEffect(() => {
-    setCursor(0)
-  }, [query])
 
   const run = async (item) => {
     if (!item) return
@@ -173,6 +180,25 @@ export default function CommandPalette() {
     }
   }
 
+  /* Tab and Shift+Tab stay inside the dialog. The input owns the arrow keys;
+     this only closes the loop at the two ends. */
+  const onDialogKeyDown = (event) => {
+    if (event.key !== 'Tab') return
+    const focusable = event.currentTarget.querySelectorAll(
+      'button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )
+    if (!focusable.length) return
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault()
+      last.focus()
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault()
+      first.focus()
+    }
+  }
+
   const onInputKeyDown = (event) => {
     if (!filtered.length) return
     if (event.key === 'ArrowDown') {
@@ -203,6 +229,7 @@ export default function CommandPalette() {
       role="dialog"
       aria-modal="true"
       aria-label="Quick navigation"
+      onKeyDown={onDialogKeyDown}
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) close()
       }}
@@ -229,16 +256,20 @@ export default function CommandPalette() {
             className="cmdk__input"
             role="combobox"
             aria-expanded="true"
+            aria-autocomplete="list"
             aria-controls="cmdk-list"
             aria-activedescendant={activeItem ? `cmdk-${activeItem.id}` : undefined}
             placeholder="Jump to a section, repo, note or action…"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => {
+              setQuery(event.target.value)
+              setCursor(0)
+            }}
             onKeyDown={onInputKeyDown}
           />
         </div>
 
-        <ul className="cmdk__list" id="cmdk-list" role="listbox">
+        <ul className="cmdk__list" id="cmdk-list" role="listbox" aria-label="Commands">
           {filtered.length === 0 ? (
             <li className="cmdk__empty">No matching command for “{query}”.</li>
           ) : (
@@ -251,20 +282,17 @@ export default function CommandPalette() {
                   id={`cmdk-${item.id}`}
                   role="option"
                   aria-selected={selected}
-                  className="cmdk__item-wrap"
+                  className={`cmdk__item${selected ? ' is-selected' : ''}`}
+                  /* keep focus in the input so typing keeps filtering */
+                  onMouseDown={(event) => event.preventDefault()}
+                  onMouseEnter={() => setCursor(idx)}
+                  onClick={() => run(item)}
                 >
                   {showGroup ? (
                     <span className="cmdk__group" aria-hidden="true">{item.group}</span>
                   ) : null}
-                  <button
-                    type="button"
-                    className={`cmdk__item${selected ? ' is-selected' : ''}`}
-                    onMouseEnter={() => setCursor(idx)}
-                    onClick={() => run(item)}
-                  >
-                    <span className="cmdk__label">{item.label}</span>
-                    <span className="cmdk__hint">{item.hint}</span>
-                  </button>
+                  <span className="cmdk__label">{item.label}</span>
+                  <span className="cmdk__hint">{item.hint}</span>
                 </li>
               )
             })

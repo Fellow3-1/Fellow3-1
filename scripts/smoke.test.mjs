@@ -1,14 +1,12 @@
 import { JSDOM } from 'jsdom'
-import React from 'react'
-import { act } from 'react'
-import { createRoot } from 'react-dom/client'
 import { build } from 'esbuild'
-import { mkdirSync, readFileSync, existsSync } from 'node:fs'
-import { caseStudy } from '../src/data/content.js'
+import { mkdirSync, readFileSync, existsSync, readdirSync, statSync } from 'node:fs'
+import { dirname, resolve, extname, join } from 'node:path'
+import { caseStudy, log } from '../src/data/content.js'
 
 mkdirSync('node_modules/.smoke', { recursive: true })
 await build({
-  entryPoints: ['src/App.jsx', 'src/components/Contact.jsx'],
+  entryPoints: ['src/App.jsx', 'src/components/Contact.jsx', 'src/components/ErrorBoundary.jsx', 'src/theme.js'],
   bundle: true,
   format: 'esm',
   jsx: 'automatic',
@@ -25,7 +23,25 @@ const dom = new JSDOM('<!doctype html><html><body><div id="root"></div></body></
 })
 globalThis.window = dom.window
 globalThis.document = dom.window.document
-try { Object.defineProperty(globalThis, 'navigator', { value: dom.window.navigator, configurable: true }) } catch {}
+globalThis.localStorage = dom.window.localStorage
+/* react-dom decides at import time whether the native `input` event exists.
+   jsdom does not expose `oninput` on Document, so React would fall back to its
+   IE-era keyup polyfill and synthetic typing would never fire onChange. Define
+   the property before react-dom is imported so the normal path is used. */
+Object.defineProperty(dom.window.Document.prototype, 'oninput', { value: null, configurable: true })
+/* theme.js and CommandPalette dispatch CustomEvent; jsdom's dispatcher only
+   accepts its own Event subclass, so point the global at the window's one. */
+globalThis.CustomEvent = dom.window.CustomEvent
+/* React's input polyfill (jsdom reports no native 'input' support) calls the
+   IE-only attachEvent/detachEvent pair. Stub them so a real change event can
+   still be dispatched in the contact race test. */
+dom.window.HTMLElement.prototype.attachEvent = () => {}
+dom.window.HTMLElement.prototype.detachEvent = () => {}
+try {
+  Object.defineProperty(globalThis, 'navigator', { value: dom.window.navigator, configurable: true })
+} catch {
+  /* navigator is not configurable in some runtimes; jsdom's is close enough */
+}
 globalThis.requestAnimationFrame = (cb) => setTimeout(cb, 0)
 globalThis.cancelAnimationFrame = (id) => clearTimeout(id)
 window.matchMedia = window.matchMedia || ((q) => ({ matches: false, media: q, addListener() {}, removeListener() {} }))
@@ -34,15 +50,33 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const results = []
 const check = (name, ok) => results.push({ name, ok: Boolean(ok) })
+
+/* Imported after the DOM globals exist: react-dom reads `canUseDOM` and the
+   input-event support flag at module scope, so an earlier static import would
+   lock in the wrong answer for this environment. */
+const React = (await import('react')).default
+const { act } = await import('react')
+const { createRoot } = await import('react-dom/client')
+
 const { default: App } = await import('../node_modules/.smoke/App.mjs')
 const { default: Contact, validateDraft, deliver } = await import('../node_modules/.smoke/Contact.mjs')
+const { default: ErrorBoundary } = await import('../node_modules/.smoke/ErrorBoundary.mjs')
+const { getTheme, setTheme } = await import('../node_modules/.smoke/theme.mjs')
 const root = createRoot(document.getElementById('root'))
 await act(async () => { root.render(React.createElement(App)) })
 await act(async () => { await new Promise((resolve) => setTimeout(resolve, 50)) })
+/* let the hero's 720 ms typing interval finish inside act, so no state update
+   lands outside it */
+await act(async () => { await new Promise((resolve) => setTimeout(resolve, 900)) })
 
 const $ = (selector) => document.querySelector(selector)
 const $$ = (selector) => Array.from(document.querySelectorAll(selector))
 const text = (element) => element?.textContent.trim() || ''
+
+/* `dist/` when a build has just run (CI), `docs/` when only the committed
+   Pages build is present. Either way this reads the artifact, not the source. */
+const builtPath = (rel) => (existsSync(`dist/${rel}`) ? `dist/${rel}` : `docs/${rel}`)
+const built = (rel) => readFileSync(builtPath(rel), 'utf8')
 
 check('hero: identifies software and IT systems scope', /systems administration|network infrastructure/i.test(text($('.hero__tag'))))
 check('hero: GitHub and LinkedIn links are present', $$('.hero__links a').length === 2)
@@ -55,6 +89,16 @@ check('projects: the retired AndroidStudyOpenSource org is not linked', !$$('.en
 check('projects: Tovuti describes connectivity checks', /connectivity before an application makes HTTP requests/i.test(text($('.entry:nth-child(2)'))))
 check('projects: SMS verifier says only RECEIVE_SMS is required', /only RECEIVE_SMS is required/i.test(text($('.entry:nth-child(3)'))))
 check('infrastructure: four capability groups render', $$('.infra__card').length === 4)
+check(
+  'infrastructure: every card exposes a labelled keyboard pin',
+  $$('.infra__card .infra__pin[aria-pressed]').length === 4
+    && $$('.infra__pin').every((button) => /Pin|Unpin/.test(button.getAttribute('aria-label') || ''))
+)
+check(
+  'infrastructure: domain chips announce the domain, not the code',
+  $$('.swarm__chip').length === 4
+    && $$('.swarm__chip').every((chip) => /Highlight|Unpin/.test(chip.getAttribute('aria-label') || ''))
+)
 check('infrastructure: privacy and experience caveat is visible', /does not imply that every product/i.test(text($('#infrastructure'))))
 check('approach: three engineering principles render', $$('.block').length === 3)
 check('profile: no education or certification section renders', !/education|certification/i.test(text($('#about'))))
@@ -142,13 +186,31 @@ check('feed: items point at standalone note pages', /writing\/safer-mpesa-callba
 check('sitemap: standalone note pages are listed', /writing\/linux-service-diagnostics\//.test(readFileSync('public/sitemap.xml', 'utf8')))
 check('contact: form creates a local email draft', $('#field-name') && $('.slip__form button'))
 check('contact: no mock invoice price is shown', !/KES\s+[0-9,]+/.test(text($('#contact'))))
-check('SEO: privacy-safe title and metadata', /Software & IT Systems Engineer/.test(readFileSync('index.html', 'utf8')))
-check('SEO: FAQ schema describes privacy policy', /Why is there no employment timeline/.test(readFileSync('index.html', 'utf8')))
+check('SEO: privacy-safe title and metadata', /Software & IT Systems Engineer/.test(built('index.html')))
+check('SEO: generated FAQ schema matches the content module', /Why is there no employment timeline/.test(built('index.html')) && /"datePublished": "2025-11-03"/.test(built('index.html')))
+check('SEO: the source shell no longer duplicates the FAQ copy', !/Why is there no employment timeline/.test(readFileSync('index.html', 'utf8')))
+check('SEO: the source shell carries the structured-data placeholder', /<!--structured-data-->/.test(readFileSync('index.html', 'utf8')))
 check('AEO: llms profile includes project links and privacy policy', existsSync('public/llms.txt') && /Privacy policy/.test(readFileSync('public/llms.txt', 'utf8')))
 check('profile README: no CV download or employment timeline', !/download.*cv|employment timeline/i.test(readFileSync('README.md', 'utf8')))
 check('profile README: no education or certification claims', !/education|certification|\bdegree\b/i.test(readFileSync('README.md', 'utf8')))
 check('footer: no downloadable CV link exists', !$$('a').some((a) => /cv|resume/i.test(a.textContent + a.href)))
-check('skip link points to project section', $('.skiplink')?.getAttribute('href') === '#work')
+check(
+  'footer: GitHub, LinkedIn and email are reachable from the footer',
+  /github/i.test(text($('.foot')))
+    && /linkedin/i.test(text($('.foot')))
+    && $$('footer a[href^="mailto:"]').length >= 1
+)
+check(
+  'hero: the polaroid is the 960 px crop, not the 2560 px original',
+  $('.polaroid img')?.getAttribute('src') === 'assets/polaroid-960.jpg'
+    && $('.polaroid img')?.getAttribute('width') === '960'
+)
+check(
+  'shell: a failed bundle gets a readable fallback, and no-JS gets one too',
+  /<noscript>[\s\S]*felixodhiambo31@live\.com[\s\S]*<\/noscript>/.test(readFileSync('index.html', 'utf8'))
+    && /hasChildNodes\(\)/.test(readFileSync('index.html', 'utf8'))
+)
+check('skip link points at the main content, not the second section', $('.skiplink')?.getAttribute('href') === '#main' && Boolean($('#main')))
 
 /* --- contact: validation, recovery and the two ways out ------------------ */
 const submit = async (scope) => {
@@ -160,7 +222,7 @@ const submit = async (scope) => {
 check('contact: submit is never silently disabled', $('.slip__form button[type="submit"]')?.disabled === false)
 check('contact: a plain mailto address is always on screen', $$('#contact a[href^="mailto:"]').length >= 1)
 check('contact: email field asks the browser for an email address', $('#field-reach')?.getAttribute('autocomplete') === 'email')
-check('contact: fields are marked required', $$('#contact input[required]').length === 3)
+check('contact: all three fields are marked required', $$('#contact :is(input, textarea)[required]').length === 3)
 
 await submit(document)
 check('contact: empty submit explains every missing field', $$('.field__err').length === 3)
@@ -207,8 +269,15 @@ check('contact: the request targets the portfolio table', /\/rest\/v1\/portfolio
 check('contact: the publishable key travels on apikey only', Boolean(calls[0].options.headers.apikey) && !calls[0].options.headers.Authorization)
 check('contact: the message carries no extra fields', Object.keys(JSON.parse(calls[0].options.body)).sort().join(',') === 'brief,email,name,page')
 
+/* the four ways a send can go wrong are four different sentences, not one */
 globalThis.fetch = window.fetch = async () => { throw new Error('offline') }
-check('contact: a failed delivery is reported, not disguised', (await deliver({ name: 'A', brief: 'B', email: 'c@d.ee', page: 'portfolio' })) === 'failed')
+check('contact: a network failure is reported as offline, not as a refused message', (await deliver({ name: 'A', brief: 'B', email: 'c@d.ee', page: 'portfolio' })) === 'offline')
+globalThis.fetch = window.fetch = async () => ({ ok: false, status: 429 })
+check('contact: a rate-limited insert is reported as limited', (await deliver({ name: 'A', brief: 'B', email: 'c@d.ee', page: 'portfolio' })) === 'limited')
+globalThis.fetch = window.fetch = async () => ({ ok: false, status: 422 })
+check('contact: a refused insert is reported as rejected', (await deliver({ name: 'A', brief: 'B', email: 'c@d.ee', page: 'portfolio' })) === 'rejected')
+globalThis.fetch = window.fetch = async () => ({ ok: false, status: 500 })
+check('contact: a server error is reported as failed', (await deliver({ name: 'A', brief: 'B', email: 'c@d.ee', page: 'portfolio' })) === 'failed')
 globalThis.fetch = window.fetch = undefined
 
 /* the section rendered with a delivered message */
@@ -278,14 +347,239 @@ const llmsTxt = readFileSync('public/llms.txt', 'utf8')
 check('shell: a failed bundle still reveals the page', /classList\.contains\("is-in"\)/.test(indexHtml))
 check(
   'SEO: public repositories are described as source code',
-  /SoftwareSourceCode/.test(indexHtml) && /"codeRepository": "https:\/\/github\.com\/Fellow3-1\/mpesa-api-go"/.test(indexHtml)
+  /SoftwareSourceCode/.test(built('index.html'))
+    && /"codeRepository": "https:\/\/github\.com\/Fellow3-1\/mpesa-api-go"/.test(built('index.html'))
 )
-check('SEO: index.html carries no retired repository link', !/AndroidStudyOpenSource/.test(indexHtml))
+check('SEO: index.html carries no retired repository link', !/AndroidStudyOpenSource/.test(built('index.html')))
 check('AEO: llms profile links the live repositories', /github\.com\/Fellow3-1\/mpesa-api-go/.test(llmsTxt) && !/AndroidStudyOpenSource/.test(llmsTxt))
 check(
   'built Pages output: no retired repository link is served',
-  !readFileSync('docs/index.html', 'utf8').includes('AndroidStudyOpenSource')
-    && !readFileSync('docs/llms.txt', 'utf8').includes('AndroidStudyOpenSource')
+  !built('index.html').includes('AndroidStudyOpenSource')
+    && !built('llms.txt').includes('AndroidStudyOpenSource')
+)
+check(
+  'built Pages output: the 404 page is noindex and is not the homepage',
+  /name="robots" content="noindex, nofollow"/.test(built('404.html'))
+    && !/rel="canonical"/.test(built('404.html'))
+    && /page not found|not in the log/i.test(built('404.html'))
+)
+/* --- link and asset check over the built artifact ----------------------- */
+const SITE = 'https://fellow3-1.github.io/Fellow3-1/'
+const buildRoot = existsSync('dist/index.html') ? 'dist' : 'docs'
+const walk = (dir) =>
+  readdirSync(dir).flatMap((name) => {
+    const full = join(dir, name)
+    return statSync(full).isDirectory() ? walk(full) : [full]
+  })
+const builtFiles = walk(buildRoot)
+const refs = new Map()
+const addRef = (from, value) => {
+  const raw = value.trim()
+  if (!raw || raw.startsWith('#') || raw.startsWith('mailto:') || raw.startsWith('data:') || raw.startsWith('tel:')) return
+  if (raw.startsWith('//') || (raw.startsWith('http') && !raw.startsWith(SITE))) return
+  const clean = raw.startsWith(SITE)
+    ? raw.slice(SITE.length).split('#')[0].split('?')[0]
+    : raw.split('#')[0].split('?')[0]
+  if (!clean) return
+  const target = raw.startsWith(SITE) || clean.startsWith('/')
+    ? join(buildRoot, clean)
+    : resolve(dirname(from), clean)
+  if (!refs.has(target)) refs.set(target, from)
+}
+
+for (const file of builtFiles) {
+  if (!['.html', '.css', '.xml', '.txt', '.webmanifest'].includes(extname(file))) continue
+  const source = readFileSync(file, 'utf8')
+  if (file.endsWith('.css')) {
+    for (const match of source.matchAll(/url\(['"]?([^'")]+)['"]?\)/g)) addRef(file, match[1])
+    continue
+  }
+  for (const match of source.matchAll(/(?:href|src)="([^"]+)"/g)) addRef(file, match[1])
+  for (const match of source.matchAll(/srcset="([^"]+)"/g)) {
+    for (const part of match[1].split(',')) addRef(file, part.trim().split(/\s+/)[0])
+  }
+  for (const match of source.matchAll(/<loc>([^<]+)<\/loc>/g)) addRef(file, match[1])
+}
+
+const broken = [...refs.entries()].filter(([target]) => !existsSync(target) && !existsSync(join(target, 'index.html')))
+check(
+  'build: every local link, asset and sitemap URL resolves',
+  broken.length === 0
+)
+check(
+  'SEO: the homepage canonical matches the deployed origin',
+  built('index.html').includes(`<link rel="canonical" href="${SITE}" />`)
+)
+if (broken.length) console.log(broken.map(([target, from]) => `  ${target} (from ${from})`).join('\n'))
+
+check(
+  'built Pages output: writing and case study have index pages',
+  /safer-mpesa-callbacks/.test(built('writing/index.html'))
+    && /A Portfolio That Refuses to Invent Numbers/.test(built('case-study/index.html'))
+)
+
+/* --- content schema, so a renamed field cannot ship a broken page ------- */
+const { writing: writingContent } = await import('../src/data/content.js')
+check(
+  'content: every note carries the fields its page needs',
+  writingContent.posts.every(
+    (p) =>
+      typeof p.slug === 'string' &&
+      /^[a-z0-9-]+$/.test(p.slug) &&
+      typeof p.title === 'string' &&
+      /^\d{4}-\d{2}-\d{2}$/.test(p.published) &&
+      typeof p.kind === 'string' &&
+      typeof p.tag === 'string' &&
+      Array.isArray(p.body) &&
+      p.body.length > 0
+  )
+)
+check(
+  'content: note slugs are unique',
+  new Set(writingContent.posts.map((p) => p.slug)).size === writingContent.posts.length
+)
+check(
+  'content: a note never reuses `date` or `minutes` for a label',
+  writingContent.posts.every((p) => !('date' in p) && !('minutes' in p))
+)
+check(
+  'AEO: llms.txt lists every public repository and every note',
+  log.entries.every((entry) => llmsTxt.includes(entry.link.href))
+    && writingContent.posts.every((post) => llmsTxt.includes(`/writing/${post.slug}/`))
+)
+check(
+  'content: every note and the case study have a social card',
+  writingContent.posts.every((p) => existsSync(`public/assets/og/${p.slug}.png`))
+    && existsSync(`public/assets/og/${caseStudy.slug}.png`)
+)
+
+/* --- post.css token sync ------------------------------------------------ */
+const rootBlock = (css) => css.match(/:root\s*\{[^}]*\}/)?.[0] || ''
+check(
+  'styles: note pages share the main sheet tokens',
+  rootBlock(readFileSync('src/index.css', 'utf8')) === rootBlock(readFileSync('public/assets/post.css', 'utf8'))
+)
+check(
+  'styles: note pages declare the Inter fallback face',
+  /Inter Fallback/.test(readFileSync('public/assets/post.css', 'utf8'))
+)
+
+/* --- contact: one request at a time, and no stale "delivered" ---------- */
+const raceHost = document.createElement('div')
+document.body.appendChild(raceHost)
+const raceRoot = createRoot(raceHost)
+let raceCalls = 0
+let resolveRace
+const raceGate = new Promise((resolve) => { resolveRace = resolve })
+await act(async () => {
+  raceRoot.render(
+    React.createElement(Contact, {
+      initialValues: base,
+      deliverMessage: () => {
+        raceCalls += 1
+        return raceGate
+      },
+    })
+  )
+})
+const raceSubmit = async () => {
+  await act(async () => {
+    raceHost.querySelector('.slip__form').dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }))
+  })
+}
+await raceSubmit()
+await raceSubmit()
+check('contact: a double submit sends exactly one message', raceCalls === 1)
+check('contact: the receipt is marked busy while sending', raceHost.querySelector('.slip__form button[type="submit"]')?.getAttribute('aria-busy') === 'true')
+check('contact: the submit button is never disabled, even mid-send', raceHost.querySelector('.slip__form button[type="submit"]')?.disabled === false)
+
+/* edit the brief while the first send is still in flight */
+const briefBox = raceHost.querySelector('#field-work')
+await act(async () => {
+  /* the prototype setter writes the DOM value without touching React's value
+     tracker, so the tracker sees a real change and fires onChange */
+  const proto = briefBox.tagName === 'TEXTAREA'
+    ? dom.window.HTMLTextAreaElement.prototype
+    : dom.window.HTMLInputElement.prototype
+  Object.getOwnPropertyDescriptor(proto, 'value').set.call(briefBox, 'A different brief entirely')
+  briefBox.dispatchEvent(new dom.window.Event('input', { bubbles: true }))
+})
+await act(async () => {
+  resolveRace('sent')
+  await new Promise((resolve) => setTimeout(resolve, 20))
+})
+check(
+  'contact: a response for an edited draft is not reported as delivered',
+  !raceHost.querySelector('.slip__status.is-sent')
+)
+await act(async () => raceRoot.unmount())
+raceHost.remove()
+
+/* --- error boundary ----------------------------------------------------- */
+const crashHost = document.createElement('div')
+document.body.appendChild(crashHost)
+const crashRoot = createRoot(crashHost)
+const Boom = () => { throw new Error('intentional smoke-test failure') }
+const originalError = console.error
+console.error = () => {}
+try {
+  await act(async () => {
+    crashRoot.render(React.createElement(ErrorBoundary, null, React.createElement(Boom)))
+  })
+} finally {
+  console.error = originalError
+}
+check(
+  'error boundary: a render failure keeps a readable page with contact details',
+  /error while rendering/i.test(text(crashHost)) && /felixodhiambo31@live\.com/.test(text(crashHost))
+)
+await act(async () => crashRoot.unmount())
+crashHost.remove()
+
+/* --- theme -------------------------------------------------------------- */
+await act(async () => { setTheme('dark', { persist: true }) })
+check(
+  'theme: setting a theme updates the document and the stored choice',
+  document.documentElement.dataset.theme === 'dark' && dom.window.localStorage.getItem('f31-theme') === 'dark'
+)
+await act(async () => { setTheme('light', { persist: true }) })
+check('theme: the theme can be flipped back', getTheme() === 'light')
+
+/* --- palette structure -------------------------------------------------- */
+await act(async () => {
+  window.dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true }))
+})
+check(
+  'command palette: options are real listbox options, not buttons inside options',
+  $$('.cmdk__list [role="option"]').length > 0 && $$('.cmdk__list [role="option"] button').length === 0
+)
+check(
+  'command palette: exactly one option is selected at a time',
+  $$('.cmdk__list [role="option"][aria-selected="true"]').length === 1
+)
+check('command palette: the dialog is modal', $('.cmdk[role="dialog"]')?.getAttribute('aria-modal') === 'true')
+
+/* focus trap: Shift+Tab on the first control must wrap to the last */
+const dialogEl = $('.cmdk')
+const closeBtn = dialogEl?.querySelector('.cmdk__close')
+const paletteInput = dialogEl?.querySelector('.cmdk__input')
+if (closeBtn && paletteInput) {
+  await act(async () => { closeBtn.focus() })
+  await act(async () => {
+    closeBtn.dispatchEvent(
+      new dom.window.KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true, cancelable: true })
+    )
+  })
+}
+check(
+  'command palette: Shift+Tab on the first control wraps to the last',
+  Boolean(closeBtn && paletteInput) && document.activeElement === paletteInput
+)
+
+/* --- reveals ------------------------------------------------------------ */
+check(
+  'reveal: every reveal element is visible in the no-observer fallback',
+  $$('[data-reveal]').every((el) => el.hasAttribute('data-reveal-in'))
 )
 
 let passed = 0

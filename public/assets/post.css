@@ -27,6 +27,17 @@
   src: url('fonts/inter-latin-500-normal.woff2') format('woff2');
 }
 
+/* metric-compatible fallback, same as the main sheet, so a slow font swap
+   does not reflow the note */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  ascent-override: 90.2%;
+  descent-override: 22.48%;
+  line-gap-override: 0%;
+  size-adjust: 107.4%;
+}
+
 *,
 *::before,
 *::after {
@@ -34,29 +45,38 @@
   margin: 0;
 }
 
+/* tokens:sync:start — generated from src/index.css by scripts/sync-post-css.mjs */
 :root {
   --paper: #f6f6f3;
   --card: #ffffff;
   --well: #ededeb;
   --ink: #111318;
   --mut: #5f6068;
+  --line: rgba(17, 19, 24, 0.08);
+  --line-strong: rgba(17, 19, 24, 0.18);
+  --nav-bg: rgba(246, 246, 243, 0.84);
   --accent: #ff488b;
   --go: #0e7a48;
-  --iris: #8650a0;
+  /* focus ring: clears 3:1 against the paper, where accent pink does not */
   --focus: #7b3f97;
+  /* the site gradient: accent pink, bridged through violet, into the
+     "go" green — the same pairing the favicon and the artwork use */
+  --iris: #8650a0;
   --grad: linear-gradient(180deg, var(--accent) 0%, var(--iris) 50%, var(--go) 100%);
   --grad-x: linear-gradient(90deg, var(--accent) 0%, var(--iris) 50%, var(--go) 100%);
+
   --fs-1: 14px;
   --fs-2: clamp(16px, 1.1vw + 12px, 19px);
   --fs-3: clamp(24px, 2.4vw + 10px, 36px);
+  --fs-4: clamp(34px, 4vw + 8px, 56px);
+  --fs-5: clamp(52px, 7.6vw, 108px);
+
   --px: clamp(20px, 4vw, 48px);
   --radius: 14px;
-  --sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-}
+  --sans: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
 
-html[data-theme='dark'] {
-  color-scheme: dark;
+  --dur: 480ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme='dark'] {
@@ -65,10 +85,18 @@ html[data-theme='dark'] {
   --well: #221527;
   --ink: #f3edf2;
   --mut: #a795a6;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.22);
+  --nav-bg: rgba(13, 6, 11, 0.82);
   --accent: #ff5796;
   --go: #3bdb84;
   --iris: #9b68c9;
   --focus: #ff9cc2;
+}
+/* tokens:sync:end */
+
+html[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 html {
@@ -368,4 +396,45 @@ a:focus-visible {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* index pages: /writing/ and /case-study/ */
+.note__list {
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+}
+
+.note__list li {
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+
+.note__list li:first-child {
+  border-top: 0;
+}
+
+.note__list-link {
+  font-size: var(--fs-3);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.note__list-link:hover {
+  color: var(--accent);
+}
+
+.note__list p {
+  margin-top: 6px;
+  color: var(--mut);
+  max-width: 62ch;
+}
+
+.note__list-meta {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--mut);
 }

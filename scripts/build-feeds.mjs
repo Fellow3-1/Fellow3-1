@@ -1,12 +1,18 @@
 import { writeFileSync } from 'node:fs'
 import { writing, caseStudy } from '../src/data/content.js'
+import { SITE } from '../src/data/site.js'
 
 /* The feed and the sitemap are generated from the content module, so a note
    cannot exist in one place and not the other. Run before every build
    (`npm run build` does it for you). */
 
-const SITE = 'https://fellow3-1.github.io/Fellow3-1'
-const HOME_UPDATED = process.env.HOME_UPDATED || '2026-11-20'
+const HOME_UPDATED =
+  process.env.HOME_UPDATED ||
+  [caseStudy?.updated, caseStudy?.date, ...writing.posts.map((p) => p.published)]
+    .filter(Boolean)
+    .sort()
+    .at(-1) ||
+  new Date().toISOString().slice(0, 10)
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -41,17 +47,28 @@ ${writing.posts
     </item>`
   )
   .join('\n')}
+${
+  caseStudy
+    ? `    <item>
+      <title>${xml(caseStudy.title)}</title>
+      <link>${SITE}/case-study/${caseStudy.slug}/</link>
+      <guid>${SITE}/case-study/${caseStudy.slug}/</guid>
+      <pubDate>${rssDate(caseStudy.date || HOME_UPDATED)}</pubDate>
+      <description>${xml(caseStudy.summary)}</description>
+    </item>`
+    : ''
+}
   </channel>
 </rss>
 `
 
 writeFileSync('public/feed.xml', feed)
-console.log(`feed: ${writing.posts.length} items`)
+console.log(`feed: ${writing.posts.length + (caseStudy ? 1 : 0)} items`)
 
 const images = [
   ['og.jpg', 'Felloh 3.1 · Felix Odhiambo, software and IT systems engineer in Nairobi'],
   ['hero-skyline-day.jpg', 'The Nairobi skyline on a clear day'],
-  ['HD-Joker-Wallpapers-scaled.jpg', 'Low-poly Joker, the site muse'],
+  ['polaroid-960.jpg', 'Low-poly Joker, the site muse'],
 ]
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -71,6 +88,12 @@ ${images
   )
   .join('\n')}
   </url>
+  <url>
+    <loc>${SITE}/writing/</loc>
+    <lastmod>${HOME_UPDATED}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 ${writing.posts
   .map(
     (post) => `  <url>
@@ -84,6 +107,12 @@ ${writing.posts
 ${
   caseStudy
     ? `  <url>
+    <loc>${SITE}/case-study/</loc>
+    <lastmod>${caseStudy.updated || caseStudy.date}</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>${SITE}/case-study/${caseStudy.slug}/</loc>
     <lastmod>${caseStudy.updated || caseStudy.date}</lastmod>
     <changefreq>yearly</changefreq>
@@ -95,4 +124,4 @@ ${
 `
 
 writeFileSync('public/sitemap.xml', sitemap)
-console.log(`sitemap: ${writing.posts.length + 1 + (caseStudy ? 1 : 0)} urls`)
+console.log(`sitemap: ${writing.posts.length + 1 + (caseStudy ? 2 : 0) + 1} urls`)

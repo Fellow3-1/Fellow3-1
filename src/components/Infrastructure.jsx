@@ -53,6 +53,20 @@ export default function Infrastructure() {
                     <span className="infra__dot" />
                     {String(index + 1).padStart(2, '0')} · {group.code}
                   </span>
+                  {/* the card itself is click-only; this is the keyboard route to
+                      the same pin toggle, and it carries the real label */}
+                  <button
+                    type="button"
+                    className="infra__pin"
+                    aria-pressed={pinned === index}
+                    aria-label={`${pinned === index ? 'Unpin' : 'Pin'} ${group.title}`}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      setPinned((cur) => (cur === index ? -1 : index))
+                    }}
+                  >
+                    <span aria-hidden="true">{pinned === index ? '◉' : '◎'}</span>
+                  </button>
                 </div>
                 <h3>{group.title}</h3>
                 <ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul>

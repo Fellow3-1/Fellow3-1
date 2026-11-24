@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { writing } from '../data/content.js'
+import { SITE } from '../data/site.js'
 import Arrow from './Arrow.jsx'
-
-const SITE = 'https://fellow3-1.github.io/Fellow3-1'
 
 export default function Writing() {
   const [copiedSlug, setCopiedSlug] = useState('')
@@ -16,7 +15,7 @@ export default function Writing() {
         setCopiedSlug((cur) => (cur === slug ? '' : cur))
       }, 2200)
     } catch {
-      window.location.hash = 'writing'
+      window.history.replaceState(null, '', '#writing')
     }
   }
 
@@ -37,15 +36,15 @@ export default function Writing() {
             const noteUrl = `${SITE}/writing/${p.slug}/`
             const isCopied = copiedSlug === p.slug
             return (
-              <details className="post" key={p.title} data-reveal style={{ '--rd': `${i * 70}ms` }}>
+              <details className="post" key={p.slug} data-reveal style={{ '--rd': `${i * 70}ms` }}>
                 <summary>
-                  <span className="post__date">{p.date}</span>
+                  <span className="post__date">{p.kind}</span>
                   <span className="post__title">{p.title}</span>
-                  <span className="post__min">{p.minutes}</span>
+                  <span className="post__min">{p.tag}</span>
                 </summary>
                 <div className="post__body">
-                  {p.body.map((para) => (
-                    <p key={para.slice(0, 24)}>{para}</p>
+                  {p.body.map((para, i) => (
+                    <p key={`${p.slug}-${i}`}>{para}</p>
                   ))}
                   <p className="post__open">
                     <a className="alink" href={`writing/${p.slug}/`}>

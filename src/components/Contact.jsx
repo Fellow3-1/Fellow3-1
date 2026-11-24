@@ -54,9 +54,16 @@ export async function deliver(message) {
       body: JSON.stringify(message),
       signal: controller?.signal,
     })
-    return response.ok ? 'sent' : 'failed'
-  } catch {
+    if (response.ok) return 'sent'
+    /* 429 is the database rate limit answering, not a broken inbox; 4xx is
+       the row being refused (a bot, a malformed field). Say which. */
+    if (response.status === 429) return 'limited'
+    if (response.status >= 400 && response.status < 500) return 'rejected'
     return 'failed'
+  } catch {
+    /* fetch only throws when the request never completed: offline, blocked,
+       DNS failure or the 8s timeout. None of those mean the inbox refused. */
+    return 'offline'
   } finally {
     if (timer) window.clearTimeout(timer)
   }
@@ -74,6 +81,9 @@ export default function Contact({ initialValues, deliverMessage = deliver }) {
   const mailRef = useRef(null)
   const fieldRefs = useRef({})
   const sendId = useRef(0)
+  /* `status` is React state, so a second submit in the same tick can still see
+     'sending' as false. This ref is the actual lock. */
+  const inFlight = useRef(false)
 
   const draftBody = useMemo(
     () =>
@@ -97,6 +107,9 @@ export default function Contact({ initialValues, deliverMessage = deliver }) {
     setStatus('')
     /* the draft described the old text; make the visitor print it again */
     setConfirmed(false)
+    /* a response for the old draft is no longer about this draft: bump the id
+       so a slow request cannot report "delivered" for text the visitor changed */
+    if (inFlight.current) sendId.current += 1
     /* clear the complaint as soon as the visitor starts fixing the field */
     setErrors((current) => {
       if (!current[key]) return current
@@ -107,7 +120,9 @@ export default function Contact({ initialValues, deliverMessage = deliver }) {
   }
 
   const buildReceipt = async () => {
-    if (status === 'sending') return
+    /* one request at a time; the button stays enabled (and announces busy)
+       because a disabled submit is a dead end for assistive tech */
+    if (inFlight.current) return
     const found = validateDraft(values)
     const firstBad = contact.fields.find((f) => found[f.key])
 
@@ -133,18 +148,23 @@ export default function Contact({ initialValues, deliverMessage = deliver }) {
 
     const id = sendId.current + 1
     sendId.current = id
+    inFlight.current = true
     setStatus('sending')
 
-    const outcome = await deliverMessage({
-      name: trim(values.name),
-      brief: trim(values.work),
-      email: trim(values.reach),
-      page: 'portfolio',
-    })
+    try {
+      const outcome = await deliverMessage({
+        name: trim(values.name),
+        brief: trim(values.work),
+        email: trim(values.reach),
+        page: 'portfolio',
+      })
 
-    /* a newer submit won the race; do not overwrite its status */
-    if (sendId.current !== id) return
-    setStatus(outcome)
+      /* a newer submit, or an edit, invalidated this one; keep its result */
+      if (sendId.current !== id) return
+      setStatus(outcome)
+    } finally {
+      inFlight.current = false
+    }
   }
 
   const copyDraft = async () => {
@@ -208,22 +228,41 @@ export default function Contact({ initialValues, deliverMessage = deliver }) {
                     <label className="field__label cap" htmlFor={`field-${f.key}`}>
                       {f.label}
                     </label>
-                    <input
-                      id={`field-${f.key}`}
-                      name={f.key}
-                      type={f.key === 'reach' ? 'email' : 'text'}
-                      required
-                      maxLength={LIMITS[f.key]}
-                      autoComplete={f.key === 'name' ? 'name' : f.key === 'reach' ? 'email' : 'off'}
-                      placeholder={f.placeholder}
-                      value={values[f.key]}
-                      aria-invalid={error ? 'true' : undefined}
-                      aria-describedby={error ? `field-${f.key}-error` : undefined}
-                      ref={(el) => {
-                        fieldRefs.current[f.key] = el
-                      }}
-                      onChange={(e) => update(f.key, e.target.value)}
-                    />
+                    {f.key === 'work' ? (
+                      <textarea
+                        id={`field-${f.key}`}
+                        name={f.key}
+                        rows={3}
+                        required
+                        maxLength={LIMITS[f.key]}
+                        autoComplete="off"
+                        placeholder={f.placeholder}
+                        value={values[f.key]}
+                        aria-invalid={error ? 'true' : undefined}
+                        aria-describedby={error ? `field-${f.key}-error` : undefined}
+                        ref={(el) => {
+                          fieldRefs.current[f.key] = el
+                        }}
+                        onChange={(e) => update(f.key, e.target.value)}
+                      />
+                    ) : (
+                      <input
+                        id={`field-${f.key}`}
+                        name={f.key}
+                        type={f.key === 'reach' ? 'email' : 'text'}
+                        required
+                        maxLength={LIMITS[f.key]}
+                        autoComplete={f.key === 'name' ? 'name' : f.key === 'reach' ? 'email' : 'off'}
+                        placeholder={f.placeholder}
+                        value={values[f.key]}
+                        aria-invalid={error ? 'true' : undefined}
+                        aria-describedby={error ? `field-${f.key}-error` : undefined}
+                        ref={(el) => {
+                          fieldRefs.current[f.key] = el
+                        }}
+                        onChange={(e) => update(f.key, e.target.value)}
+                      />
+                    )}
                     {error ? (
                       <p className="field__err" id={`field-${f.key}-error`} role="alert">
                         {error}
@@ -282,7 +321,7 @@ export default function Contact({ initialValues, deliverMessage = deliver }) {
               <p className="slip__hint" id="slip-hint">
                 {contact.hint}
               </p>
-              <p className="slip__result" role="status" aria-live="polite">
+              <p className="slip__result" aria-live="polite">
                 {copied}
               </p>
             </form>
@@ -332,7 +371,7 @@ export default function Contact({ initialValues, deliverMessage = deliver }) {
             </p>
 
             {confirmed ? (
-              <div className="slip__confirm" role="status">
+              <div className="slip__confirm">
                 <b>{contact.confirmed[0]}</b>
                 <span>{contact.confirmed[1]}</span>
               </div>

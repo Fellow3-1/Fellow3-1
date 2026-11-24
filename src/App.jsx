@@ -13,7 +13,7 @@ import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import CommandPalette from './components/CommandPalette.jsx'
 
-export function useReveals(deps = []) {
+export function useReveals() {
   useEffect(() => {
     /* Reveal state is written as a data attribute, never as a class.
        React owns `className` on these elements; when a hover or click changes
@@ -38,8 +38,23 @@ export function useReveals(deps = []) {
       })
     }, { rootMargin: '-10% 0px -10% 0px', threshold: 0.01 })
     els.forEach((el) => io.observe(el))
-    return () => io.disconnect()
-  }, deps)
+
+    /* Safety net: if an element is already inside the viewport the observer
+       still fires, but a browser that never delivers the callback (or a section
+       taller than the root margin allows) would leave content at opacity 0
+       forever. Reveal everything after five seconds, whatever happened. */
+    const failsafe = window.setTimeout(() => {
+      els.forEach((el) => {
+        if (!el.hasAttribute('data-reveal-in')) el.setAttribute('data-reveal-in', '')
+      })
+      io.disconnect()
+    }, 5000)
+
+    return () => {
+      window.clearTimeout(failsafe)
+      io.disconnect()
+    }
+  }, [])
 }
 
 export default function App() {
@@ -59,7 +74,7 @@ export default function App() {
 
   return (
     <>
-      <a className="skiplink" href="#work">Skip to the work</a>
+      <a className="skiplink" href="#main">Skip to the content</a>
       <Nav />
       <main id="main">
         <Hero />

@@ -6,22 +6,41 @@ import Arrow from './Arrow.jsx'
 const TYPED = 'whoami'
 
 export default function Hero() {
-  const [typed, setTyped] = useState('')
+  const [typed, setTyped] = useState(() => {
+    /* the initial render already respects reduced motion; no effect needed */
+    const reduced =
+      document.documentElement.classList.contains('reduce') ||
+      Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)
+    return reduced ? TYPED : ''
+  })
   const [theme] = useTheme()
 
   /* one terminal keeps typing; everything else respects reduced motion */
   useEffect(() => {
-    if (document.documentElement.classList.contains('reduce')) {
-      setTyped(TYPED)
-      return undefined
-    }
+    const mq =
+      typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)')
+        : null
+    if (mq?.matches) return undefined
     let i = 0
-    const id = window.setInterval(() => {
+    let id = 0
+    const type = () => {
       i += 1
       setTyped(TYPED.slice(0, i))
       if (i >= TYPED.length) window.clearInterval(id)
-    }, 120)
-    return () => window.clearInterval(id)
+    }
+    id = window.setInterval(type, 120)
+    /* if the OS setting flips mid-animation, finish the word immediately */
+    const onChange = (event) => {
+      if (!event.matches) return
+      window.clearInterval(id)
+      setTyped(TYPED)
+    }
+    mq?.addEventListener?.('change', onChange)
+    return () => {
+      window.clearInterval(id)
+      mq?.removeEventListener?.('change', onChange)
+    }
   }, [])
 
   const nameLetters = 'Felloh'.split('')
@@ -75,12 +94,14 @@ export default function Hero() {
 
           <figure className="polaroid" data-reveal>
             <picture>
-              <source srcSet="assets/HD-Joker-Wallpapers-scaled.webp" type="image/webp" />
+              {/* the polaroid is ~420 CSS px wide: 960 px covers 2x DPI at a
+                  quarter of the bytes the 2560 px original cost */}
+              <source srcSet="assets/polaroid-960.webp" type="image/webp" />
               <img
-                src="assets/HD-Joker-Wallpapers-scaled.jpg"
+                src="assets/polaroid-960.jpg"
                 alt="Low-poly Joker bust, the site's muse"
-                width="2560"
-                height="1440"
+                width="960"
+                height="540"
                 loading="eager"
                 decoding="async"
               />
