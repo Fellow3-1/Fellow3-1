@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process'
-import { mkdirSync, mkdtempSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { writing, caseStudy } from '../src/data/content.js'
@@ -67,18 +67,23 @@ const card = ({ slug, kicker, title, line }) => {
   console.log(`og card: ${out}`)
 }
 
-for (const post of writing.posts) {
-  card({
-    slug: post.slug,
-    kicker: `Felloh 3.1 · ${post.minutes}`,
-    title: post.title,
-    line: post.blurb,
-  })
-}
+try {
+  for (const post of writing.posts) {
+    card({
+      slug: post.slug,
+      kicker: `Felloh 3.1 · ${post.tag}`,
+      title: post.title,
+      line: post.blurb,
+    })
+  }
 
-card({
-  slug: caseStudy.slug,
-  kicker: `Felloh 3.1 · ${caseStudy.kicker}`,
-  title: caseStudy.title,
-  line: `${caseStudy.minutes} · how this site is built`,
-})
+  card({
+    slug: caseStudy.slug,
+    kicker: `Felloh 3.1 · ${caseStudy.kicker}`,
+    title: caseStudy.title,
+    line: `${caseStudy.minutes} · how this site is built`,
+  })
+} finally {
+  /* the temp dir used to survive every run; a failed convert left it behind */
+  rmSync(WORK, { recursive: true, force: true })
+}

@@ -7,7 +7,7 @@ were not taste — they were **what actually shipped**, **what happened after so
 contact you**, and **how much the first screen cost to download**. Everything below is
 either fixed in this branch or documented with the reason it could not be.
 
-Run `npm test` (82 checks) and `npm run build:pages`, then `npm run preview`.
+Run `npm test` (115 checks) and `npm run build:pages`, then `npm run preview`.
 
 ---
 
@@ -142,7 +142,7 @@ reporting delivery, the reframed section, and every note appearing in the feed a
 
 ## 2 · Deliberately not done
 
-- **Rebuilding the site without React.** 83 KB gzip is fine for this page, and the note
+- **Rebuilding the site without React.** 93 KB gzip is fine for this page, and the note
   pages already prove the static pipeline works. It would be a rewrite for a number, not a
   user.
 - **Inventing post dates or metrics.** The three notes carry the date the feed already
@@ -177,11 +177,52 @@ the three items and keep role-only attribution — the layout needs no change.
 
 ```bash
 npm ci
-npm test              # 82 checks
-npm run build         # generates feed, sitemap, note pages, case study
+npm run lint          # eslint over src, scripts and config
+npm test              # 115 checks
+npm run build         # generates feed, sitemap, note pages, case study, 404
 npm run build:pages   # refreshes the committed Pages build in docs/
 npm run preview
 ```
 
 Tab through the preview: skip link → nav → hero → project details → form. Submit it empty
 for the error path; submit it filled for delivery, the receipt and both exits.
+
+
+---
+
+## 5 · 2026-11-24 follow-up
+
+A second review found the remaining gaps and closed them:
+
+- **Writing posts misused two fields.** `date` held the category label (`Guide`)
+  and `minutes` held the topic (`Payments`). They are now `kind` and `tag`, and
+  the note pages print the real publication date instead of the word "Guide".
+- **The contact form could double-submit and report a stale "delivered".** The
+  in-flight lock is a ref now, not state, and editing a draft invalidates the
+  response for the old one. Non-OK replies are distinguished: 429 is `limited`,
+  other 4xx is `rejected`, a network failure is `offline`.
+- **The contact table accepted any `page` value and counted email quotas
+  case-sensitively.** `20261124_message_hardening.sql` adds the check constraint,
+  a `lower(email)` expression index, a per-address advisory lock and a
+  `read_at` + purge routine behind the deletion promise.
+- **No `<noscript>`, no error boundary.** A failed bundle now renders a readable
+  fallback with the contact details, and a render error is caught instead of
+  unmounting the page.
+- **`404.html` was a byte copy of the homepage.** It is a real noindex page with
+  absolute asset URLs, so it also works on nested unknown paths.
+- **`/writing/` and `/case-study/` were 404s.** Both have index pages now, and
+  the feed carries the case study as well as the notes.
+- **The note stylesheet had drifted from the main sheet.** `npm run sync` copies
+  the tokens from `src/index.css`, and the smoke test fails if they diverge.
+- **The palette had no focus trap and put a button inside a listbox option.**
+  The background is `inert` while it is open, Tab is trapped, and options are the
+  list items themselves.
+- **Infrastructure cards were click-only.** Each card now has a labelled pin
+  button for keyboard users, and the domain chips announce the domain name.
+- **The polaroid was 2560 px and the preload guessed the wrong theme.** It is a
+  960 px crop now, and the preload is chosen after the stored theme is known.
+- **The smoke test read the committed `docs/` build.** CI now builds first and
+  the test reads `dist/`, so it checks the code in the commit rather than the
+  artifact it is about to replace.
+- **The duplicate deploy template is gone.** `docs/` is the documented source of
+  truth; the workflow's `deploy` job is a mirror for when Pages moves to Actions.

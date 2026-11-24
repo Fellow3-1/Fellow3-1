@@ -150,7 +150,7 @@ try {
             <h2>What went wrong</h2>
             <div class="note__body">
               <p><strong>Two deploy paths.</strong> GitHub Pages was serving a build I had committed into the docs folder, while a workflow uploaded a different build as an artifact. The two drifted apart, and for weeks the live site showed a seven section version of a nine section page. The fix had nothing to do with code. I picked one path and let a script, not a person, refresh the output.</p>
-            <p><strong>A hero image nobody could see.</strong> My portrait was sending 223 KB of pixels that no screen ever displayed, because CSS cropped it to a thin band after the full image had already downloaded. Now it is cropped at build time to the part that actually shows, and phones get their own 3:2 crop instead of a squashed slice.</p>
+            <p><strong>A hero image nobody could see.</strong> My portrait was sending 223 KB of pixels that no screen ever displayed, because CSS cropped it to a thin band after the full image had already downloaded. Now it is a 960 px crop sized for the roughly 420 px box it renders in, and phones get their own 3:2 crop instead of a squashed slice.</p>
             <p><strong>A blank page waiting to happen.</strong> The page started fully transparent and waited for the JavaScript bundle to fade it in. That is fine until the bundle fails to load, and then visitors get an empty white sheet. I added a watchdog that reveals the content after two and a half seconds no matter what.</p>
             </div>
           </section>
@@ -158,7 +158,7 @@ try {
             <h2>How I know the promises hold</h2>
             <div class="note__body">
               <p>I wrote a smoke test that builds the real app, renders it in jsdom and checks the things that matter. It confirms the privacy rules still hold, with no employment timeline, no education or certification claims and no CV download. It checks the structure, the schema, the feed and the sitemap. And it checks the contact form closely: the exact request it sends, the key going in the right header, the fallback working when sending fails, and a submit button that can never get stuck disabled.</p>
-            <p>The tests are blunt on purpose. They don’t compare pixels. They check that every promise the page makes in words still has something real behind it. There are 82 of them, and they all have to pass before a deploy is allowed to begin.</p>
+            <p>The tests are blunt on purpose. They don’t compare pixels. They check that every promise the page makes in words still has something real behind it. There are 115 of them, and they all have to pass before a deploy is allowed to begin.</p>
             </div>
           </section>
           <section class="note__section">

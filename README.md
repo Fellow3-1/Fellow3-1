@@ -23,6 +23,8 @@
   </a>
 </p>
 
+> This repository is also the source of the portfolio site above. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, the content model, the smoke tests and the deploy path.
+
 ---
 
 <h2 align="center">📊 GitHub Stats & Analytics</h2>

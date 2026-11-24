@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { brand } from '../data/content.js'
 import { useTheme } from '../theme.js'
 
@@ -25,11 +25,15 @@ export default function Contributions() {
   const [errored, setErrored] = useState(false)
   const [snapFailed, setSnapFailed] = useState(false)
 
-  /* a theme change resets the fallback ladder back to the fresh source */
-  useEffect(() => {
+  /* a theme change resets the fallback ladder back to the fresh source.
+     Adjusting state during render is the documented pattern for "reset when a
+     prop changes" and avoids a second paint with the old theme's error state. */
+  const [seenTheme, setSeenTheme] = useState(theme)
+  if (seenTheme !== theme) {
+    setSeenTheme(theme)
     setErrored(false)
     setSnapFailed(false)
-  }, [theme])
+  }
 
   const src = errored ? SNAPSHOT[theme] : SNAKE[theme]
   const failed = errored && snapFailed

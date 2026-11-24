@@ -1,5 +1,6 @@
+import { Fragment } from 'react'
 import { brand, footer } from '../data/content.js'
-import { openPalette } from './CommandPalette.jsx'
+import { openPalette } from '../palette.js'
 
 const shortcutLabel =
   typeof navigator !== 'undefined' && /Mac|iPhone|iPad|iPod/i.test(navigator.platform || navigator.userAgent || '')
@@ -56,6 +57,17 @@ export default function Footer() {
         <div className="foot__base">
           <p>{footer.line}</p>
           <p className="foot__meta-links">
+            {brand.socials.map((social, index) => (
+              <Fragment key={social.href}>
+                {index > 0 ? <span aria-hidden="true">·</span> : null}
+                <a href={social.href} target="_blank" rel="noreferrer">
+                  {social.label.split(' · ')[0].toLowerCase()}
+                </a>
+              </Fragment>
+            ))}
+            <span aria-hidden="true">·</span>
+            <a href={`mailto:${brand.email}`}>email</a>
+            <span aria-hidden="true">·</span>
             <a href="feed.xml">rss</a>
             <span aria-hidden="true">·</span>
             <a href="sitemap.xml">sitemap</a>

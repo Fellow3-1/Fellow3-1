@@ -29,10 +29,12 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Run portfolio smoke tests
-        run: npm test
+      - name: Lint
+        run: npm run lint
       - name: Build site
         run: npm run build:pages
+      - name: Run portfolio smoke tests
+        run: npm test
       - name: Fail if the committed Pages build is stale
         run: |
           if ! git diff --quiet -- docs; then
@@ -41,6 +43,11 @@ jobs:
             exit 1
           fi
 
+  # Pages is currently configured as "Deploy from a branch -> main / docs", so
+  # the committed docs/ folder is the live site. This job is the mirror that
+  # makes switching the Pages source to GitHub Actions a settings-only change
+  # (see CONTRIBUTING.md). Both paths build from the same commit; the stale-docs
+  # gate above is what keeps them identical.
   deploy:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     needs: verify

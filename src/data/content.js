@@ -15,6 +15,12 @@ export const brand = {
     { label: 'LinkedIn · felloh31', href: 'https://linkedin.com/in/felloh31' },
   ],
   linkedin: 'https://linkedin.com/in/felloh31',
+  /* used by the generated Person schema; keep it to verifiable capabilities */
+  knowsAbout: [
+    'Software engineering', 'React', 'Java', 'Python', 'PHP', 'Go', 'REST APIs',
+    'M-PESA Daraja', 'Android development', 'Windows', 'Linux', 'Networking',
+    'DNS', 'DHCP', 'VPN', 'AWS', 'Docker',
+  ],
 }
 
 export const nav = {
@@ -121,30 +127,30 @@ export const writing = {
   note: 'Short explainers and implementation notes. Public articles should reflect reproducible technical guidance, not confidential project details.',
   posts: [
     {
-      date: 'Guide',
+      kind: 'Guide',
       published: '2025-11-03',
       title: 'Designing safer M-PESA callback handling',
       slug: 'safer-mpesa-callbacks',
       blurb: 'Idempotent payment callbacks, raw event storage for audit, and why a timeout means unknown, not failed.',
-      minutes: 'Payments',
+      tag: 'Payments',
       body: ['Treat payment callbacks as untrusted, retryable input. Validate the request, persist the raw event for audit, make processing idempotent, and reconcile uncertain outcomes against the provider rather than assuming a timeout means failure.', 'Keep credentials in environment-backed secret storage, use HTTPS, log correlation identifiers instead of sensitive customer data, and test duplicate and out-of-order callback scenarios.'],
     },
     {
-      date: 'Guide',
+      kind: 'Guide',
       published: '2025-11-03',
       title: 'A practical network troubleshooting sequence',
       slug: 'network-troubleshooting-sequence',
       blurb: 'Scope first, then link state, addressing, gateway, DNS and routing — one variable at a time.',
-      minutes: 'Networking',
+      tag: 'Networking',
       body: ['Start by confirming the scope: one device, one VLAN, one site or a wider outage. Check link state and addressing, then gateway reachability, DNS resolution, route selection and the destination service.', 'Record the exact tests and timestamps. Avoid changing several network variables at once; isolate the fault and verify the fix from an affected endpoint.'],
     },
     {
-      date: 'Guide',
+      kind: 'Guide',
       published: '2025-11-03',
       title: 'Linux service diagnostics',
       slug: 'linux-service-diagnostics',
       blurb: 'systemctl, journalctl, ss and resource pressure — evidence before the restart button.',
-      minutes: 'Systems',
+      tag: 'Systems',
       body: ['Check service state with systemctl, inspect recent events with journalctl, confirm listening sockets with ss, and verify disk, memory and CPU pressure before restarting a production service.', 'A restart can restore service, but it is not a root-cause analysis. Capture the failure evidence and investigate why the service stopped or became unhealthy.'],
     },
   ],
@@ -195,7 +201,7 @@ export const faq = {
     { q: 'What can I review publicly?', a: 'The linked GitHub repositories, their README files and source code are the primary evidence presented here. The site avoids unsupported client metrics and confidential screenshots.' },
     { q: 'Does the infrastructure section represent every vendor as production experience?', a: 'No. It is a high-level capability overview. Specific vendor platforms and production environments should be assessed through a direct technical discussion.' },
     { q: 'What opportunities are of interest?', a: 'Software engineering, systems administration, IT operations, infrastructure support and network-focused roles, as well as relevant consulting engagements.' },
-    { q: 'What happens to a message sent through this site?', a: 'It is stored in a database only I can read, used only to reply, and deleted when the conversation ends. No analytics, cookies or third-party scripts receive it. The email draft the form prepares stays on your device.' },
+    { q: 'What happens to a message sent through this site?', a: 'It is stored in a database only I can read, used only to reply, deleted once the conversation is closed, and purged after 90 days if unread. No analytics, cookies or third-party scripts receive it. The email draft the form prepares stays on your device.' },
   ],
 }
 
@@ -218,6 +224,8 @@ export const contact = {
   delivery: {
     sending: 'sending to the inbox…',
     sent: 'delivered — the message is in my inbox.',
+    limited: 'the inbox is cooling down — too many messages in fifteen minutes. Open the email draft instead.',
+    rejected: 'the inbox refused that message. Check the fields, or open the email draft.',
     failed: 'the inbox did not answer. Open the email draft instead — it is already prepared.',
     offline: 'this browser cannot reach the inbox. Open the email draft instead.',
     delivered: 'delivered',
@@ -228,7 +236,7 @@ export const contact = {
     { label: 'LinkedIn', dot: 'amber', glyph: '−', href: 'https://linkedin.com/in/felloh31' },
     { label: 'Email', dot: 'green', glyph: '+', href: 'mailto:felixodhiambo31@live.com' },
   ],
-  disclaimer: 'No analytics, no cookies, no third parties. Messages are used only to reply, and deleted when the conversation ends.',
+  disclaimer: 'No analytics, no cookies, no third parties. Messages are used only to reply, deleted once the conversation is closed, and purged after 90 days if unread.',
 }
 
 export const footer = {
@@ -291,7 +299,7 @@ export const caseStudy = {
       heading: 'What went wrong',
       body: [
         '**Two deploy paths.** GitHub Pages was serving a build I had committed into the docs folder, while a workflow uploaded a different build as an artifact. The two drifted apart, and for weeks the live site showed a seven section version of a nine section page. The fix had nothing to do with code. I picked one path and let a script, not a person, refresh the output.',
-        '**A hero image nobody could see.** My portrait was sending 223 KB of pixels that no screen ever displayed, because CSS cropped it to a thin band after the full image had already downloaded. Now it is cropped at build time to the part that actually shows, and phones get their own 3:2 crop instead of a squashed slice.',
+        '**A hero image nobody could see.** My portrait was sending 223 KB of pixels that no screen ever displayed, because CSS cropped it to a thin band after the full image had already downloaded. Now it is a 960 px crop sized for the roughly 420 px box it renders in, and phones get their own 3:2 crop instead of a squashed slice.',
         '**A blank page waiting to happen.** The page started fully transparent and waited for the JavaScript bundle to fade it in. That is fine until the bundle fails to load, and then visitors get an empty white sheet. I added a watchdog that reveals the content after two and a half seconds no matter what.',
       ],
     },
@@ -299,7 +307,7 @@ export const caseStudy = {
       heading: 'How I know the promises hold',
       body: [
         'I wrote a smoke test that builds the real app, renders it in jsdom and checks the things that matter. It confirms the privacy rules still hold, with no employment timeline, no education or certification claims and no CV download. It checks the structure, the schema, the feed and the sitemap. And it checks the contact form closely: the exact request it sends, the key going in the right header, the fallback working when sending fails, and a submit button that can never get stuck disabled.',
-        'The tests are blunt on purpose. They don’t compare pixels. They check that every promise the page makes in words still has something real behind it. There are 82 of them, and they all have to pass before a deploy is allowed to begin.',
+        'The tests are blunt on purpose. They don’t compare pixels. They check that every promise the page makes in words still has something real behind it. There are 115 of them, and they all have to pass before a deploy is allowed to begin.',
       ],
     },
     {
